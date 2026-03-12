@@ -164,6 +164,7 @@
 
   .tab-panel { display: none; }
   .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
+  #tab-dip.active { display: flex; flex-direction: column; min-height: 100vh; }
 
   /* ── Section labels ── */
   .section-label {
@@ -1789,7 +1790,7 @@ if('serviceWorker' in navigator){
       <div class="dip-disp-label">Address Value</div>
       <div class="dip-disp-val" id="dip-result">0</div>
     </div>
-    <div class="dip-area">
+    <div class="dip-area" style="flex:1;">
       <div class="dip-body" id="dip-body"></div>
     </div>
     <div class="dip-reset-wrap">
