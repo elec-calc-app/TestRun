@@ -673,6 +673,10 @@
 .note-photo-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;}
 .note-photo-thumb{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid #e5e7eb;}
 .note-photo-add{width:64px;height:64px;border:2px dashed #d1d5db;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#9ca3af;font-size:22px;background:#f9fafb;flex-shrink:0;}
+.photo-lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:1100;align-items:center;justify-content:center;cursor:pointer;}
+.photo-lightbox.open{display:flex;}
+.photo-lightbox img{max-width:96vw;max-height:92vh;object-fit:contain;border-radius:8px;box-shadow:0 4px 40px rgba(0,0,0,0.6);}
+.punch-photo-thumb,.note-photo-thumb{cursor:pointer;}
 .note-print-card-btn{flex:1;background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
 .punch-print-btn{flex:1;background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
 .ts-header-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
@@ -2404,7 +2408,7 @@ function renderNotes(){
       return h+'</div>';
     }).join('');
     var svgHtml=n.svg?'<div class="note-svg">'+n.svg+'</div>':'';
-    var photosHtml='<div class="note-photo-row">'+(n.photos&&n.photos.length?n.photos.map(function(p){return '<img class="note-photo-thumb" src="'+p+'">';}).join(''):'')+'<label class="note-photo-add" title="Add photo">+<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addNotePhoto('+n.id+',this)"></label></div>';
+    var photosHtml='<div class="note-photo-row">'+(n.photos&&n.photos.length?n.photos.map(function(p){return '<img class="note-photo-thumb" src="'+p+'" onclick="openLightbox(this.src)">';}).join(''):'')+'<label class="note-photo-add" title="Add photo">+<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addNotePhoto('+n.id+',this)"></label></div>';
     var noteLabel=escHtml(n.title||n.tabName||'');
     return '<div class="note-card" id="nc-'+n.id+'">'+
       '<div class="note-card-hd" onclick="jcToggleNote('+n.id+')">'+
@@ -2457,6 +2461,7 @@ function jcExportNote(id){
   var rows=lines.map(function(l){return '<tr><td>'+escHtml(l.label||'')+'</td><td><strong>'+escHtml(String(l.val||''))+'</strong></td></tr>';}).join('');
   var bodyHTML='<table class="kv-table"><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>'+rows+'</tbody></table>';
   if(n.annotation)bodyHTML+='<div class="sec-hd">Job Notes</div><div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;font-size:13px;line-height:1.6;">'+escHtml(n.annotation)+'</div>';
+  if(n.photos&&n.photos.length)bodyHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">'+n.photos.map(function(p){return '<img src="'+p+'" style="max-width:200px;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;">';}).join('')+'</div>';
   var html=buildPrintHTML(title,n.tabName+' · Created '+created,bodyHTML);
   openExportSheet(title,txt.join('\n'),csv,html);
 }
@@ -2544,6 +2549,8 @@ function openExportSheet(title,text,csv,html){
   document.getElementById('export-sheet-ov').classList.add('open');
 }
 function closeExportSheet(){document.getElementById('export-sheet-ov').classList.remove('open');}
+function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('photo-lightbox').classList.add('open');}
+function closeLightbox(){document.getElementById('photo-lightbox').classList.remove('open');document.getElementById('lightbox-img').src='';}
 function doExportPDF(){
   if(!_exportData)return;
   closeExportSheet();
@@ -3076,7 +3083,7 @@ function renderPunch(){
     var ts=new Date(item.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'});
     var cat=item.catId&&catMap[item.catId]?catMap[item.catId]:null;
     var catBubble=cat?'<span class="punch-cat-bubble" style="background:'+cat.color+';border-color:'+cat.color.replace('fe','c')+';">'+escHtml(cat.name)+'</span>':'';
-    var photosHtml=(item.photos&&item.photos.length?item.photos.map(function(p){return '<img class="punch-photo-thumb" src="'+p+'">';}).join(''):'');
+    var photosHtml=(item.photos&&item.photos.length?item.photos.map(function(p){return '<img class="punch-photo-thumb" src="'+p+'" onclick="openLightbox(this.src)">';}).join(''):'');
     return '<div class="punch-item'+(item.done?' done':'')+'" id="pi-'+item.id+'">'+
       '<div class="punch-item-hd">'+
         '<input type="checkbox" '+(item.done?'checked':'')+' onchange="togglePunchDone('+item.id+',this.checked)" style="width:16px;height:16px;accent-color:#f0c020;cursor:pointer;flex-shrink:0;">'+
@@ -3164,8 +3171,8 @@ function exportPunchItem(id){
     '<tr><td>Created</td><td>'+created+'</td></tr>'+
     '<tr><td>Completed</td><td>'+(item.done?'<span class="badge badge-green">Yes</span>':'<span class="badge badge-gray">No</span>')+'</td></tr>'+
     (item.notes?'<tr><td>Notes</td><td>'+escHtml(item.notes)+'</td></tr>':'')+
-    (item.photos&&item.photos.length?'<tr><td>Photos</td><td>'+item.photos.length+' attached</td></tr>':'')+
-    '</tbody></table>';
+    '</tbody></table>'+
+    (item.photos&&item.photos.length?'<div class="sec-hd">Photos ('+item.photos.length+')</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">'+item.photos.map(function(p){return '<img src="'+p+'" style="max-width:200px;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;">';}).join('')+'</div>':'');
   var html=buildPrintHTML('Punch Item','JoltCalc Punch List · '+_fmtDate(),bodyHTML);
   openExportSheet('Punch — '+item.title,txt.join('\n'),csv,html);
 }
@@ -5389,6 +5396,11 @@ setCodeYear(_codeYear);
     <button class="punch-opts-done" onclick="closePunchOpts()">Done</button>
   </div>
 </div>
+<!-- Photo Lightbox -->
+<div class="photo-lightbox" id="photo-lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Photo">
+</div>
+
 <!-- Export Sheet -->
 <div class="export-sheet-ov" id="export-sheet-ov" onclick="closeExportSheet()">
   <div class="export-sheet" onclick="event.stopPropagation()">
