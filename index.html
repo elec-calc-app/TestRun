@@ -84,14 +84,14 @@
 
   /* ── Header ── */
   .calc-header {
-    padding: 10px 16px 10px;
-    padding-top: calc(10px + env(safe-area-inset-top));
+    padding: 6px 16px 6px;
+    padding-top: calc(6px + env(safe-area-inset-top));
     background: linear-gradient(135deg, #060809 0%, #0e1520 100%);
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
   }
-  .calc-bolt-bar { background: linear-gradient(135deg, #060809 0%, #0e1520 100%); padding: 4px 0 8px; overflow: visible; }
+  .calc-bolt-bar { background: linear-gradient(135deg, #060809 0%, #0e1520 100%); padding: 2px 0 4px; overflow: visible; }
   .calc-eyebrow {
     font-family: 'Roboto Mono', monospace;
     font-size: 9px;
@@ -753,7 +753,7 @@ if('serviceWorker' in navigator){
     <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
   </div>
   <div class="calc-bolt-bar">
-    <svg viewBox="0 0 400 48" width="100%" height="48" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 48" width="100%" height="28" xmlns="http://www.w3.org/2000/svg">
       <line class="wire-anim" id="wire-l" x1="174" y1="24" x2="0" y2="24" stroke="#1c2230" stroke-width="1.5"/>
       <line class="wire-anim" id="wire-r" x1="226" y1="24" x2="400" y2="24" stroke="#1c2230" stroke-width="1.5"/>
       <polygon class="bolt-anim" id="bolt-icon" points="188,4 198,24 192,24 208,44 198,24 204,24" fill="#f0c020"/>
