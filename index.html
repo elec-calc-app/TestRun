@@ -130,8 +130,8 @@
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    padding: 0;
-    gap: 0;
+    padding: 5px 6px;
+    gap: 3px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -144,25 +144,22 @@
     font-size: 12px;
     font-weight: 600;
     letter-spacing: .2px;
-    color: #000000;
-    background: none;
+    color: rgba(0,0,0,0.6);
+    background: rgba(255,255,255,0.25);
     border: none;
-    border-right: 1px solid rgba(0,0,0,.15);
-    border-bottom: 3px solid transparent;
-    padding: 15px 10px 12px;
+    border-radius: 6px;
+    padding: 7px 11px;
     cursor: pointer;
-    transition: color .15s, border-color .15s, background .15s;
+    transition: color .15s, background .15s;
     white-space: nowrap;
     text-align: center;
     -webkit-tap-highlight-color: transparent;
   }
-  .tab-btn:last-child { border-right: none; }
   .tab-btn.active {
-    color: #ffffff;
-    border-bottom-color: transparent;
-    background: rgba(255,255,255,.25);
+    color: #1a1200;
+    background: #ffffff;
   }
-  @media (hover: hover) { .tab-btn:hover:not(.active) { color: #fff; } }
+  @media (hover: hover) { .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.45); color: #000; } }
 
   .tab-panel { display: none; }
   .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
