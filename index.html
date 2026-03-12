@@ -2482,7 +2482,7 @@ function tsGetWeekStartDate(d){
   return dt;
 }
 function tsFmtDate(d){var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return mo[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
-function tsFmtShort(d){var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return mo[d.getMonth()]+' '+d.getDate()+",'"+String(d.getFullYear()).slice(2);}
+function tsFmtShort(d){return (d.getMonth()+1)+'/'+d.getDate()+'/'+String(d.getFullYear()).slice(2);}
 function tsKey(empId,day){return empId+'_'+day;}
 function loadTs(){var sel=document.getElementById('ts-wkstart-sel');if(sel)sel.value=localStorage.getItem('jc_ts_wkstart')||'Mon';renderTs();}
 function addTsWeek(){
