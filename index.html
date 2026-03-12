@@ -156,7 +156,8 @@
   .tab-btn:last-child { border-right: none; }
   .tab-btn.active {
     color: #ffffff;
-    border-bottom-color: #fff;
+    border-bottom-color: #000;
+    border-bottom-width: 4px;
     background: rgba(255,255,255,.25);
   }
   .tab-btn:hover:not(.active) { color: #fff; }
@@ -578,8 +579,8 @@
 .calc-srch-item{padding:8px 14px;font-size:12px;font-family:'Inter',sans-serif;color:#e5e7eb;cursor:pointer;white-space:nowrap;}
 .calc-srch-item:hover,.calc-srch-item:active{background:rgba(240,192,32,0.15);color:#f0c020;}
 .code-year-btn:not(.active):hover{border-color:rgba(240,192,32,0.4);color:#9ca3af;}
-.tab-scroll-track{height:5px;background:rgba(240,192,32,0.18);}
-.tab-scroll-thumb{height:5px;background:#f0c020;border-radius:3px;width:40%;transition:margin-left .1s;}
+.tab-scroll-track{height:4px;background:rgba(255,255,255,0.10);}
+.tab-scroll-thumb{height:4px;background:#ffffff;border-radius:2px;width:40%;transition:margin-left .1s;}
 .menu-btn{background:none;border:none;color:#f0c020;font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;flex-shrink:0;}
 .menu-btn:active{opacity:.7;}
 .jc-menu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:899;}
