@@ -155,7 +155,7 @@
   @media (hover: hover) { .tab-btn:hover:not(.active) { background: #2a2a2a; } }
 
   .tab-panel { display: none; }
-  .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; min-height: 100vh; }
+  .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
 
   /* ── Section labels ── */
   .section-label {
@@ -593,7 +593,7 @@
 .res-sub{flex:1;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;padding:13px 8px 10px;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;color:#6b7280;cursor:pointer;}
 .res-sub.active{color:#1a1200;border-bottom-color:#f0c020;}
 .res-section{display:none;}
-.res-section.active{display:block;}
+.res-section.active{display:block;min-height:100vh;}
 .punch-toolbar{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
 .punch-add-btn{background:#f0c020;color:#1a1200;border:1px solid #c9a010;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .punch-add-btn:active{opacity:.85;}
