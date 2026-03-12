@@ -523,12 +523,13 @@
 .jc-save-btn{background:#f0c020;color:#1a1200;border:none;border-radius:8px;padding:11px 20px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;flex-shrink:0;}
 .jc-dismiss-btn{background:none;border:none;color:#4a5468;font-size:20px;cursor:pointer;padding:2px 4px;line-height:1;}
 .note-card{background:#ffffff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.07);}
-.note-card-hd{display:flex;align-items:center;gap:10px;padding:9px 12px;-webkit-user-select:none;user-select:none;}
+.note-card-hd{display:flex;align-items:center;gap:10px;padding:9px 12px;-webkit-user-select:none;user-select:none;cursor:pointer;}
 .note-card-hd:active{background:rgba(0,0,0,0.02);}
 .note-hd-left{flex:1;min-width:0;}
-.note-title{background:none;border:none;color:#111827;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;width:100%;padding:0;margin-bottom:5px;cursor:text;display:block;}
-.note-title:focus{outline:none;color:#d4a010;}
-.note-title::placeholder{color:#9ca3af;}
+.note-title-txt{color:#111827;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;display:block;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.note-title-txt.placeholder{color:#9ca3af;}
+.note-edit-btn{background:none;border:none;color:#d1d5db;font-size:13px;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.note-edit-btn:active{color:#f0c020;}
 .note-hd-meta{display:flex;align-items:center;gap:8px;}
 .note-src-badge{font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(240,192,32,0.12);color:#92700a;border:1px solid rgba(240,192,32,0.3);padding:2px 7px;border-radius:4px;flex-shrink:0;}
 .note-ts{font-family:'Roboto Mono',monospace;font-size:9px;color:#9ca3af;}
@@ -2373,6 +2374,15 @@ function jcToggleNote(id){
   var card=document.getElementById('nc-'+id);
   if(card)card.classList.toggle('expanded');
 }
+function jcRenameNote(id){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var n=notes.find(function(x){return x.id===id;});if(!n)return;
+  var cur=n.title||n.tabName||'';
+  var val=prompt('Rename note:',cur);
+  if(val===null)return;
+  n.title=val.trim()||cur;
+  localStorage.setItem('jc_notes',JSON.stringify(notes));renderNotes();
+}
 function jcUpdateTitle(id,val){
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
   notes.forEach(function(n){if(n.id===id)n.title=val;});
@@ -2401,13 +2411,15 @@ function renderNotes(){
     }).join('');
     var svgHtml=n.svg?'<div class="note-svg">'+n.svg+'</div>':'';
     var photosHtml='<div class="note-photo-row">'+(n.photos&&n.photos.length?n.photos.map(function(p){return '<img class="note-photo-thumb" src="'+p+'">';}).join(''):'')+'<label class="note-photo-add" title="Add photo">+<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addNotePhoto('+n.id+',this)"></label></div>';
+    var noteLabel=escHtml(n.title||n.tabName||'');
     return '<div class="note-card" id="nc-'+n.id+'">'+
-      '<div class="note-card-hd">'+
+      '<div class="note-card-hd" onclick="jcToggleNote('+n.id+')">'+
         '<div class="note-hd-left">'+
-          '<input class="note-title" type="text" value="'+escHtml(n.title||n.tabName)+'" placeholder="Tap to name…" onchange="jcUpdateTitle('+n.id+',this.value)"/>'+
+          '<span class="note-title-txt'+(noteLabel?'':' placeholder')+'">'+( noteLabel||'Tap ✏ to name…')+'</span>'+
           '<div class="note-hd-meta"><span class="note-src-badge">'+n.tabName+'</span><span class="note-ts">'+ts+'</span></div>'+
         '</div>'+
-        '<div class="note-chevron" onclick="jcToggleNote('+n.id+')" style="cursor:pointer;padding:4px 0 4px 8px;">▾</div>'+
+        '<button class="note-edit-btn" onclick="event.stopPropagation();jcRenameNote('+n.id+')" title="Rename">✏</button>'+
+        '<div class="note-chevron" style="padding:4px 0 4px 4px;">▾</div>'+
       '</div>'+
       '<div class="note-card-bd">'+
         '<div class="note-lines">'+linesHtml+'</div>'+
