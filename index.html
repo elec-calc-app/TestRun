@@ -225,7 +225,7 @@
     position: absolute;
     right: 8px; top: 50%;
     transform: translateY(-50%);
-    font-size: 16px;
+    font-size: 22px;
     color: var(--sub);
     pointer-events: none;
   }
@@ -2426,7 +2426,7 @@ function renderNotes(){
         '<textarea class="note-annotation" placeholder="Add a job note…" rows="2" onchange="jcUpdateAnnotation('+n.id+',this.value)">'+escHtml(n.annotation||'')+'</textarea>'+
         '<div class="note-card-actions">'+
           '<button class="note-export-card-btn" onclick="jcExportNote('+n.id+')">Export</button>'+
-          '<button class="note-print-card-btn" onclick="printNote('+n.id+')">Print</button>'+
+          '<button class="note-print-card-btn" onclick="jcRenameNote('+n.id+')">Edit</button>'+
           '<button class="note-del-btn" onclick="jcDeleteNote('+n.id+')">Delete</button>'+
         '</div>'+
       '</div>'+
@@ -2788,7 +2788,7 @@ function renderTs(){
     return '<div class="ts-week-card" id="tw-'+week.id+'">'+
       '<div class="ts-week-hd-row">'+
         '<div class="ts-week-title" onclick="toggleTsWeek('+week.id+')">'+tsFmtShort(mon)+' – '+tsFmtShort(endDay)+'</div>'+
-        '<input class="ts-foreman-inp" value="'+escHtml(week.foreman||'')+'" placeholder="Foreman…" onchange="updateTsForeman('+week.id+',this.value)" onclick="event.stopPropagation()">'+
+        '<input class="ts-foreman-inp" id="tsf-'+week.id+'" value="'+escHtml(week.foreman||'')+'" placeholder="Foreman…" onchange="updateTsForeman('+week.id+',this.value)" onclick="event.stopPropagation()">'+
         '<input class="ts-po-inp" value="'+escHtml(week.po||'')+'" placeholder="PO #" onchange="updateTsPo('+week.id+',this.value)" onclick="event.stopPropagation()">'+
         '<div class="note-chevron" onclick="toggleTsWeek('+week.id+')">▾</div>'+
       '</div>'+
@@ -2797,7 +2797,7 @@ function renderTs(){
         wknd+
         '<div class="ts-actions">'+
           '<button class="ts-export-btn" onclick="exportTsWeek('+week.id+')">Export</button>'+
-          '<button class="ts-print-btn" onclick="printTsWeek('+week.id+')">Print</button>'+
+          '<button class="ts-print-btn" onclick="editTsWeek('+week.id+')">Edit</button>'+
           '<button class="ts-del-btn" onclick="deleteTsWeek('+week.id+')">Delete</button>'+
         '</div>'+
       '</div>'+
@@ -2874,6 +2874,19 @@ function exportTsWeek(weekId){
   var bodyHTML=meta+'<table><thead><tr><th>Employee</th>'+thDays+'<th style="text-align:right;">Total</th></tr></thead><tbody>'+rows+'</tbody></table>';
   var html=buildPrintHTML('Time Sheet',escHtml(w.label||'')+'  ·  '+now,bodyHTML);
   openExportSheet('JoltCalc Time Sheet',text,csvRows.join('\n'),html);
+}
+function editTsWeek(weekId){
+  var el=document.getElementById('tw-'+weekId);
+  if(el&&!el.classList.contains('expanded'))el.classList.add('expanded');
+  setTimeout(function(){var inp=document.getElementById('tsf-'+weekId);if(inp){inp.focus();inp.select();}},120);
+}
+function editPunchItem(id){
+  var items=JSON.parse(localStorage.getItem('jc_punch')||'[]');
+  var item=items.find(function(i){return i.id===id;});if(!item)return;
+  var val=prompt('Edit description:',item.title||'');
+  if(val===null)return;
+  item.title=val.trim()||item.title;
+  localStorage.setItem('jc_punch',JSON.stringify(items));renderPunch();
 }
 function printTsWeek(weekId){
   var weeks=tsGetWeeks(),emps=tsGetEmps();
@@ -3102,7 +3115,7 @@ function renderPunch(){
             cats.map(function(c){return '<option value="'+c.id+'"'+(item.catId===c.id?' selected':'')+'>'+escHtml(c.name)+'</option>';}).join('')+
           '</select>'+
           '<button class="punch-export-btn" onclick="exportPunchItem('+item.id+')">Export</button>'+
-          '<button class="punch-export-btn" onclick="printPunchItem('+item.id+')">Print</button>'+
+          '<button class="punch-export-btn" onclick="editPunchItem('+item.id+')">Edit</button>'+
         '</div>'+
       '</div>'+
     '</div>';
@@ -3197,10 +3210,11 @@ function exportPunchAll(){
     csvRows.push('"'+(item.title||'').replace(/"/g,'""')+'",'+status+','+_fmtDateShort(item.ts)+','+(item.done?'Yes':'No')+',"'+(item.notes||'').replace(/"/g,'""')+'"');
   });
   // HTML
-  var summaryBar='<div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;">'+
-    '<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px 20px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#111;">'+items.length+'</div><div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;">Total Items</div></div>'+
-    '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 20px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#15803d;">'+done+'</div><div style="font-size:11px;color:#15803d;text-transform:uppercase;letter-spacing:.05em;">Complete</div></div>'+
-    '<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px 20px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#dc2626;">'+(items.length-done)+'</div><div style="font-size:11px;color:#dc2626;text-transform:uppercase;letter-spacing:.05em;">Open</div></div>'+
+  var statusCounts={};items.forEach(function(it){var s=it.catId&&catMap[it.catId]?catMap[it.catId].name:'Pending';statusCounts[s]=(statusCounts[s]||0)+1;});
+  var summaryBar='<div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">'+
+    '<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px 18px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#111;">'+items.length+'</div><div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;">Total</div></div>'+
+    cats.filter(function(c){return statusCounts[c.name];}).map(function(c){return '<div style="background:'+c.color+';border:1px solid '+c.color+';border-radius:8px;padding:12px 18px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#111;">'+statusCounts[c.name]+'</div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">'+escHtml(c.name)+'</div></div>';}).join('')+
+    (statusCounts['Pending']?'<div style="background:#e5e7eb;border:1px solid #d1d5db;border-radius:8px;padding:12px 18px;text-align:center;"><div style="font-size:22px;font-weight:800;color:#6b7280;">'+statusCounts['Pending']+'</div><div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;">Pending</div></div>':'')+
   '</div>';
   var rows=items.map(function(item,i){
     var status=item.catId&&catMap[item.catId]?catMap[item.catId].name:'Pending';
@@ -4498,7 +4512,7 @@ function bfAddCondRow(){
   row.style.cssText='gap:4px;align-items:center;flex-wrap:nowrap;';
   row.innerHTML=
     '<div class="sel-wrap" style="flex:1;"><select class="fi" id="bf-cawg-'+id+'">'+awgOpts+'</select></div>'+
-    '<input class="fi" id="bf-cqty-'+id+'" type="number" value="2" min="1" max="99" style="width:44px;flex:none;text-align:center;" title="Count"/>'+
+    '<input class="fi" id="bf-cqty-'+id+'" type="text" inputmode="numeric" pattern="[0-9]*" value="2" style="width:44px;flex:none;text-align:center;" title="Count" onfocus="var v=this.value;this.value=\'\';this.value=v;"/>'+
     '<button onclick="bfRemoveCondRow('+id+')" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 2px;flex:none;">×</button>';
   document.getElementById('bf-cond-rows').appendChild(row);
   clrBF();
