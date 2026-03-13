@@ -562,14 +562,59 @@
 .notes-toolbar-title{font-size:13px;font-weight:700;color:#374151;font-family:'Inter',sans-serif;}
 .notes-add-btn{background:#f0c020;color:#1a1200;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:.2px;}
 .notes-add-btn:active{opacity:.85;}
+/* Note pin / flag */
+.note-pin-btn,.note-flag-btn{background:none;border:none;font-size:14px;cursor:pointer;padding:2px 3px;color:#d1d5db;flex-shrink:0;line-height:1;-webkit-tap-highlight-color:transparent;}
+.note-pin-btn.pinned{color:#f0c020;}.note-flag-btn.flagged{color:#dc2626;}
+.note-pinned-bar{font-size:9px;font-weight:700;letter-spacing:.1em;color:#92700a;background:#fef9c3;text-align:center;padding:2px 8px;text-transform:uppercase;}
+.manual-note-meta{display:flex;align-items:center;gap:6px;margin-top:3px;}
+/* Checklist */
+.note-checklist{padding:6px 0 4px;margin-bottom:6px;}
+.note-cl-progress{height:3px;background:#f3f4f6;border-radius:2px;margin-bottom:8px;overflow:hidden;}
+.note-cl-progress-bar{height:100%;background:#16a34a;border-radius:2px;transition:width .3s;}
+.note-cl-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;}
+.note-cl-item:last-of-type{border-bottom:none;}
+.note-cl-check{width:20px;height:20px;border-radius:50%;border:2px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;font-size:10px;font-weight:700;color:transparent;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.note-cl-check.done{background:#16a34a;border-color:#16a34a;color:#fff;}
+.note-cl-text{flex:1;font-size:14px;font-family:'Inter',sans-serif;color:#374151;border:none;background:transparent;outline:none;padding:0;min-width:0;}
+.note-cl-text.done{text-decoration:line-through;color:#9ca3af;}
+.note-cl-del{background:none;border:none;color:#d1d5db;font-size:15px;cursor:pointer;padding:2px 4px;flex-shrink:0;line-height:1;-webkit-tap-highlight-color:transparent;}
+.note-cl-del:active{color:#ef4444;}
+.note-cl-add-btn{display:flex;align-items:center;gap:6px;background:none;border:1px dashed #e5e7eb;border-radius:6px;padding:7px 12px;font-size:12px;color:#9ca3af;font-family:'Inter',sans-serif;cursor:pointer;width:100%;margin-top:4px;margin-bottom:8px;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+.note-cl-add-btn:active{border-color:#f0c020;color:#f0c020;}
+.note-cl-badge{font-size:9px;font-weight:700;letter-spacing:.06em;background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 6px;white-space:nowrap;text-transform:uppercase;flex-shrink:0;}
+/* Copy btn */
+.note-copy-btn{background:none;border:1px solid #e5e7eb;border-radius:6px;color:#9ca3af;font-size:11px;padding:6px 12px;cursor:pointer;font-family:'Inter',sans-serif;}
+.note-copy-btn:active{border-color:#16a34a;color:#16a34a;}
+/* Flagged / pinned card indicators */
+.manual-note-card.note-flagged{border-left-color:#dc2626;}
+.manual-note-card.note-pinned{border-left-color:#f0c020;}
+/* Template picker sheet */
+.note-tpl-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:920;align-items:flex-end;}
+.note-tpl-ov.open{display:flex;}
+.note-tpl-sheet{background:#fff;border-radius:16px 16px 0 0;padding:20px 16px 36px;width:100%;box-sizing:border-box;}
+.note-tpl-title{font-size:15px;font-weight:700;color:#111827;font-family:'Inter',sans-serif;margin-bottom:14px;}
+.note-tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.note-tpl-btn{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px 12px;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;color:#374151;cursor:pointer;text-align:left;line-height:1.4;}
+.note-tpl-btn:active{background:#fef9c3;border-color:#f0c020;color:#92700a;}
+.note-tpl-lbl{display:block;font-size:10px;color:#9ca3af;font-weight:400;margin-top:3px;}
+.note-tpl-cancel{width:100%;margin-top:12px;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+/* Loading splash */
+#jc-splash{position:fixed;inset:0;background:#07090f;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;}
+#jc-splash.fade-out{opacity:0;pointer-events:none;}
+.jc-splash-inner{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.jc-splash-logo{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#f0c020;letter-spacing:5px;}
+.jc-splash-sub{font-family:'Roboto Mono',monospace;font-size:9px;color:#4b5563;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.jc-splash-bar{width:120px;height:2px;background:#1c2230;border-radius:1px;margin-top:20px;overflow:hidden;}
+.jc-splash-fill{height:100%;background:#f0c020;border-radius:1px;width:0;animation:jcLoad .9s ease-out .15s forwards;}
+@keyframes jcLoad{to{width:100%;}}
 .manual-note-card{border-radius:10px;margin:10px 16px;border-left:3px solid #f0c020;background:#fffef5;border-top:1px solid #e5e7eb;border-right:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;overflow:hidden;}
-.manual-note-hd{display:flex;align-items:center;gap:8px;padding:12px 14px 8px;-webkit-tap-highlight-color:transparent;}
+.manual-note-hd{display:flex;align-items:center;gap:8px;padding:9px 12px;-webkit-tap-highlight-color:transparent;}
 .manual-note-title-inp{flex:1;border:none;background:transparent;font-size:14px;font-weight:700;font-family:'Inter',sans-serif;color:#111827;outline:none;padding:0;min-width:0;}
 .manual-note-title-inp::placeholder{color:#d1d5db;}
 .manual-badge{font-size:9px;font-weight:700;letter-spacing:.08em;color:#92700a;background:#fef9c3;border-radius:4px;padding:2px 6px;white-space:nowrap;text-transform:uppercase;flex-shrink:0;}
 .manual-note-ts{font-size:10px;color:#9ca3af;white-space:nowrap;flex-shrink:0;}
 .manual-note-chevron{color:#9ca3af;font-size:12px;flex-shrink:0;cursor:pointer;transition:transform .2s;padding:4px;}
-.manual-note-preview{padding:0 14px 10px;font-size:12px;color:#6b7280;font-family:'Inter',sans-serif;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
+.manual-note-preview{display:none;}
 .manual-note-bd{display:none;padding:0 14px 14px;}
 .manual-note-card.expanded .manual-note-bd{display:block;}
 .manual-note-card.expanded .manual-note-chevron{transform:rotate(180deg);}
@@ -908,6 +953,13 @@ if('serviceWorker' in navigator){
 </script>
 </head>
 <body>
+<div id="jc-splash">
+  <div class="jc-splash-inner">
+    <div class="jc-splash-logo">CIRCUITMATIC</div>
+    <div class="jc-splash-sub">Electrical Reference Calculator</div>
+    <div class="jc-splash-bar"><div class="jc-splash-fill"></div></div>
+  </div>
+</div>
 <div class="calc-wrap">
 
   <div class="calc-bolt-bar">
@@ -1964,7 +2016,6 @@ if('serviceWorker' in navigator){
         <div class="proj-list-title">Projects</div>
         <div class="proj-hd-btns">
           <button class="proj-export-btn" onclick="openProjExportModal()">Export Project</button>
-          <button class="proj-note-btn" onclick="addNoteFromList()">+ Note</button>
           <button class="proj-create-btn" onclick="openNewProjModal()">+ New Project</button>
         </div>
       </div>
@@ -1988,7 +2039,7 @@ if('serviceWorker' in navigator){
       <div class="res-section active" id="res-notes">
         <div class="notes-toolbar">
           <span class="notes-toolbar-title">Saved Notes</span>
-          <button class="notes-add-btn" onclick="openManualNote()">+ Add Note</button>
+          <button class="notes-add-btn" onclick="openNoteTplSheet()">+ Add Note</button>
         </div>
         <div id="notes-list"></div>
       </div>
@@ -2924,6 +2975,7 @@ function renderNotes(){
   if(!el)return;
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
   if(_activeProjectId!==null)notes=notes.filter(function(n){return n.projectId===_activeProjectId;});
+  notes.sort(function(a,b){if(a.pinned&&!b.pinned)return -1;if(!a.pinned&&b.pinned)return 1;return 0;});
   if(!notes.length){el.innerHTML='<div class="notes-empty">No notes yet.<br>Run a calculation and tap <strong>Save</strong>,<br>or tap <strong>+ Add Note</strong> to write your own.</div>';return;}
   el.innerHTML=notes.map(function(n){
     if(n.type==='manual')return renderManualNoteCard(n);
@@ -2963,10 +3015,25 @@ function renderNotes(){
     '</div>';
   }).join('');
 }
-function openManualNote(){
-  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+function openNoteTplSheet(){document.getElementById('note-tpl-ov').classList.add('open');}
+function closeNoteTplSheet(){var el=document.getElementById('note-tpl-ov');if(el)el.classList.remove('open');}
+function openManualNote(tpl){
+  closeNoteTplSheet();
   var now=Date.now();
-  var newNote={id:now,ts:now,tab:'manual',tabName:'Note',title:'',body:'',lines:[],svg:null,annotation:'',photos:[],projectId:_activeProjectId,type:'manual'};
+  var cl=[];
+  var title='';
+  if(tpl==='material'){
+    title='Material Order';
+    ['Item / Description','Quantity','Supplier / Source','Unit Cost','Notes'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl==='inspection'){
+    title='Site Inspection';
+    ['Panel condition OK','Grounding verified','GFCI/AFCI checked','Conduit secured','J-box covers on','Labels updated','Work area clean'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl==='safety'){
+    title='Safety Check';
+    ['LOTO applied','PPE worn','Work area clear','Energized parts ID\'d','Permit obtained','Emergency contacts posted'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  }
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var newNote={id:now,ts:now,tab:'manual',tabName:'Note',title:title,body:'',lines:[],svg:null,annotation:'',photos:[],projectId:_activeProjectId,type:'manual',pinned:false,flagged:false,checklist:cl};
   notes.unshift(newNote);
   localStorage.setItem('jc_notes',JSON.stringify(notes));
   renderNotes();
@@ -2975,24 +3042,114 @@ function openManualNote(){
     if(card){card.classList.add('expanded');var ti=card.querySelector('.manual-note-title-inp');if(ti)ti.focus();}
   },50);
 }
+function toggleNotePin(id){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){if(n.id===id)n.pinned=!n.pinned;});
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+}
+function toggleNoteFlag(id){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){if(n.id===id)n.flagged=!n.flagged;});
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+}
+function addChecklistItem(noteId){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){
+    if(n.id===noteId){if(!n.checklist)n.checklist=[];n.checklist.push({id:Date.now(),text:'',done:false});}
+  });
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+  setTimeout(function(){
+    var card=document.getElementById('mn-'+noteId);
+    if(card){var inputs=card.querySelectorAll('.note-cl-text');if(inputs.length)inputs[inputs.length-1].focus();}
+  },50);
+}
+function toggleChecklistItem(noteId,itemId){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){
+    if(n.id===noteId&&n.checklist)n.checklist.forEach(function(c){if(c.id===itemId)c.done=!c.done;});
+  });
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+}
+function updateChecklistItem(noteId,itemId,val){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){
+    if(n.id===noteId&&n.checklist)n.checklist.forEach(function(c){if(c.id===itemId)c.text=val;});
+  });
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+}
+function deleteChecklistItem(noteId,itemId){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){
+    if(n.id===noteId&&n.checklist)n.checklist=n.checklist.filter(function(c){return c.id!==itemId;});
+  });
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+}
+function copyNoteContent(id){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var n=notes.find(function(x){return x.id===id;});if(!n)return;
+  var lines=[n.title||'Note','Created: '+_fmtDate(n.ts||n.id),''];
+  if(n.body)lines.push(n.body,'');
+  if(n.checklist&&n.checklist.length){
+    n.checklist.forEach(function(c){lines.push((c.done?'[x] ':'[ ] ')+c.text);});
+    lines.push('');
+  }
+  lines.push('— Circuitmatic');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(lines.join('\n')).then(function(){
+      var btn=document.querySelector('[data-copy-id="'+id+'"]');
+      if(btn){var orig=btn.textContent;btn.textContent='Copied!';setTimeout(function(){btn.textContent=orig;},1500);}
+    });
+  }
+}
 function renderManualNoteCard(n){
   var d=new Date(n.ts);
   var ts=(d.getMonth()+1)+'/'+d.getDate()+' · '+d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
   var bodyText=n.body||'';
-  var preview=bodyText?bodyText.replace(/\n/g,' ').substring(0,80)+(bodyText.length>80?'…':''):'Tap to write…';
+  var cl=n.checklist||[];
+  var clDone=cl.filter(function(c){return c.done;}).length;
+  var pct=cl.length?Math.round(clDone/cl.length*100):0;
+  var clBadge=cl.length?'<span class="note-cl-badge">'+clDone+'/'+cl.length+'</span>':'';
+  var clHtml=cl.length?
+    '<div class="note-checklist">'+
+      '<div class="note-cl-progress"><div class="note-cl-progress-bar" style="width:'+pct+'%"></div></div>'+
+      cl.map(function(c){
+        return '<div class="note-cl-item">'+
+          '<div class="note-cl-check'+(c.done?' done':'')+'" onclick="toggleChecklistItem('+n.id+','+c.id+')">'+(c.done?'✓':'')+'</div>'+
+          '<input type="text" class="note-cl-text'+(c.done?' done':'')+'" value="'+escHtml(c.text)+'" placeholder="Item…" oninput="updateChecklistItem('+n.id+','+c.id+',this.value)" style="font-size:16px!important;">'+
+          '<button class="note-cl-del" onclick="deleteChecklistItem('+n.id+','+c.id+')">✕</button>'+
+        '</div>';
+      }).join('')+
+    '</div>':'';
   var photosHtml='<div class="note-photo-row">'+(n.photos&&n.photos.length?n.photos.map(function(p){return '<img class="note-photo-thumb" src="'+p+'" onclick="openLightbox(this.src)">';}).join(''):'')+'<label class="note-photo-add" title="Add photo">+<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addManualNotePhoto('+n.id+',this)"></label></div>';
-  return '<div class="manual-note-card" id="mn-'+n.id+'">'+
+  var cardClass='manual-note-card'+(n.pinned?' note-pinned':'')+(n.flagged?' note-flagged':'');
+  return '<div class="'+cardClass+'" id="mn-'+n.id+'">'+
+    (n.pinned?'<div class="note-pinned-bar">Pinned</div>':'')+
     '<div class="manual-note-hd">'+
-      '<input class="manual-note-title-inp" type="text" placeholder="Note title…" value="'+escHtml(n.title||'')+'" oninput="updateManualNoteTitle('+n.id+',this.value)" style="font-size:16px !important;">'+
-      '<span class="manual-badge">Note</span>'+
-      '<span class="manual-note-ts">'+ts+'</span>'+
+      '<div style="flex:1;min-width:0;">'+
+        '<input class="manual-note-title-inp" type="text" placeholder="Note title…" value="'+escHtml(n.title||'')+'" oninput="updateManualNoteTitle('+n.id+',this.value)" style="font-size:16px!important;">'+
+        '<div class="manual-note-meta">'+
+          '<span class="note-src-badge">Note</span>'+
+          '<span class="note-ts">'+ts+'</span>'+
+          clBadge+
+          (n.flagged?'<span style="font-size:9px;font-weight:700;color:#dc2626;letter-spacing:.06em;text-transform:uppercase;">Flagged</span>':'')+
+        '</div>'+
+      '</div>'+
+      '<button class="note-pin-btn'+(n.pinned?' pinned':'')+'" onclick="event.stopPropagation();toggleNotePin('+n.id+')" title="Pin">'+(n.pinned?'★':'☆')+'</button>'+
+      '<button class="note-flag-btn'+(n.flagged?' flagged':'')+'" onclick="event.stopPropagation();toggleNoteFlag('+n.id+')" title="Flag">⚑</button>'+
       '<span class="manual-note-chevron" onclick="jcToggleManualNote('+n.id+')">▾</span>'+
     '</div>'+
-    '<div class="manual-note-preview" onclick="jcToggleManualNote('+n.id+')">'+escHtml(preview)+'</div>'+
     '<div class="manual-note-bd">'+
-      '<textarea class="manual-note-body" placeholder="Start writing…" rows="5" oninput="updateManualNoteBody('+n.id+',this.value);autoResizeTA(this)" style="font-size:16px !important;">'+escHtml(bodyText)+'</textarea>'+
+      clHtml+
+      '<button class="note-cl-add-btn" onclick="addChecklistItem('+n.id+')">+ Add checklist item</button>'+
+      '<textarea class="manual-note-body" placeholder="Notes…" rows="4" oninput="updateManualNoteBody('+n.id+',this.value);autoResizeTA(this)" style="font-size:16px!important;">'+escHtml(bodyText)+'</textarea>'+
       photosHtml+
       '<div class="note-card-actions" style="margin-top:10px;">'+
+        '<button class="note-copy-btn" data-copy-id="'+n.id+'" onclick="copyNoteContent('+n.id+')">Copy</button>'+
         '<button class="note-export-card-btn" onclick="jcExportNote('+n.id+')">Export</button>'+
         '<button class="note-del-btn" onclick="jcDeleteNote('+n.id+')">Delete</button>'+
       '</div>'+
@@ -3044,12 +3201,15 @@ function jcExportNote(id){
   var title=n.title||n.tabName||'Note';
   var bodyHTML='',txt,csv;
   if(n.type==='manual'){
-    // Manual freeform note export
+    var cl=n.checklist||[];
     txt=[title,'Type: Note','Created: '+created,'─'.repeat(36),'',n.body||''];
+    if(cl.length){txt.push('','Checklist ('+cl.filter(function(c){return c.done;}).length+'/'+cl.length+' done):');cl.forEach(function(c){txt.push((c.done?'[x] ':'[ ] ')+c.text);});}
     if(n.photos&&n.photos.length)txt.push('','Photos: '+n.photos.length+' attached');
     txt.push('','Generated by Circuitmatic');
     csv='Field,Value\nTitle,"'+title.replace(/"/g,'""')+'"\nCreated,'+created+'\nBody,"'+(n.body||'').replace(/"/g,'""')+'"';
+    if(cl.length)csv+='\n\nChecklist Item,Done\n'+cl.map(function(c){return '"'+c.text.replace(/"/g,'""')+'",'+(c.done?'Yes':'No');}).join('\n');
     bodyHTML='<div style="background:#fffef5;border-left:3px solid #f0c020;border-radius:8px;padding:16px 18px;font-size:14px;font-family:\'Inter\',sans-serif;line-height:1.7;color:#111827;white-space:pre-wrap;">'+escHtml(n.body||'')+'</div>';
+    if(cl.length){var clDoneC=cl.filter(function(c){return c.done;}).length;bodyHTML+='<div class="sec-hd">Checklist ('+clDoneC+'/'+cl.length+')</div><table class="kv-table"><tbody>'+cl.map(function(c){return '<tr><td style="width:24px;text-align:center;">'+(c.done?'<strong style="color:#16a34a;">✓</strong>':'○')+'</td><td style="'+(c.done?'text-decoration:line-through;color:#9ca3af;':'')+'">'+escHtml(c.text)+'</td></tr>';}).join('')+'</tbody></table>';}
     if(n.photos&&n.photos.length){var _npc2=n.photos.length===1?'rpt-photo-solo':'rpt-photo';bodyHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+n.photos.map(function(p){return '<img src="'+p+'" class="'+_npc2+'">';}).join('')+'</div>';}
     var html=buildPrintHTML(title,'Note · Created '+created,bodyHTML);
     openExportSheet(title,txt.join('\n'),csv,html);
@@ -6052,6 +6212,12 @@ resUpdate();
 pnAddCircuit();
 initTabScroll();
 setCodeYear(_codeYear);
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    var s=document.getElementById('jc-splash');
+    if(s){s.classList.add('fade-out');setTimeout(function(){s.style.display='none';},650);}
+  },1100);
+});
 
 </script>
 
@@ -6306,6 +6472,18 @@ setCodeYear(_codeYear);
     <div class="jc-menu-item" onclick="closeMenu();switchTab('wc',document.getElementById('tab-btn-wc'))"><span class="jc-menu-icon">🎨</span>Wire Colors</div>
   </div>
   <div class="jc-menu-foot">Circuitmatic · Electrical Code<br>Design guidance only. Verify with AHJ before installation.</div>
+</div>
+<div class="note-tpl-ov" id="note-tpl-ov" onclick="closeNoteTplSheet()">
+  <div class="note-tpl-sheet" onclick="event.stopPropagation()">
+    <div class="note-tpl-title">New Note</div>
+    <div class="note-tpl-grid">
+      <button class="note-tpl-btn" onclick="openManualNote('blank')">Blank Note<span class="note-tpl-lbl">Free-form text</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('material')">Material Order<span class="note-tpl-lbl">Checklist + notes</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('inspection')">Site Inspection<span class="note-tpl-lbl">7-item checklist</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('safety')">Safety Check<span class="note-tpl-lbl">LOTO / PPE / hazards</span></button>
+    </div>
+    <button class="note-tpl-cancel" onclick="closeNoteTplSheet()">Cancel</button>
+  </div>
 </div>
 <div class="jc-save-bar" id="jc-save-bar">
   <div class="jc-save-top">
