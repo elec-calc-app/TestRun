@@ -753,6 +753,9 @@
 .ts-info-btn{background:none;border:2px solid rgba(240,192,32,0.5);border-radius:50%;width:30px;height:30px;color:#f0c020;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-left:auto;display:flex;align-items:center;justify-content:center;}
 .ts-week-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.07);}
 .ts-week-title{font-size:12px;font-weight:700;font-family:'Inter',sans-serif;color:#111827;flex:1;min-width:120px;}
+.ts-week-proj{flex:0 0 auto;text-align:right;margin-right:4px;}
+.ts-week-proj-name{font-size:11px;font-weight:700;font-family:'Inter',sans-serif;color:#111827;line-height:1.3;}
+.ts-week-proj-po{font-size:9px;font-family:'Roboto Mono',monospace;color:#9ca3af;line-height:1.3;}
 .ts-po-inp{width:90px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px;font-size:11px;font-family:'Roboto Mono',monospace;color:#374151;outline:none;flex-shrink:0;}
 .ts-po-inp:focus{border-color:#f0c020;}
 .ts-week-del{background:none;border:none;color:#d1d5db;font-size:18px;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;}
@@ -2916,7 +2919,7 @@ function addEmployee(weekId){
   tsSaveWeeks(weeks);renderTs();
   setTimeout(function(){var el=document.getElementById('tw-'+weekId);if(el)el.classList.add('expanded');},60);
 }
-function removeEmployee(empId){
+function removeEmployee(empId,weekId){
   var emps=tsGetEmps().filter(function(e){return e.id!==empId;});
   tsSaveEmps(emps);
   var weeks=tsGetWeeks();
@@ -2925,6 +2928,7 @@ function removeEmployee(empId){
     Object.keys(w.entries).forEach(function(k){if(k.indexOf(empId+'_')===0)delete w.entries[k];});
   });
   tsSaveWeeks(weeks);renderTs();
+  setTimeout(function(){var c=document.getElementById('tw-'+weekId);if(c)c.classList.add('expanded');},60);
 }
 function updateEmpName(empId,val){
   var emps=tsGetEmps();emps.forEach(function(e){if(e.id===empId)e.name=val;});tsSaveEmps(emps);
@@ -2983,9 +2987,16 @@ function clearTsWeek(weekId){
   var weeks=tsGetWeeks();
   weeks.forEach(function(w){
     if(w.id!==weekId)return;
-    Object.keys(w.entries||{}).forEach(function(k){w.entries[k].h='';});
+    if(w.entries)Object.keys(w.entries).forEach(function(k){w.entries[k].h='';w.entries[k].type='ST';});
   });
-  tsSaveWeeks(weeks);renderTs();
+  tsSaveWeeks(weeks);
+  // Update DOM without re-rendering so card stays expanded
+  var card=document.getElementById('tw-'+weekId);
+  if(card){
+    card.querySelectorAll('.ts-cell-h').forEach(function(inp){inp.value='';});
+    card.querySelectorAll('.ts-cell-type').forEach(function(sel){sel.value='ST';});
+    tsRecalc(weekId);
+  }
 }
 function deleteTsWeek(weekId){
   tsSaveWeeks(tsGetWeeks().filter(function(w){return w.id!==weekId;}));renderTs();
@@ -3039,7 +3050,7 @@ function renderTs(){
       return '<tr id="er-'+week.id+'-'+emp.id+'">'+
         '<td class="ts-emp-cell">'+
           '<input class="ts-emp-name-inp" value="'+escHtml(emp.name)+'" placeholder="Type Name" onchange="updateEmpName('+emp.id+',this.value)">'+
-          '<button class="ts-rm-emp-btn" onclick="removeEmployee('+emp.id+')" title="Remove">✕</button>'+
+          '<button class="ts-rm-emp-btn" onclick="removeEmployee('+emp.id+','+week.id+')" title="Remove">✕</button>'+
           '<span class="ts-emp-inline-tot" id="eit-'+week.id+'-'+emp.id+'">—</span>'+
         '</td>'+
         cells+
@@ -3066,9 +3077,12 @@ function renderTs(){
       '<button class="ts-add-emp-btn" onclick="addEmployee('+week.id+')">+ Add Employee</button>'+
       '<button class="ts-clr-week-btn" onclick="clearTsWeek('+week.id+')" title="Clear all hours for this week">Clear</button>'+
     '</div>';
+    var _wp=_activeProjectId?getProjList().find(function(x){return x.id===_activeProjectId;}):null;
+    var _projHdr=_wp?'<div class="ts-week-proj"><div class="ts-week-proj-name">'+escHtml(_wp.name)+'</div>'+(_wp.po?'<div class="ts-week-proj-po">'+escHtml(_wp.po)+'</div>':'')+'</div>':'';
     return '<div class="ts-week-card" id="tw-'+week.id+'">'+
       '<div class="ts-week-hd-row" onclick="toggleTsWeek('+week.id+')">'+
         '<div class="ts-week-title">'+tsFmtShort(mon)+' – '+tsFmtShort(endDay)+'</div>'+
+        _projHdr+
         '<div class="note-chevron">▾</div>'+
       '</div>'+
       '<div class="ts-week-bd">'+
@@ -3076,7 +3090,6 @@ function renderTs(){
         wknd+
         '<div class="ts-actions">'+
           '<button class="ts-export-btn" onclick="exportTsWeek('+week.id+')">Export</button>'+
-          '<button class="ts-print-btn" onclick="editTsWeek('+week.id+')">Edit</button>'+
           '<button class="ts-del-btn" onclick="deleteTsWeek('+week.id+')">Delete</button>'+
         '</div>'+
       '</div>'+
