@@ -210,10 +210,9 @@
     appearance: none;
   }
 
-  /* Force 16px on focus only — stops iOS Safari zoom trigger */
+  /* Force 16px on focus — stops iOS Safari auto-zoom on any input/select/textarea */
   @media screen and (max-width: 768px) {
-    input.fi:focus, select.fi:focus { font-size: 16px !important; }
-    #tab-notes input:focus, #tab-notes select:focus, #tab-notes textarea:focus { font-size: 16px !important; }
+    input:focus, select:focus, textarea:focus { font-size: 16px !important; }
   }
   input.fi:focus, select.fi:focus {
     border-color: var(--accent);
