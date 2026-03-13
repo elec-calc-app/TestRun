@@ -2488,6 +2488,14 @@ function jcUpdateAnnotation(id,val){
   notes.forEach(function(n){if(n.id===id)n.annotation=val;});
   localStorage.setItem('jc_notes',JSON.stringify(notes));
 }
+function fmtPhone(inp){
+  var d=inp.value.replace(/\D/g,'').slice(0,10);
+  var out='';
+  if(d.length>0)out='('+d.slice(0,3);
+  if(d.length>=4)out+=') '+d.slice(3,6);
+  if(d.length>=7)out+='-'+d.slice(6,10);
+  inp.value=out;
+}
 // ── About & Privacy ───────────────────────────
 function openAbout(){document.getElementById('about-ov').classList.add('open');}
 function closeAbout(){document.getElementById('about-ov').classList.remove('open');}
@@ -5760,9 +5768,9 @@ setCodeYear(_codeYear);
     <div class="co-field-lbl">Address</div>
     <input class="co-inp" id="co-address" type="text" placeholder="123 Main St, City, ST 00000">
     <div class="co-field-lbl">Phone / Cell</div>
-    <input class="co-inp" id="co-phone" type="tel" placeholder="(555) 000-0000">
+    <input class="co-inp" id="co-phone" type="tel" placeholder="(555) 000-0000" oninput="fmtPhone(this)">
     <div class="co-field-lbl">Fax <span style="font-size:10px;color:#9ca3af;font-weight:400;text-transform:none;">(optional)</span></div>
-    <input class="co-inp" id="co-fax" type="tel" placeholder="(555) 000-0000">
+    <input class="co-inp" id="co-fax" type="tel" placeholder="(555) 000-0000" oninput="fmtPhone(this)">
     <div class="co-field-lbl">Website <span style="font-size:10px;color:#9ca3af;font-weight:400;text-transform:none;">(optional)</span></div>
     <input class="co-inp" id="co-website" type="url" placeholder="www.yourcompany.com">
     <button class="co-save-btn" onclick="saveCoModal()">Save Branding</button>
