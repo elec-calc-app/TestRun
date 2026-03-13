@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>JoltCalc</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#07090f;
+  --card:#0d1018;
+  --card2:#11141e;
+  --border:rgba(255,255,255,0.07);
+  --border-hi:rgba(255,255,255,0.12);
+  --gold:#f0c020;
+  --gold-dim:rgba(240,192,32,0.1);
+  --text:#eef1fa;
+  --t2:#7a8499;
+  --t3:#363d52;
+  --green:#22c55e;
+  --amber:#f59e0b;
+  --r:10px;
+}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  max-width:430px;
+  margin:0 auto;
+  height:100dvh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Header ── */
+.header{
+  flex-shrink:0;
+  height:52px;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  padding:0 18px;
+  gap:12px;
+}
+.logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:15px;
+  font-weight:900;
+  color:var(--gold);
+  letter-spacing:3px;
+}
+.header-sep{width:1px;height:18px;background:var(--border-hi);}
+.header-tab-name{
+  font-family:'Roboto Mono',monospace;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--t2);
+}
+.header-right{
+  margin-left:auto;
+  font-family:'Roboto Mono',monospace;
+  font-size:9px;
+  color:var(--t3);
+  letter-spacing:1px;
+}
+
+/* ── Tab Content ── */
+.tab-content{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+.tab-pane{display:none;padding:10px 14px 16px;}
+.tab-pane.active{display:block;}
+
+/* ── Section label ── */
+.section-label{
+  font-family:'Roboto Mono',monospace;
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--t3);
+  padding:14px 2px 7px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-label:first-child{padding-top:6px;}
+
+/* ── Tool Row ── */
+.tool{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:12px 13px;
+  margin-bottom:6px;
+  cursor:pointer;
+  transition:background .12s, border-color .12s, transform .1s;
+  position:relative;
+}
+.tool:active{transform:scale(0.985);background:var(--card2);}
+
+.tool.live{border-left:2px solid rgba(34,197,94,0.45);}
+.tool.priority{border-left:2px solid rgba(245,158,11,0.45);}
+.tool.planned{opacity:0.45;}
+.tool.planned .tool-name{color:var(--t2);}
+
+.tool-icon{
+  width:38px;height:38px;
+  border-radius:8px;
+  background:var(--card2);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;
+  flex-shrink:0;
+}
+.tool.live .tool-icon{background:rgba(34,197,94,0.07);border-color:rgba(34,197,94,0.15);}
+.tool.priority .tool-icon{background:rgba(245,158,11,0.07);border-color:rgba(245,158,11,0.15);}
+
+.tool-body{flex:1;min-width:0;}
+.tool-name{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  letter-spacing:-0.1px;
+  margin-bottom:2px;
+}
+.tool-desc{
+  font-family:'Roboto Mono',monospace;
+  font-size:9px;
+  color:var(--t3);
+  letter-spacing:0.2px;
+  line-height:1.4;
+}
+
+.tool-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.status{
+  font-family:'Roboto Mono',monospace;
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding:3px 7px;
+  border-radius:4px;
+}
+.status.live{background:rgba(34,197,94,0.09);color:var(--green);border:1px solid rgba(34,197,94,0.18);}
+.status.soon{background:rgba(245,158,11,0.09);color:var(--amber);border:1px solid rgba(245,158,11,0.18);}
+.status.planned{background:var(--card2);color:var(--t3);border:1px solid var(--border);}
+.tool-arrow{font-size:14px;color:var(--t3);}
+
+/* ── Bottom Tab Bar ── */
+.tabbar{
+  flex-shrink:0;
+  height:62px;
+  background:var(--card);
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:stretch;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.tab-btn{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  transition:background .1s;
+  position:relative;
+}
+.tab-btn:active{background:rgba(255,255,255,0.03);}
+.tab-btn.active::before{
+  content:'';
+  position:absolute;
+  top:0;left:20%;right:20%;
+  height:2px;
+  background:var(--gold);
+  border-radius:0 0 2px 2px;
+}
+.tab-icon{
+  font-size:20px;
+  line-height:1;
+  opacity:0.35;
+  transition:opacity .12s;
+}
+.tab-label{
+  font-family:'Roboto Mono',monospace;
+  font-size:8px;
+  font-weight:600;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--t3);
+  transition:color .12s;
+}
+.tab-btn.active .tab-icon{opacity:1;}
+.tab-btn.active .tab-label{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">JOLTCALC</div>
+  <div class="header-sep"></div>
+  <div class="header-tab-name" id="tab-name">Calculators</div>
+  <div class="header-right">NEC 2026</div>
+</div>
+
+<!-- Tab Content -->
+<div class="tab-content">
+
+  <!-- ── CALC ── -->
+  <div class="tab-pane active" id="pane-calc">
+
+    <div class="section-label">Live Now</div>
+    <div class="tool live"><div class="tool-icon">📉</div><div class="tool-body"><div class="tool-name">Voltage Drop</div><div class="tool-desc">Ch.9 Tables 8 & 9 · Min wire · Max distance</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">🔌</div><div class="tool-body"><div class="tool-name">Ampacity</div><div class="tool-desc">310.16 / 310.17 · Temp & CCC derating</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">⚙️</div><div class="tool-body"><div class="tool-name">Motor Circuit</div><div class="tool-desc">Art.430 · FLC · Conductor · OCPD · Overload</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">📦</div><div class="tool-body"><div class="tool-name">Box Fill</div><div class="tool-desc">314.16(B) · Standard boxes + NEMA JB</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">📐</div><div class="tool-body"><div class="tool-name">Conduit Fill</div><div class="tool-desc">Ch.9 Table 1 · Any raceway type</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">↩️</div><div class="tool-body"><div class="tool-name">Conduit Bend</div><div class="tool-desc">8 bend types · Bender select · SVG diagrams</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+
+    <div class="section-label">Coming Next</div>
+    <div class="tool priority"><div class="tool-icon">🚗</div><div class="tool-body"><div class="tool-name">EV Charger Sizing</div><div class="tool-desc">Art.625.41 · Circuit · Conductor · OCPD</div></div><div class="tool-right"><div class="status soon">Soon</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🌍</div><div class="tool-body"><div class="tool-name">Grounding (GEC / EGC)</div><div class="tool-desc">250.66 / 250.122 · Sizing tables</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🗺️</div><div class="tool-body"><div class="tool-name">Run Planner</div><div class="tool-desc">Segments · Cumulative degrees · 360° flag</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🔋</div><div class="tool-body"><div class="tool-name">Generator Sizing</div><div class="tool-desc">Input loads → minimum kW · transfer switch</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+
+  </div>
+
+  <!-- ── RESI ── -->
+  <div class="tab-pane" id="pane-resi">
+
+    <div class="section-label">Calculations</div>
+    <div class="tool priority"><div class="tool-icon">🏗️</div><div class="tool-body"><div class="tool-name">Service Sizing Wizard</div><div class="tool-desc">Art.220 · Standard + optional method · Permit-ready</div></div><div class="tool-right"><div class="status soon">Soon</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">📏</div><div class="tool-body"><div class="tool-name">Receptacle Spacing</div><div class="tool-desc">210.52 · Room dimensions → outlet count</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+
+    <div class="section-label">Code Lookups</div>
+    <div class="tool priority"><div class="tool-icon">⚠️</div><div class="tool-body"><div class="tool-name">GFCI / AFCI Requirements</div><div class="tool-desc">Room type → required protection · by code year</div></div><div class="tool-right"><div class="status soon">Soon</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🍳</div><div class="tool-body"><div class="tool-name">Kitchen Requirements</div><div class="tool-desc">Small appliance circuits · dedicated · 2026</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🚿</div><div class="tool-body"><div class="tool-name">Bathroom Requirements</div><div class="tool-desc">20A dedicated · shared rules · GFCI</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">⛏️</div><div class="tool-body"><div class="tool-name">Burial Depth Table</div><div class="tool-desc">300.5 · Wiring method → minimum cover</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🔔</div><div class="tool-body"><div class="tool-name">Smoke / CO Placement</div><div class="tool-desc">Where required · count · interconnect rules</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🌧️</div><div class="tool-body"><div class="tool-name">Outdoor / Wet Location Rules</div><div class="tool-desc">In-use covers · weatherproof · damp vs wet</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+
+  </div>
+
+  <!-- ── REF ── -->
+  <div class="tab-pane" id="pane-ref">
+
+    <div class="section-label">Live Now</div>
+    <div class="tool live"><div class="tool-icon">🎨</div><div class="tool-body"><div class="tool-name">Wire Color Chart</div><div class="tool-desc">120/240V · High voltage · NEC color rules</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">🔴</div><div class="tool-body"><div class="tool-name">Phase Color Chart</div><div class="tool-desc">Circuits 1–84 · Low & high voltage phases</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">🟤</div><div class="tool-body"><div class="tool-name">Resistor Color Code</div><div class="tool-desc">IEC 60062 · 4 & 5-band · Reverse lookup</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+
+    <div class="section-label">Planned</div>
+    <div class="tool planned"><div class="tool-icon">⚡</div><div class="tool-body"><div class="tool-name">Arc Flash PPE Reference</div><div class="tool-desc">Incident energy levels · PPE categories · NFPA 70E</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">📖</div><div class="tool-body"><div class="tool-name">Standard Circuit Reference</div><div class="tool-desc">Wire + breaker sizes · field cheat sheet</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🗓️</div><div class="tool-body"><div class="tool-name">Code Year Toggle</div><div class="tool-desc">2020 / 2023 / 2026 · All tables update globally</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+
+  </div>
+
+  <!-- ── TOOLS ── -->
+  <div class="tab-pane" id="pane-tools">
+
+    <div class="section-label">Live Now</div>
+    <div class="tool live"><div class="tool-icon">½</div><div class="tool-body"><div class="tool-name">Fraction Calculator</div><div class="tool-desc">Physical keypad · 1/16" snap · Mixed numbers</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool live"><div class="tool-icon">🎛️</div><div class="tool-body"><div class="tool-name">DIP Switch</div><div class="tool-desc">8-switch calculator · Animated rockers</div></div><div class="tool-right"><div class="status live">Live</div><div class="tool-arrow">›</div></div></div>
+
+    <div class="section-label">Coming Next</div>
+    <div class="tool priority"><div class="tool-icon">📝</div><div class="tool-body"><div class="tool-name">Save to Notes</div><div class="tool-desc">Save any result · Annotate · On-device storage</div></div><div class="tool-right"><div class="status soon">Soon</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool priority"><div class="tool-icon">✅</div><div class="tool-body"><div class="tool-name">Punch List</div><div class="tool-desc">Per-job items · Priority flags · Completion tracking</div></div><div class="tool-right"><div class="status soon">Soon</div><div class="tool-arrow">›</div></div></div>
+    <div class="tool planned"><div class="tool-icon">🎓</div><div class="tool-body"><div class="tool-name">Apprentice Mode</div><div class="tool-desc">Code citations · Quiz mode · Exam prep</div></div><div class="tool-right"><div class="status planned">Planned</div><div class="tool-arrow">›</div></div></div>
+
+  </div>
+
+</div>
+
+<!-- Bottom Tab Bar -->
+<div class="tabbar">
+  <button class="tab-btn active" id="tab-calc" onclick="switchTab('calc','Calculators')">
+    <div class="tab-icon">⚡</div>
+    <div class="tab-label">Calc</div>
+  </button>
+  <button class="tab-btn" id="tab-resi" onclick="switchTab('resi','Residential')">
+    <div class="tab-icon">🏠</div>
+    <div class="tab-label">Resi</div>
+  </button>
+  <button class="tab-btn" id="tab-ref" onclick="switchTab('ref','Reference')">
+    <div class="tab-icon">📋</div>
+    <div class="tab-label">Ref</div>
+  </button>
+  <button class="tab-btn" id="tab-tools" onclick="switchTab('tools','Tools')">
+    <div class="tab-icon">🛠️</div>
+    <div class="tab-label">Tools</div>
+  </button>
+</div>
+
+<script>
+function switchTab(key, name){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('pane-'+key).classList.add('active');
+  document.getElementById('tab-'+key).classList.add('active');
+  document.getElementById('tab-name').textContent=name;
+  document.querySelector('.tab-content').scrollTop=0;
+}
+</script>
+</body>
+</html>
