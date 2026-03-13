@@ -658,6 +658,25 @@
 .punch-opts-done{width:100%;margin-top:12px;background:#f0c020;color:#1a1200;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;}
 .punch-del-btn{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:8px 12px;font-size:12px;color:#9ca3af;font-family:'Inter',sans-serif;cursor:pointer;}
 .punch-empty{text-align:center;padding:48px 20px;color:#9ca3af;font-size:13px;line-height:1.8;}
+/* ── Projects ── */
+.proj-list-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;}
+.proj-list-title{font-size:18px;font-weight:800;font-family:'Inter',sans-serif;color:#111827;}
+.proj-create-btn{background:#f0c020;color:#1a1200;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;}
+.proj-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.07);transition:box-shadow .15s;}
+.proj-card:active{box-shadow:0 0 0 2px #f0c020;}
+.proj-card-hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.proj-card-name{font-size:15px;font-weight:700;font-family:'Inter',sans-serif;color:#111827;}
+.proj-card-po{font-size:11px;font-weight:600;font-family:'Roboto Mono',monospace;color:#9ca3af;}
+.proj-card-meta{display:flex;gap:10px;font-size:11px;color:#6b7280;font-family:'Inter',sans-serif;flex-wrap:wrap;}
+.proj-card-meta span{background:#f3f4f6;border-radius:6px;padding:2px 8px;}
+.proj-card-date{margin-left:auto!important;background:none!important;padding:0!important;}
+.proj-empty{text-align:center;padding:60px 20px;color:#9ca3af;font-size:13px;line-height:1.8;}
+.proj-detail-hd{display:flex;align-items:center;gap:10px;padding:10px 0 10px;border-bottom:2px solid #f0c020;margin-bottom:10px;}
+.proj-back-btn{background:none;border:none;color:#f0c020;font-size:14px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;padding:6px 12px 6px 0;white-space:nowrap;flex-shrink:0;}
+.proj-detail-info{min-width:0;}
+.proj-detail-name{font-size:16px;font-weight:800;font-family:'Inter',sans-serif;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.proj-detail-po{font-size:11px;color:#9ca3af;font-family:'Roboto Mono',monospace;}
+.jc-save-proj-row{font-size:10px;font-weight:600;font-family:'Roboto Mono',monospace;color:#9ca3af;letter-spacing:.5px;margin-bottom:6px;}
 .ts-aw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:960;align-items:center;justify-content:center;}
 .ts-aw-ov.open{display:flex;}
 .ts-aw-modal{background:#fff;border-radius:14px;padding:22px 20px 18px;width:88%;max-width:340px;box-sizing:border-box;}
@@ -807,7 +826,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-fr" onclick="switchTab('fr',this)">Fracs</button>
     <button class="tab-btn" id="tab-btn-dip" onclick="switchTab('dip',this)">Dip SW</button>
     <button class="tab-btn" id="tab-btn-wc" onclick="switchTab('wc',this)">Colors</button>
-    <button class="tab-btn" id="tab-btn-notes" onclick="switchTab('notes',this)">Resources</button>
+    <button class="tab-btn" id="tab-btn-notes" onclick="switchTab('notes',this)">Projects</button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -1824,40 +1843,58 @@ if('serviceWorker' in navigator){
   </div>
 
   <div class="tab-panel" id="tab-notes" style="padding:14px 14px 80px;background:#f3f4f6;">
-    <div class="res-subnav">
-      <button class="res-sub active" id="res-sub-notes" onclick="resSub('notes',this)">Notes</button>
-      <button class="res-sub" id="res-sub-punch" onclick="resSub('punch',this)">Punch List</button>
-      <button class="res-sub" id="res-sub-ts" onclick="resSub('ts',this)">Time Sheet</button>
-    </div>
-    <div class="res-section active" id="res-notes">
-      <div id="notes-list"></div>
-    </div>
-    <div class="res-section" id="res-punch">
-      <div id="punch-status-bar" class="punch-status-bar"></div>
-      <div class="punch-toolbar">
-        <button class="punch-add-btn" onclick="openPunchModal()">+ Add</button>
-        <input class="punch-srch-inp" id="punch-srch" type="text" placeholder="Search items & notes…" oninput="renderPunch()" autocomplete="off">
-        <button class="punch-opts-btn" onclick="openPunchOpts()">Status</button>
-        <button class="punch-export-all-btn" onclick="exportPunchAll()">Export All</button>
+    <!-- Project List View -->
+    <div id="proj-list-view">
+      <div class="proj-list-header">
+        <div class="proj-list-title">Projects</div>
+        <button class="proj-create-btn" onclick="openNewProjModal()">+ New Project</button>
       </div>
-      <div id="punch-list"></div>
+      <div id="proj-list"></div>
     </div>
-    <div class="res-section" id="res-ts">
-      <div class="ts-header-row">
-        <button class="ts-add-week-btn" onclick="addTsWeek()">+ Add Week</button>
-        <div class="ts-wkstart-wrap">
-          <span class="ts-wkstart-lbl">Week Start</span>
-          <select class="ts-wkstart-sel" id="ts-wkstart-sel" onchange="setTsWkStart(this.value)">
-            <option value="Mon">Mon</option>
-            <option value="Tue">Tue</option>
-            <option value="Wed">Wed</option>
-            <option value="Thu">Thu</option>
-            <option value="Fri">Fri</option>
-          </select>
+    <!-- Project Detail View -->
+    <div id="proj-detail-view" style="display:none;">
+      <div class="proj-detail-hd">
+        <button class="proj-back-btn" onclick="closeProject()">← Projects</button>
+        <div class="proj-detail-info">
+          <div class="proj-detail-name" id="proj-detail-name"></div>
+          <div class="proj-detail-po" id="proj-detail-po"></div>
         </div>
-        <button class="ts-info-btn" onclick="tsShowInfo()" title="Pay type codes">ⓘ</button>
       </div>
-      <div id="ts-list"></div>
+      <div class="res-subnav">
+        <button class="res-sub active" id="res-sub-notes" onclick="resSub('notes',this)">Notes</button>
+        <button class="res-sub" id="res-sub-punch" onclick="resSub('punch',this)">Punch List</button>
+        <button class="res-sub" id="res-sub-ts" onclick="resSub('ts',this)">Time Sheet</button>
+      </div>
+      <div class="res-section active" id="res-notes">
+        <div id="notes-list"></div>
+      </div>
+      <div class="res-section" id="res-punch">
+        <div id="punch-status-bar" class="punch-status-bar"></div>
+        <div class="punch-toolbar">
+          <button class="punch-add-btn" onclick="openPunchModal()">+ Add</button>
+          <input class="punch-srch-inp" id="punch-srch" type="text" placeholder="Search items & notes…" oninput="renderPunch()" autocomplete="off">
+          <button class="punch-opts-btn" onclick="openPunchOpts()">Status</button>
+          <button class="punch-export-all-btn" onclick="exportPunchAll()">Export All</button>
+        </div>
+        <div id="punch-list"></div>
+      </div>
+      <div class="res-section" id="res-ts">
+        <div class="ts-header-row">
+          <button class="ts-add-week-btn" onclick="addTsWeek()">+ Add Week</button>
+          <div class="ts-wkstart-wrap">
+            <span class="ts-wkstart-lbl">Week Start</span>
+            <select class="ts-wkstart-sel" id="ts-wkstart-sel" onchange="setTsWkStart(this.value)">
+              <option value="Mon">Mon</option>
+              <option value="Tue">Tue</option>
+              <option value="Wed">Wed</option>
+              <option value="Thu">Thu</option>
+              <option value="Fri">Fri</option>
+            </select>
+          </div>
+          <button class="ts-info-btn" onclick="tsShowInfo()" title="Pay type codes">ⓘ</button>
+        </div>
+        <div id="ts-list"></div>
+      </div>
     </div>
   </div>
 
@@ -2351,6 +2388,14 @@ function jcSaveReady(tab,tabName,lines,svg){
   document.getElementById('jc-save-from').textContent=tabName;
   var inp=document.getElementById('jc-save-name');
   if(inp)inp.value=tabName;
+  var projRow=document.getElementById('jc-save-proj-row');
+  if(projRow){
+    if(_activeProjectId!==null){
+      var pp=getProjList().find(function(x){return x.id===_activeProjectId;});
+      projRow.textContent='SAVING TO: '+(pp?pp.name:'Project');
+      projRow.style.display='';
+    }else{projRow.style.display='none';}
+  }
   document.getElementById('jc-save-bar').classList.add('visible');
   setTimeout(function(){if(inp)inp.select();},250);
 }
@@ -2359,7 +2404,7 @@ function jcSaveNote(){
   var inp=document.getElementById('jc-save-name');
   var title=(inp&&inp.value.trim())?inp.value.trim():_jcPending.tabName;
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
-  notes.unshift({id:Date.now(),ts:Date.now(),tab:_jcPending.tab,tabName:_jcPending.tabName,title:title,lines:_jcPending.lines,svg:_jcPending.svg||null,annotation:''});
+  notes.unshift({id:Date.now(),ts:Date.now(),tab:_jcPending.tab,tabName:_jcPending.tabName,title:title,lines:_jcPending.lines,svg:_jcPending.svg||null,annotation:'',projectId:_activeProjectId});
   if(notes.length>100)notes=notes.slice(0,100);
   localStorage.setItem('jc_notes',JSON.stringify(notes));
   _jcPending=null;
@@ -2402,10 +2447,102 @@ function jcUpdateAnnotation(id,val){
   notes.forEach(function(n){if(n.id===id)n.annotation=val;});
   localStorage.setItem('jc_notes',JSON.stringify(notes));
 }
+// ── Projects ──────────────────────────────────
+var _activeProjectId=null;
+function getProjList(){return JSON.parse(localStorage.getItem('jc_projects')||'[]');}
+function saveProjList(list){localStorage.setItem('jc_projects',JSON.stringify(list));}
+function migrateToProjects(){
+  if(localStorage.getItem('jc_proj_migrated'))return;
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var punch=JSON.parse(localStorage.getItem('jc_punch')||'[]');
+  var weeks=JSON.parse(localStorage.getItem('jc_ts')||'[]');
+  var hasOrphans=notes.some(function(n){return !n.projectId;})||punch.some(function(p){return !p.projectId;})||weeks.some(function(w){return !w.projectId;});
+  if(hasOrphans){
+    var genId=Date.now();
+    var projects=getProjList();
+    projects.unshift({id:genId,name:'General',po:'',created:genId});
+    saveProjList(projects);
+    notes.forEach(function(n){if(!n.projectId)n.projectId=genId;});
+    punch.forEach(function(p){if(!p.projectId)p.projectId=genId;});
+    weeks.forEach(function(w){if(!w.projectId)w.projectId=genId;});
+    localStorage.setItem('jc_notes',JSON.stringify(notes));
+    localStorage.setItem('jc_punch',JSON.stringify(punch));
+    localStorage.setItem('jc_ts',JSON.stringify(weeks));
+  }
+  localStorage.setItem('jc_proj_migrated','1');
+}
+function renderProjList(){
+  migrateToProjects();
+  var el=document.getElementById('proj-list');if(!el)return;
+  var projects=getProjList();
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var punch=JSON.parse(localStorage.getItem('jc_punch')||'[]');
+  var weeks=JSON.parse(localStorage.getItem('jc_ts')||'[]');
+  if(!projects.length){el.innerHTML='<div class="proj-empty">No projects yet.<br>Tap <strong>+ New Project</strong> to create one.</div>';return;}
+  el.innerHTML=projects.map(function(p){
+    var nCount=notes.filter(function(n){return n.projectId===p.id;}).length;
+    var pCount=punch.filter(function(i){return i.projectId===p.id;}).length;
+    var wCount=weeks.filter(function(w){return w.projectId===p.id;}).length;
+    var d=new Date(p.created);
+    var dateStr=(d.getMonth()+1)+'/'+d.getDate()+'/'+String(d.getFullYear()).slice(2);
+    return '<div class="proj-card" onclick="openProject('+p.id+')">'+
+      '<div class="proj-card-hd">'+
+        '<div class="proj-card-name">'+escHtml(p.name)+'</div>'+
+        (p.po?'<div class="proj-card-po">PO: '+escHtml(p.po)+'</div>':'')+
+      '</div>'+
+      '<div class="proj-card-meta">'+
+        '<span>'+nCount+' note'+(nCount!==1?'s':'')+'</span>'+
+        '<span>'+pCount+' punch</span>'+
+        '<span>'+wCount+' week'+(wCount!==1?'s':'')+'</span>'+
+        '<span class="proj-card-date">'+dateStr+'</span>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+function openProject(id){
+  var projects=getProjList();
+  var p=projects.find(function(x){return x.id===id;});if(!p)return;
+  _activeProjectId=id;
+  document.getElementById('proj-detail-name').textContent=p.name;
+  document.getElementById('proj-detail-po').textContent=p.po?'PO: '+p.po:'';
+  document.getElementById('proj-list-view').style.display='none';
+  document.getElementById('proj-detail-view').style.display='';
+  document.querySelectorAll('.res-sub').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.res-section').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('res-sub-notes').classList.add('active');
+  document.getElementById('res-notes').classList.add('active');
+  renderNotes();
+}
+function closeProject(){
+  _activeProjectId=null;
+  document.getElementById('proj-list-view').style.display='';
+  document.getElementById('proj-detail-view').style.display='none';
+  renderProjList();
+}
+function openNewProjModal(){
+  document.getElementById('np-name').value='';
+  document.getElementById('np-po').value='';
+  document.getElementById('new-proj-ov').classList.add('open');
+  setTimeout(function(){document.getElementById('np-name').focus();},120);
+}
+function closeNewProjModal(){document.getElementById('new-proj-ov').classList.remove('open');}
+function confirmNewProj(){
+  var name=document.getElementById('np-name').value.trim();
+  if(!name){document.getElementById('np-name').focus();return;}
+  var po=document.getElementById('np-po').value.trim();
+  var id=Date.now();
+  var projects=getProjList();
+  projects.unshift({id:id,name:name,po:po,created:id});
+  saveProjList(projects);
+  closeNewProjModal();
+  openProject(id);
+}
+// ──────────────────────────────────────────────
 function renderNotes(){
   var el=document.getElementById('notes-list');
   if(!el)return;
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  if(_activeProjectId!==null)notes=notes.filter(function(n){return n.projectId===_activeProjectId;});
   if(!notes.length){el.innerHTML='<div class="notes-empty">No saved results yet.<br>Run a calculation and tap <strong>Save</strong>.</div>';return;}
   el.innerHTML=notes.map(function(n){
     var d=new Date(n.ts);
@@ -2654,7 +2791,7 @@ function confirmTsAwModal(){
   while(used.indexOf(wsd.toISOString().slice(0,10))>=0){wsd=new Date(wsd.getTime()+7*24*60*60*1000);}
   var entries={};
   emps.forEach(function(emp){TS_DAYS_BASE.forEach(function(day){entries[tsKey(emp.id,day)]={h:'',type:'ST'};});});
-  weeks.unshift({id:Date.now(),weekStart:wsd.toISOString().slice(0,10),po:po,foreman:foreman,showSat:false,showSun:false,entries:entries});
+  weeks.unshift({id:Date.now(),weekStart:wsd.toISOString().slice(0,10),po:po,foreman:foreman,showSat:false,showSun:false,entries:entries,projectId:_activeProjectId});
   tsSaveWeeks(weeks);renderTs();
   setTimeout(function(){var el=document.querySelector('.ts-week-card');if(el)el.classList.add('expanded');},60);
 }
@@ -2764,7 +2901,8 @@ function tsRecalc(weekId){
 }
 function renderTs(){
   var el=document.getElementById('ts-list');if(!el)return;
-  var weeks=tsGetWeeks(),emps=tsGetEmps();
+  var allWeeks=tsGetWeeks(),emps=tsGetEmps();
+  var weeks=_activeProjectId!==null?allWeeks.filter(function(w){return w.projectId===_activeProjectId;}):allWeeks;
   if(!weeks.length){el.innerHTML='<div class="ts-empty">No weeks yet.<br>Tap <strong>+ Add Week</strong> to start.</div>';return;}
   el.innerHTML=weeks.map(function(week){
     var mon=new Date(week.weekStart+'T00:00:00');
@@ -3033,7 +3171,7 @@ function savePunchModal(){
   var catId=document.getElementById('pm-cat').value||'';
   var notes=document.getElementById('pm-notes').value||'';
   var items=JSON.parse(localStorage.getItem('jc_punch')||'[]');
-  var item={id:Date.now(),title:title,catId:catId,done:false,notes:notes,photos:_pmPhoto?[_pmPhoto]:[],ts:Date.now()};
+  var item={id:Date.now(),title:title,catId:catId,done:false,notes:notes,photos:_pmPhoto?[_pmPhoto]:[],ts:Date.now(),projectId:_activeProjectId};
   items.unshift(item);
   localStorage.setItem('jc_punch',JSON.stringify(items));
   closePunchModal();renderPunch();
@@ -3090,6 +3228,7 @@ function seedPunchCats(){
 function renderPunchStatusBar(){
   var el=document.getElementById('punch-status-bar');if(!el)return;
   var items=JSON.parse(localStorage.getItem('jc_punch')||'[]');
+  if(_activeProjectId!==null)items=items.filter(function(it){return it.projectId===_activeProjectId;});
   var cats=JSON.parse(localStorage.getItem('jc_punch_cats')||'[]');
   var catMap={};cats.forEach(function(c){catMap[c.id]=c;});
   var counts={};var noStatus=0;
@@ -3114,6 +3253,7 @@ function renderPunch(){
   renderPunchStatusBar();
   var el=document.getElementById('punch-list');if(!el)return;
   var items=JSON.parse(localStorage.getItem('jc_punch')||'[]');
+  if(_activeProjectId!==null)items=items.filter(function(it){return it.projectId===_activeProjectId;});
   var cats=JSON.parse(localStorage.getItem('jc_punch_cats')||'[]');
   var catMap={};cats.forEach(function(c){catMap[c.id]=c;});
   var q=(document.getElementById('punch-srch')||{}).value||'';
@@ -3312,7 +3452,7 @@ function switchTab(tab,btn){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('tab-'+tab).classList.add('active');
   btn.classList.add('active');
-  if(tab==='notes'){renderNotes();renderPunch();loadTs();}
+  if(tab==='notes'){renderProjList();}
 }
 
 // ── Voltage Drop ──────────────────────────────────────────────────────────────
@@ -5446,6 +5586,21 @@ setCodeYear(_codeYear);
   <img id="lightbox-img" src="" alt="Photo">
 </div>
 
+<!-- New Project Modal -->
+<div class="ts-aw-ov" id="new-proj-ov" onclick="closeNewProjModal()">
+  <div class="ts-aw-modal" onclick="event.stopPropagation()">
+    <div class="ts-aw-title">New Project</div>
+    <div class="ts-aw-sub">Set up a new job project</div>
+    <div class="ts-aw-label">Project Name</div>
+    <input class="ts-aw-inp" id="np-name" type="text" placeholder="Project name…" autocomplete="off">
+    <div class="ts-aw-label">PO Number</div>
+    <input class="ts-aw-inp" id="np-po" type="text" placeholder="PO #…" autocomplete="off" onkeydown="if(event.key==='Enter')confirmNewProj()">
+    <div class="ts-aw-btns">
+      <button class="ts-aw-cancel" onclick="closeNewProjModal()">Cancel</button>
+      <button class="ts-aw-confirm" onclick="confirmNewProj()">Create Project</button>
+    </div>
+  </div>
+</div>
 <!-- Add Week Modal -->
 <div class="ts-aw-ov" id="ts-aw-ov" onclick="closeTsAwModal()">
   <div class="ts-aw-modal" onclick="event.stopPropagation()">
@@ -5503,12 +5658,11 @@ setCodeYear(_codeYear);
     <button class="jc-menu-close" onclick="closeMenu()">✕</button>
   </div>
   <div class="jc-menu-section">
-    <div class="jc-menu-section-lbl">Resources</div>
-    <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'));resSub('notes',document.getElementById('res-sub-notes'))"><span class="jc-menu-icon">📋</span>Saved Notes</div>
-    <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'));resSub('punch',document.getElementById('res-sub-punch'))"><span class="jc-menu-icon">✅</span>Punch List</div>
+    <div class="jc-menu-section-lbl">Projects</div>
+    <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'))"><span class="jc-menu-icon">📁</span>Projects</div>
+    <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'));openNewProjModal()"><span class="jc-menu-icon">➕</span>New Project</div>
     <div class="jc-menu-item" onclick="jcExportAllNotes();closeMenu()"><span class="jc-menu-icon">📤</span>Export All Notes</div>
     <div class="jc-menu-item" onclick="exportPunchAll();closeMenu()"><span class="jc-menu-icon">📤</span>Export Punch List</div>
-    <div class="jc-menu-item" onclick="if(confirm('Clear all saved notes?')){localStorage.removeItem('jc_notes');renderNotes();closeMenu();}"><span class="jc-menu-icon">🗑</span>Clear All Notes</div>
   </div>
   <div class="jc-menu-section">
     <div class="jc-menu-section-lbl">Calculators</div>
@@ -5526,6 +5680,7 @@ setCodeYear(_codeYear);
     <span class="jc-save-from" id="jc-save-from">Result</span>
     <button class="jc-dismiss-btn" onclick="jcDismissSave()">✕</button>
   </div>
+  <div class="jc-save-proj-row" id="jc-save-proj-row" style="display:none;"></div>
   <div class="jc-save-row">
     <input class="jc-save-input" id="jc-save-name" type="text" placeholder="Name this result…" />
     <button class="jc-save-btn" id="jc-save-btn" onclick="jcSaveNote()">Save</button>
