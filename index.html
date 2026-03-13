@@ -830,6 +830,14 @@ body.light-mode body { background: var(--bg); }
 .disc-body{font-size:12px;color:#374151;font-family:'Inter',sans-serif;line-height:1.75;}
 .disc-body h3{font-size:12px;font-weight:700;color:#111827;margin:16px 0 4px;}
 .disc-close{width:100%;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;margin-top:18px;}
+.tou-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:990;align-items:flex-end;}
+.tou-ov.open{display:flex;}
+.tou-sheet{background:#fff;border-radius:16px 16px 0 0;padding:20px 20px 44px;width:100%;box-sizing:border-box;max-height:92vh;overflow-y:auto;}
+.tou-title{font-size:16px;font-weight:800;font-family:'Inter',sans-serif;color:#111827;margin-bottom:4px;}
+.tou-date{font-size:11px;color:#9ca3af;font-family:'Inter',sans-serif;margin-bottom:18px;}
+.tou-body{font-size:12px;color:#374151;font-family:'Inter',sans-serif;line-height:1.75;}
+.tou-body h3{font-size:12px;font-weight:700;color:#111827;margin:16px 0 4px;}
+.tou-close{width:100%;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;margin-top:18px;}
 .pp-body{font-size:12px;color:#374151;font-family:'Inter',sans-serif;line-height:1.8;}
 .pp-body h3{font-size:13px;font-weight:700;color:#111827;margin:14px 0 4px;}
 .pp-close{width:100%;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;margin-top:16px;}
@@ -3022,6 +3030,8 @@ function fmtPhone(inp){
 // ── About & Privacy ───────────────────────────
 function openSettings(){document.getElementById('stg-overlay').classList.add('open');}
 function closeSettings(){document.getElementById('stg-overlay').classList.remove('open');}
+function openTerms(){closeAbout();document.getElementById('tou-ov').classList.add('open');}
+function closeTerms(){document.getElementById('tou-ov').classList.remove('open');}
 function openDisclaimer(){closeAbout();document.getElementById('disc-ov').classList.add('open');}
 function closeDisclaimer(){document.getElementById('disc-ov').classList.remove('open');}
 function openAbout(){document.getElementById('about-ov').classList.add('open');}
@@ -6685,6 +6695,10 @@ window.addEventListener('load',function(){
       <span class="about-action-icon">⚠️</span>
       <div><div class="about-action-lbl">Disclaimer</div><div class="about-action-sub">Limitations of liability &amp; intended use</div></div>
     </button>
+    <button class="about-action-btn" onclick="openTerms()">
+      <span class="about-action-icon">📋</span>
+      <div><div class="about-action-lbl">Terms of Use</div><div class="about-action-sub">Your rights, restrictions &amp; our policies</div></div>
+    </button>
     <button class="about-close" onclick="closeAbout()">Close</button>
   </div>
 </div>
@@ -6714,6 +6728,35 @@ window.addEventListener('load',function(){
       Questions about this policy? Email us at <strong>support@circuitmatic.app</strong>
     </div>
     <button class="pp-close" onclick="closePP()">Close</button>
+  </div>
+</div>
+<!-- Terms of Use Modal -->
+<div class="tou-ov" id="tou-ov" onclick="closeTerms()">
+  <div class="tou-sheet" onclick="event.stopPropagation()">
+    <div class="tou-title">Terms of Use</div>
+    <div class="tou-date">Circuitmatic &mdash; Effective March 2026</div>
+    <div class="tou-body">
+      <p>Please read these Terms of Use carefully before using Circuitmatic. By downloading, installing, or using this application, you agree to be bound by these terms. If you do not agree, do not use the application.</p>
+      <h3>1. License</h3>
+      <p>Circuitmatic grants you a limited, non-exclusive, non-transferable, revocable license to use this application for your personal, professional field use. You may not sublicense, sell, resell, copy, modify, distribute, or commercially exploit the application or any portion of it without express written permission from the developer.</p>
+      <h3>2. Intellectual Property</h3>
+      <p>The Circuitmatic name, application design, interface, code, and all original content are the property of the developer. While Circuitmatic is not currently a registered trademark, all rights are reserved. Unauthorized use of the name, branding, or any part of this application for commercial purposes is prohibited. All third-party references, including the National Electrical Code&reg; (NEC&reg;), remain the property of their respective owners. Circuitmatic is not affiliated with or endorsed by the NFPA or any standards body.</p>
+      <h3>3. Permitted Use</h3>
+      <p>This application is licensed for use by qualified electrical professionals only. You agree to use Circuitmatic solely as a reference aid to support your own calculations and decisions, and not as a standalone engineering or code-compliance determination. You are responsible for ensuring your use of this application complies with all applicable laws, codes, and regulations in your jurisdiction.</p>
+      <h3>4. Prohibited Use</h3>
+      <p>You agree not to: (a) reverse engineer, decompile, or disassemble any part of the application; (b) use the application to provide professional services to third parties as a primary source of truth without independent verification; (c) represent calculations produced by this application as certified engineering output; (d) remove or alter any proprietary notices or labels within the application.</p>
+      <h3>5. No Warranty</h3>
+      <p>Circuitmatic is provided &ldquo;as-is&rdquo; and &ldquo;as available&rdquo; without warranty of any kind. We do not warrant that the application will be error-free, uninterrupted, or that any specific result will be obtained from its use. Please refer to our Disclaimer for the full scope of limitations.</p>
+      <h3>6. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, the developer of Circuitmatic shall not be liable for any indirect, incidental, special, exemplary, or consequential damages of any kind arising from your use of or inability to use this application, regardless of whether such damages were foreseeable.</p>
+      <h3>7. Updates &amp; Changes</h3>
+      <p>We reserve the right to update, modify, or discontinue any feature of Circuitmatic at any time without prior notice. We may also update these Terms of Use from time to time. Continued use of the application following any update constitutes acceptance of the revised terms. The effective date at the top of this document will reflect the most recent revision.</p>
+      <h3>8. Governing Law</h3>
+      <p>These Terms of Use shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law provisions. Any disputes arising under these terms shall be resolved in the appropriate courts of that jurisdiction.</p>
+      <h3>9. Contact</h3>
+      <p>For questions regarding these Terms of Use, please contact us at support@circuitmatic.app.</p>
+    </div>
+    <button class="tou-close" onclick="closeTerms()">Close</button>
   </div>
 </div>
 <!-- Disclaimer Modal -->
