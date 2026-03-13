@@ -828,8 +828,10 @@
 .ts-clr-week-btn{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;color:#9ca3af;font-family:'Inter',sans-serif;cursor:pointer;margin-left:6px;}
 .ts-clr-week-btn:active{border-color:#ef4444;color:#ef4444;}
 .ts-actions{display:flex;gap:6px;margin-top:8px;}
-.ts-export-btn,.ts-print-btn{flex:1;background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
-.ts-del-btn{flex:1;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:6px;padding:8px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+.ts-export-btn,.ts-print-btn{flex:1;background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+.ts-dup-btn{flex:1;background:#fffbea;color:#92700a;border:1px solid #f0c020;border-radius:6px;padding:8px;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+.ts-dup-btn:active{background:#fef3c7;}
+.ts-del-btn{flex:1;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:6px;padding:8px;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
 .ts-del-btn:active{background:#fee2e2;}
 .ts-empty{text-align:center;padding:48px 20px;color:#9ca3af;font-size:13px;line-height:1.8;}
 .ts-info-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:800;}
@@ -3119,6 +3121,23 @@ function addTsWeek(){
   tsSaveWeeks(weeks);renderTs();
   setTimeout(function(){var el=document.querySelector('.ts-week-card');if(el)el.classList.add('expanded');},60);
 }
+function duplicateTsWeek(weekId){
+  var weeks=tsGetWeeks();
+  var src=weeks.find(function(w){return w.id===weekId;});
+  if(!src)return;
+  // Find next available week starting from src + 7 days
+  var used=weeks.map(function(w){return w.weekStart;});
+  var wsd=new Date(src.weekStart+'T00:00:00');
+  wsd=new Date(wsd.getTime()+7*24*60*60*1000);
+  while(used.indexOf(wsd.toISOString().slice(0,10))>=0){wsd=new Date(wsd.getTime()+7*24*60*60*1000);}
+  // Deep-copy entries
+  var entries={};
+  Object.keys(src.entries||{}).forEach(function(k){entries[k]={h:src.entries[k].h,type:src.entries[k].type};});
+  var newWeek={id:Date.now(),weekStart:wsd.toISOString().slice(0,10),showSat:src.showSat,showSun:src.showSun,entries:entries,projectId:src.projectId};
+  weeks.unshift(newWeek);
+  tsSaveWeeks(weeks);renderTs();
+  setTimeout(function(){var el=document.querySelector('.ts-week-card');if(el)el.classList.add('expanded');},60);
+}
 function addEmployee(weekId){
   var emps=tsGetEmps(),weeks=tsGetWeeks();
   var newEmp={id:Date.now(),name:''};
@@ -3301,6 +3320,7 @@ function renderTs(){
         wknd+
         '<div class="ts-actions">'+
           '<button class="ts-export-btn" onclick="exportTsWeek('+week.id+')">Export</button>'+
+          '<button class="ts-dup-btn" onclick="duplicateTsWeek('+week.id+')">Duplicate</button>'+
           '<button class="ts-del-btn" onclick="deleteTsWeek('+week.id+')">Delete</button>'+
         '</div>'+
       '</div>'+
