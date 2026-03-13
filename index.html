@@ -2655,54 +2655,96 @@ function doProjExport(fmt){
     setTimeout(function(){URL.revokeObjectURL(url);},1000);
     return;
   }
-  // PDF
+  // PDF — professional project report
+  var doneCount=d.punch.filter(function(i){return i.done;}).length;
+  var openCount=d.punch.length-doneCount;
+  var savedAid=_activeProjectId;
+  _activeProjectId=projId; // so buildPrintHTML picks up correct project header
   var body='';
-  // Project info block
-  body+='<div class="sec-hd">Project Information</div>';
-  body+='<table class="kv-table"><tbody>';
-  body+='<tr><td>Project Name</td><td><strong>'+escHtml(d.proj.name)+'</strong></td></tr>';
-  if(d.proj.po)body+='<tr><td>PO Number</td><td>'+escHtml(d.proj.po)+'</td></tr>';
-  if(d.proj.foreman)body+='<tr><td>Foreman</td><td>'+escHtml(d.proj.foreman)+'</td></tr>';
-  body+='<tr><td>Created</td><td>'+new Date(d.proj.created).toLocaleDateString()+'</td></tr>';
-  body+='</tbody></table>';
-  // Notes
+  // ── Summary band ──
+  var punchBg=d.punch.length&&doneCount===d.punch.length?'#dcfce7':'#fef9c3';
+  var punchClr=d.punch.length&&doneCount===d.punch.length?'#15803d':'#854d0e';
+  body+='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px;align-items:flex-start;">';
+  body+='<div style="flex:1;min-width:200px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px 18px;">';
+  body+='<div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Project Details</div>';
+  body+='<table style="width:100%;font-size:12px;margin:0;border:none;"><tbody style="background:none;">';
+  if(d.proj.po)body+='<tr><td style="font-weight:700;color:#374151;padding:3px 10px 3px 0;width:38%;border:none;">PO Number</td><td style="border:none;">'+escHtml(d.proj.po)+'</td></tr>';
+  if(d.proj.foreman)body+='<tr><td style="font-weight:700;color:#374151;padding:3px 10px 3px 0;border:none;">Foreman</td><td style="border:none;">'+escHtml(d.proj.foreman)+'</td></tr>';
+  body+='<tr><td style="font-weight:700;color:#374151;padding:3px 10px 3px 0;border:none;">Created</td><td style="border:none;">'+new Date(d.proj.created).toLocaleDateString()+'</td></tr>';
+  body+='<tr><td style="font-weight:700;color:#374151;padding:3px 10px 3px 0;border:none;">Exported</td><td style="border:none;">'+now+'</td></tr>';
+  body+='</tbody></table></div>';
+  body+='<div style="display:flex;flex-direction:column;gap:8px;">';
+  body+='<div style="background:#e0f2fe;border-radius:8px;padding:8px 16px;display:flex;align-items:center;gap:12px;min-width:130px;"><div style="font-size:22px;font-weight:800;color:#0369a1;line-height:1;">'+d.notes.length+'</div><div style="font-size:10px;font-weight:700;color:#0369a1;">Saved Notes</div></div>';
+  body+='<div style="background:'+punchBg+';border-radius:8px;padding:8px 16px;display:flex;align-items:center;gap:12px;"><div style="font-size:22px;font-weight:800;color:'+punchClr+';line-height:1;">'+d.punch.length+'</div><div style="font-size:10px;font-weight:700;color:'+punchClr+';">Punch Items</div></div>';
+  body+='<div style="background:#f3e8ff;border-radius:8px;padding:8px 16px;display:flex;align-items:center;gap:12px;"><div style="font-size:22px;font-weight:800;color:#7e22ce;line-height:1;">'+d.weeks.length+'</div><div style="font-size:10px;font-weight:700;color:#7e22ce;">TS Weeks</div></div>';
+  body+='</div></div>';
+  // ── Notes ──
   if(d.notes.length){
     body+='<div class="sec-hd">Saved Notes ('+d.notes.length+')</div>';
-    d.notes.forEach(function(n){
-      body+='<div style="margin-bottom:14px;"><div style="font-weight:700;font-size:13px;margin-bottom:4px;">'+escHtml(n.title)+'</div>';
-      body+='<div style="font-size:10px;color:#9ca3af;margin-bottom:6px;">'+escHtml(n.tabName||'')+'&nbsp;·&nbsp;'+new Date(n.ts).toLocaleDateString()+'</div>';
+    d.notes.forEach(function(n,idx){
+      body+='<div style="margin-bottom:18px;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;page-break-inside:avoid;">';
+      body+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f9fafb;border-bottom:1px solid #e5e7eb;">';
+      body+='<div style="width:22px;height:22px;border-radius:50%;background:#1a1a1a;color:#f0c020;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+(idx+1)+'</div>';
+      body+='<div style="flex:1;font-weight:800;font-size:13px;color:#111;">'+escHtml(n.title||n.tabName||'Note')+'</div>';
+      body+='<div style="font-size:10px;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;font-weight:700;white-space:nowrap;">'+escHtml(n.tabName||'')+'</div>';
+      body+='<div style="font-size:10px;color:#9ca3af;white-space:nowrap;margin-left:6px;">'+new Date(n.ts||n.id).toLocaleDateString()+'</div>';
+      body+='</div>';
+      body+='<div style="padding:14px;">';
       if(n.lines&&n.lines.length){
-        body+='<table class="kv-table"><thead><tr><th>Field</th><th>Value</th><th>Details</th></tr></thead><tbody>';
-        n.lines.forEach(function(l){body+='<tr><td>'+escHtml(l.label||l.lbl||'')+'</td><td><strong>'+escHtml(String(l.val||l.value||''))+'</strong></td><td style="color:#6b7280;font-size:11px;">'+escHtml(l.sub||l.desc||'')+'</td></tr>';});
+        body+='<table><thead><tr><th>Field</th><th>Value</th><th>Details / Comments</th></tr></thead><tbody>';
+        n.lines.forEach(function(l){var sc=l.state==='pass'?'#15803d':l.state==='fail'?'#dc2626':'#1d4ed8';body+='<tr><td style="font-weight:600;">'+escHtml(l.label||l.lbl||'')+'</td><td><strong style="color:'+sc+';">'+escHtml(String(l.val||l.value||''))+'</strong></td><td style="color:#6b7280;font-size:11px;">'+escHtml(l.sub||l.desc||'')+'</td></tr>';});
         body+='</tbody></table>';
       }
+      if(n.annotation)body+='<div style="background:#fffbeb;border-left:3px solid #f0c020;padding:10px 14px;font-size:12px;line-height:1.6;border-radius:0 6px 6px 0;margin:0 0 14px;">'+escHtml(n.annotation)+'</div>';
+      if(n.photos&&n.photos.length){var pc=n.photos.length===1?'rpt-photo-solo':'rpt-photo';body+='<div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+n.photos.map(function(p){return '<img src="'+p+'" class="'+pc+'">';}).join('')+'</div>';}
+      body+='</div></div>';
+    });
+  }
+  // ── Punch list ──
+  if(d.punch.length){
+    body+='<div class="sec-hd">Punch List</div>';
+    body+='<div style="display:flex;gap:12px;margin-bottom:16px;">';
+    body+='<div style="background:#dcfce7;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:20px;font-weight:800;color:#15803d;">'+doneCount+'</div><div style="font-size:10px;color:#16a34a;font-weight:600;">Completed</div></div>';
+    body+='<div style="background:#fef9c3;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:20px;font-weight:800;color:#854d0e;">'+openCount+'</div><div style="font-size:10px;color:#a16207;font-weight:600;">Open</div></div>';
+    body+='</div>';
+    d.punch.forEach(function(item){
+      body+='<div style="margin-bottom:10px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;page-break-inside:avoid;">';
+      body+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:'+(item.done?'#f0fdf4':'#fff')+';">';
+      body+='<div style="width:18px;height:18px;border-radius:50%;background:'+(item.done?'#22c55e':'#e5e7eb')+';display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:800;flex-shrink:0;">'+(item.done?'✓':'')+'</div>';
+      body+='<div style="flex:1;font-weight:700;font-size:13px;">'+escHtml(item.title)+'</div>';
+      body+='<div style="font-size:10px;padding:3px 10px;border-radius:10px;font-weight:700;background:'+(item.done?'#bbf7d0':'#fee2e2')+';color:'+(item.done?'#15803d':'#dc2626')+';">'+(item.done?'COMPLETE':'OPEN')+'</div>';
+      body+='<div style="font-size:10px;color:#9ca3af;margin-left:8px;">'+new Date(item.ts).toLocaleDateString()+'</div>';
+      body+='</div>';
+      if(item.notes)body+='<div style="padding:8px 14px;font-size:12px;color:#374151;border-top:1px solid #f0f0f0;line-height:1.5;">'+escHtml(item.notes)+'</div>';
+      if(item.photos&&item.photos.length){var ipc=item.photos.length===1?'rpt-photo-solo':'rpt-photo';body+='<div style="padding:10px 14px;border-top:1px solid #f0f0f0;"><div class="rpt-photo-grid">'+item.photos.map(function(p){return '<img src="'+p+'" class="'+ipc+'">';}).join('')+'</div></div>';}
       body+='</div>';
     });
   }
-  // Punch list
-  if(d.punch.length){
-    body+='<div class="sec-hd">Punch List ('+d.punch.length+')</div>';
-    body+='<table class="kv-table"><thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead><tbody>';
-    d.punch.forEach(function(i){body+='<tr><td>'+escHtml(i.title)+'</td><td>'+(i.done?'✅ Done':'⬜ Open')+'</td><td style="color:#6b7280;font-size:11px;">'+escHtml(i.notes||'')+'</td></tr>';});
-    body+='</tbody></table>';
-  }
-  // Timesheets
+  // ── Timesheets ──
   if(d.weeks.length){
-    body+='<div class="sec-hd">Timesheets ('+d.weeks.length+' week'+(d.weeks.length>1?'s':'')+')</div>';
+    body+='<div class="sec-hd">Timesheets</div>';
+    var grandTotal=0;
     d.weeks.forEach(function(w){
       var mon=new Date(w.weekStart+'T00:00:00');
+      var endDay=new Date(mon.getTime()+6*24*60*60*1000);
       var wDays=['Mon','Tue','Wed','Thu','Fri'].concat(w.showSat?['Sat']:[]).concat(w.showSun?['Sun']:[]);
-      body+='<div style="font-weight:700;font-size:12px;margin:10px 0 4px;">Week of '+mon.toLocaleDateString()+'</div>';
-      body+='<table class="kv-table"><thead><tr><th>Employee</th>'+wDays.map(function(dy){return '<th>'+dy+'</th>';}).join('')+'<th>Total</th></tr></thead><tbody>';
+      var weekTotal=0;
+      body+='<div style="margin-bottom:20px;page-break-inside:avoid;">';
+      body+='<div style="font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Week of '+mon.toLocaleDateString()+' — '+endDay.toLocaleDateString()+'</div>';
+      body+='<table><thead><tr><th style="min-width:110px;">Employee</th>'+wDays.map(function(dy){return '<th style="text-align:center;">'+dy+'</th>';}).join('')+'<th style="text-align:center;">Total</th></tr></thead><tbody>';
       emps.forEach(function(emp){
-        var tot=0;
-        var cells=wDays.map(function(dy){var e=(w.entries||{})[emp.id+'_'+dy]||{};var h=parseFloat(e.h||0);tot+=h;return '<td style="text-align:center;">'+(h||'—')+(e.type&&e.type!=='ST'?'<br><span style="font-size:9px;color:#9ca3af;">'+e.type+'</span>':'')+'</td>';}).join('');
-        body+='<tr><td>'+escHtml(emp.name)+'</td>'+cells+'<td style="text-align:center;font-weight:700;">'+Math.round(tot*10)/10+'h</td></tr>';
+        var empTotal=0;
+        var cells=wDays.map(function(dy){var e=(w.entries||{})[emp.id+'_'+dy]||{};var h=parseFloat(e.h||0);empTotal+=h;if(!h)return '<td style="text-align:center;color:#d1d5db;">—</td>';return '<td style="text-align:center;">'+(h)+(e.type&&e.type!=='ST'?'<div style="font-size:9px;color:#7c3aed;">'+e.type+'</div>':'')+'</td>';}).join('');
+        weekTotal+=empTotal;grandTotal+=empTotal;
+        body+='<tr><td style="font-weight:600;">'+escHtml(emp.name)+'</td>'+cells+'<td style="text-align:center;font-weight:800;">'+(empTotal?Math.round(empTotal*10)/10+'h':'—')+'</td></tr>';
       });
-      body+='</tbody></table>';
+      body+='<tr class="total-row"><td colspan="'+(wDays.length+1)+'" style="font-weight:800;text-align:right;padding-right:12px;">Week Total</td><td style="text-align:center;font-weight:800;">'+Math.round(weekTotal*10)/10+'h</td></tr>';
+      body+='</tbody></table></div>';
     });
+    if(d.weeks.length>1)body+='<div style="text-align:right;font-size:14px;font-weight:800;color:#111;margin-bottom:20px;padding:10px 0;border-top:2px solid #111;">Grand Total: '+Math.round(grandTotal*10)/10+' hours</div>';
   }
-  var html=buildPrintHTML(d.proj.name,'Project Export &nbsp;·&nbsp; '+now,body);
+  var html=buildPrintHTML(d.proj.name,'Project Report &nbsp;·&nbsp; '+now,body);
+  _activeProjectId=savedAid;
   var w2=window.open('','_blank');
   if(w2){w2.document.write(html+'<scr'+'ipt>setTimeout(function(){window.print();},400);<\/scr'+'ipt>');w2.document.close();}
 }
@@ -2882,7 +2924,7 @@ function jcExportNote(id){
   }).join('');
   var bodyHTML='<table class="kv-table"><thead><tr><th>Field</th><th>Value</th><th>Details / Comments</th></tr></thead><tbody>'+rows+'</tbody></table>';
   if(n.annotation)bodyHTML+='<div class="sec-hd">Job Notes</div><div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;font-size:13px;line-height:1.6;">'+escHtml(n.annotation)+'</div>';
-  if(n.photos&&n.photos.length)bodyHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">'+n.photos.map(function(p){return '<img src="'+p+'" style="max-width:200px;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;">';}).join('')+'</div>';
+  if(n.photos&&n.photos.length){var _npc=n.photos.length===1?'rpt-photo-solo':'rpt-photo';bodyHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+n.photos.map(function(p){return '<img src="'+p+'" class="'+_npc+'">';}).join('')+'</div>';}
   var html=buildPrintHTML(title,n.tabName+' · Created '+created,bodyHTML);
   openExportSheet(title,txt.join('\n'),csv,html);
 }
@@ -2961,7 +3003,10 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
     '.kv-table td:first-child{font-weight:700;color:#374151;width:40%;white-space:nowrap;}'+
     '.total-row td{font-weight:700;background:#f0f0f0!important;border-top:2px solid #d1d5db;}'+
     '.rpt-footer{margin-top:28px;padding-top:10px;border-top:1px solid #e5e7eb;font-size:10px;color:#9ca3af;text-align:center;}'+
-    '@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}'+
+    '.rpt-photo-grid{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 16px;page-break-inside:avoid;}'+
+    '.rpt-photo{max-width:3in;max-height:3in;object-fit:contain;border-radius:6px;border:1px solid #e5e7eb;}'+
+    '.rpt-photo-solo{max-width:5.5in;max-height:4.5in;object-fit:contain;border-radius:6px;border:1px solid #e5e7eb;display:block;}'+
+    '@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.rpt-photo-grid{page-break-inside:avoid;}}'+
   '</style></head><body>'+
   '<div class="rpt-header">'+
     '<div style="display:flex;align-items:center;">'+coLogoHtml+'<div>'+coNameHtml+coInfoHtml+'</div></div>'+
@@ -3643,7 +3688,8 @@ function exportPunchItem(id){
     '<tr><td>Completed</td><td>'+(item.done?'<span class="badge badge-green">Yes</span>':'<span class="badge badge-gray">No</span>')+'</td></tr>'+
     (item.notes?'<tr><td>Notes</td><td>'+escHtml(item.notes)+'</td></tr>':'')+
     '</tbody></table>'+
-    (item.photos&&item.photos.length?'<div class="sec-hd">Photos ('+item.photos.length+')</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">'+item.photos.map(function(p){return '<img src="'+p+'" style="max-width:200px;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;">';}).join('')+'</div>':'');
+    '';
+  if(item.photos&&item.photos.length){var _ipc=item.photos.length===1?'rpt-photo-solo':'rpt-photo';bodyHTML+='<div class="sec-hd">Photos ('+item.photos.length+')</div><div class="rpt-photo-grid">'+item.photos.map(function(p){return '<img src="'+p+'" class="'+_ipc+'">';}).join('')+'</div>';}
   var html=buildPrintHTML('Punch Item','Circuitmatic Punch List · '+_fmtDate(),bodyHTML);
   openExportSheet('Punch — '+item.title,txt.join('\n'),csv,html);
 }
