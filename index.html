@@ -83,7 +83,11 @@
     background: var(--card);
     border-radius: 0;
     box-shadow: none;
-    overflow: hidden;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    flex: 1;
   }
 
   /* ── Header ── */
@@ -159,7 +163,7 @@
   @media (hover: hover) { .tab-btn:hover:not(.active) { background: #2a2a2a; } }
 
   .tab-panel { display: none; }
-  .tab-panel.active { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
+  .tab-panel.active { display: flex; flex-direction: column; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
 
   /* ── Section labels ── */
   .section-label {
@@ -2359,8 +2363,8 @@ if('serviceWorker' in navigator){
     <div id="pn-phase-section" style="display:none;padding-top:4px;"></div>
   </div><!-- /tab-pn -->
 
-  <div style="text-align:center; padding:10px 20px 14px; background:var(--bg);">
-    <span style="font-family:'Roboto Mono',monospace; font-size:8px; color:#2a3a4a; letter-spacing:1px;">© 2026 Circuitmatic · circuitmatic.app · For reference only — verify with licensed electrician and local AHJ.</span>
+  <div style="text-align:center; padding:10px 20px calc(14px + env(safe-area-inset-bottom)); background:#ffffff; border-top:1px solid #f0f0f0; margin-top:auto;">
+    <span style="font-family:'Roboto Mono',monospace; font-size:8px; color:#d1d5db; letter-spacing:1px;">© 2026 Circuitmatic · circuitmatic.app · For reference only — verify with licensed electrician and local AHJ.</span>
   </div>
 </div><!-- calc-wrap -->
 
