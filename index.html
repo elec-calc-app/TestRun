@@ -3138,7 +3138,6 @@ function duplicateTsWeek(weekId){
   var newWeek={id:Date.now(),weekStart:wsd.toISOString().slice(0,10),showSat:src.showSat,showSun:src.showSun,entries:entries,projectId:src.projectId};
   weeks.unshift(newWeek);
   tsSaveWeeks(weeks);renderTs();
-  setTimeout(function(){var el=document.querySelector('.ts-week-card');if(el)el.classList.add('expanded');},60);
 }
 function addEmployee(weekId){
   var emps=tsGetEmps(),weeks=tsGetWeeks();
