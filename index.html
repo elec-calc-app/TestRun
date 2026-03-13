@@ -734,6 +734,11 @@
 .export-sheet-btn-icon{font-size:22px;flex-shrink:0;}
 .export-sheet-btn-lbl{font-size:14px;font-weight:600;color:#111827;}
 .export-sheet-btn-sub{font-size:11px;color:#9ca3af;margin-top:1px;}
+.export-sheet-btn-primary{background:#fffbea;border-color:#f0c020!important;border-width:1.5px!important;}
+.export-sheet-btn-primary .export-sheet-btn-lbl{color:#92700a;}
+.export-sheet-btn-primary .export-sheet-btn-sub{color:#b38f1a;}
+.export-sheet-divider{display:flex;align-items:center;gap:10px;margin:4px 0 10px;color:#9ca3af;font-size:10px;font-weight:700;font-family:'Inter',sans-serif;letter-spacing:.06em;text-transform:uppercase;}
+.export-sheet-divider::before,.export-sheet-divider::after{content:'';flex:1;height:1px;background:#e5e7eb;}
 .export-sheet-cancel{width:100%;background:none;border:none;padding:12px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;color:#9ca3af;cursor:pointer;margin-top:4px;}
 .note-card-actions{display:flex;gap:8px;margin-top:8px;}
 .note-export-card-btn{flex:1;background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
@@ -2826,8 +2831,18 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
 function openExportSheet(title,text,csv,html){
   _exportData={title:title,text:text,csv:csv||text,html:html||null};
   document.getElementById('export-sheet-title').textContent=title;
-  document.getElementById('export-sheet-sub').textContent='Choose export format';
+  document.getElementById('export-sheet-sub').textContent='Send or save this report';
+  var nsBtn=document.getElementById('export-native-share');
+  var nsDivider=document.getElementById('export-native-divider');
+  var hasShare=!!navigator.share;
+  if(nsBtn)nsBtn.style.display=hasShare?'flex':'none';
+  if(nsDivider)nsDivider.style.display=hasShare?'flex':'none';
   document.getElementById('export-sheet-ov').classList.add('open');
+}
+function doNativeShare(){
+  if(!_exportData||!navigator.share)return;
+  closeExportSheet();
+  navigator.share({title:_exportData.title,text:_exportData.text}).catch(function(){});
 }
 function closeExportSheet(){document.getElementById('export-sheet-ov').classList.remove('open');}
 function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('photo-lightbox').classList.add('open');}
@@ -3551,7 +3566,7 @@ function jcResultsReady(tab,tabName,svgHtml){
   _jcPending={tab:tab,tabName:tabName,lines:lines.slice(0,5),svg:svgHtml||null};
   var act=document.createElement('div');
   act.className='result-actions';
-  act.innerHTML='<button class="result-save-btn" onclick="jcShowSave()">Save to Notes</button><button class="result-export-btn" onclick="jcExport()">Export</button>';
+  act.innerHTML='<button class="result-save-btn" onclick="jcShowSave()">Save to Notes</button><button class="result-export-btn" onclick="jcExport()">Share &amp; Export</button>';
   resEl.appendChild(act);
 }
 
@@ -5827,8 +5842,13 @@ setCodeYear(_codeYear);
 <!-- Export Sheet -->
 <div class="export-sheet-ov" id="export-sheet-ov" onclick="closeExportSheet()">
   <div class="export-sheet" onclick="event.stopPropagation()">
-    <div class="export-sheet-title" id="export-sheet-title">Export</div>
-    <div class="export-sheet-sub" id="export-sheet-sub">Choose format</div>
+    <div class="export-sheet-title" id="export-sheet-title">Share &amp; Export</div>
+    <div class="export-sheet-sub" id="export-sheet-sub">Send or save this report</div>
+    <button class="export-sheet-btn export-sheet-btn-primary" id="export-native-share" onclick="doNativeShare()" style="display:none;">
+      <span class="export-sheet-btn-icon">📱</span>
+      <div><div class="export-sheet-btn-lbl">Send via...</div><div class="export-sheet-btn-sub">SMS, Email, AirDrop &amp; more</div></div>
+    </button>
+    <div class="export-sheet-divider" id="export-native-divider" style="display:none;"><span>File Exports</span></div>
     <button class="export-sheet-btn" onclick="doExportPDF()">
       <span class="export-sheet-btn-icon">📄</span>
       <div><div class="export-sheet-btn-lbl">PDF / Print</div><div class="export-sheet-btn-sub">Open print dialog</div></div>
