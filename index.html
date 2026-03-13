@@ -945,6 +945,20 @@
 body.text-large{zoom:1.14;}
 body.text-xlarge{zoom:1.28;}
 body.text-xxlarge{zoom:1.45;}
+body.high-contrast{--text:#ffffff;--sub:#c0d8f0;--muted:#b0c8e0;--border:#2a3548;--border2:#384a60;}
+body.high-contrast .stg-card{background:#0a0e16;}
+.stg-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;}
+.stg-toggle-info{flex:1;min-width:0;padding-right:16px;}
+.stg-toggle{position:relative;width:48px;height:28px;flex-shrink:0;cursor:pointer;display:inline-block;}
+.stg-toggle input{opacity:0;width:0;height:0;position:absolute;}
+.stg-toggle-track{position:absolute;inset:0;background:#d1d5db;border-radius:14px;transition:background .2s;}
+.stg-toggle input:checked+.stg-toggle-track{background:#f0c020;}
+.stg-toggle-thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);pointer-events:none;}
+.stg-toggle input:checked~.stg-toggle-thumb{transform:translateX(20px);}
+.stg-material-btns{display:flex;border:1.5px solid #e5e7eb;border-radius:8px;overflow:hidden;flex-shrink:0;}
+.stg-material-btn{flex:1;background:#f3f4f6;border:none;border-right:1px solid #e5e7eb;padding:9px 16px;font-size:12px;font-weight:700;font-family:'Roboto Mono',monospace;color:#6b7280;cursor:pointer;transition:all .15s;}
+.stg-material-btn:last-child{border-right:none;}
+.stg-material-btn.active{background:#f0c020;color:#1a1200;}
 
 </style>
 <style>
@@ -2059,6 +2073,49 @@ if('serviceWorker' in navigator){
             </div>
           </div>
         </div>
+        <div class="stg-card">
+          <div class="stg-toggle-row">
+            <div class="stg-toggle-info">
+              <div class="stg-row-title">&#128064; High Contrast</div>
+              <div class="stg-row-sub">Brighter text for glare &amp; direct sunlight</div>
+            </div>
+            <label class="stg-toggle"><input type="checkbox" id="stg-high-contrast-cb" onchange="setHighContrast(this.checked)"><span class="stg-toggle-track"></span><span class="stg-toggle-thumb"></span></label>
+          </div>
+        </div>
+        <div class="stg-card">
+          <div class="stg-toggle-row">
+            <div class="stg-toggle-info">
+              <div class="stg-row-title">&#9728; Keep Screen Awake</div>
+              <div class="stg-row-sub">Prevent phone from sleeping mid-calculation</div>
+            </div>
+            <label class="stg-toggle"><input type="checkbox" id="stg-keep-awake-cb" onchange="setKeepAwake(this.checked)"><span class="stg-toggle-track"></span><span class="stg-toggle-thumb"></span></label>
+          </div>
+        </div>
+        <div class="stg-card">
+          <div class="stg-toggle-row">
+            <div class="stg-toggle-info">
+              <div class="stg-row-title">&#128243; Haptic Feedback</div>
+              <div class="stg-row-sub">Vibration on button taps</div>
+            </div>
+            <label class="stg-toggle"><input type="checkbox" id="stg-haptics-cb" onchange="setHaptics(this.checked)"><span class="stg-toggle-track"></span><span class="stg-toggle-thumb"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="stg-group">
+        <div class="stg-group-lbl">Field Defaults</div>
+        <div class="stg-card">
+          <div class="stg-row">
+            <div class="stg-row-info">
+              <div class="stg-row-title">Default Wire Material</div>
+              <div class="stg-row-sub">Pre-selects conductor type in calculators</div>
+            </div>
+            <div class="stg-material-btns">
+              <button class="stg-material-btn" data-mat="CU" onclick="setDefMaterial('CU')">CU</button>
+              <button class="stg-material-btn" data-mat="AL" onclick="setDefMaterial('AL')">AL</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="stg-group">
@@ -2642,6 +2699,51 @@ function setTextSize(size,init){
   document.body.classList.remove('text-large','text-xlarge','text-xxlarge');
   if(size!=='normal')document.body.classList.add('text-'+size);
   document.querySelectorAll('.stg-tsz-btn').forEach(function(b){b.classList.toggle('active',b.dataset.size===size);});
+}
+// ── High Contrast ──
+var _highContrast=localStorage.getItem('jc_high_contrast')==='1';
+function setHighContrast(on,init){
+  _highContrast=!!on;
+  if(!init)localStorage.setItem('jc_high_contrast',on?'1':'0');
+  document.body.classList.toggle('high-contrast',_highContrast);
+  var cb=document.getElementById('stg-high-contrast-cb');
+  if(cb)cb.checked=_highContrast;
+}
+// ── Keep Screen Awake ──
+var _wakeLock=null;
+var _keepAwake=localStorage.getItem('jc_keep_awake')==='1';
+function setKeepAwake(on,init){
+  _keepAwake=!!on;
+  if(!init)localStorage.setItem('jc_keep_awake',on?'1':'0');
+  var cb=document.getElementById('stg-keep-awake-cb');
+  if(cb)cb.checked=_keepAwake;
+  if(_keepAwake&&'wakeLock' in navigator){
+    navigator.wakeLock.request('screen').then(function(wl){
+      _wakeLock=wl;
+      _wakeLock.addEventListener('release',function(){if(_keepAwake)setKeepAwake(true);});
+    }).catch(function(){});
+  } else if(!_keepAwake&&_wakeLock){
+    _wakeLock.release();_wakeLock=null;
+  }
+}
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState==='visible'&&_keepAwake)setKeepAwake(true);
+});
+// ── Haptic Feedback ──
+var _haptics=localStorage.getItem('jc_haptics')!=='0';
+function setHaptics(on,init){
+  _haptics=!!on;
+  if(!init)localStorage.setItem('jc_haptics',on?'1':'0');
+  var cb=document.getElementById('stg-haptics-cb');
+  if(cb)cb.checked=_haptics;
+}
+function hapticTap(){if(_haptics&&navigator.vibrate)navigator.vibrate(10);}
+// ── Default Wire Material ──
+var _defMaterial=localStorage.getItem('jc_def_material')||'CU';
+function setDefMaterial(mat,init){
+  _defMaterial=mat;
+  if(!init)localStorage.setItem('jc_def_material',mat);
+  document.querySelectorAll('.stg-material-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mat===mat);});
 }
 // ── Clear All App Data ──
 function clearAllAppData(){
@@ -6349,6 +6451,11 @@ window.addEventListener('load',function(){
   },1100);
   // Init text size
   setTextSize(localStorage.getItem('jc_text_size')||'normal',true);
+  // Init new settings
+  setHighContrast(localStorage.getItem('jc_high_contrast')==='1',true);
+  setKeepAwake(localStorage.getItem('jc_keep_awake')==='1',true);
+  setHaptics(localStorage.getItem('jc_haptics')!=='0',true);
+  setDefMaterial(localStorage.getItem('jc_def_material')||'CU',true);
   // Init settings code year buttons
   var _sy=localStorage.getItem('jc_code_year')||'2026';
   document.querySelectorAll('.stg-cy-btn').forEach(function(b){b.classList.remove('active');});
@@ -6592,6 +6699,7 @@ window.addEventListener('load',function(){
     <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'))"><span class="jc-menu-icon">📁</span>Projects</div>
     <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'));openNewProjModal()"><span class="jc-menu-icon">➕</span>New Project</div>
     <div class="jc-menu-section-lbl">Settings</div>
+    <div class="jc-menu-item" onclick="closeMenu();switchTab('settings',document.getElementById('tab-btn-settings'))"><span class="jc-menu-icon">&#9881;&#65039;</span>Settings</div>
     <div class="jc-menu-item" onclick="closeMenu();openCoModal()"><span class="jc-menu-icon">🏢</span>Company Branding</div>
     <div class="jc-menu-section-lbl">App</div>
     <div class="jc-menu-item" onclick="closeMenu();openAbout()"><span class="jc-menu-icon">ℹ️</span>About</div>
