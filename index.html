@@ -2157,15 +2157,6 @@ if('serviceWorker' in navigator){
             <label class="stg-toggle"><input type="checkbox" id="stg-keep-awake-cb" onchange="setKeepAwake(this.checked)"><span class="stg-toggle-track"></span><span class="stg-toggle-thumb"></span></label>
           </div>
         </div>
-        <div class="stg-card">
-          <div class="stg-toggle-row">
-            <div class="stg-toggle-info">
-              <div class="stg-row-title" data-i18n="stg-haptics">&#128243; Haptic Feedback</div>
-              <div class="stg-row-sub">Vibration on button taps</div>
-            </div>
-            <label class="stg-toggle"><input type="checkbox" id="stg-haptics-cb" onchange="setHaptics(this.checked)"><span class="stg-toggle-track"></span><span class="stg-toggle-thumb"></span></label>
-          </div>
-        </div>
       </div>
 
       <div class="stg-group">
@@ -2189,7 +2180,7 @@ if('serviceWorker' in navigator){
               <div class="stg-row-sub" data-i18n="stg-distance-units-sub">Used in voltage drop and conduit calculations</div>
             </div>
             <div class="stg-material-btns">
-              <button class="stg-material-btn stg-unit-btn" data-unit="ft" onclick="setUnits('ft')">ft</button>
+              <button class="stg-material-btn stg-unit-btn active" data-unit="ft" onclick="setUnits('ft')">ft</button>
               <button class="stg-material-btn stg-unit-btn" data-unit="m" onclick="setUnits('m')">m</button>
             </div>
           </div>
@@ -2201,7 +2192,7 @@ if('serviceWorker' in navigator){
               <div class="stg-row-sub" data-i18n="stg-language-sub">App display language</div>
             </div>
             <div class="stg-material-btns">
-              <button class="stg-material-btn stg-lang-btn" data-lang="en" onclick="applyLang('en')">EN</button>
+              <button class="stg-material-btn stg-lang-btn active" data-lang="en" onclick="applyLang('en')">EN</button>
               <button class="stg-material-btn stg-lang-btn" data-lang="es" onclick="applyLang('es')">ES</button>
             </div>
           </div>
@@ -2913,19 +2904,6 @@ function setKeepAwake(on,init){
 document.addEventListener('visibilitychange',function(){
   if(document.visibilityState==='visible'&&_keepAwake)setKeepAwake(true);
 });
-// ── Haptic Feedback ──
-var _haptics=localStorage.getItem('jc_haptics')!=='0';
-function setHaptics(on,init){
-  _haptics=!!on;
-  if(!init)localStorage.setItem('jc_haptics',on?'1':'0');
-  var cb=document.getElementById('stg-haptics-cb');
-  if(cb)cb.checked=_haptics;
-}
-function hapticTap(){if(_haptics&&navigator.vibrate)navigator.vibrate(10);}
-// Global haptic — fires on every button touchstart
-document.addEventListener('touchstart',function(e){
-  if(e.target.tagName==='BUTTON'||e.target.closest('button'))hapticTap();
-},{passive:true});
 // ── Default Wire Material ──
 var _defMaterial=localStorage.getItem('jc_def_material')||'CU';
 function setDefMaterial(mat,init){
@@ -6649,7 +6627,6 @@ window.addEventListener('load',function(){
   setHighContrast(localStorage.getItem('jc_high_contrast')==='1',true);
   setLightMode(localStorage.getItem('jc_light_mode') === '1', true);
   setKeepAwake(localStorage.getItem('jc_keep_awake')==='1',true);
-  setHaptics(localStorage.getItem('jc_haptics')!=='0',true);
   setDefMaterial(localStorage.getItem('jc_def_material')||'CU',true);
   setUnits(localStorage.getItem('jc_units') || 'ft', true);
   applyLang(localStorage.getItem('jc_lang') || 'en', true);
