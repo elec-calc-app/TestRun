@@ -665,8 +665,8 @@
 .proj-list-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;}
 .proj-list-title{font-size:18px;font-weight:800;font-family:'Inter',sans-serif;color:#111827;}
 .proj-hd-btns{display:flex;gap:6px;align-items:center;}
-.proj-create-btn{background:#f0c020;color:#1a1200;border:none;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;}
-.proj-export-btn{background:#f3f4f6;color:#374151;border:1px solid #d1d5db;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;}
+.proj-create-btn{flex:1;background:#f0c020;color:#1a1200;border:none;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;text-align:center;}
+.proj-export-btn{flex:1;background:#f3f4f6;color:#374151;border:1px solid #d1d5db;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;text-align:center;}
 .proj-export-btn:active{background:#e5e7eb;}
 /* Export Project Modal */
 .pe-modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:900;align-items:flex-end;}
@@ -692,6 +692,7 @@
 .proj-card-meta span{background:#f3f4f6;border-radius:6px;padding:2px 8px;}
 .proj-card-date{margin-left:auto!important;background:none!important;padding:0!important;}
 .proj-empty{text-align:center;padding:60px 20px;color:#9ca3af;font-size:13px;line-height:1.8;}
+#proj-list-view{min-height:100dvh;}
 .proj-detail-hd{display:flex;align-items:center;gap:8px;padding:6px 0 6px;border-bottom:2px solid #f0c020;margin-bottom:8px;}
 .proj-back-btn{background:none;border:none;color:#f0c020;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;padding:4px 10px 4px 0;white-space:nowrap;flex-shrink:0;}
 .proj-detail-info{min-width:0;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
@@ -2831,6 +2832,7 @@ function openNewProjModal(){
   document.getElementById('np-name').value='';
   document.getElementById('np-foreman').value='';
   document.getElementById('np-po').value='';
+  document.getElementById('np-start').value='';
   document.getElementById('new-proj-ov').classList.add('open');
   setTimeout(function(){document.getElementById('np-name').focus();},120);
 }
@@ -2840,9 +2842,10 @@ function confirmNewProj(){
   if(!name){document.getElementById('np-name').focus();return;}
   var foreman=document.getElementById('np-foreman').value.trim();
   var po=document.getElementById('np-po').value.trim();
+  var startDate=document.getElementById('np-start').value||'';
   var id=Date.now();
   var projects=getProjList();
-  projects.unshift({id:id,name:name,foreman:foreman,po:po,created:id});
+  projects.unshift({id:id,name:name,foreman:foreman,po:po,startDate:startDate,created:id});
   saveProjList(projects);
   closeNewProjModal();
   openProject(id);
@@ -6059,7 +6062,9 @@ setCodeYear(_codeYear);
     <div class="ts-aw-label">Foreman</div>
     <input class="ts-aw-inp" id="np-foreman" type="text" placeholder="Foreman name…" autocomplete="off">
     <div class="ts-aw-label">PO Number</div>
-    <input class="ts-aw-inp" id="np-po" type="text" placeholder="PO #…" autocomplete="off" onkeydown="if(event.key==='Enter')confirmNewProj()">
+    <input class="ts-aw-inp" id="np-po" type="text" placeholder="PO #…" autocomplete="off">
+    <div class="ts-aw-label">Project Start Date</div>
+    <input class="ts-aw-inp" id="np-start" type="date" onkeydown="if(event.key==='Enter')confirmNewProj()">
     <div class="ts-aw-btns">
       <button class="ts-aw-cancel" onclick="closeNewProjModal()">Cancel</button>
       <button class="ts-aw-confirm" onclick="confirmNewProj()">Create Project</button>
