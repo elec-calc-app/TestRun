@@ -139,6 +139,47 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .scan-overlay-lbl{color:#fff;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;}
 .scan-prog-wrap{width:220px;height:7px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;}
 .scan-prog-bar{height:100%;background:#f0c020;border-radius:4px;transition:width .15s;width:0%;}
+/* ── NEC Quiz Tab ── */
+.quiz-wrap{display:flex;flex-direction:column;align-items:center;width:100%;padding:12px 12px 24px;overflow-y:auto;flex:1;}
+.quiz-header{width:100%;max-width:600px;margin-bottom:10px;}
+.quiz-title{font-family:'Roboto Mono',monospace;font-size:0.85rem;font-weight:700;color:#f0c020;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.quiz-prog-wrap{width:100%;height:5px;background:#1e2530;border-radius:5px;overflow:hidden;}
+.quiz-prog{height:100%;background:linear-gradient(90deg,#f0c020,#fff8d0);transition:width 0.35s ease;border-radius:5px;width:0%;}
+.quiz-stat-row{display:flex;gap:8px;width:100%;max-width:600px;margin-bottom:10px;}
+.quiz-stat{flex:1;background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:8px 10px;text-align:center;}
+.quiz-stat-lbl{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:.5px;}
+.quiz-stat-val{font-size:1rem;font-weight:700;color:#f0c020;margin-top:2px;font-family:'Roboto Mono',monospace;}
+.quiz-stat-val.sm{font-size:0.7rem;}
+.quiz-card{width:100%;max-width:600px;background:#111827;border:1px solid #1e293b;border-radius:14px;padding:18px;}
+.quiz-q-text{font-size:0.97rem;font-weight:600;color:#f1f5f9;margin-bottom:16px;line-height:1.55;}
+.quiz-opts{display:grid;gap:8px;}
+.quiz-opt{background:#13181f;border:1px solid #1e293b;color:#dde6f0;padding:13px 14px;border-radius:9px;text-align:left;cursor:pointer;font-size:0.88rem;font-weight:500;transition:all 0.15s ease;width:100%;}
+.quiz-opt:hover:not(:disabled){border-color:#f0c020;background:#1e2530;transform:translateY(-1px);}
+.quiz-opt.qz-ok{border-color:#22c55e!important;background:rgba(34,197,94,0.13)!important;color:#4ade80!important;}
+.quiz-opt.qz-bad{border-color:#ef4444!important;background:rgba(239,68,68,0.13)!important;color:#f87171!important;}
+.quiz-feedback{margin-top:14px;padding:12px 14px;border-radius:9px;background:#0a1120;border-left:3px solid #f0c020;display:none;}
+.quiz-ref{display:inline-block;background:#f0c020;color:#1a1200;padding:2px 7px;border-radius:4px;font-weight:900;font-size:0.68rem;margin-bottom:7px;font-family:'Roboto Mono',monospace;}
+.quiz-exp{font-size:0.84rem;color:#cbd5e1;line-height:1.45;}
+.quiz-next-btn{margin-top:14px;width:100%;padding:14px;background:#f0c020;color:#1a1200;border:none;border-radius:9px;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;display:none;text-transform:uppercase;letter-spacing:1px;font-size:0.82rem;}
+.quiz-next-btn:hover{background:#ffe066;}
+.quiz-score-screen{display:none;text-align:center;padding:16px 0;}
+.quiz-score-num{font-size:3.2rem;font-family:'Roboto Mono',monospace;color:#f0c020;margin:12px 0;text-shadow:0 0 20px rgba(240,192,32,0.35);}
+.quiz-score-label{font-size:0.9rem;color:#94a3b8;margin-bottom:8px;}
+.quiz-score-msg{margin-bottom:20px;font-size:0.9rem;line-height:1.5;}
+.quiz-score-pass{color:#4ade80;}
+.quiz-score-fail{color:#f87171;}
+.quiz-restart{width:100%;padding:14px;background:#f0c020;color:#1a1200;border:none;border-radius:9px;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-size:0.82rem;margin-top:8px;}
+.quiz-restart:hover{background:#ffe066;}
+body.light-mode .quiz-wrap{background:#f8fafc;}
+body.light-mode .quiz-card{background:#fff;border-color:#e2e8f0;}
+body.light-mode .quiz-stat{background:#f1f5f9;border-color:#e2e8f0;}
+body.light-mode .quiz-opt{background:#f8fafc;border-color:#e2e8f0;color:#1e293b;}
+body.light-mode .quiz-opt:hover:not(:disabled){background:#f1f5f9;border-color:#f0c020;}
+body.light-mode .quiz-feedback{background:#f8fafc;border-color:#e2e8f0;}
+body.light-mode .quiz-exp{color:#374151;}
+body.light-mode .quiz-prog-wrap{background:#e2e8f0;}
+body.light-mode .quiz-stat-val{color:#c9a010;}
+body.light-mode .quiz-q-text{color:#111827;}
 body.light-mode .calc-home-lbl { color: #c9a010; }
 body.light-mode .menu-btn { color: #c9a010; }
 body { background: var(--bg); }
@@ -1188,6 +1229,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-notes" onclick="switchTab('notes',this)">Projects</button>
     <button class="tab-btn" id="tab-btn-charts" onclick="switchTab('charts',this)">Charts</button>
     <button class="tab-btn" id="tab-btn-scan" onclick="switchTab('scan',this)">Scan</button>
+    <button class="tab-btn" id="tab-btn-quiz" onclick="switchTab('quiz',this)">Quiz</button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -3590,6 +3632,40 @@ if('serviceWorker' in navigator){
     <div class="scan-overlay" id="scan-overlay">
       <div class="scan-overlay-lbl" id="scan-overlay-lbl">Building PDF…</div>
       <div class="scan-prog-wrap"><div class="scan-prog-bar" id="scan-prog-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- ── NEC 2026 Quiz Tab ── -->
+  <div class="tab-panel" id="tab-quiz">
+    <div class="quiz-wrap">
+      <div class="quiz-header">
+        <div class="quiz-title">⚡ NEC 2026 — Exam Prep</div>
+        <div class="quiz-prog-wrap"><div class="quiz-prog" id="qz-prog"></div></div>
+      </div>
+      <div class="quiz-stat-row">
+        <div class="quiz-stat"><div class="quiz-stat-lbl">Question</div><div class="quiz-stat-val" id="qz-qnum">—</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-lbl">Correct</div><div class="quiz-stat-val" id="qz-correct">—</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-lbl">Score</div><div class="quiz-stat-val" id="qz-score">—</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-lbl">Category</div><div class="quiz-stat-val sm" id="qz-cat">—</div></div>
+      </div>
+      <div class="quiz-card" id="qz-card">
+        <div id="qz-qa">
+          <div class="quiz-q-text" id="qz-qtext"></div>
+          <div class="quiz-opts" id="qz-opts"></div>
+          <div class="quiz-feedback" id="qz-feedback">
+            <div class="quiz-ref" id="qz-ref">REF</div>
+            <div class="quiz-exp" id="qz-exp"></div>
+          </div>
+          <button class="quiz-next-btn" id="qz-next" onclick="qzNext()">Next Question →</button>
+        </div>
+        <div class="quiz-score-screen" id="qz-end">
+          <div class="quiz-q-text">Exam Complete</div>
+          <div class="quiz-score-num" id="qz-pct">0%</div>
+          <div class="quiz-score-label" id="qz-fraction"></div>
+          <div class="quiz-score-msg" id="qz-msg"></div>
+          <button class="quiz-restart" onclick="qzStart()">↺ Retake Exam</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -8071,6 +8147,8 @@ window.addEventListener('load',function(){
   applyLang(localStorage.getItem('jc_lang') || 'en', true);
   // Load scan pages
   scanLoad();
+  // Init quiz
+  qzStart();
   // Init settings code year buttons
   var _sy=localStorage.getItem('jc_code_year')||'2026';
   document.querySelectorAll('.stg-cy-btn').forEach(function(b){b.classList.remove('active');});
@@ -8432,6 +8510,159 @@ window.addEventListener('load',function(){
     <button class="ts-del-yes-btn" onclick="tsDelYes()">Yes, Remove</button>
   </div>
 </div>
+
+// ── NEC 2026 Quiz ─────────────────────────────────────────────────
+var _qzBank=[
+  // WORKING SPACE
+  {c:'WORKING SPACE',q:'What is the minimum working space depth in front of 0–150V equipment where Condition 1 applies?',a:'3 feet',o:['2 feet','3 feet','3.5 feet','4 feet'],r:'110.26(A)(1)',t:'The standard minimum depth is 3 feet for 0–150V to ground under Condition 1 working clearances.'},
+  {c:'WORKING SPACE',q:'What is the minimum headroom generally required for working spaces about service equipment, switchboards, or panelboards rated 1000V or less?',a:'6.5 feet',o:['5 feet','6 feet','6.5 feet','7 feet'],r:'110.26(A)(3)',t:'The general minimum headroom in these working spaces is 6.5 feet.'},
+  // GFCI / AFCI
+  {c:'GFCI',q:'Which location in a dwelling does NOT require GFCI protection for 125V receptacles?',a:'Living Room',o:['Kitchen countertop','Bathroom','Living Room','Garage'],r:'210.8(A)',t:'Living rooms are not listed in 210.8(A) as a GFCI-required location. Kitchens, bathrooms, and garages all are.'},
+  {c:'GFCI',q:'A 125V, single-phase, 15- or 20-amp receptacle installed outdoors at a dwelling generally requires which protection?',a:'GFCI protection',o:['AFCI only','GFCI protection','No protection required','Only tamper-resistant'],r:'210.8(A)(3)',t:'Outdoor dwelling receptacles of this type require GFCI protection.'},
+  {c:'GFCI',q:'In the 2026 NEC, outdoor outlets at dwellings rated up to ___ amperes require GFCI protection.',a:'60 Amps',o:['20 Amps','30 Amps','50 Amps','60 Amps'],r:'210.8(F)',t:'2026 Change: Threshold increased from 50A to 60A for outdoor GFCI requirements.'},
+  {c:'GFCI',q:'Bathroom receptacle outlets in dwelling units require which type of protection?',a:'GFCI protection',o:['No special protection','GFCI protection','Surge protection only','AFCI only'],r:'210.8(A)(1)',t:'Bathroom receptacle outlets in dwellings require GFCI protection.'},
+  {c:'GFCI',q:'A receptacle outlet installed in a garage of a dwelling unit generally requires which protection?',a:'GFCI protection',o:['No protection','GFCI protection','Only surge protection','AFCI only'],r:'210.8(A)(2)',t:'Garage receptacle outlets in dwelling units require GFCI protection.'},
+  {c:'AFCI',q:'What is one major purpose of AFCI protection in dwelling unit circuits?',a:'Protect against arcing faults that may start fires',o:['Reduce voltage drop','Protect against arcing faults that may start fires','Increase available fault current','Eliminate need for grounding'],r:'210.12',t:'AFCI protection is intended to mitigate dangerous arcing faults associated with fire hazards.'},
+  // BRANCH CIRCUITS
+  {c:'BRANCH CIRCUITS',q:'What is the maximum overcurrent protection permitted for 14 AWG copper branch-circuit conductors?',a:'15A',o:['10A','15A','20A','25A'],r:'240.4(D)',t:'14 AWG copper branch-circuit conductors are limited to 15 amperes.'},
+  {c:'BRANCH CIRCUITS',q:'What is the maximum overcurrent protection permitted for 12 AWG copper branch-circuit conductors?',a:'20A',o:['15A','20A','25A','30A'],r:'240.4(D)',t:'12 AWG copper branch-circuit conductors are limited to 20 amperes.'},
+  {c:'BRANCH CIRCUITS',q:'What is the maximum overcurrent protection permitted for 10 AWG copper branch-circuit conductors?',a:'30A',o:['20A','25A','30A','35A'],r:'240.4(D)',t:'10 AWG copper branch-circuit conductors are limited to 30 amperes.'},
+  {c:'BRANCH CIRCUITS',q:'What is the typical minimum number of small-appliance branch circuits required for a dwelling kitchen and dining area?',a:'Two',o:['One','Two','Three','Four'],r:'210.11(C)(1)',t:'A minimum of two 20A small-appliance branch circuits is required for specified dwelling areas.'},
+  {c:'BRANCH CIRCUITS',q:'What is the minimum number of 20A laundry branch circuits required for a dwelling unit?',a:'One',o:['Zero','One','Two','Three'],r:'210.11(C)(2)',t:'A dwelling unit generally requires at least one 20-amp laundry branch circuit.'},
+  {c:'BRANCH CIRCUITS',q:'What is the minimum number of 20A bathroom branch circuits required in a dwelling unit?',a:'One',o:['Zero','One','Two','Three'],r:'210.11(C)(3)',t:'At least one 20-amp bathroom branch circuit is generally required in a dwelling unit.'},
+  {c:'BRANCH CIRCUITS',q:'For a 20-amp branch circuit supplying receptacles, the minimum conductor size is typically which copper size?',a:'12 AWG',o:['14 AWG','12 AWG','10 AWG','8 AWG'],r:'210.19(A)',t:'A 20-amp general-use branch circuit typically requires at least 12 AWG copper conductors.'},
+  {c:'BRANCH CIRCUITS',q:'What is the general rule for receptacle spacing in habitable rooms of a dwelling?',a:'No point along the floor line more than 6 feet from a receptacle',o:['Receptacles only every 20 feet','No point along the floor line more than 6 feet from a receptacle','One per wall minimum','Only one receptacle required per room'],r:'210.52(A)(1)',t:'The 6/12 rule: no point along the floor line is more than 6 feet from a receptacle outlet.'},
+  // CONDUCTORS & AMPACITY
+  {c:'CONDUCTORS',q:'THHN insulation is commonly associated with what dry-location temperature rating?',a:'90°C',o:['60°C','75°C','90°C','105°C'],r:'310.4',t:'THHN conductors carry a 90°C dry-location rating.'},
+  {c:'CONDUCTORS',q:'For conductor ampacity terminations rated 100A or less, what temperature column commonly applies unless equipment is listed otherwise?',a:'60°C column',o:['60°C column','75°C column','90°C column','105°C column'],r:'110.14(C)(1)(a)',t:'The 60°C limitation commonly applies to equipment rated 100A or less unless listed and identified for higher temperature.'},
+  {c:'CONDUCTORS',q:'What is the ampacity of a #6 AWG THHN Copper conductor at 75°C per Table 310.16?',a:'65 Amps',o:['55 Amps','65 Amps','75 Amps','85 Amps'],r:'Table 310.16',t:'Table 310.16 lists #6 AWG copper at 65A in the 75°C column — an essential lookup for wire sizing.'},
+  {c:'CONDUCTORS',q:'What is the minimum conductor size permitted to be run in parallel?',a:'1/0 AWG',o:['#1 AWG','1/0 AWG','2/0 AWG','250 kcmil'],r:'310.10(G)(1)',t:'Conductors smaller than 1/0 AWG are not generally permitted in parallel.'},
+  {c:'CONDUCTORS',q:'Which conductor is identified by white or gray insulation or by three continuous white stripes?',a:'Grounded conductor',o:['Ungrounded conductor','Equipment grounding conductor','Grounded conductor','Traveler conductor'],r:'200.6',t:'The grounded conductor is identified by white or gray, or by three continuous white stripes on other than green insulation.'},
+  {c:'CONDUCTORS',q:'What is the usual identification color for an insulated equipment grounding conductor?',a:'Green or green with yellow stripes',o:['White','Gray','Green or green with yellow stripes','Black'],r:'250.119',t:'An insulated equipment grounding conductor is identified by green or green with one or more yellow stripes.'},
+  // CONDUIT FILL
+  {c:'CONDUIT FILL',q:'What is the general maximum conduit fill for more than two conductors in a raceway?',a:'40%',o:['31%','40%','53%','60%'],r:'Table 1 Ch.9',t:'For more than two conductors, the general maximum raceway fill is 40 percent.'},
+  {c:'CONDUIT FILL',q:'What is the general maximum conduit fill for exactly one conductor in a raceway?',a:'53%',o:['31%','40%','53%','60%'],r:'Table 1 Ch.9',t:'For one conductor, the raceway fill limit is generally 53 percent.'},
+  {c:'CONDUIT FILL',q:'What is the general maximum conduit fill for exactly two conductors in a raceway?',a:'31%',o:['31%','40%','53%','60%'],r:'Table 1 Ch.9',t:'For two conductors, the raceway fill limit is generally 31 percent.'},
+  {c:'CONDUIT FILL',q:'How many #12 THHN conductors are allowed in 3/4-inch EMT per Annex C?',a:'16',o:['9','12','16','22'],r:'Annex C Table C.1',t:'Standard conduit fill table lookup: 3/4" EMT holds up to 16 conductors of #12 THHN.'},
+  {c:'CONDUIT FILL',q:'How many 12 AWG copper THHN current-carrying conductors are generally permitted in a 3/4-inch EMT before adjustment factors are needed?',a:'3',o:['3','4','6','9'],r:'310.15(C)(1)',t:'Adjustment factors apply when there are MORE than three current-carrying conductors. Three does not trigger derating.'},
+  // BOX FILL
+  {c:'BOX FILL',q:'A single yoke containing one device generally counts as how many conductor volumes in a box fill calculation?',a:'Two',o:['One','Two','Three','Four'],r:'314.16(B)(4)',t:'A single yoke or strap containing one device counts as two conductor volumes based on the largest conductor connected.'},
+  {c:'BOX FILL',q:'How are internal cable clamps counted in box fill calculations?',a:'One allowance total (regardless of number of clamps)',o:['Not counted','One allowance total (regardless of number of clamps)','One per clamp','Two per clamp'],r:'314.16(B)(2)',t:'One or more internal cable clamps count as a single conductor volume allowance — not one per clamp.'},
+  {c:'BOX FILL',q:'Do lever-actuated wire connectors (like push-in connectors) require a separate volume allowance in box fill calculations?',a:'No',o:['Yes, one per connector','Yes, for each wire','No','Only if #10 AWG or larger'],r:'314.16(B)',t:'2026 Clarification: Small splicing connectors like push-in types do not require a separate volume allowance.'},
+  // GROUNDING & BONDING
+  {c:'GROUNDING',q:'Equipment grounding conductors are sized primarily based on what?',a:'Rating of the overcurrent device ahead of the circuit',o:['Conduit size','Service voltage','Rating of the overcurrent device ahead of the circuit','Number of receptacles'],r:'Table 250.122',t:'EGC sizing comes from Table 250.122, based on the rating or setting of the overcurrent device.'},
+  {c:'GROUNDING',q:'Which wiring method is permitted to be used as an equipment grounding conductor when installed with proper fittings?',a:'EMT',o:['EMT','Flexible cord','NM cable jacket','PVC conduit'],r:'250.118',t:'EMT is recognized as an equipment grounding conductor when properly installed and electrically continuous.'},
+  {c:'GROUNDING',q:'What is the primary purpose of a grounding electrode system?',a:'Stabilize system voltage to earth and connect available electrodes',o:['Provide a low-impedance fault-return path on branch circuits','Stabilize system voltage to earth and connect available electrodes','Increase breaker size','Replace equipment grounding conductors'],r:'250.50',t:'The grounding electrode system connects the electrical system to earth and bonds available electrodes together.'},
+  {c:'GROUNDING',q:'Where is the main bonding jumper typically installed?',a:'At the service disconnecting means',o:['At every receptacle outlet','At the service disconnecting means','At the farthest panel','At every transformer secondary'],r:'250.28',t:'The main bonding jumper is located at the service disconnecting means or its equivalent bonding location.'},
+  {c:'GROUNDING',q:'What is the primary purpose of bonding metal parts likely to become energized?',a:'To create an effective fault current path',o:['To raise system voltage','To create an effective fault current path','To eliminate voltage drop','To reduce conductor insulation thickness'],r:'250.4(A)(5)',t:'Bonding joins conductive parts to establish an effective fault-current path and facilitate operation of overcurrent devices.'},
+  {c:'GROUNDING',q:'Table 250.122 is used to size which type of conductor?',a:'Equipment Grounding Conductor',o:['Grounding Electrode Conductor','Equipment Grounding Conductor','Main Bonding Jumper','Neutral Conductor'],r:'Table 250.122',t:'EGC is sized from Table 250.122, based on the overcurrent protective device (breaker) rating.'},
+  {c:'GROUNDING',q:'A service has 400 kcmil copper ungrounded conductors. What is the minimum size copper GEC per Table 250.66?',a:'1/0 AWG',o:['#2 AWG','1/0 AWG','2/0 AWG','3/0 AWG'],r:'Table 250.66',t:'Table 250.66 sizes the GEC based on the largest ungrounded service conductor. 400 kcmil Cu = 1/0 Cu GEC.'},
+  {c:'GROUNDING',q:'The main bonding jumper in a service must be sized using which table?',a:'Table 250.66',o:['Table 250.66','Table 250.122','Table 310.16','Table 430.52'],r:'250.28(D)',t:'The MBJ sizing follows the same logic as the GEC — Table 250.66.'},
+  {c:'GROUNDING',q:'The grounded conductor and EGC are generally bonded together on the load side of the service disconnect where?',a:'Only at service equipment or specific separately derived systems',o:['At every panelboard','Only at service equipment or specific separately derived systems','At every receptacle','Inside every junction box'],r:'250.24(A)',t:'Neutral-to-ground bonding is controlled and made only at service equipment or specific separately derived system points.'},
+  // LOAD CALCULATIONS (2026)
+  {c:'LOAD CALC 2026',q:'In the 2026 NEC, load calculation requirements for dwelling units were relocated from Article 220 to which Article?',a:'Article 120',o:['Article 210','Article 220','Article 120','Article 130'],r:'Art. 120',t:'Major 2026 restructure: Load calcs for dwelling units moved from Article 220 to new Article 120.'},
+  {c:'LOAD CALC 2026',q:'Under the 2026 NEC Optional Method (120.82), what value is used for the "First X kVA at 100%" calculation?',a:'8 kVA',o:['3 kVA','8 kVA','10 kVA','12 kVA'],r:'120.82(B)',t:'2026 Change: Reduced from 10 kVA to 8 kVA to account for modern energy-efficient appliances.'},
+  {c:'LOAD CALC 2026',q:'What is the general lighting load per square foot for a dwelling unit in the 2026 NEC?',a:'2 VA',o:['2 VA','3 VA','3.3 VA','5 VA'],r:'Table 120.12',t:'2026 Change: Reduced from 3 VA to 2 VA per sq ft due to the prevalence of LED lighting.'},
+  {c:'LOAD CALC 2026',q:'When calculating HVAC loads, conductors must be sized at ___% of the nameplate Minimum Circuit Ampacity (MCA).',a:'100%',o:['100%','125%','150%','250%'],r:'440.6(A)',t:'The 125% factor is already built into the MCA by the manufacturer, so conductors are sized at 100% of MCA.'},
+  {c:'LOAD CALC 2026',q:'For a commercial kitchen, what is the demand factor for 6 or more pieces of kitchen equipment?',a:'65%',o:['50%','65%','75%','80%'],r:'Table 120.56',t:'Standard demand factor for 6 or more pieces of commercial kitchen equipment is 65%.'},
+  // CONTINUOUS LOADS
+  {c:'CONTINUOUS LOADS',q:'What does "continuous load" mean in NEC usage?',a:'A load expected to continue for 3 hours or more',o:['A load expected to run for 30 minutes or more','A load expected to run for 1 hour or more','A load expected to continue for 3 hours or more','A load that never shuts off'],r:'Article 100',t:'A continuous load is one where maximum current is expected to continue for 3 hours or more.'},
+  {c:'CONTINUOUS LOADS',q:'Branch-circuit conductors serving continuous loads generally must be sized at not less than what percentage of the continuous load?',a:'125%',o:['100%','110%','125%','150%'],r:'210.19(A)(1)',t:'Branch-circuit conductors serving continuous loads are sized at not less than 125 percent of the continuous load.'},
+  // PANELBOARDS & SERVICE
+  {c:'PANELBOARD',q:'A panelboard in a dwelling unit generally cannot be installed in which location?',a:'Bathroom',o:['Basement','Hallway','Bathroom','Garage'],r:'240.24(E)',t:'Overcurrent devices generally cannot be located in bathrooms.'},
+  {c:'PANELBOARD',q:'What is the general maximum number of service disconnects historically associated with the "six disconnect" rule?',a:'6',o:['2','4','6','8'],r:'230.71(A)',t:'The familiar maximum is six service disconnects, though you should verify exact rules per edition and installation type.'},
+  {c:'SERVICE',q:'The overhead service drop must have a minimum clearance of ___ feet over a residential driveway.',a:'12 feet',o:['10 feet','12 feet','15 feet','18 feet'],r:'230.24(B)(2)',t:'Vertical clearance requirement for service conductors over a residential driveway is 12 feet.'},
+  // BURIAL / COVER
+  {c:'BURIAL DEPTH',q:'What is the minimum cover for rigid metal conduit under a residential driveway under typical conditions?',a:'6 inches',o:['6 inches','12 inches','18 inches','24 inches'],r:'Table 300.5',t:'Rigid metal conduit qualifies for the shallowest burial depth category. Always verify the exact table and use case.'},
+  {c:'BURIAL DEPTH',q:'What is the minimum cover for direct-buried cable under standard residential yard conditions?',a:'24 inches',o:['6 inches','12 inches','18 inches','24 inches'],r:'Table 300.5',t:'Direct-buried cable commonly requires 24 inches of cover under standard residential conditions.'},
+  // NM CABLE
+  {c:'NM CABLE',q:'What is the general rule for supporting NM cable near boxes, cabinets, or fittings?',a:'Within 12 inches',o:['Within 12 inches','Within 18 inches','Within 24 inches','Within 36 inches'],r:'334.30(B)',t:'NM cable must be secured within 12 inches of every box, cabinet, or fitting, with specific exceptions.'},
+  // RECEPTACLES
+  {c:'RECEPTACLES',q:'What is the general rule regarding receptacle replacement in a location now requiring GFCI where no equipment grounding conductor exists?',a:'GFCI-type replacement with required "no equipment ground" marking',o:['Nothing — replace with standard ungrounded only','GFCI-type replacement with required "no equipment ground" marking','A larger box only','Full rewire required always'],r:'406.4(D)',t:'Where replacement is permitted without an EGC, GFCI-type protection plus specific marking is the compliant path.'},
+  {c:'RECEPTACLES',q:'Which receptacles in dwelling units are generally required to be tamper-resistant?',a:'Most 125V, 15A and 20A receptacles in specified dwelling locations',o:['Only garage receptacles','Most 125V, 15A and 20A receptacles in specified dwelling locations','Only kitchen countertop receptacles','No receptacles'],r:'406.12',t:'Tamper-resistant requirements apply broadly to dwelling-unit receptacles in specified locations.'},
+  {c:'RECEPTACLES',q:'What is the maximum load permitted for a single cord-and-plug connected fastened-in-place appliance on a 20A, 120V branch circuit?',a:'80% of circuit rating',o:['50% of circuit rating','80% of circuit rating','100% of circuit rating','125% of circuit rating'],r:'210.23(A)(2)',t:'A single cord-and-plug connected fastened-in-place item is limited to 80 percent of the branch-circuit ampere rating.'},
+  // FLEXIBLE CORD
+  {c:'WIRING METHODS',q:'Which statement about flexible cords is most accurate?',a:'Permitted only for specific uses — not a substitute for fixed wiring',o:['May be used as a substitute for fixed wiring','Always permitted to pass through walls','Permitted only for specific uses — not a substitute for fixed wiring','Never require strain relief'],r:'400.8',t:'Flexible cords have limited permitted uses and cannot generally substitute for the fixed wiring of a structure.'},
+  // MOTORS
+  {c:'MOTORS',q:'What is the multiplier for an inverse time circuit breaker protecting a Design B polyphase motor?',a:'250%',o:['125%','175%','250%','300%'],r:'Table 430.52(C)(1)',t:'Standard motor branch-circuit protection calculation: Design B polyphase, inverse time breaker = 250% of FLA.'},
+  {c:'MOTORS',q:'Motor disconnecting means must be in sight from the motor and have a rating of at least ___% of motor FLA.',a:'115%',o:['100%','115%','125%','150%'],r:'430.110(A)',t:'The motor disconnect must be rated at not less than 115% of the motor full-load current.'},
+  // ARC FLASH
+  {c:'ARC FLASH',q:'The 2026 NEC requires arc-flash hazard markings on equipment to include which piece of information?',a:'Date of assessment',o:['Contractor license number','Date of assessment','Room temperature at time of install','Wire manufacturer name'],r:'110.16(B)',t:'2026 Change: Arc-flash marking must now include the date of assessment to ensure data remains current.'},
+  // DEFINITIONS / GENERAL
+  {c:'DEFINITIONS',q:'In general NEC use, an outlet is best described as what?',a:'Any point where current is taken to supply utilization equipment',o:['Any point where current is taken to supply utilization equipment','Only a duplex receptacle','Only a lighting outlet','A service disconnect'],r:'Article 100',t:'An outlet is a point on the wiring system where current is taken to supply utilization equipment.'},
+  {c:'VOLTAGE DROP',q:'The NEC recommends a maximum voltage drop of ___% for branch circuits as informational guidance.',a:'3%',o:['2%','3%','5%','8%'],r:'210.19(A) Note',t:'NEC informational note recommends no more than 3% voltage drop for branch circuits for operational performance.'},
+  // NEC ARTICLES
+  {c:'NEC ARTICLES',q:'Which article covers motors, motor circuits, and controllers?',a:'Article 430',o:['Article 210','Article 250','Article 300','Article 430'],r:'Art. 430',t:'Article 430 covers motors, motor circuits, and controllers.'},
+  {c:'NEC ARTICLES',q:'Which article covers grounding and bonding?',a:'Article 250',o:['Article 110','Article 220','Article 250','Article 310'],r:'Art. 250',t:'Article 250 is the core grounding and bonding article.'},
+  {c:'NEC ARTICLES',q:'Which article covers branch circuits?',a:'Article 210',o:['Article 210','Article 240','Article 250','Article 430'],r:'Art. 210',t:'Article 210 addresses branch circuits.'},
+  {c:'NEC ARTICLES',q:'Which article covers overcurrent protection?',a:'Article 240',o:['Article 220','Article 240','Article 300','Article 406'],r:'Art. 240',t:'Article 240 addresses overcurrent protection.'}
+];
+var _qzSet=[],_qzCur=0,_qzScore=0,_qzTotal=50;
+function qzStart(){
+  _qzCur=0;_qzScore=0;
+  // Shuffle all questions, take 50 (or all if fewer)
+  _qzSet=[..._qzBank].sort(function(){return Math.random()-0.5;}).slice(0,Math.min(_qzTotal,_qzBank.length));
+  _qzTotal=_qzSet.length;
+  document.getElementById('qz-end').style.display='none';
+  document.getElementById('qz-qa').style.display='block';
+  qzRender();
+}
+function qzRender(){
+  var q=_qzSet[_qzCur];
+  var pct=Math.round((_qzCur/_qzTotal)*100);
+  document.getElementById('qz-prog').style.width=pct+'%';
+  document.getElementById('qz-qnum').textContent=(_qzCur+1)+' / '+_qzTotal;
+  document.getElementById('qz-correct').textContent=_qzScore;
+  var sp=_qzCur>0?Math.round(_qzScore/_qzCur*100)+'%':'—';
+  document.getElementById('qz-score').textContent=sp;
+  var cv=document.getElementById('qz-cat');cv.textContent=q.c;cv.className='quiz-stat-val sm';
+  document.getElementById('qz-qtext').textContent=q.q;
+  document.getElementById('qz-feedback').style.display='none';
+  document.getElementById('qz-next').style.display='none';
+  var opts=document.getElementById('qz-opts');
+  opts.innerHTML='';
+  var shuffled=[...q.o].sort(function(){return Math.random()-0.5;});
+  shuffled.forEach(function(opt){
+    var b=document.createElement('button');
+    b.className='quiz-opt';b.textContent=opt;
+    b.onclick=function(){qzPick(opt,b,q);};
+    opts.appendChild(b);
+  });
+}
+function qzPick(choice,btn,q){
+  document.querySelectorAll('.quiz-opt').forEach(function(b){b.disabled=true;});
+  if(choice===q.a){
+    btn.classList.add('qz-ok');_qzScore++;
+  } else {
+    btn.classList.add('qz-bad');
+    document.querySelectorAll('.quiz-opt').forEach(function(b){if(b.textContent===q.a)b.classList.add('qz-ok');});
+  }
+  document.getElementById('qz-ref').textContent=q.r||'NEC 2026';
+  document.getElementById('qz-exp').textContent=q.t;
+  document.getElementById('qz-feedback').style.display='block';
+  document.getElementById('qz-next').style.display='block';
+  document.getElementById('qz-correct').textContent=_qzScore;
+  document.getElementById('qz-score').textContent=Math.round(_qzScore/(_qzCur+1)*100)+'%';
+}
+function qzNext(){
+  _qzCur++;
+  if(_qzCur<_qzTotal){qzRender();}else{qzFinish();}
+}
+function qzFinish(){
+  document.getElementById('qz-qa').style.display='none';
+  document.getElementById('qz-end').style.display='block';
+  document.getElementById('qz-prog').style.width='100%';
+  var pct=Math.round(_qzScore/_qzTotal*100);
+  document.getElementById('qz-pct').textContent=pct+'%';
+  document.getElementById('qz-fraction').textContent=_qzScore+' correct out of '+_qzTotal;
+  document.getElementById('qz-qnum').textContent=_qzTotal+' / '+_qzTotal;
+  document.getElementById('qz-correct').textContent=_qzScore;
+  document.getElementById('qz-score').textContent=pct+'%';
+  var msg=document.getElementById('qz-msg');
+  if(pct>=80){msg.innerHTML='<span class="quiz-score-pass">★ EXCELLENT — Exam ready!</span><br><span style="font-size:0.8rem;color:#94a3b8;">Score ≥ 80% — Strong command of 2026 NEC. Keep it up.</span>';}
+  else if(pct>=70){msg.innerHTML='<span class="quiz-score-pass">PASSING — Keep studying.</span><br><span style="font-size:0.8rem;color:#94a3b8;">Score 70–79% — Solid foundation. Review weak categories before exam day.</span>';}
+  else{msg.innerHTML='<span class="quiz-score-fail">BELOW PASSING — More review needed.</span><br><span style="font-size:0.8rem;color:#94a3b8;">Score &lt; 70% — Focus on GFCI, Grounding, Box Fill, and 2026 changes.</span>';}
+}
 
 // ── PDF Scanner ──────────────────────────────────────────────────
 var _scanPages=[];
