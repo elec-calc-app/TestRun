@@ -59,7 +59,7 @@ body.light-mode .tab-btn { color: #6b7280; }
 body.light-mode .tab-btn.active { color: #1a1200; background: #f0c020; border-radius: 8px; }
 body.light-mode .calc-home-lbl { color: #c9a010; }
 body.light-mode .menu-btn { color: #c9a010; }
-body.light-mode body { background: var(--bg); }
+body { background: var(--bg); }
 
   html {
     height: 100%;
@@ -181,7 +181,7 @@ body.light-mode body { background: var(--bg); }
   @media (hover: hover) { .tab-btn:hover:not(.active) { background: #2a2a2a; } }
 
   .tab-panel { display: none; }
-  .tab-panel.active { display: flex; flex-direction: column; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #ffffff; }
+  .tab-panel.active { display: flex; flex-direction: column; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
 
   /* ── Section labels ── */
   .section-label {
@@ -298,7 +298,7 @@ body.light-mode body { background: var(--bg); }
   .result-block {
     border-radius: 10px;
     border: 1.5px solid var(--border);
-    background: var(--neutral-bg);
+    background: var(--card);
     overflow: hidden;
     position: relative;
   }
@@ -387,7 +387,7 @@ body.light-mode body { background: var(--bg); }
   .code-note { padding:6px 20px 16px; font-family:'Roboto Mono',monospace; font-size:9px; color:var(--muted); line-height:1.4; text-align:center; }
 
   /* ── Fraction Calculator ── */
-  .fr-display { padding:8px 16px 10px; background:#ffffff; }
+  .fr-display { padding:8px 16px 10px; background:var(--card); }
   .fr-expr { font-family:'Roboto Mono',monospace; font-size:11px; color:rgba(0,0,0,.4); text-align:right; min-height:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .fr-main { font-family:'Inter',sans-serif; font-size:30px; font-weight:700; color:#000000; text-align:right; line-height:1.05; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:-.5px; }
   .fr-main.error { color:#fca5a5; font-size:18px; }
@@ -993,9 +993,9 @@ body.text-xxlarge{zoom:1.45;}
 .stg-material-btn{flex:1;background:#f3f4f6;border:none;border-right:1px solid #e5e7eb;padding:9px 16px;font-size:12px;font-weight:700;font-family:'Roboto Mono',monospace;color:#6b7280;cursor:pointer;transition:all .15s;}
 .stg-material-btn:last-child{border-right:none;}
 .stg-material-btn.active{background:#f0c020;color:#1a1200;}
-.stg-overlay{position:fixed;inset:0;background:#f3f4f6;z-index:800;overflow-y:auto;display:none;-webkit-overflow-scrolling:touch;}
+.stg-overlay{position:fixed;inset:0;background:var(--bg);z-index:800;overflow-y:auto;display:none;-webkit-overflow-scrolling:touch;}
 .stg-overlay.open{display:block;}
-.stg-overlay-head{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 14px) 16px 14px;background:#0d1018;border-bottom:1px solid rgba(240,192,32,.22);position:sticky;top:0;z-index:1;}
+.stg-overlay-head{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 14px) 16px 14px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;}
 .stg-overlay-title{font-family:'Orbitron',sans-serif;font-size:15px;color:#f0c020;letter-spacing:.04em;}
 .stg-overlay-close{background:none;border:none;color:#9ca3af;font-size:20px;cursor:pointer;padding:4px 6px;line-height:1;}
 </style>
@@ -2192,30 +2192,6 @@ if('serviceWorker' in navigator){
       </div>
 
       <div class="stg-group">
-        <div class="stg-group-lbl">Company</div>
-        <div class="stg-card stg-action-row" onclick="openCoModal()">
-          <span class="stg-action-icon">&#127970;</span>
-          <div class="stg-row-info">
-            <div class="stg-row-title">Company Branding</div>
-            <div class="stg-row-sub">Logo, name and contact info for exports</div>
-          </div>
-          <span class="stg-action-arrow">&#8250;</span>
-        </div>
-      </div>
-
-      <div class="stg-group">
-        <div class="stg-group-lbl">Company</div>
-        <div class="stg-card stg-action-row" onclick="closeSettings();openCoModal()">
-          <span class="stg-action-icon">&#127970;</span>
-          <div class="stg-row-info">
-            <div class="stg-row-title">Company Branding</div>
-            <div class="stg-row-sub">Logo, name and contact info for exports</div>
-          </div>
-          <span class="stg-action-arrow">&#8250;</span>
-        </div>
-      </div>
-
-      <div class="stg-group">
         <div class="stg-group-lbl" data-i18n="stg-data">Data</div>
         <div class="stg-card stg-action-row" onclick="clearAllAppData()">
           <span class="stg-action-icon">&#128465;&#65039;</span>
@@ -2932,6 +2908,67 @@ var _i18n = {
     'auto:Hot': 'Fase',
     'auto:Reference': 'Referencia',
     'auto:Code Table': 'Tabla Código',
+    'auto:Bend Type': 'Tipo de Doblez',
+    'auto:Bender': 'Dobladora',
+    'auto:Conduit Size': 'Tamaño de Conduit',
+    'auto:Stub Height (in)': 'Altura del Montante (pulg)',
+    'auto:Offset Rise (in)': 'Elevación del Offset (pulg)',
+    'auto:Obstacle Height (in)': 'Altura del Obstáculo (pulg)',
+    'auto:Obstacle Width (in)': 'Ancho del Obstáculo (pulg)',
+    'auto:Horiz Rise (in)': 'Elevación Horizontal (pulg)',
+    'auto:Vert Rise (in)': 'Elevación Vertical (pulg)',
+    'auto:Distance B-B (in)': 'Distancia C-C (pulg)',
+    'auto:Conduit Spacing (in)': 'Separación de Conduit (pulg)',
+    'auto:Spacing (in)': 'Separación (pulg)',
+    'auto:No. of Conduits': 'Núm. de Conduits',
+    'auto:Bend Angle': 'Ángulo de Doblez',
+    'auto:Custom Angle (°)': 'Ángulo Personalizado (°)',
+    'auto:Existing Bend Angle': 'Ángulo de Doblez Existente',
+    'auto:Existing Offset Rise (in)': 'Elevación de Offset Existente (pulg)',
+    'auto:New 1st Mark (in)': 'Nueva 1ra Marca (pulg)',
+    'auto:1st Mark (in)': '1ra Marca (pulg)',
+    'auto:1st Mark from End (in)': '1ra Marca desde el Extremo (pulg)',
+    'auto:1st Mark — C1 (in)': '1ra Marca — C1 (pulg)',
+    'auto:Center Mark (in)': 'Marca Central (pulg)',
+    'auto:Offset Depth (in)': 'Profundidad del Offset (pulg)',
+    'auto:Gain/Deduct Override': 'Ajuste de Ganancia/Deducción',
+    'auto:Support Fittings': 'Accesorios de Soporte',
+    'auto:Box Volume': 'Volumen de Caja',
+    'auto:Internal Clamps': 'Abrazaderas Internas',
+    'auto:Devices / Yokes': 'Dispositivos / Yugos',
+    'auto:Device Type': 'Tipo de Dispositivo',
+    'auto:Device Conductor AWG': 'Conductor del Dispositivo AWG',
+    'auto:EGC Count': 'Cant. de Conductores de Tierra',
+    'auto:Largest EGC': 'Conductor de Tierra Mayor',
+    'auto:Dimensions — L × W × D (inches)': 'Dimensiones — L × A × P (pulg)',
+    'auto:Nipple ≤24"': 'Niple ≤24"',
+    'auto:Installation': 'Instalación',
+    'auto:Insulation / Temp': 'Aislamiento / Temp',
+    'auto:Insulation Rating': 'Clasificación de Aislamiento',
+    'auto:Terminal Rating': 'Clasificación del Terminal',
+    'auto:Rooftop Conduit': 'Conduit en Azotea',
+    'auto:CCCs in Raceway': 'CCC en Canaleta',
+    'auto:Continuous Load': 'Carga Continua',
+    'auto:Amperes (A)': 'Amperios (A)',
+    'auto:Voltage (V)': 'Voltaje (V)',
+    'auto:Load (A)': 'Carga (A)',
+    'auto:Distance (ft)': 'Distancia (ft)',
+    'auto:Circuit Type': 'Tipo de Circuito',
+    'auto:Motor Type': 'Tipo de Motor',
+    'auto:Service Factor': 'Factor de Servicio',
+    'auto:Parallels': 'Paralelos',
+    'auto:Panel ID': 'ID del Panel',
+    'auto:Main Breaker': 'Interruptor Principal',
+    'auto:Band 1': 'Banda 1',
+    'auto:Band 2': 'Banda 2',
+    'auto:Band 3': 'Banda 3',
+    'auto:Multiplier': 'Multiplicador',
+    'auto:Tolerance': 'Tolerancia',
+    'auto:Value': 'Valor',
+    'auto:Mode': 'Modo',
+    'auto:Calculator': 'Calculadora',
+    'auto:Important Notice': 'Aviso Importante',
+    'auto:Engineering Info': 'Información de Ingeniería',
     'auto:Verify with AHJ before installation.': 'Verifique con la AHJ antes de instalar.',
     'auto:Design guidance only.': 'Solo referencia de diseño.',
 
@@ -2945,15 +2982,133 @@ var _i18n = {
       'f-type': {
         'Single Phase': 'Monofásico',
         'Three Phase': 'Trifásico',
-        'DC': 'CC'
+        'DC': 'CC',
+        'Residential': 'Residencial',
+        'Commercial 60°': 'Comercial 60°',
+        'Commercial 75°': 'Comercial 75°',
+        'Commercial 90°': 'Comercial 90°'
       },
       'f-material': {
         'Copper': 'Cobre',
         'Aluminum': 'Aluminio'
       },
+      'f-conductor': { 'Copper': 'Cobre', 'Aluminum': 'Aluminio' },
+      'a-conductor': { 'Copper': 'Cobre', 'Aluminum': 'Aluminio' },
+      'mc-cond': { 'Copper': 'Cobre', 'Aluminum': 'Aluminio' },
       'f-phase': {
         'Single Phase (1Ø)': 'Monofásico (1Ø)',
         'Three Phase (3Ø)': 'Trifásico (3Ø)'
+      },
+      'f-ctype': {
+        'Branch Circuit (3%)': 'Circuito Ramal (3%)',
+        'Feeder (3%)': 'Alimentador (3%)',
+        'Both (5%)': 'Ambos (5%)'
+      },
+      'f-install': {
+        'Cable / Non-Steel Conduit': 'Cable / Conduit No Metálico',
+        'Steel Conduit': 'Conduit de Acero',
+        'Direct Burial': 'Enterrado Directo',
+        'Overhead (≤3 conductors)': 'Aéreo (≤3 conductores)',
+        'Single Conductor Free Air': 'Conductor Único Aire Libre'
+      },
+      'a-objective': {
+        'Ampacity Lookup': 'Consulta de Amperaje',
+        'Minimum Conductor Size': 'Calibre Mínimo'
+      },
+      'a-install': {
+        'Raceway / Cable / Earth (310.16)': 'Canaleta / Cable / Tierra (310.16)',
+        'Single Conductor Free Air (310.17)': 'Conductor Único Aire Libre (310.17)'
+      },
+      'a-rooftop': {
+        'No': 'No',
+        'Yes — within 3/8" of roof (310.15(B)(2))': 'Sí — dentro de 3/8" del techo'
+      },
+      'a-continuous': {
+        'No': 'No',
+        'Yes — 3 hrs+ (×125%)': 'Sí — 3 hrs+ (×125%)'
+      },
+      'cf-mode': {
+        'Conduit Fill': 'Llenado de Conduit',
+        'Conduit Bend': 'Doblado de Conduit'
+      },
+      'cf-conduit': {
+        'EMT — Art. 358': 'EMT — Art. 358',
+        'RMC — Art. 344': 'RMC — Art. 344',
+        'IMC — Art. 342': 'IMC — Art. 342',
+        'PVC Sch. 40 — Art. 352': 'PVC Sch. 40 — Art. 352',
+        'PVC Sch. 80 — Art. 352': 'PVC Sch. 80 — Art. 352',
+        'ENT — Art. 362': 'ENT — Art. 362'
+      },
+      'cf-nipple': {
+        'No — standard fill rules': 'No — reglas estándar',
+        'Yes — 60% fill allowed (Note 4)': 'Sí — 60% permitido (Nota 4)'
+      },
+      'bend-type': {
+        'Stub-Up (90°)': 'Montante (90°)',
+        'Back-to-Back 90°': 'Espalda con Espalda 90°',
+        'Offset': 'Offset',
+        '3-Bend Saddle': 'Silla de 3 Dobleces',
+        '4-Bend Saddle': 'Silla de 4 Dobleces',
+        'Rolling Offset': 'Offset Rodante',
+        'Parallel Offset': 'Offset Paralelo',
+        'Match (Segment)': 'Igualado (Segmento)',
+        'Box Offset (2-Bend)': 'Offset de Caja (2 Dobleces)'
+      },
+      'bend-material': {
+        'EMT (springback ~1°)': 'EMT (retroceso ~1°)',
+        'IMC (springback ~3°)': 'IMC (retroceso ~3°)',
+        'RMC/Rigid (springback ~5°)': 'RMC/Rígido (retroceso ~5°)',
+        'PVC (no springback)': 'PVC (sin retroceso)'
+      },
+      'bf-boxtype': {
+        'Standard Metal Box (Table 314.16A)': 'Caja Metálica Estándar (Tabla 314.16A)',
+        'NEMA JB — Enter L × W × D': 'NEMA JB — Ingresar L × A × P',
+        'Custom / Nonmetallic (enter volume)': 'Personalizada / No Metálica (ingresar volumen)'
+      },
+      'mc-phase': {
+        '3-Phase AC': 'CA Trifásico',
+        'Single-Phase AC': 'CA Monofásico'
+      },
+      'mc-type': {
+        'Squirrel Cage (standard)': 'Jaula de Ardilla (estándar)',
+        'Design B Energy-Efficient': 'Diseño B Alta Eficiencia',
+        'Synchronous': 'Síncrono',
+        'Wound Rotor': 'Rotor Bobinado'
+      },
+      'mc-ocpd': {
+        'Inverse Time Breaker': 'Interruptor de Tiempo Inverso',
+        'Dual Element (Time-Delay) Fuse': 'Fusible de Doble Elemento (Retardo)',
+        'Non-Time Delay Fuse': 'Fusible Sin Retardo',
+        'Instantaneous Trip Breaker': 'Interruptor de Disparo Instantáneo'
+      },
+      'mc-sf': {
+        '≥ 1.15 or ≤40°C rise — 125% OL': '≥ 1.15 o ≤40°C — 125% Sobrecarga',
+        'Other — 115% OL': 'Otro — 115% Sobrecarga'
+      },
+      'bf-clamps': {
+        'None': 'Ninguna',
+        'Present — 1 allowance (314.16(B)(2))': 'Presente — 1 deducción (314.16(B)(2))'
+      },
+      'bf-devices': {
+        'None': 'Ninguno',
+        '1 device (2 allowances)': '1 dispositivo (2 deducciones)',
+        '2 devices (4 allowances)': '2 dispositivos (4 deducciones)',
+        '3 devices (6 allowances)': '3 dispositivos (6 deducciones)',
+        '4 devices (8 allowances)': '4 dispositivos (8 deducciones)'
+      },
+      'a-ccc': {
+        '1–3 (no adjustment)': '1–3 (sin ajuste)',
+        '4–6 conductors (80%)': '4–6 conductores (80%)',
+        '7–9 conductors (70%)': '7–9 conductores (70%)',
+        '10–20 conductors (50%)': '10–20 conductores (50%)',
+        '21–30 conductors (45%)': '21–30 conductores (45%)',
+        '31–40 conductors (40%)': '31–40 conductores (40%)',
+        '41+ conductors (35%)': '41+ conductores (35%)'
+      },
+      'pn-system': {
+        '120/240V · 1Ø · 3W': '120/240V · 1Ø · 3H',
+        '120/208V · 3Ø · 4W': '120/208V · 3Ø · 4H',
+        '277/480V · 3Ø · 4W': '277/480V · 3Ø · 4H'
       }
     }
   }
@@ -7123,6 +7278,7 @@ window.addEventListener('load',function(){
     <div class="jc-menu-section-lbl">Projects</div>
     <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'))"><span class="jc-menu-icon">📁</span>Projects</div>
     <div class="jc-menu-item" onclick="closeMenu();switchTab('notes',document.getElementById('tab-btn-notes'));openNewProjModal()"><span class="jc-menu-icon">➕</span>New Project</div>
+    <div class="jc-menu-item" onclick="closeMenu();openCoModal()" data-i18n-menu="company"><span class="jc-menu-icon">🏢</span>Company Branding</div>
     <div class="jc-menu-section-lbl">Settings</div>
     <div class="jc-menu-item" onclick="closeMenu();openSettings()"><span class="jc-menu-icon">&#9881;&#65039;</span>Settings</div>
     <div class="jc-menu-section-lbl">App</div>
