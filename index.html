@@ -8388,7 +8388,7 @@ window.addEventListener('load',function(){
       </button>
     </div>
     <!-- Pages grid -->
-    <div class="scan-pages-wrap" id="scan-pages-wrap" style="display:none;" id="scan-pages-wrap"></div>
+    <div class="scan-pages-wrap" id="scan-pages-wrap" style="display:none;"></div>
     <!-- Bottom bar -->
     <div class="scan-bar" id="scan-bar" style="display:none;">
       <span class="scan-count" id="scan-count">0 pages</span>
@@ -8424,6 +8424,7 @@ window.addEventListener('load',function(){
   </div>
 </div>
 
+<script>
 // ── PDF Scanner ──────────────────────────────────────────────────
 var _scanPages=[];
 function scanAddPage(input){
@@ -8464,10 +8465,10 @@ function scanRender(){
     return '<div class="scan-page-card">'+
       '<img class="scan-page-img" src="'+p.dataUrl+'">'+
       '<div class="scan-page-num">'+(i+1)+'</div>'+
-      '<button class="scan-page-del" onclick="scanDelete('+p.id+')">✕</button>'+
+      '<button class="scan-page-del" onclick="scanDelete('+p.id+')">&#x2715;</button>'+
       '<div class="scan-page-move">'+
-        (i>0?'<button class="scan-mv-btn" onclick="scanMove('+p.id+',-1)">\u2191</button>':'')+
-        (i<_scanPages.length-1?'<button class="scan-mv-btn" onclick="scanMove('+p.id+',1)">\u2193</button>':'')+
+        (i>0?'<button class="scan-mv-btn" onclick="scanMove('+p.id+',-1)">&#x2191;</button>':'')+
+        (i<_scanPages.length-1?'<button class="scan-mv-btn" onclick="scanMove('+p.id+',1)">&#x2193;</button>':'')+
       '</div>'+
     '</div>';
   }).join('')+'</div>';
@@ -8477,7 +8478,8 @@ function scanDelete(id){
   scanRender();
 }
 function scanMove(id,dir){
-  var idx=_scanPages.findIndex(function(p){return p.id===id;});
+  var idx=-1;
+  for(var i=0;i<_scanPages.length;i++){if(_scanPages[i].id===id){idx=i;break;}}
   if(idx<0)return;
   var ni=idx+dir;
   if(ni<0||ni>=_scanPages.length)return;
@@ -8493,7 +8495,7 @@ function scanGeneratePDF(){
   if(!_scanPages.length)return;
   var jspdfLib=window.jspdf;
   if(!jspdfLib||!jspdfLib.jsPDF){
-    alert('PDF library is still loading — please wait a moment and try again.');
+    alert('PDF library is still loading, please try again in a moment.');
     return;
   }
   var overlay=document.getElementById('scan-overlay');
@@ -8506,7 +8508,7 @@ function scanGeneratePDF(){
     try{
       var jsPDF=jspdfLib.jsPDF;
       var first=_scanPages[0];
-      var pw=612, ph=Math.round(612*first.h/first.w);
+      var pw=612,ph=Math.round(612*first.h/first.w);
       var doc=new jsPDF({unit:'pt',format:[pw,ph],compress:true});
       _scanPages.forEach(function(p,i){
         var w2=612,h2=Math.round(612*p.h/p.w);
@@ -8515,8 +8517,8 @@ function scanGeneratePDF(){
         if(bar)bar.style.width=Math.round((i+1)/_scanPages.length*100)+'%';
       });
       if(lbl)lbl.textContent='Saving\u2026';
-      var slug='scan_'+new Date().toLocaleDateString('en-US').replace(/\//g,'-');
-      var fname=slug+'.pdf';
+      var d=new Date();
+      var fname='scan_'+( d.getMonth()+1)+'-'+d.getDate()+'-'+d.getFullYear()+'.pdf';
       var blob=doc.output('blob');
       if(overlay)overlay.classList.remove('visible');
       var shareFile=new File([blob],fname,{type:'application/pdf'});
@@ -8534,6 +8536,6 @@ function scanDownload(blob,fname){
   var a=document.createElement('a');a.href=url;a.download=fname;a.click();
   setTimeout(function(){URL.revokeObjectURL(url);},2000);
 }
-
+</script>
 </body>
 </html>
