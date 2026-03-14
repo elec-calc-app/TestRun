@@ -55,9 +55,8 @@ body.light-mode {
   --muted: #7a8fa0;
 }
 body.light-mode .calc-wrap { background: var(--card); }
-body.light-mode .tab-bar { background: #ffffff; border-bottom: 1px solid #e0e4ea; }
 body.light-mode .tab-btn { color: #6b7280; }
-body.light-mode .tab-btn.active { color: #1a1200; background: #f0c020; border-radius: 8px; }
+body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-radius: 8px; }
 /* ── Charts Tab ── */
 .charts-hdr{padding:18px 16px 4px;}.charts-hdr-title{font-size:17px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;}.charts-hdr-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;margin-bottom:4px;}
 .cht-card{margin:10px 12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
@@ -2215,8 +2214,8 @@ if('serviceWorker' in navigator){
               <div class="stg-row-sub">App appearance</div>
             </div>
             <div class="stg-material-btns">
-              <button class="stg-material-btn stg-theme-btn active" data-theme="dark" onclick="setTheme('dark')">Dark</button>
-              <button class="stg-material-btn stg-theme-btn" data-theme="light" onclick="setTheme('light')">Light</button>
+              <button class="stg-material-btn stg-theme-btn" data-theme="dark" onclick="setTheme('dark')">Dark</button>
+              <button class="stg-material-btn stg-theme-btn active" data-theme="light" onclick="setTheme('light')">Light</button>
             </div>
           </div>
         </div>
@@ -3733,7 +3732,7 @@ function setTextSize(size,init){
   document.querySelectorAll('.stg-tsz-btn').forEach(function(b){b.classList.toggle('active',b.dataset.size===size);});
 }
 // ── Dark / Light Mode ──
-var _theme = localStorage.getItem('jc_theme') || 'dark';
+var _theme = localStorage.getItem('jc_theme') || 'light';
 function setTheme(theme, init) {
   _theme = theme;
   if (!init) localStorage.setItem('jc_theme', theme);
@@ -8060,7 +8059,7 @@ window.addEventListener('load',function(){
   // Init text size
   setTextSize(localStorage.getItem('jc_text_size')||'normal',true);
   // Init new settings
-  setTheme(localStorage.getItem('jc_theme') || 'dark', true);
+  setTheme(localStorage.getItem('jc_theme') || 'light', true);
   setKeepAwake(localStorage.getItem('jc_keep_awake')==='1',true);
   setDefMaterial(localStorage.getItem('jc_def_material')||'CU',true);
   setUnits(localStorage.getItem('jc_units') || 'ft', true);
