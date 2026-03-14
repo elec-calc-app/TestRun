@@ -637,12 +637,12 @@ body { background: var(--bg); }
 .note-hd-left{flex:1;min-width:0;}
 .note-title-txt{color:var(--text);font-size:13px;font-weight:700;font-family:'Inter',sans-serif;display:block;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .note-title-txt.placeholder{color:#9ca3af;}
-.note-edit-btn{background:none;border:none;color:#d1d5db;font-size:13px;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.note-edit-btn{background:none;border:none;color:#d1d5db;font-size:20px;cursor:pointer;padding:2px 4px;line-height:1;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
 .note-edit-btn:active{color:#f0c020;}
 .note-hd-meta{display:flex;align-items:center;gap:8px;}
 .note-src-badge{font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(240,192,32,0.12);color:#92700a;border:1px solid rgba(240,192,32,0.3);padding:2px 7px;border-radius:4px;flex-shrink:0;}
 .note-ts{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted);}
-.note-chevron{color:var(--muted);font-size:32px;transition:transform .2s;flex-shrink:0;line-height:1;}
+.note-chevron{color:var(--muted);font-size:22px;transition:transform .2s;flex-shrink:0;line-height:1;}
 .note-card.expanded .note-chevron{transform:rotate(180deg);}
 .note-card-bd{display:none;padding:0 14px 14px;border-top:1px solid var(--border);}
 .note-card.expanded .note-card-bd{display:block;}
@@ -665,7 +665,7 @@ body { background: var(--bg); }
 .notes-add-btn{background:#f0c020;color:#1a1200;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:.2px;}
 .notes-add-btn:active{opacity:.85;}
 /* Note pin / flag */
-.note-pin-btn,.note-flag-btn{background:none;border:none;font-size:28px;cursor:pointer;padding:2px 3px;color:#d1d5db;flex-shrink:0;line-height:1;-webkit-tap-highlight-color:transparent;}
+.note-pin-btn,.note-flag-btn{background:none;border:none;font-size:20px;cursor:pointer;padding:2px 3px;color:#d1d5db;flex-shrink:0;line-height:1;-webkit-tap-highlight-color:transparent;}
 .note-pin-btn.pinned{color:#f0c020;}.note-flag-btn.flagged{color:#dc2626;}
 .note-pinned-bar{font-size:9px;font-weight:700;letter-spacing:.1em;color:#92700a;background:#fef9c3;text-align:center;padding:2px 8px;text-transform:uppercase;}
 .manual-note-meta{display:flex;align-items:center;gap:6px;margin-top:4px;}
@@ -734,7 +734,7 @@ body { background: var(--bg); }
 .manual-note-title-inp::placeholder{color:#d1d5db;}
 .manual-badge{font-size:9px;font-weight:700;letter-spacing:.08em;color:#92700a;background:#fef9c3;border-radius:4px;padding:2px 6px;white-space:nowrap;text-transform:uppercase;flex-shrink:0;}
 .manual-note-ts{font-size:10px;color:#9ca3af;white-space:nowrap;flex-shrink:0;}
-.manual-note-chevron{color:var(--muted);font-size:32px;flex-shrink:0;cursor:pointer;transition:transform .2s;padding:4px 0 4px 4px;}
+.manual-note-chevron{color:var(--muted);font-size:22px;flex-shrink:0;cursor:pointer;transition:transform .2s;padding:4px 0 4px 4px;}
 .manual-note-preview{display:none;}
 .manual-note-bd{display:none;padding:0 14px 14px;border-top:1px solid var(--border);}
 .manual-note-card.expanded .manual-note-bd{display:block;}
@@ -4950,9 +4950,9 @@ function renderManualNoteCard(n){
   var cardClass='manual-note-card'+(n.pinned?' note-pinned':'')+(n.flagged?' note-flagged':'');
   return '<div class="'+cardClass+'" id="mn-'+n.id+'">'+
     (n.pinned?'<div class="note-pinned-bar">Pinned</div>':'')+
-    '<div class="manual-note-hd">'+
+    '<div class="manual-note-hd" onclick="jcToggleManualNote('+n.id+')" style="cursor:pointer;">'+
       '<div style="flex:1;min-width:0;">'+
-        '<input class="manual-note-title-inp" type="text" placeholder="Note title…" value="'+escHtml(n.title||'')+'" oninput="updateManualNoteTitle('+n.id+',this.value)">'+
+        '<span class="note-title-txt'+(n.title?'':' placeholder')+'" style="display:block;margin-bottom:5px;">'+escHtml(n.title||'Untitled Note')+'</span>'+
         '<div class="manual-note-meta">'+
           '<span class="note-src-badge">Note</span>'+
           '<span class="note-ts">'+ts+'</span>'+
@@ -4960,9 +4960,10 @@ function renderManualNoteCard(n){
           (n.flagged?'<span style="font-size:9px;font-weight:700;color:#dc2626;letter-spacing:.06em;text-transform:uppercase;">Flagged</span>':'')+
         '</div>'+
       '</div>'+
+      '<button class="note-edit-btn" onclick="event.stopPropagation();jcRenameNote('+n.id+')" title="Edit">✏</button>'+
       '<button class="note-pin-btn'+(n.pinned?' pinned':'')+'" onclick="event.stopPropagation();toggleNotePin('+n.id+')" title="Pin">'+(n.pinned?'★':'☆')+'</button>'+
       '<button class="note-flag-btn'+(n.flagged?' flagged':'')+'" onclick="event.stopPropagation();toggleNoteFlag('+n.id+')" title="Flag">⚑</button>'+
-      '<span class="manual-note-chevron" onclick="jcToggleManualNote('+n.id+')">▾</span>'+
+      '<span class="manual-note-chevron">▾</span>'+
     '</div>'+
     '<div class="manual-note-bd">'+
       clHtml+
