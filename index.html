@@ -545,7 +545,7 @@ body { background: var(--bg); }
   .wc-sub-panel.active { display:block; }
 
   /* ── Phase Color Chart ── */
-  .pc-head{background:#f3f4f6;padding:6px 10px;font-family:'Roboto Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#374151;border:1.5px solid #374151;border-bottom:none;border-radius:5px 5px 0 0;}
+  .pc-head{background:#f3f4f6;padding:6px 10px;font-family:'Roboto Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#374151;border:1.5px solid #374151;border-bottom:none;border-radius:5px 5px 0 0;}
   .pc-panels-wrap{display:flex;gap:8px;margin:0 12px 10px;}
   .pc-panel-half{flex:1;min-width:0;}
   .pc-panel-half .pc-head{margin:0;}
@@ -553,9 +553,9 @@ body { background: var(--bg); }
   .pc-row{display:flex;align-items:stretch;height:22px;}
   .pc-row+.pc-row{border-top:1px solid rgba(0,0,0,0.15);}
   .pc-row.pc-grp-sep{border-top:1.5px solid #374151;}
-  .pc-num-L{width:20px;font-size:8px;font-family:'Roboto Mono',monospace;font-weight:700;color:#374151;display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:#f3f4f6;flex-shrink:0;}
+  .pc-num-L{width:20px;font-size:11px;font-family:'Roboto Mono',monospace;font-weight:700;color:#374151;display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:#f3f4f6;flex-shrink:0;}
   .pc-num-R{width:24px;font-size:11px;font-family:'Roboto Mono',monospace;font-weight:700;color:var(--sub);display:flex;align-items:center;justify-content:flex-start;padding-left:3px;background:var(--surface);flex-shrink:0;}
-  .pc-bar{flex:1;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:700;font-family:'Roboto Mono',monospace;color:rgba(255,255,255,0.95);}
+  .pc-bar{flex:1;display:flex;align-items:center;padding:0 5px;font-size:11px;font-weight:700;font-family:'Roboto Mono',monospace;color:rgba(255,255,255,0.95);}
   .pc-bar-L{justify-content:flex-end;}
   .pc-bar-R{justify-content:flex-start;}
   .pc-bus{width:2px;background:#374151;flex-shrink:0;}
@@ -8426,7 +8426,6 @@ window.addEventListener('load',function(){
   </div>
 </div>
 
-<script>
 // ── PDF Scanner ──────────────────────────────────────────────────
 var _scanPages=[];
 function scanAddPage(input){
@@ -8537,7 +8536,6 @@ function scanDownload(blob,fname){
   var a=document.createElement('a');a.href=url;a.download=fname;a.click();
   setTimeout(function(){URL.revokeObjectURL(url);},2000);
 }
-</script>
 
 </body>
 </html>
