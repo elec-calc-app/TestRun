@@ -54,7 +54,9 @@ body.light-mode {
   --muted: #7a8fa0;
 }
 body.light-mode .calc-wrap { background: var(--card); }
-/* tab-bar always gold — no light-mode override */
+body.light-mode .tab-bar { background: #ffffff; border-bottom: 1px solid #e0e4ea; }
+body.light-mode .tab-btn { color: #6b7280; }
+body.light-mode .tab-btn.active { color: #1a1200; background: #f0c020; border-radius: 8px; }
 /* ── Charts Tab ── */
 .charts-hdr{padding:18px 16px 4px;}.charts-hdr-title{font-size:17px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;}.charts-hdr-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;margin-bottom:4px;}
 .cht-card{margin:10px 12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
@@ -2858,7 +2860,7 @@ function setTextSize(size,init){
   document.querySelectorAll('.stg-tsz-btn').forEach(function(b){b.classList.toggle('active',b.dataset.size===size);});
 }
 // ── Dark / Light Mode ──
-var _theme = localStorage.getItem('jc_theme') || 'light';
+var _theme = localStorage.getItem('jc_theme') || 'dark';
 function setTheme(theme, init) {
   _theme = theme;
   if (!init) localStorage.setItem('jc_theme', theme);
@@ -3797,7 +3799,7 @@ function confirmNewProj(){
   projects.unshift({id:id,name:name,foreman:foreman,po:po,startDate:startDate,created:id});
   saveProjList(projects);
   closeNewProjModal();
-  openProject(id);
+  renderProjList();
 }
 // ──────────────────────────────────────────────
 function renderNotes(){
@@ -4092,7 +4094,7 @@ function renderManualNoteCard(n){
       photosHtml+
       '<div class="note-card-actions">'+
         '<div class="note-actions-row">'+
-          '<button class="note-copy-btn" onclick="focusManualTitle('+n.id+')">Edit</button>'+
+          '<button class="note-copy-btn" onclick="copyNoteContent('+n.id+')">Copy</button>'+
           '<button class="note-copy-btn" onclick="duplicateNote('+n.id+')">Duplicate</button>'+
           '<button class="note-export-card-btn" onclick="jcExportNote('+n.id+')">Export</button>'+
         '</div>'+
@@ -4103,10 +4105,6 @@ function renderManualNoteCard(n){
       '</div>'+
     '</div>'+
   '</div>';
-}
-function focusManualTitle(id){
-  var ti=document.querySelector('#mn-'+id+' .manual-note-title-inp');
-  if(ti){ti.focus();ti.select();}
 }
 function jcToggleManualNote(id){
   var el=document.getElementById('mn-'+id);
@@ -7189,7 +7187,7 @@ window.addEventListener('load',function(){
   // Init text size
   setTextSize(localStorage.getItem('jc_text_size')||'normal',true);
   // Init new settings
-  setTheme(localStorage.getItem('jc_theme') || 'light', true);
+  setTheme(localStorage.getItem('jc_theme') || 'dark', true);
   setKeepAwake(localStorage.getItem('jc_keep_awake')==='1',true);
   setDefMaterial(localStorage.getItem('jc_def_material')||'CU',true);
   setUnits(localStorage.getItem('jc_units') || 'ft', true);
