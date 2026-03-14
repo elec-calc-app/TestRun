@@ -4960,7 +4960,6 @@ function renderManualNoteCard(n){
           (n.flagged?'<span style="font-size:9px;font-weight:700;color:#dc2626;letter-spacing:.06em;text-transform:uppercase;">Flagged</span>':'')+
         '</div>'+
       '</div>'+
-      '<button class="note-edit-btn" onclick="event.stopPropagation();jcRenameNote('+n.id+')" title="Edit">✏</button>'+
       '<button class="note-pin-btn'+(n.pinned?' pinned':'')+'" onclick="event.stopPropagation();toggleNotePin('+n.id+')" title="Pin">'+(n.pinned?'★':'☆')+'</button>'+
       '<button class="note-flag-btn'+(n.flagged?' flagged':'')+'" onclick="event.stopPropagation();toggleNoteFlag('+n.id+')" title="Flag">⚑</button>'+
       '<span class="manual-note-chevron">▾</span>'+
