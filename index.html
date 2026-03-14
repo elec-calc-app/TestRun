@@ -4484,8 +4484,8 @@ function setCodeYear(year){
   if(sb)sb.classList.add('active');
   // Show/hide 2026-only conductor sizes in wire selects
   document.querySelectorAll('.opt-2026').forEach(function(o){o.style.display=year==='2026'?'':'none';});
-  // Refresh GFCI/AFCI tab if visible
-  if(typeof gfciRender==='function' && document.getElementById('gfci-dw-tbody')) gfciRender();
+  // Refresh GFCI/AFCI tab if visible (guard: data arrays must be initialized first)
+  if(typeof gfciRender==='function' && typeof _GFCI_DW!=='undefined' && _GFCI_DW && document.getElementById('gfci-dw-tbody')) gfciRender();
 }
 // ── Save to Notes ──
 var _jcPending=null;
