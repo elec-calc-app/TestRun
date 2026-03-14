@@ -66,10 +66,10 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .cht-chev{font-size:11px;color:var(--muted);flex-shrink:0;transition:transform .2s;}
 .cht-body{display:none;border-top:1px solid var(--border);padding:0 0 10px;}
 .cht-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.cht-tbl{border-collapse:collapse;width:100%;font-family:'Roboto Mono',monospace;font-size:11px;min-width:480px;}
-.cht-tbl th{background:var(--surface);color:var(--sub);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;}
+.cht-tbl{border-collapse:collapse;width:100%;font-family:'Roboto Mono',monospace;font-size:11px;}
+.cht-tbl th{background:var(--surface);color:var(--sub);font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:5px 7px;text-align:right;border-bottom:1px solid var(--border);white-space:normal;line-height:1.2;position:sticky;top:0;}
 .cht-tbl th:first-child{text-align:left;}
-.cht-tbl td{padding:6px 10px;text-align:right;color:var(--text);border-bottom:1px solid var(--border);white-space:nowrap;}
+.cht-tbl td{padding:5px 7px;text-align:right;color:var(--text);border-bottom:1px solid var(--border);white-space:nowrap;}
 .cht-tbl td:first-child{text-align:left;font-weight:700;color:var(--sub);}
 .cht-tbl tr:last-child td{border-bottom:none;}
 .cht-tbl tr:hover td{background:var(--surface);}
@@ -2846,7 +2846,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-emt">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Trade Size</th><th>ID (in)</th><th>Total Area (in²)</th><th>1 Wire (53%)</th><th>2 Wires (31%)</th><th>3+ Wires (40%)</th></tr></thead>
+            <thead><tr><th>Size</th><th>ID (in)</th><th>Area (in²)</th><th>1-Wire</th><th>2-Wire</th><th>3+ Wire</th></tr></thead>
             <tbody>
               <tr><td>1/2"</td><td>0.622</td><td>0.304</td><td>0.161</td><td>0.094</td><td>0.122</td></tr>
               <tr><td>3/4"</td><td>0.824</td><td>0.533</td><td>0.283</td><td>0.165</td><td>0.213</td></tr>
@@ -2875,7 +2875,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-rigid">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Trade Size</th><th>RMC ID (in)</th><th>RMC Area (in²)</th><th>40% Fill (3+)</th><th>IMC ID (in)</th><th>IMC Area (in²)</th><th>40% Fill (3+)</th></tr></thead>
+            <thead><tr><th>Size</th><th>RMC ID</th><th>RMC (in²)</th><th>RMC 40%</th><th>IMC ID</th><th>IMC (in²)</th><th>IMC 40%</th></tr></thead>
             <tbody>
               <tr><td>1/2"</td><td>0.632</td><td>0.314</td><td>0.126</td><td>0.660</td><td>0.342</td><td>0.137</td></tr>
               <tr><td>3/4"</td><td>0.836</td><td>0.549</td><td>0.220</td><td>0.864</td><td>0.586</td><td>0.234</td></tr>
@@ -2906,7 +2906,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-wirearea">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Size</th><th>OD (in)</th><th>Area (in²)</th><th># in 1/2" EMT</th><th># in 3/4" EMT</th><th># in 1" EMT</th><th># in 1-1/4" EMT</th></tr></thead>
+            <thead><tr><th>Size</th><th>OD (in)</th><th>Area (in²)</th><th>½" EMT</th><th>¾" EMT</th><th>1" EMT</th><th>1¼" EMT</th></tr></thead>
             <tbody>
               <tr><td>14 AWG</td><td>0.105</td><td>0.0087</td><td>14</td><td>24</td><td>39</td><td>69</td></tr>
               <tr><td>12 AWG</td><td>0.130</td><td>0.0133</td><td>9</td><td>16</td><td>26</td><td>45</td></tr>
@@ -2941,7 +2941,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-mot3">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>HP</th><th>FLA @ 460V</th><th>125% (wire)</th><th>Min Wire (75°C)</th><th>Max OCPD (175%)</th></tr></thead>
+            <thead><tr><th>HP</th><th>460V FLA</th><th>125%</th><th>Min Wire</th><th>Max OCPD</th></tr></thead>
             <tbody>
               <tr><td>1/2</td><td>1.1 A</td><td>1.4 A</td><td>14 AWG</td><td>2 A</td></tr>
               <tr><td>3/4</td><td>1.6 A</td><td>2.0 A</td><td>14 AWG</td><td>3 A</td></tr>
@@ -3018,7 +3018,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-egc">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>OCPD Rating</th><th>Min EGC (Copper)</th><th>Min EGC (Aluminum)</th></tr></thead>
+            <thead><tr><th>OCPD</th><th>EGC Cu</th><th>EGC Al</th></tr></thead>
             <tbody>
               <tr><td>15 A</td><td>14 AWG</td><td>12 AWG</td></tr>
               <tr><td>20 A</td><td>12 AWG</td><td>10 AWG</td></tr>
@@ -3058,7 +3058,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-gec">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Largest Service Conductor</th><th>GEC Copper</th><th>GEC Aluminum</th></tr></thead>
+            <thead><tr><th>Service Conductor</th><th>GEC Cu</th><th>GEC Al</th></tr></thead>
             <tbody>
               <tr><td>2 AWG or smaller</td><td>8 AWG</td><td>6 AWG</td></tr>
               <tr><td>1 AWG – 1/0</td><td>6 AWG</td><td>4 AWG</td></tr>
@@ -3084,7 +3084,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-boxfill">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Wire Size</th><th>Volume per Conductor (in³)</th><th>Common Box Sizes</th><th>Box Volume (in³)</th></tr></thead>
+            <thead><tr><th>Size</th><th>Vol/Cond (in³)</th><th>Box Size</th><th>Box Vol (in³)</th></tr></thead>
             <tbody>
               <tr><td>18 AWG</td><td>1.50</td><td>4" sq × 1-1/4"</td><td>18.0</td></tr>
               <tr><td>16 AWG</td><td>1.75</td><td>4" sq × 1-1/2"</td><td>21.0</td></tr>
@@ -3162,7 +3162,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-tempcorr">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Ambient Temp</th><th>60°C Factor</th><th>75°C Factor</th><th>90°C Factor</th></tr></thead>
+            <thead><tr><th>Ambient</th><th>60°C</th><th>75°C</th><th>90°C</th></tr></thead>
             <tbody>
               <tr><td>10°C (50°F)</td><td>1.29</td><td>1.20</td><td>1.15</td></tr>
               <tr><td>15°C (59°F)</td><td>1.22</td><td>1.15</td><td>1.12</td></tr>
@@ -3194,7 +3194,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-bundle">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th># Current-Carrying Conductors</th><th>Adjustment Factor</th></tr></thead>
+            <thead><tr><th># CCC</th><th>Factor</th></tr></thead>
             <tbody>
               <tr><td>4 – 6</td><td>0.80 (80%)</td></tr>
               <tr><td>7 – 9</td><td>0.70 (70%)</td></tr>
@@ -3246,7 +3246,7 @@ if('serviceWorker' in navigator){
       <div class="cht-body" id="cht-wiretypes">
         <div class="cht-scroll">
           <table class="cht-tbl">
-            <thead><tr><th>Type</th><th>Max Temp</th><th>Wet/Dry</th><th>Typical Use</th></tr></thead>
+            <thead><tr><th>Type</th><th>Temp</th><th>Location</th><th>Use</th></tr></thead>
             <tbody>
               <tr><td>THHN</td><td>90°C</td><td>Dry only</td><td>General branch circuits in conduit</td></tr>
               <tr><td>THWN-2</td><td>90°C</td><td>Wet &amp; Dry</td><td>Conduit, including wet locations</td></tr>
