@@ -3856,8 +3856,9 @@ var AMP17_2023={copper:{'18':[null,null,18],'16':[null,null,24],'14':[25,30,35],
 var AMP17_2026=AMP17_2023;
 
 // ── Year-keyed table helpers — use these everywhere instead of AMP16/AMP17 directly ──
-function getAmpTbl16(){return (_codeYear==='2026'||_codeYear==='2023')?AMP16_2026:AMP16;}
-function getAmpTbl17(){return (_codeYear==='2026'||_codeYear==='2023')?AMP17_2023:AMP17;}
+// 2020, 2023, and 2026 NEC all use identical 310.16 and 310.17 values (confirmed from physical code books)
+function getAmpTbl16(){return AMP16_2026;}
+function getAmpTbl17(){return AMP17_2023;}
 
 // ── Table 310.15(B)(1)(1) — Ambient Correction Factors (30°C base) ──────────
 var AMB={'10':[1.29,1.20,1.15],'11':[1.22,1.15,1.12],'16':[1.15,1.11,1.08],'21':[1.08,1.05,1.04],'26':[1.00,1.00,1.00],'30':[1.00,1.00,1.00],'31':[0.91,0.94,0.96],'36':[0.82,0.88,0.91],'41':[0.71,0.82,0.87],'46':[0.58,0.75,0.82],'51':[0.41,0.67,0.76],'56':[null,0.58,0.71],'61':[null,0.47,0.65],'66':[null,0.33,0.58],'71':[null,null,0.50],'76':[null,null,0.41],'81':[null,null,0.29]};
@@ -8478,30 +8479,32 @@ function calculateEV() {
 
 // ── GFCI / AFCI Lookup ───────────────────────────────────────────────────────
 
-// Dwelling locations: [label, gfci_all_years, afci_2020, afci_2023_plus, ref]
+// Dwelling locations: [label, gfci_min_year, afci_2020, afci_2023_plus, ref, pre2026_note]
+// gfci_min_year: '2020'|'2023'|'2026'|false(AFCI-only) — minimum code year this item requires GFCI
+// All three years (2020/2023/2026) confirmed from physical code books
 var _GFCI_DW = [
-  ['Bathrooms',                         true,  false, false, '210.8(A)(1)'],
-  ['Garages',                           true,  false, false, '210.8(A)(2)'],
-  ['Accessory building storage areas',  true,  false, false, '210.8(A)(3)'],
-  ['Outdoors',                          true,  false, false, '210.8(A)(4)'],
-  ['Crawl spaces — at or below grade',  true,  false, false, '210.8(A)(5)'],
-  ['Basements',                         true,  false, false, '210.8(A)(6)'],
-  ['Kitchens',                          true,  true,  true,  '210.8(A)(7) / 210.12(B)(1)'],
-  ['Food/beverage prep areas w/ sink',  true,  false, false, '210.8(A)(8)'],
-  ['Sinks — within 6 ft of bowl edge',  true,  false, false, '210.8(A)(9)'],
-  ['Boathouses',                        true,  false, false, '210.8(A)(10)'],
-  ['Bathtubs/shower stalls — 6 ft',     true,  false, false, '210.8(A)(11)'],
-  ['Laundry areas',                     true,  false, true,  '210.8(A)(12) / 210.12(B)(13)'],
-  ['Indoor damp locations',             true,  false, false, '210.8(A)(13)'],
-  ['Indoor wet locations',              true,  false, false, '210.8(A)(14)'],
-  ['Living rooms',                      false, true,  true,  '210.12(B)(4)'],
-  ['Family rooms',                      false, true,  true,  '210.12(B)(2)'],
-  ['Dining rooms',                      false, true,  true,  '210.12(B)(3)'],
-  ['Bedrooms',                          false, true,  true,  '210.12(B)(8)'],
-  ['Hallways',                          false, true,  true,  '210.12(B)(12)'],
-  ['Closets',                           false, true,  true,  '210.12(B)(11)'],
-  ['Recreation rooms / sunrooms',       false, true,  true,  '210.12(B)(10)'],
-  ['Libraries / dens / parlors',        false, true,  true,  '210.12(B)(5-7)'],
+  ['Bathrooms',                         '2020', false, false, '210.8(A)(1)',               ''],
+  ['Garages',                           '2020', false, false, '210.8(A)(2)',               'Includes accessory buildings in 2020 &amp; 2023'],
+  ['Accessory building storage areas',  '2026', false, false, '210.8(A)(3)',               ''],
+  ['Outdoors',                          '2020', false, false, '210.8(A)(4)',               ''],
+  ['Crawl spaces — at or below grade',  '2020', false, false, '210.8(A)(5)',               ''],
+  ['Basements',                         '2020', false, false, '210.8(A)(6)',               ''],
+  ['Kitchens',                          '2020', true,  true,  '210.8(A)(7) / 210.12(B)(1)',''],
+  ['Food/beverage prep areas w/ sink',  '2023', false, false, '210.8(A)(8)',               ''],
+  ['Sinks — within 6 ft of bowl edge',  '2020', false, false, '210.8(A)(9)',               ''],
+  ['Boathouses',                        '2020', false, false, '210.8(A)(10)',              ''],
+  ['Bathtubs/shower stalls — 6 ft',     '2020', false, false, '210.8(A)(11)',              ''],
+  ['Laundry areas',                     '2020', false, true,  '210.8(A)(12) / 210.12(B)(13)',''],
+  ['Indoor damp locations',             '2026', false, false, '210.8(A)(13)',              ''],
+  ['Indoor wet locations',              '2020', false, false, '210.8(A)(14)',              'Covers damp &amp; wet locations in 2020 &amp; 2023'],
+  ['Living rooms',                      false,  true,  true,  '210.12(B)(4)',              ''],
+  ['Family rooms',                      false,  true,  true,  '210.12(B)(2)',              ''],
+  ['Dining rooms',                      false,  true,  true,  '210.12(B)(3)',              ''],
+  ['Bedrooms',                          false,  true,  true,  '210.12(B)(8)',              ''],
+  ['Hallways',                          false,  true,  true,  '210.12(B)(12)',             ''],
+  ['Closets',                           false,  true,  true,  '210.12(B)(11)',             ''],
+  ['Recreation rooms / sunrooms',       false,  true,  true,  '210.12(B)(10)',             ''],
+  ['Libraries / dens / parlors',        false,  true,  true,  '210.12(B)(5-7)',            ''],
 ];
 
 // Commercial locations: [label, ref]
@@ -8558,21 +8561,44 @@ function gfciRender() {
 
   // ── Dwelling ──
   var alert2026 = document.getElementById('gfci-dw-2026-alert');
-  if (alert2026) alert2026.style.display = yr==='2026' ? '' : 'none';
+  if (alert2026) {
+    if (yr==='2026') {
+      alert2026.style.display = '';
+      alert2026.innerHTML = '<div class="gfci-alert-title">⚡ 2026 Changes — §210.8(A)</div>Accessory buildings and indoor damp locations added as separate items. Outdoor GFCI threshold raised to 60A (was 50A). Items marked <span class="gfci-badge gfci-new">New 2026</span> are new this cycle.';
+    } else if (yr==='2023') {
+      alert2026.style.display = '';
+      alert2026.innerHTML = '<div class="gfci-alert-title">⚡ 2023 Change — §210.8(A)</div>Food/beverage prep areas with a sink added to dwelling GFCI requirements. Item marked <span class="gfci-badge gfci-new">New 2023</span> was added this cycle.';
+    } else {
+      alert2026.style.display = 'none';
+    }
+  }
 
   var dwTbody = document.getElementById('gfci-dw-tbody');
   if (dwTbody) {
     var rows = '';
     _GFCI_DW.forEach(function(row) {
-      var loc=row[0], hasGfci=row[1], afci20=row[2], afci23=row[3], ref=row[4];
+      var loc=row[0], gfciMinYr=row[1], afci20=row[2], afci23=row[3], ref=row[4], preNote=row[5];
       var afciReq = yr==='2020' ? afci20 : afci23;
-      var gfciCell = hasGfci
-        ? '<span class="gfci-badge gfci-yes">Required</span>'
-        : '<span class="gfci-badge gfci-no">—</span>';
+      var gfciReq = gfciMinYr &&
+        (gfciMinYr==='2020' ||
+         (gfciMinYr==='2023' && yr!=='2020') ||
+         (gfciMinYr==='2026' && yr==='2026'));
+      var gfciCell;
+      if (!gfciMinYr) {
+        gfciCell = '<span class="gfci-badge gfci-no">—</span>';
+      } else if (gfciReq) {
+        gfciCell = '<span class="gfci-badge gfci-yes">Required</span>';
+        if (gfciMinYr === yr && yr !== '2020') {
+          gfciCell += ' <span class="gfci-badge gfci-new">New '+yr+'</span>';
+        }
+      } else {
+        gfciCell = '<span class="gfci-badge gfci-no">Not yet</span>';
+      }
       var afciCell = afciReq
         ? '<span class="gfci-badge gfci-yes">Required</span>'
         : '<span class="gfci-badge gfci-no">—</span>';
-      rows += '<tr><td>'+loc+'<div class="gfci-year-note">'+ref+'</div></td><td class="center">'+gfciCell+'</td><td class="center">'+afciCell+'</td></tr>';
+      var noteHtml = (preNote && yr !== '2026') ? '<div class="gfci-year-note">'+preNote+'</div>' : '';
+      rows += '<tr><td>'+loc+'<div class="gfci-year-note">'+ref+'</div>'+noteHtml+'</td><td class="center">'+gfciCell+'</td><td class="center">'+afciCell+'</td></tr>';
     });
     dwTbody.innerHTML = rows;
   }
