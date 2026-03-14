@@ -545,7 +545,7 @@ body { background: var(--bg); }
   .wc-sub-panel.active { display:block; }
 
   /* ── Phase Color Chart ── */
-  .pc-head{background:#f3f4f6;padding:6px 10px;font-family:'Roboto Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#374151;border:1.5px solid #374151;border-bottom:none;border-radius:5px 5px 0 0;}
+  .pc-head{background:#f3f4f6;padding:6px 10px;font-family:'Roboto Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#374151;border:1.5px solid #374151;border-bottom:none;border-radius:5px 5px 0 0;}
   .pc-panels-wrap{display:flex;gap:8px;margin:0 12px 10px;}
   .pc-panel-half{flex:1;min-width:0;}
   .pc-panel-half .pc-head{margin:0;}
@@ -553,9 +553,9 @@ body { background: var(--bg); }
   .pc-row{display:flex;align-items:stretch;height:22px;}
   .pc-row+.pc-row{border-top:1px solid rgba(0,0,0,0.15);}
   .pc-row.pc-grp-sep{border-top:1.5px solid #374151;}
-  .pc-num-L{width:20px;font-size:11px;font-family:'Roboto Mono',monospace;font-weight:700;color:#374151;display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:#f3f4f6;flex-shrink:0;}
+  .pc-num-L{width:20px;font-size:8px;font-family:'Roboto Mono',monospace;font-weight:700;color:#374151;display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:#f3f4f6;flex-shrink:0;}
   .pc-num-R{width:24px;font-size:11px;font-family:'Roboto Mono',monospace;font-weight:700;color:var(--sub);display:flex;align-items:center;justify-content:flex-start;padding-left:3px;background:var(--surface);flex-shrink:0;}
-  .pc-bar{flex:1;display:flex;align-items:center;padding:0 5px;font-size:11px;font-weight:700;font-family:'Roboto Mono',monospace;color:rgba(255,255,255,0.95);}
+  .pc-bar{flex:1;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:700;font-family:'Roboto Mono',monospace;color:rgba(255,255,255,0.95);}
   .pc-bar-L{justify-content:flex-end;}
   .pc-bar-R{justify-content:flex-start;}
   .pc-bus{width:2px;background:#374151;flex-shrink:0;}
@@ -2388,6 +2388,7 @@ if('serviceWorker' in navigator){
       <button class="wc-sub active" onclick="wcSub('wire',this)">Wire Colors</button>
       <button class="wc-sub" onclick="wcSub('phase',this)">Phase Chart</button>
       <button class="wc-sub" onclick="wcSub('resistor',this)">Resistor</button>
+      <button class="wc-sub" onclick="wcSub('telecom',this)">Telecom</button>
     </div>
     <div class="wc-sub-panel active" id="wc-wire">
     <div class="section-label" style="padding-top:16px;">AC Systems</div>
@@ -2693,6 +2694,167 @@ if('serviceWorker' in navigator){
         </div>
       </div>
     </div><!-- /wc-resistor -->
+    <div class="wc-sub-panel" id="wc-telecom">
+
+    <!-- Fiber Optic Color Code -->
+    <div class="cht-card">
+      <div class="cht-hd" onclick="toggleCht('cht-fiber')">
+        <span class="cht-icon">&#x1F4A1;</span>
+        <div class="cht-hd-txt"><div class="cht-title">Fiber Optic Color Code</div><div class="cht-sub">12-fiber standard (TIA-598-C) — strand &amp; tube colors</div></div>
+        <span class="cht-chev" id="cht-fiber-chev">&#x25B6;</span>
+      </div>
+      <div class="cht-body" id="cht-fiber">
+        <div class="fiber-grid">
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#0070c0;"></div>
+            <div><div class="fiber-num">1</div><div class="fiber-name">Blue</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#ff6600;"></div>
+            <div><div class="fiber-num">2</div><div class="fiber-name">Orange</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#00a550;"></div>
+            <div><div class="fiber-num">3</div><div class="fiber-name">Green</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#7b3f00;"></div>
+            <div><div class="fiber-num">4</div><div class="fiber-name">Brown</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#808080;"></div>
+            <div><div class="fiber-num">5</div><div class="fiber-name">Slate</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#f0f0f0;border-color:var(--border);"></div>
+            <div><div class="fiber-num">6</div><div class="fiber-name">White</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#cc0000;"></div>
+            <div><div class="fiber-num">7</div><div class="fiber-name">Red</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#1a1a1a;border-color:#555;"></div>
+            <div><div class="fiber-num">8</div><div class="fiber-name">Black</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#f0c020;"></div>
+            <div><div class="fiber-num">9</div><div class="fiber-name">Yellow</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#6a0dad;"></div>
+            <div><div class="fiber-num">10</div><div class="fiber-name">Violet</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#ff69b4;"></div>
+            <div><div class="fiber-num">11</div><div class="fiber-name">Rose</div></div>
+          </div>
+          <div class="fiber-chip">
+            <div class="fiber-dot" style="background:#00ced1;"></div>
+            <div><div class="fiber-num">12</div><div class="fiber-name">Aqua</div></div>
+          </div>
+        </div>
+        <div class="cht-section-lbl">Multi-Tube Cable — Tube Color Sequence (same order)</div>
+        <div class="cht-scroll">
+          <table class="cht-tbl" style="min-width:0;">
+            <thead><tr><th>Position</th><th>Tube Color</th><th>Fibers Inside</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>T1</td><td>Blue</td><td>Fibers 1-12</td><td>First tube</td></tr>
+              <tr><td>T2</td><td>Orange</td><td>Fibers 13-24</td><td></td></tr>
+              <tr><td>T3</td><td>Green</td><td>Fibers 25-36</td><td></td></tr>
+              <tr><td>T4</td><td>Brown</td><td>Fibers 37-48</td><td></td></tr>
+              <tr><td>T5</td><td>Slate</td><td>Fibers 49-60</td><td></td></tr>
+              <tr><td>T6</td><td>White</td><td>Fibers 61-72</td><td></td></tr>
+              <tr><td>T7</td><td>Red</td><td>Fibers 73-84</td><td></td></tr>
+              <tr><td>T8</td><td>Black</td><td>Fibers 85-96</td><td></td></tr>
+              <tr><td>T9</td><td>Yellow</td><td>Fibers 97-108</td><td></td></tr>
+              <tr><td>T10</td><td>Violet</td><td>Fibers 109-120</td><td></td></tr>
+              <tr><td>T11</td><td>Rose</td><td>Fibers 121-132</td><td></td></tr>
+              <tr><td>T12</td><td>Aqua</td><td>Fibers 133-144</td><td>Last of 144-fiber</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cht-note">Mnemonic: <strong style="color:var(--text);">B</strong>ig <strong style="color:var(--text);">O</strong>range <strong style="color:var(--text);">G</strong>irls <strong style="color:var(--text);">B</strong>uy <strong style="color:var(--text);">S</strong>lates <strong style="color:var(--text);">W</strong>hile <strong style="color:var(--text);">R</strong>ed <strong style="color:var(--text);">B</strong>ananas <strong style="color:var(--text);">Y</strong>ield <strong style="color:var(--text);">V</strong>ery <strong style="color:var(--text);">P</strong>retty <strong style="color:var(--text);">A</strong>qua. Fibers within each tube follow the same 12-color sequence.</div>
+      </div>
+    </div>
+
+    <!-- RJ-45 Pinout -->
+    <div class="cht-card">
+      <div class="cht-hd" onclick="toggleCht('cht-rj45')">
+        <span class="cht-icon">&#x1F50C;</span>
+        <div class="cht-hd-txt"><div class="cht-title">RJ-45 Pinout &mdash; T568A &amp; T568B</div><div class="cht-sub">Cat5e / Cat6 data cable wiring (connector front view)</div></div>
+        <span class="cht-chev" id="cht-rj45-chev">&#x25B6;</span>
+      </div>
+      <div class="cht-body" id="cht-rj45">
+        <div class="rj45-wrap">
+          <div class="rj45-diagrams">
+            <!-- T568B -->
+            <div class="rj45-blk">
+              <div class="rj45-title">T568B &mdash; Commercial (US Standard)</div>
+              <div class="rj45-connector">
+                <div class="rj45-pins-row">
+                  <div class="rj45-pin" style="background:#ff8c00;" title="Wh/Or">1</div>
+                  <div class="rj45-pin" style="background:#ff6600;" title="Orange">2</div>
+                  <div class="rj45-pin" style="background:#90ee90;" title="Wh/Gr">3</div>
+                  <div class="rj45-pin" style="background:#0000cd;" title="Blue">4</div>
+                  <div class="rj45-pin" style="background:#add8e6;" title="Wh/Bl">5</div>
+                  <div class="rj45-pin" style="background:#008000;" title="Green">6</div>
+                  <div class="rj45-pin" style="background:#d2b48c;" title="Wh/Br">7</div>
+                  <div class="rj45-pin" style="background:#8b4513;" title="Brown">8</div>
+                </div>
+                <div class="rj45-nums">
+                  <div class="rj45-pnum">1</div><div class="rj45-pnum">2</div><div class="rj45-pnum">3</div><div class="rj45-pnum">4</div>
+                  <div class="rj45-pnum">5</div><div class="rj45-pnum">6</div><div class="rj45-pnum">7</div><div class="rj45-pnum">8</div>
+                </div>
+              </div>
+              <table class="rj45-table">
+                <tr><td style="color:#ff8c00;">&#x25CF;</td><td><b>1</b></td><td>Wh/Orange</td><td>TX+</td></tr>
+                <tr><td style="color:#ff6600;">&#x25CF;</td><td><b>2</b></td><td>Orange</td><td>TX&#x2212;</td></tr>
+                <tr><td style="color:#90ee90;">&#x25CF;</td><td><b>3</b></td><td>Wh/Green</td><td>RX+</td></tr>
+                <tr><td style="color:#0000cd;">&#x25CF;</td><td><b>4</b></td><td>Blue</td><td>&#x2014;</td></tr>
+                <tr><td style="color:#add8e6;">&#x25CF;</td><td><b>5</b></td><td>Wh/Blue</td><td>&#x2014;</td></tr>
+                <tr><td style="color:#008000;">&#x25CF;</td><td><b>6</b></td><td>Green</td><td>RX&#x2212;</td></tr>
+                <tr><td style="color:#d2b48c;">&#x25CF;</td><td><b>7</b></td><td>Wh/Brown</td><td>&#x2014;</td></tr>
+                <tr><td style="color:#8b4513;">&#x25CF;</td><td><b>8</b></td><td>Brown</td><td>&#x2014;</td></tr>
+              </table>
+            </div>
+            <!-- T568A -->
+            <div class="rj45-blk">
+              <div class="rj45-title">T568A &mdash; Residential / Gov&apos;t</div>
+              <div class="rj45-connector">
+                <div class="rj45-pins-row">
+                  <div class="rj45-pin" style="background:#90ee90;" title="Wh/Gr">1</div>
+                  <div class="rj45-pin" style="background:#008000;" title="Green">2</div>
+                  <div class="rj45-pin" style="background:#ff8c00;" title="Wh/Or">3</div>
+                  <div class="rj45-pin" style="background:#0000cd;" title="Blue">4</div>
+                  <div class="rj45-pin" style="background:#add8e6;" title="Wh/Bl">5</div>
+                  <div class="rj45-pin" style="background:#ff6600;" title="Orange">6</div>
+                  <div class="rj45-pin" style="background:#d2b48c;" title="Wh/Br">7</div>
+                  <div class="rj45-pin" style="background:#8b4513;" title="Brown">8</div>
+                </div>
+                <div class="rj45-nums">
+                  <div class="rj45-pnum">1</div><div class="rj45-pnum">2</div><div class="rj45-pnum">3</div><div class="rj45-pnum">4</div>
+                  <div class="rj45-pnum">5</div><div class="rj45-pnum">6</div><div class="rj45-pnum">7</div><div class="rj45-pnum">8</div>
+                </div>
+              </div>
+              <table class="rj45-table">
+                <tr><td style="color:#90ee90;">&#x25CF;</td><td><b>1</b></td><td>Wh/Green</td><td>TX+</td></tr>
+                <tr><td style="color:#008000;">&#x25CF;</td><td><b>2</b></td><td>Green</td><td>TX&#x2212;</td></tr>
+                <tr><td style="color:#ff8c00;">&#x25CF;</td><td><b>3</b></td><td>Wh/Orange</td><td>RX+</td></tr>
+                <tr><td style="color:#0000cd;">&#x25CF;</td><td><b>4</b></td><td>Blue</td><td>&#x2014;</td></tr>
+                <tr><td style="color:#add8e6;">&#x25CF;</td><td><b>5</b></td><td>Wh/Blue</td><td>&#x2014;</td></tr>
+                <tr><td style="color:#ff6600;">&#x25CF;</td><td><b>6</b></td><td>Orange</td><td>RX&#x2212;</td></tr>
+                <tr><td style="color:#d2b48c;">&#x25CF;</td><td><b>7</b></td><td>Wh/Brown</td><td>&#x2014;</td></tr>
+                <tr><td style="color:#8b4513;">&#x25CF;</td><td><b>8</b></td><td>Brown</td><td>&#x2014;</td></tr>
+              </table>
+            </div>
+          </div><!-- end rj45-diagrams -->
+          <div class="cht-note" style="margin-top:10px;">&#x1F4A1; <strong style="color:var(--text);">Crossover cable</strong> = one end T568A, other end T568B (connects two devices directly). <strong style="color:var(--text);">Straight-through</strong> = both ends same standard (connects device to switch/router). Pins 1,2 = Transmit &bull; Pins 3,6 = Receive (10/100 Mbps). Gigabit uses all 4 pairs.</div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /wc-telecom -->
   </div><!-- /tab-wc -->
 
   <!-- ══════════════════════════════════════════════
@@ -3397,166 +3559,6 @@ if('serviceWorker' in navigator){
       </div>
     </div>
 
-    <!-- 18. Fiber Optic Color Code -->
-    <div class="cht-card">
-      <div class="cht-hd" onclick="toggleCht('cht-fiber')">
-        <span class="cht-icon">&#x1F4A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Fiber Optic Color Code</div><div class="cht-sub">12-fiber standard (TIA-598-C) — strand &amp; tube colors</div></div>
-        <span class="cht-chev" id="cht-fiber-chev">&#x25B6;</span>
-      </div>
-      <div class="cht-body" id="cht-fiber">
-        <div class="fiber-grid">
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#0070c0;"></div>
-            <div><div class="fiber-num">1</div><div class="fiber-name">Blue</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#ff6600;"></div>
-            <div><div class="fiber-num">2</div><div class="fiber-name">Orange</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#00a550;"></div>
-            <div><div class="fiber-num">3</div><div class="fiber-name">Green</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#7b3f00;"></div>
-            <div><div class="fiber-num">4</div><div class="fiber-name">Brown</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#808080;"></div>
-            <div><div class="fiber-num">5</div><div class="fiber-name">Slate</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#f0f0f0;border-color:var(--border);"></div>
-            <div><div class="fiber-num">6</div><div class="fiber-name">White</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#cc0000;"></div>
-            <div><div class="fiber-num">7</div><div class="fiber-name">Red</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#1a1a1a;border-color:#555;"></div>
-            <div><div class="fiber-num">8</div><div class="fiber-name">Black</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#f0c020;"></div>
-            <div><div class="fiber-num">9</div><div class="fiber-name">Yellow</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#6a0dad;"></div>
-            <div><div class="fiber-num">10</div><div class="fiber-name">Violet</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#ff69b4;"></div>
-            <div><div class="fiber-num">11</div><div class="fiber-name">Rose</div></div>
-          </div>
-          <div class="fiber-chip">
-            <div class="fiber-dot" style="background:#00ced1;"></div>
-            <div><div class="fiber-num">12</div><div class="fiber-name">Aqua</div></div>
-          </div>
-        </div>
-        <div class="cht-section-lbl">Multi-Tube Cable — Tube Color Sequence (same order)</div>
-        <div class="cht-scroll">
-          <table class="cht-tbl" style="min-width:0;">
-            <thead><tr><th>Position</th><th>Tube Color</th><th>Fibers Inside</th><th>Notes</th></tr></thead>
-            <tbody>
-              <tr><td>T1</td><td>Blue</td><td>Fibers 1-12</td><td>First tube</td></tr>
-              <tr><td>T2</td><td>Orange</td><td>Fibers 13-24</td><td></td></tr>
-              <tr><td>T3</td><td>Green</td><td>Fibers 25-36</td><td></td></tr>
-              <tr><td>T4</td><td>Brown</td><td>Fibers 37-48</td><td></td></tr>
-              <tr><td>T5</td><td>Slate</td><td>Fibers 49-60</td><td></td></tr>
-              <tr><td>T6</td><td>White</td><td>Fibers 61-72</td><td></td></tr>
-              <tr><td>T7</td><td>Red</td><td>Fibers 73-84</td><td></td></tr>
-              <tr><td>T8</td><td>Black</td><td>Fibers 85-96</td><td></td></tr>
-              <tr><td>T9</td><td>Yellow</td><td>Fibers 97-108</td><td></td></tr>
-              <tr><td>T10</td><td>Violet</td><td>Fibers 109-120</td><td></td></tr>
-              <tr><td>T11</td><td>Rose</td><td>Fibers 121-132</td><td></td></tr>
-              <tr><td>T12</td><td>Aqua</td><td>Fibers 133-144</td><td>Last of 144-fiber</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="cht-note">Mnemonic: <strong style="color:var(--text);">B</strong>ig <strong style="color:var(--text);">O</strong>range <strong style="color:var(--text);">G</strong>irls <strong style="color:var(--text);">B</strong>uy <strong style="color:var(--text);">S</strong>lates <strong style="color:var(--text);">W</strong>hile <strong style="color:var(--text);">R</strong>ed <strong style="color:var(--text);">B</strong>ananas <strong style="color:var(--text);">Y</strong>ield <strong style="color:var(--text);">V</strong>ery <strong style="color:var(--text);">P</strong>retty <strong style="color:var(--text);">A</strong>qua. Fibers within each tube follow the same 12-color sequence.</div>
-      </div>
-    </div>
-
-    <!-- 19. RJ-45 Pinout -->
-    <div class="cht-card">
-      <div class="cht-hd" onclick="toggleCht('cht-rj45')">
-        <span class="cht-icon">&#x1F50C;</span>
-        <div class="cht-hd-txt"><div class="cht-title">RJ-45 Pinout — T568A &amp; T568B</div><div class="cht-sub">Cat5e / Cat6 data cable wiring (connector front view)</div></div>
-        <span class="cht-chev" id="cht-rj45-chev">&#x25B6;</span>
-      </div>
-      <div class="cht-body" id="cht-rj45">
-        <div class="rj45-wrap">
-          <div class="rj45-diagrams">
-
-            <!-- T568B -->
-            <div class="rj45-blk">
-              <div class="rj45-title">T568B &mdash; Commercial (US Standard)</div>
-              <div class="rj45-connector">
-                <div class="rj45-pins-row">
-                  <div class="rj45-pin" style="background:#ff8c00;" title="Wh/Or">1</div>
-                  <div class="rj45-pin" style="background:#ff6600;" title="Orange">2</div>
-                  <div class="rj45-pin" style="background:#90ee90;" title="Wh/Gr">3</div>
-                  <div class="rj45-pin" style="background:#0000cd;" title="Blue">4</div>
-                  <div class="rj45-pin" style="background:#add8e6;" title="Wh/Bl">5</div>
-                  <div class="rj45-pin" style="background:#008000;" title="Green">6</div>
-                  <div class="rj45-pin" style="background:#d2b48c;" title="Wh/Br">7</div>
-                  <div class="rj45-pin" style="background:#8b4513;" title="Brown">8</div>
-                </div>
-                <div class="rj45-nums">
-                  <div class="rj45-pnum">1</div><div class="rj45-pnum">2</div><div class="rj45-pnum">3</div><div class="rj45-pnum">4</div>
-                  <div class="rj45-pnum">5</div><div class="rj45-pnum">6</div><div class="rj45-pnum">7</div><div class="rj45-pnum">8</div>
-                </div>
-              </div>
-              <table class="rj45-table">
-                <tr><td style="color:#ff8c00;">&#x25CF;</td><td><b>1</b></td><td>Wh/Orange</td><td>TX+</td></tr>
-                <tr><td style="color:#ff6600;">&#x25CF;</td><td><b>2</b></td><td>Orange</td><td>TX&#x2212;</td></tr>
-                <tr><td style="color:#90ee90;">&#x25CF;</td><td><b>3</b></td><td>Wh/Green</td><td>RX+</td></tr>
-                <tr><td style="color:#0000cd;">&#x25CF;</td><td><b>4</b></td><td>Blue</td><td>&#x2014;</td></tr>
-                <tr><td style="color:#add8e6;">&#x25CF;</td><td><b>5</b></td><td>Wh/Blue</td><td>&#x2014;</td></tr>
-                <tr><td style="color:#008000;">&#x25CF;</td><td><b>6</b></td><td>Green</td><td>RX&#x2212;</td></tr>
-                <tr><td style="color:#d2b48c;">&#x25CF;</td><td><b>7</b></td><td>Wh/Brown</td><td>&#x2014;</td></tr>
-                <tr><td style="color:#8b4513;">&#x25CF;</td><td><b>8</b></td><td>Brown</td><td>&#x2014;</td></tr>
-              </table>
-            </div>
-
-            <!-- T568A -->
-            <div class="rj45-blk">
-              <div class="rj45-title">T568A &mdash; Residential / Gov&apos;t</div>
-              <div class="rj45-connector">
-                <div class="rj45-pins-row">
-                  <div class="rj45-pin" style="background:#90ee90;" title="Wh/Gr">1</div>
-                  <div class="rj45-pin" style="background:#008000;" title="Green">2</div>
-                  <div class="rj45-pin" style="background:#ff8c00;" title="Wh/Or">3</div>
-                  <div class="rj45-pin" style="background:#0000cd;" title="Blue">4</div>
-                  <div class="rj45-pin" style="background:#add8e6;" title="Wh/Bl">5</div>
-                  <div class="rj45-pin" style="background:#ff6600;" title="Orange">6</div>
-                  <div class="rj45-pin" style="background:#d2b48c;" title="Wh/Br">7</div>
-                  <div class="rj45-pin" style="background:#8b4513;" title="Brown">8</div>
-                </div>
-                <div class="rj45-nums">
-                  <div class="rj45-pnum">1</div><div class="rj45-pnum">2</div><div class="rj45-pnum">3</div><div class="rj45-pnum">4</div>
-                  <div class="rj45-pnum">5</div><div class="rj45-pnum">6</div><div class="rj45-pnum">7</div><div class="rj45-pnum">8</div>
-                </div>
-              </div>
-              <table class="rj45-table">
-                <tr><td style="color:#90ee90;">&#x25CF;</td><td><b>1</b></td><td>Wh/Green</td><td>TX+</td></tr>
-                <tr><td style="color:#008000;">&#x25CF;</td><td><b>2</b></td><td>Green</td><td>TX&#x2212;</td></tr>
-                <tr><td style="color:#ff8c00;">&#x25CF;</td><td><b>3</b></td><td>Wh/Orange</td><td>RX+</td></tr>
-                <tr><td style="color:#0000cd;">&#x25CF;</td><td><b>4</b></td><td>Blue</td><td>&#x2014;</td></tr>
-                <tr><td style="color:#add8e6;">&#x25CF;</td><td><b>5</b></td><td>Wh/Blue</td><td>&#x2014;</td></tr>
-                <tr><td style="color:#ff6600;">&#x25CF;</td><td><b>6</b></td><td>Orange</td><td>RX&#x2212;</td></tr>
-                <tr><td style="color:#d2b48c;">&#x25CF;</td><td><b>7</b></td><td>Wh/Brown</td><td>&#x2014;</td></tr>
-                <tr><td style="color:#8b4513;">&#x25CF;</td><td><b>8</b></td><td>Brown</td><td>&#x2014;</td></tr>
-              </table>
-            </div>
-
-          </div><!-- end rj45-diagrams -->
-          <div class="cht-note" style="margin-top:10px;">&#x1F4A1; <strong style="color:var(--text);">Crossover cable</strong> = one end T568A, other end T568B (connects two devices directly). <strong style="color:var(--text);">Straight-through</strong> = both ends same standard (connects device to switch/router). Pins 1,2 = Transmit &bull; Pins 3,6 = Receive (10/100 Mbps). Gigabit uses all 4 pairs.</div>
-        </div>
-      </div>
-    </div>
 
     <div class="cht-spacer"></div>
   </div>
