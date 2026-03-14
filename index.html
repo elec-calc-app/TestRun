@@ -57,6 +57,33 @@ body.light-mode .calc-wrap { background: var(--card); }
 body.light-mode .tab-bar { background: #ffffff; border-bottom: 1px solid #e0e4ea; }
 body.light-mode .tab-btn { color: #6b7280; }
 body.light-mode .tab-btn.active { color: #1a1200; background: #f0c020; border-radius: 8px; }
+/* ── Charts Tab ── */
+.charts-hdr{padding:18px 16px 4px;}.charts-hdr-title{font-size:17px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;}.charts-hdr-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;margin-bottom:4px;}
+.cht-card{margin:10px 12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
+.cht-hd{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;-webkit-user-select:none;user-select:none;}
+.cht-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
+.cht-hd-txt{flex:1;}.cht-title{font-size:13px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;}.cht-sub{font-size:11px;color:var(--muted);font-family:'Inter',sans-serif;}
+.cht-chev{font-size:11px;color:var(--muted);flex-shrink:0;transition:transform .2s;}
+.cht-body{display:none;border-top:1px solid var(--border);padding:0 0 10px;}
+.cht-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.cht-tbl{border-collapse:collapse;width:100%;font-family:'Roboto Mono',monospace;font-size:11px;min-width:480px;}
+.cht-tbl th{background:var(--surface);color:var(--sub);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;}
+.cht-tbl th:first-child{text-align:left;}
+.cht-tbl td{padding:6px 10px;text-align:right;color:var(--text);border-bottom:1px solid var(--border);white-space:nowrap;}
+.cht-tbl td:first-child{text-align:left;font-weight:700;color:var(--sub);}
+.cht-tbl tr:last-child td{border-bottom:none;}
+.cht-tbl tr:hover td{background:var(--surface);}
+.cht-amp-hi{color:#4ade80!important;font-weight:700;}
+.cht-amp-md{color:#facc15!important;font-weight:600;}
+.cht-amp-lo{color:var(--text)!important;}
+.cht-note{font-size:11px;color:var(--muted);font-family:'Inter',sans-serif;padding:8px 14px 0;line-height:1.5;}
+.cht-ocpd-grid{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;}
+.cht-ocpd-chip{padding:5px 10px;border-radius:6px;background:var(--surface);color:var(--sub);font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;border:1px solid var(--border);}
+.cht-ocpd-chip.common{background:rgba(240,192,32,.15);color:#f0c020;border-color:#f0c020;}
+.cht-spacer{height:20px;}
+.cht-2col{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.cht-2col .cht-tbl{min-width:0;}
+.cht-section-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px;font-family:'Roboto Mono',monospace;}
 body.light-mode .calc-home-lbl { color: #c9a010; }
 body.light-mode .menu-btn { color: #c9a010; }
 body { background: var(--bg); }
@@ -1100,6 +1127,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-dip" onclick="switchTab('dip',this)">Dip SW</button>
     <button class="tab-btn" id="tab-btn-wc" onclick="switchTab('wc',this)">Colors</button>
     <button class="tab-btn" id="tab-btn-notes" onclick="switchTab('notes',this)">Projects</button>
+    <button class="tab-btn" id="tab-btn-charts" onclick="switchTab('charts',this)">Charts</button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -3926,6 +3954,7 @@ function toggleCheckAll(noteId){
     if(el)el.classList.add('expanded');
   },30);
 }
+function toggleCht(id){var el=document.getElementById(id);var chev=document.getElementById(id+'-chev');var open=el.style.display==='block';el.style.display=open?'none':'block';if(chev)chev.style.transform=open?'':'rotate(90deg)';}
 function toggleNotePin(id){
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
   notes.forEach(function(n){if(n.id===id)n.pinned=!n.pinned;});
@@ -7477,6 +7506,526 @@ window.addEventListener('load',function(){
     <input class="jc-save-input" id="jc-save-name" type="text" placeholder="Name this result…" />
     <button class="jc-save-btn" id="jc-save-btn" onclick="jcSaveNote()">Save</button>
   </div>
+</div>
+<!-- Charts Tab Panel -->
+<div class="tab-panel" id="tab-charts" style="display:none;">
+  <div class="charts-hdr">
+    <div class="charts-hdr-title">Reference Charts</div>
+    <div class="charts-hdr-sub">Tap any section to expand</div>
+  </div>
+
+  <!-- 1. Conductor Ampacity -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-ampacity')">
+      <span class="cht-icon">&#x26A1;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Conductor Ampacity — Copper</div><div class="cht-sub">60°C · 75°C · 90°C in raceway or cable</div></div>
+      <span class="cht-chev" id="cht-ampacity-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-ampacity">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Size</th><th>60°C</th><th>75°C</th><th>90°C</th><th>Circ Mils</th><th>Dia (in)</th><th>Ω/kft Cu</th></tr></thead>
+          <tbody>
+            <tr><td>14 AWG</td><td>15 A</td><td>20 A</td><td>25 A</td><td>4,107</td><td>0.064</td><td>3.140</td></tr>
+            <tr><td>12 AWG</td><td>20 A</td><td>25 A</td><td>30 A</td><td>6,530</td><td>0.081</td><td>1.980</td></tr>
+            <tr><td>10 AWG</td><td>30 A</td><td>35 A</td><td>40 A</td><td>10,380</td><td>0.102</td><td>1.240</td></tr>
+            <tr><td>8 AWG</td><td>40 A</td><td>50 A</td><td>55 A</td><td>16,510</td><td>0.128</td><td>0.778</td></tr>
+            <tr><td>6 AWG</td><td>55 A</td><td>65 A</td><td>75 A</td><td>26,240</td><td>0.162</td><td>0.491</td></tr>
+            <tr><td>4 AWG</td><td>70 A</td><td>85 A</td><td>95 A</td><td>41,740</td><td>0.204</td><td>0.308</td></tr>
+            <tr><td>3 AWG</td><td>85 A</td><td>100 A</td><td>110 A</td><td>52,620</td><td>0.229</td><td>0.245</td></tr>
+            <tr><td>2 AWG</td><td>95 A</td><td>115 A</td><td>130 A</td><td>66,360</td><td>0.258</td><td>0.194</td></tr>
+            <tr><td>1 AWG</td><td>110 A</td><td>130 A</td><td>150 A</td><td>83,690</td><td>0.289</td><td>0.154</td></tr>
+            <tr><td>1/0 AWG</td><td>125 A</td><td>150 A</td><td>170 A</td><td>105,600</td><td>0.325</td><td>0.122</td></tr>
+            <tr><td>2/0 AWG</td><td>145 A</td><td>175 A</td><td>195 A</td><td>133,100</td><td>0.365</td><td>0.0967</td></tr>
+            <tr><td>3/0 AWG</td><td>165 A</td><td>200 A</td><td>225 A</td><td>167,800</td><td>0.410</td><td>0.0766</td></tr>
+            <tr><td>4/0 AWG</td><td>195 A</td><td>230 A</td><td>260 A</td><td>211,600</td><td>0.460</td><td>0.0608</td></tr>
+            <tr><td>250 kcmil</td><td>215 A</td><td>255 A</td><td>290 A</td><td>250,000</td><td>0.500</td><td>0.0515</td></tr>
+            <tr><td>300 kcmil</td><td>240 A</td><td>285 A</td><td>320 A</td><td>300,000</td><td>0.548</td><td>0.0429</td></tr>
+            <tr><td>350 kcmil</td><td>260 A</td><td>310 A</td><td>350 A</td><td>350,000</td><td>0.592</td><td>0.0367</td></tr>
+            <tr><td>400 kcmil</td><td>280 A</td><td>335 A</td><td>380 A</td><td>400,000</td><td>0.632</td><td>0.0321</td></tr>
+            <tr><td>500 kcmil</td><td>320 A</td><td>380 A</td><td>430 A</td><td>500,000</td><td>0.707</td><td>0.0258</td></tr>
+            <tr><td>600 kcmil</td><td>355 A</td><td>420 A</td><td>475 A</td><td>600,000</td><td>0.775</td><td>0.0214</td></tr>
+            <tr><td>700 kcmil</td><td>385 A</td><td>460 A</td><td>520 A</td><td>700,000</td><td>0.837</td><td>0.0184</td></tr>
+            <tr><td>750 kcmil</td><td>400 A</td><td>475 A</td><td>535 A</td><td>750,000</td><td>0.866</td><td>0.0171</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Single conductor in raceway or cable. Derate for ambient temp above 30°C (86°F) and for more than 3 current-carrying conductors.</div>
+    </div>
+  </div>
+
+  <!-- 2. Aluminum Ampacity -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-alamp')">
+      <span class="cht-icon">&#x1F529;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Conductor Ampacity — Aluminum</div><div class="cht-sub">60°C · 75°C · 90°C — AL or CU-clad AL</div></div>
+      <span class="cht-chev" id="cht-alamp-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-alamp">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Size</th><th>60°C</th><th>75°C</th><th>90°C</th><th>Circ Mils</th><th>Dia (in)</th><th>Ω/kft Al</th></tr></thead>
+          <tbody>
+            <tr><td>12 AWG</td><td>15 A</td><td>20 A</td><td>25 A</td><td>6,530</td><td>0.081</td><td>3.18</td></tr>
+            <tr><td>10 AWG</td><td>25 A</td><td>30 A</td><td>35 A</td><td>10,380</td><td>0.102</td><td>2.00</td></tr>
+            <tr><td>8 AWG</td><td>30 A</td><td>40 A</td><td>45 A</td><td>16,510</td><td>0.128</td><td>1.26</td></tr>
+            <tr><td>6 AWG</td><td>40 A</td><td>50 A</td><td>60 A</td><td>26,240</td><td>0.162</td><td>0.795</td></tr>
+            <tr><td>4 AWG</td><td>55 A</td><td>65 A</td><td>75 A</td><td>41,740</td><td>0.204</td><td>0.499</td></tr>
+            <tr><td>3 AWG</td><td>65 A</td><td>75 A</td><td>85 A</td><td>52,620</td><td>0.229</td><td>0.397</td></tr>
+            <tr><td>2 AWG</td><td>75 A</td><td>90 A</td><td>100 A</td><td>66,360</td><td>0.258</td><td>0.316</td></tr>
+            <tr><td>1 AWG</td><td>85 A</td><td>100 A</td><td>115 A</td><td>83,690</td><td>0.289</td><td>0.250</td></tr>
+            <tr><td>1/0 AWG</td><td>100 A</td><td>120 A</td><td>135 A</td><td>105,600</td><td>0.325</td><td>0.198</td></tr>
+            <tr><td>2/0 AWG</td><td>115 A</td><td>135 A</td><td>150 A</td><td>133,100</td><td>0.365</td><td>0.158</td></tr>
+            <tr><td>3/0 AWG</td><td>130 A</td><td>155 A</td><td>175 A</td><td>167,800</td><td>0.410</td><td>0.125</td></tr>
+            <tr><td>4/0 AWG</td><td>150 A</td><td>180 A</td><td>205 A</td><td>211,600</td><td>0.460</td><td>0.0991</td></tr>
+            <tr><td>250 kcmil</td><td>170 A</td><td>205 A</td><td>230 A</td><td>250,000</td><td>0.500</td><td>0.0836</td></tr>
+            <tr><td>300 kcmil</td><td>190 A</td><td>230 A</td><td>260 A</td><td>300,000</td><td>0.548</td><td>0.0697</td></tr>
+            <tr><td>350 kcmil</td><td>210 A</td><td>250 A</td><td>280 A</td><td>350,000</td><td>0.592</td><td>0.0598</td></tr>
+            <tr><td>400 kcmil</td><td>225 A</td><td>270 A</td><td>305 A</td><td>400,000</td><td>0.632</td><td>0.0523</td></tr>
+            <tr><td>500 kcmil</td><td>260 A</td><td>310 A</td><td>350 A</td><td>500,000</td><td>0.707</td><td>0.0418</td></tr>
+            <tr><td>600 kcmil</td><td>285 A</td><td>340 A</td><td>385 A</td><td>600,000</td><td>0.775</td><td>0.0349</td></tr>
+            <tr><td>700 kcmil</td><td>310 A</td><td>375 A</td><td>420 A</td><td>700,000</td><td>0.837</td><td>0.0299</td></tr>
+            <tr><td>750 kcmil</td><td>320 A</td><td>385 A</td><td>435 A</td><td>750,000</td><td>0.866</td><td>0.0279</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Aluminum or copper-clad aluminum conductors. Not for use below 12 AWG for branch circuits.</div>
+    </div>
+  </div>
+
+  <!-- 3. EMT Conduit Fill -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-emt')">
+      <span class="cht-icon">&#x1F527;</span>
+      <div class="cht-hd-txt"><div class="cht-title">EMT Conduit Fill</div><div class="cht-sub">Max usable area by fill percentage</div></div>
+      <span class="cht-chev" id="cht-emt-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-emt">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Trade Size</th><th>ID (in)</th><th>Total Area (in²)</th><th>1 Wire (53%)</th><th>2 Wires (31%)</th><th>3+ Wires (40%)</th></tr></thead>
+          <tbody>
+            <tr><td>1/2"</td><td>0.622</td><td>0.304</td><td>0.161</td><td>0.094</td><td>0.122</td></tr>
+            <tr><td>3/4"</td><td>0.824</td><td>0.533</td><td>0.283</td><td>0.165</td><td>0.213</td></tr>
+            <tr><td>1"</td><td>1.049</td><td>0.864</td><td>0.458</td><td>0.268</td><td>0.346</td></tr>
+            <tr><td>1-1/4"</td><td>1.380</td><td>1.496</td><td>0.793</td><td>0.464</td><td>0.598</td></tr>
+            <tr><td>1-1/2"</td><td>1.610</td><td>2.036</td><td>1.079</td><td>0.631</td><td>0.814</td></tr>
+            <tr><td>2"</td><td>2.067</td><td>3.356</td><td>1.778</td><td>1.040</td><td>1.342</td></tr>
+            <tr><td>2-1/2"</td><td>2.731</td><td>5.858</td><td>3.105</td><td>1.816</td><td>2.343</td></tr>
+            <tr><td>3"</td><td>3.356</td><td>8.846</td><td>4.688</td><td>2.742</td><td>3.538</td></tr>
+            <tr><td>3-1/2"</td><td>3.834</td><td>11.545</td><td>6.119</td><td>3.579</td><td>4.618</td></tr>
+            <tr><td>4"</td><td>4.334</td><td>14.753</td><td>7.819</td><td>4.573</td><td>5.901</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Areas in square inches. Use 40% fill for 3+ conductors, 31% for 2, 53% for 1. Add areas for each conductor and compare to the allowed column.</div>
+    </div>
+  </div>
+
+  <!-- 4. Rigid / IMC Conduit Fill -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-rigid')">
+      <span class="cht-icon">&#x1FA9B;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Rigid / IMC Conduit Fill</div><div class="cht-sub">RMC and IMC usable fill areas</div></div>
+      <span class="cht-chev" id="cht-rigid-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-rigid">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Trade Size</th><th>RMC ID (in)</th><th>RMC Area (in²)</th><th>40% Fill (3+)</th><th>IMC ID (in)</th><th>IMC Area (in²)</th><th>40% Fill (3+)</th></tr></thead>
+          <tbody>
+            <tr><td>1/2"</td><td>0.632</td><td>0.314</td><td>0.126</td><td>0.660</td><td>0.342</td><td>0.137</td></tr>
+            <tr><td>3/4"</td><td>0.836</td><td>0.549</td><td>0.220</td><td>0.864</td><td>0.586</td><td>0.234</td></tr>
+            <tr><td>1"</td><td>1.063</td><td>0.887</td><td>0.355</td><td>1.105</td><td>0.959</td><td>0.384</td></tr>
+            <tr><td>1-1/4"</td><td>1.394</td><td>1.526</td><td>0.610</td><td>1.448</td><td>1.647</td><td>0.659</td></tr>
+            <tr><td>1-1/2"</td><td>1.624</td><td>2.071</td><td>0.829</td><td>1.683</td><td>2.225</td><td>0.890</td></tr>
+            <tr><td>2"</td><td>2.083</td><td>3.408</td><td>1.363</td><td>2.150</td><td>3.630</td><td>1.452</td></tr>
+            <tr><td>2-1/2"</td><td>2.489</td><td>4.866</td><td>1.946</td><td>2.557</td><td>5.135</td><td>2.054</td></tr>
+            <tr><td>3"</td><td>3.090</td><td>7.499</td><td>3.000</td><td>3.176</td><td>7.922</td><td>3.169</td></tr>
+            <tr><td>3-1/2"</td><td>3.570</td><td>10.010</td><td>4.004</td><td>3.671</td><td>10.584</td><td>4.234</td></tr>
+            <tr><td>4"</td><td>4.050</td><td>12.882</td><td>5.153</td><td>4.166</td><td>13.631</td><td>5.452</td></tr>
+            <tr><td>5"</td><td>5.073</td><td>20.212</td><td>8.085</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>6"</td><td>6.093</td><td>29.158</td><td>11.663</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">RMC = Rigid Metal Conduit. IMC = Intermediate Metal Conduit. Use same fill % rules as EMT.</div>
+    </div>
+  </div>
+
+  <!-- 5. THHN Wire Area by AWG -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-wirearea')">
+      <span class="cht-icon">&#x1F4D0;</span>
+      <div class="cht-hd-txt"><div class="cht-title">THHN/THWN Wire Cross-Section</div><div class="cht-sub">OD and area for conduit fill calculations</div></div>
+      <span class="cht-chev" id="cht-wirearea-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-wirearea">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Size</th><th>OD (in)</th><th>Area (in²)</th><th># in 1/2" EMT</th><th># in 3/4" EMT</th><th># in 1" EMT</th><th># in 1-1/4" EMT</th></tr></thead>
+          <tbody>
+            <tr><td>14 AWG</td><td>0.105</td><td>0.0087</td><td>14</td><td>24</td><td>39</td><td>69</td></tr>
+            <tr><td>12 AWG</td><td>0.130</td><td>0.0133</td><td>9</td><td>16</td><td>26</td><td>45</td></tr>
+            <tr><td>10 AWG</td><td>0.164</td><td>0.0211</td><td>5</td><td>10</td><td>16</td><td>28</td></tr>
+            <tr><td>8 AWG</td><td>0.216</td><td>0.0366</td><td>3</td><td>5</td><td>9</td><td>16</td></tr>
+            <tr><td>6 AWG</td><td>0.252</td><td>0.0499</td><td>2</td><td>4</td><td>6</td><td>11</td></tr>
+            <tr><td>4 AWG</td><td>0.324</td><td>0.0824</td><td>1</td><td>2</td><td>4</td><td>7</td></tr>
+            <tr><td>3 AWG</td><td>0.352</td><td>0.0973</td><td>1</td><td>1</td><td>3</td><td>6</td></tr>
+            <tr><td>2 AWG</td><td>0.384</td><td>0.1158</td><td>1</td><td>1</td><td>2</td><td>5</td></tr>
+            <tr><td>1 AWG</td><td>0.446</td><td>0.1562</td><td>—</td><td>1</td><td>1</td><td>3</td></tr>
+            <tr><td>1/0</td><td>0.489</td><td>0.1879</td><td>—</td><td>—</td><td>1</td><td>3</td></tr>
+            <tr><td>2/0</td><td>0.532</td><td>0.2223</td><td>—</td><td>—</td><td>1</td><td>2</td></tr>
+            <tr><td>3/0</td><td>0.575</td><td>0.2600</td><td>—</td><td>—</td><td>1</td><td>2</td></tr>
+            <tr><td>4/0</td><td>0.642</td><td>0.3237</td><td>—</td><td>—</td><td>—</td><td>1</td></tr>
+            <tr><td>250 kcmil</td><td>0.711</td><td>0.3970</td><td>—</td><td>—</td><td>—</td><td>1</td></tr>
+            <tr><td>350 kcmil</td><td>0.827</td><td>0.5376</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>500 kcmil</td><td>0.983</td><td>0.7590</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Wire counts based on 40% fill (3+ conductors). Actual fill must account for all conductors including EGC.</div>
+    </div>
+  </div>
+
+  <!-- 6. 3-Phase Motor FLA -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-mot3')">
+      <span class="cht-icon">&#x2699;&#xFE0F;</span>
+      <div class="cht-hd-txt"><div class="cht-title">3-Phase Motor — Full Load Amps</div><div class="cht-sub">460V · Design B squirrel cage induction</div></div>
+      <span class="cht-chev" id="cht-mot3-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-mot3">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>HP</th><th>FLA @ 460V</th><th>125% (wire)</th><th>Min Wire (75°C)</th><th>Max OCPD (175%)</th></tr></thead>
+          <tbody>
+            <tr><td>1/2</td><td>1.1 A</td><td>1.4 A</td><td>14 AWG</td><td>2 A</td></tr>
+            <tr><td>3/4</td><td>1.6 A</td><td>2.0 A</td><td>14 AWG</td><td>3 A</td></tr>
+            <tr><td>1</td><td>2.1 A</td><td>2.6 A</td><td>14 AWG</td><td>4 A</td></tr>
+            <tr><td>1-1/2</td><td>3.0 A</td><td>3.8 A</td><td>14 AWG</td><td>6 A</td></tr>
+            <tr><td>2</td><td>3.4 A</td><td>4.3 A</td><td>14 AWG</td><td>6 A</td></tr>
+            <tr><td>3</td><td>4.8 A</td><td>6.0 A</td><td>14 AWG</td><td>9 A</td></tr>
+            <tr><td>5</td><td>7.6 A</td><td>9.5 A</td><td>14 AWG</td><td>15 A</td></tr>
+            <tr><td>7-1/2</td><td>11 A</td><td>13.8 A</td><td>14 AWG</td><td>20 A</td></tr>
+            <tr><td>10</td><td>14 A</td><td>17.5 A</td><td>12 AWG</td><td>25 A</td></tr>
+            <tr><td>15</td><td>21 A</td><td>26.3 A</td><td>10 AWG</td><td>40 A</td></tr>
+            <tr><td>20</td><td>27 A</td><td>33.8 A</td><td>8 AWG</td><td>50 A</td></tr>
+            <tr><td>25</td><td>34 A</td><td>42.5 A</td><td>8 AWG</td><td>60 A</td></tr>
+            <tr><td>30</td><td>40 A</td><td>50.0 A</td><td>6 AWG</td><td>70 A</td></tr>
+            <tr><td>40</td><td>52 A</td><td>65.0 A</td><td>4 AWG</td><td>100 A</td></tr>
+            <tr><td>50</td><td>65 A</td><td>81.3 A</td><td>3 AWG</td><td>115 A</td></tr>
+            <tr><td>60</td><td>77 A</td><td>96.3 A</td><td>2 AWG</td><td>135 A</td></tr>
+            <tr><td>75</td><td>96 A</td><td>120 A</td><td>1 AWG</td><td>170 A</td></tr>
+            <tr><td>100</td><td>124 A</td><td>155 A</td><td>1/0</td><td>220 A</td></tr>
+            <tr><td>125</td><td>156 A</td><td>195 A</td><td>2/0</td><td>275 A</td></tr>
+            <tr><td>150</td><td>180 A</td><td>225 A</td><td>3/0</td><td>315 A</td></tr>
+            <tr><td>200</td><td>240 A</td><td>300 A</td><td>4/0</td><td>420 A</td></tr>
+            <tr><td>250</td><td>302 A</td><td>378 A</td><td>350 kcmil</td><td>530 A</td></tr>
+            <tr><td>300</td><td>361 A</td><td>451 A</td><td>400 kcmil</td><td>632 A</td></tr>
+            <tr><td>350</td><td>414 A</td><td>518 A</td><td>500 kcmil</td><td>725 A</td></tr>
+            <tr><td>400</td><td>477 A</td><td>596 A</td><td>600 kcmil</td><td>835 A</td></tr>
+            <tr><td>450</td><td>515 A</td><td>644 A</td><td>700 kcmil</td><td>901 A</td></tr>
+            <tr><td>500</td><td>590 A</td><td>738 A</td><td>750 kcmil</td><td>1033 A</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Wire sized at 125% FLA (75°C column). Max OCPD at 175% for inverse-time breakers — round up to next standard size. Verify with motor nameplate.</div>
+    </div>
+  </div>
+
+  <!-- 7. 1-Phase Motor FLA -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-mot1')">
+      <span class="cht-icon">&#x1F50C;</span>
+      <div class="cht-hd-txt"><div class="cht-title">1-Phase Motor — Full Load Amps</div><div class="cht-sub">115V and 230V single-phase motors</div></div>
+      <span class="cht-chev" id="cht-mot1-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-mot1">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>HP</th><th>FLA @ 115V</th><th>FLA @ 230V</th><th>125% @ 230V</th></tr></thead>
+          <tbody>
+            <tr><td>1/6</td><td>4.4 A</td><td>2.2 A</td><td>2.8 A</td></tr>
+            <tr><td>1/4</td><td>5.8 A</td><td>2.9 A</td><td>3.6 A</td></tr>
+            <tr><td>1/3</td><td>7.2 A</td><td>3.6 A</td><td>4.5 A</td></tr>
+            <tr><td>1/2</td><td>9.8 A</td><td>4.9 A</td><td>6.1 A</td></tr>
+            <tr><td>3/4</td><td>13.8 A</td><td>6.9 A</td><td>8.6 A</td></tr>
+            <tr><td>1</td><td>16 A</td><td>8.0 A</td><td>10.0 A</td></tr>
+            <tr><td>1-1/2</td><td>20 A</td><td>10.0 A</td><td>12.5 A</td></tr>
+            <tr><td>2</td><td>24 A</td><td>12.0 A</td><td>15.0 A</td></tr>
+            <tr><td>3</td><td>34 A</td><td>17.0 A</td><td>21.3 A</td></tr>
+            <tr><td>5</td><td>56 A</td><td>28.0 A</td><td>35.0 A</td></tr>
+            <tr><td>7-1/2</td><td>80 A</td><td>40.0 A</td><td>50.0 A</td></tr>
+            <tr><td>10</td><td>100 A</td><td>50.0 A</td><td>62.5 A</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Always verify with motor nameplate. 115V motors above 5 HP are uncommon in commercial installs.</div>
+    </div>
+  </div>
+
+  <!-- 8. Equipment Grounding Conductor -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-egc')">
+      <span class="cht-icon">&#x1F7E2;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Equipment Grounding Conductor (EGC)</div><div class="cht-sub">Minimum size by OCPD rating</div></div>
+      <span class="cht-chev" id="cht-egc-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-egc">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>OCPD Rating</th><th>Min EGC (Copper)</th><th>Min EGC (Aluminum)</th></tr></thead>
+          <tbody>
+            <tr><td>15 A</td><td>14 AWG</td><td>12 AWG</td></tr>
+            <tr><td>20 A</td><td>12 AWG</td><td>10 AWG</td></tr>
+            <tr><td>30 A</td><td>10 AWG</td><td>8 AWG</td></tr>
+            <tr><td>40 A</td><td>10 AWG</td><td>8 AWG</td></tr>
+            <tr><td>60 A</td><td>10 AWG</td><td>8 AWG</td></tr>
+            <tr><td>100 A</td><td>8 AWG</td><td>6 AWG</td></tr>
+            <tr><td>200 A</td><td>6 AWG</td><td>4 AWG</td></tr>
+            <tr><td>300 A</td><td>4 AWG</td><td>2 AWG</td></tr>
+            <tr><td>400 A</td><td>3 AWG</td><td>1 AWG</td></tr>
+            <tr><td>500 A</td><td>2 AWG</td><td>1/0</td></tr>
+            <tr><td>600 A</td><td>1 AWG</td><td>2/0</td></tr>
+            <tr><td>800 A</td><td>1/0</td><td>3/0</td></tr>
+            <tr><td>1000 A</td><td>2/0</td><td>4/0</td></tr>
+            <tr><td>1200 A</td><td>3/0</td><td>250 kcmil</td></tr>
+            <tr><td>1600 A</td><td>4/0</td><td>350 kcmil</td></tr>
+            <tr><td>2000 A</td><td>250 kcmil</td><td>400 kcmil</td></tr>
+            <tr><td>2500 A</td><td>350 kcmil</td><td>600 kcmil</td></tr>
+            <tr><td>3000 A</td><td>400 kcmil</td><td>600 kcmil</td></tr>
+            <tr><td>4000 A</td><td>500 kcmil</td><td>800 kcmil</td></tr>
+            <tr><td>5000 A</td><td>700 kcmil</td><td>1200 kcmil</td></tr>
+            <tr><td>6000 A</td><td>800 kcmil</td><td>1200 kcmil</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">If the supply conductor is larger than required for the load, increase the EGC proportionally. Copper EGC may be used in any raceway type.</div>
+    </div>
+  </div>
+
+  <!-- 9. GEC Sizing -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-gec')">
+      <span class="cht-icon">&#x1F30D;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Grounding Electrode Conductor (GEC)</div><div class="cht-sub">Service entrance GEC sizing by largest service conductor</div></div>
+      <span class="cht-chev" id="cht-gec-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-gec">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Largest Service Conductor</th><th>GEC Copper</th><th>GEC Aluminum</th></tr></thead>
+          <tbody>
+            <tr><td>2 AWG or smaller</td><td>8 AWG</td><td>6 AWG</td></tr>
+            <tr><td>1 AWG – 1/0</td><td>6 AWG</td><td>4 AWG</td></tr>
+            <tr><td>2/0 – 3/0</td><td>4 AWG</td><td>2 AWG</td></tr>
+            <tr><td>Over 3/0 – 350 kcmil</td><td>2 AWG</td><td>1/0</td></tr>
+            <tr><td>Over 350 – 600 kcmil</td><td>1/0</td><td>3/0</td></tr>
+            <tr><td>Over 600 – 1100 kcmil</td><td>2/0</td><td>4/0</td></tr>
+            <tr><td>Over 1100 kcmil</td><td>3/0</td><td>250 kcmil</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">For parallel service conductors, use the total equivalent cross-sectional area to determine the GEC size. Maximum copper GEC is 3/0 AWG when connected to a ground ring or rod/pipe electrode.</div>
+    </div>
+  </div>
+
+  <!-- 10. Box Fill -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-boxfill')">
+      <span class="cht-icon">&#x1F4E6;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Box Fill — Volume Allowance</div><div class="cht-sub">Cubic inches per conductor / fitting</div></div>
+      <span class="cht-chev" id="cht-boxfill-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-boxfill">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Wire Size</th><th>Volume per Conductor (in³)</th><th>Common Box Sizes</th><th>Box Volume (in³)</th></tr></thead>
+          <tbody>
+            <tr><td>18 AWG</td><td>1.50</td><td>4" sq × 1-1/4"</td><td>18.0</td></tr>
+            <tr><td>16 AWG</td><td>1.75</td><td>4" sq × 1-1/2"</td><td>21.0</td></tr>
+            <tr><td>14 AWG</td><td>2.00</td><td>4" sq × 2-1/8"</td><td>30.3</td></tr>
+            <tr><td>12 AWG</td><td>2.25</td><td>4-11/16" sq × 1-1/2"</td><td>29.5</td></tr>
+            <tr><td>10 AWG</td><td>2.50</td><td>4-11/16" sq × 2-1/8"</td><td>42.0</td></tr>
+            <tr><td>8 AWG</td><td>3.00</td><td>3" × 2" × 2-1/2" device</td><td>12.5</td></tr>
+            <tr><td>6 AWG</td><td>5.00</td><td>3" × 2" × 3-1/2" device</td><td>18.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Count each conductor entering the box. Add 1 for all ground wires combined. Add 1 per strap/yoke device. Add 1 for all internal cable clamps combined. Largest wire size determines volume for each category.</div>
+    </div>
+  </div>
+
+  <!-- 11. Standard OCPD Ratings -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-ocpd')">
+      <span class="cht-icon">&#x1F534;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Standard OCPD Ampere Ratings</div><div class="cht-sub">Common breaker and fuse sizes</div></div>
+      <span class="cht-chev" id="cht-ocpd-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-ocpd">
+      <div class="cht-section-lbl">Standard Ratings (Amperes)</div>
+      <div class="cht-ocpd-grid">
+        <span class="cht-ocpd-chip common">15</span>
+        <span class="cht-ocpd-chip common">20</span>
+        <span class="cht-ocpd-chip">25</span>
+        <span class="cht-ocpd-chip common">30</span>
+        <span class="cht-ocpd-chip">35</span>
+        <span class="cht-ocpd-chip common">40</span>
+        <span class="cht-ocpd-chip">45</span>
+        <span class="cht-ocpd-chip common">50</span>
+        <span class="cht-ocpd-chip common">60</span>
+        <span class="cht-ocpd-chip">70</span>
+        <span class="cht-ocpd-chip">80</span>
+        <span class="cht-ocpd-chip">90</span>
+        <span class="cht-ocpd-chip common">100</span>
+        <span class="cht-ocpd-chip">110</span>
+        <span class="cht-ocpd-chip common">125</span>
+        <span class="cht-ocpd-chip">150</span>
+        <span class="cht-ocpd-chip">175</span>
+        <span class="cht-ocpd-chip common">200</span>
+        <span class="cht-ocpd-chip">225</span>
+        <span class="cht-ocpd-chip common">250</span>
+        <span class="cht-ocpd-chip">300</span>
+        <span class="cht-ocpd-chip">350</span>
+        <span class="cht-ocpd-chip common">400</span>
+        <span class="cht-ocpd-chip">450</span>
+        <span class="cht-ocpd-chip">500</span>
+        <span class="cht-ocpd-chip common">600</span>
+        <span class="cht-ocpd-chip">700</span>
+        <span class="cht-ocpd-chip">800</span>
+        <span class="cht-ocpd-chip">1000</span>
+        <span class="cht-ocpd-chip">1200</span>
+        <span class="cht-ocpd-chip">1600</span>
+        <span class="cht-ocpd-chip">2000</span>
+        <span class="cht-ocpd-chip">2500</span>
+        <span class="cht-ocpd-chip">3000</span>
+        <span class="cht-ocpd-chip">4000</span>
+        <span class="cht-ocpd-chip">5000</span>
+        <span class="cht-ocpd-chip">6000</span>
+      </div>
+      <div class="cht-note">Gold = most common residential/commercial sizes. When conductor ampacity falls between standard ratings, round UP to the next standard size (exceptions apply for small conductors).</div>
+    </div>
+  </div>
+
+  <!-- 12. Temperature Correction -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-tempcorr')">
+      <span class="cht-icon">&#x1F321;&#xFE0F;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Temperature Correction Factors</div><div class="cht-sub">Derate ampacity for ambient temp above 30°C</div></div>
+      <span class="cht-chev" id="cht-tempcorr-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-tempcorr">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Ambient Temp</th><th>60°C Factor</th><th>75°C Factor</th><th>90°C Factor</th></tr></thead>
+          <tbody>
+            <tr><td>10°C (50°F)</td><td>1.29</td><td>1.20</td><td>1.15</td></tr>
+            <tr><td>15°C (59°F)</td><td>1.22</td><td>1.15</td><td>1.12</td></tr>
+            <tr><td>20°C (68°F)</td><td>1.15</td><td>1.11</td><td>1.08</td></tr>
+            <tr><td>25°C (77°F)</td><td>1.08</td><td>1.05</td><td>1.04</td></tr>
+            <tr><td>30°C (86°F)</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td>35°C (95°F)</td><td>0.91</td><td>0.94</td><td>0.96</td></tr>
+            <tr><td>40°C (104°F)</td><td>0.82</td><td>0.88</td><td>0.91</td></tr>
+            <tr><td>45°C (113°F)</td><td>0.71</td><td>0.82</td><td>0.87</td></tr>
+            <tr><td>50°C (122°F)</td><td>0.58</td><td>0.75</td><td>0.82</td></tr>
+            <tr><td>55°C (131°F)</td><td>0.41</td><td>0.67</td><td>0.76</td></tr>
+            <tr><td>60°C (140°F)</td><td>—</td><td>0.58</td><td>0.71</td></tr>
+            <tr><td>70°C (158°F)</td><td>—</td><td>0.33</td><td>0.58</td></tr>
+            <tr><td>75°C (167°F)</td><td>—</td><td>—</td><td>0.50</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Multiply the tabulated ampacity by the correction factor. If both adjustment (bundling) and correction (temp) apply, multiply both factors together, then apply to the base ampacity.</div>
+    </div>
+  </div>
+
+  <!-- 13. Bundling / Adjustment Factors -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-bundle')">
+      <span class="cht-icon">&#x1FAA2;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Bundling / Adjustment Factors</div><div class="cht-sub">Derate for more than 3 current-carrying conductors</div></div>
+      <span class="cht-chev" id="cht-bundle-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-bundle">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th># Current-Carrying Conductors</th><th>Adjustment Factor</th></tr></thead>
+          <tbody>
+            <tr><td>4 – 6</td><td>0.80 (80%)</td></tr>
+            <tr><td>7 – 9</td><td>0.70 (70%)</td></tr>
+            <tr><td>10 – 20</td><td>0.50 (50%)</td></tr>
+            <tr><td>21 – 30</td><td>0.45 (45%)</td></tr>
+            <tr><td>31 – 40</td><td>0.40 (40%)</td></tr>
+            <tr><td>41 and above</td><td>0.35 (35%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Applies when more than 3 current-carrying conductors are in a raceway, cable, or Earth for 24"+ continuously. Neutrals carrying only unbalanced current from non-linear loads must be counted. EGC is NOT a current-carrying conductor.</div>
+    </div>
+  </div>
+
+  <!-- 14. Voltage Drop Reference -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-vd')">
+      <span class="cht-icon">&#x1F4C9;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Voltage Drop — Max Distance (ft)</div><div class="cht-sub">3% max drop · copper · 120V 1-phase</div></div>
+      <span class="cht-chev" id="cht-vd-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-vd">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Wire Size</th><th>5 A</th><th>10 A</th><th>15 A</th><th>20 A</th><th>30 A</th><th>40 A</th><th>50 A</th></tr></thead>
+          <tbody>
+            <tr><td>14 AWG</td><td>274 ft</td><td>137 ft</td><td>91 ft</td><td>68 ft</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>12 AWG</td><td>435 ft</td><td>217 ft</td><td>145 ft</td><td>109 ft</td><td>72 ft</td><td>—</td><td>—</td></tr>
+            <tr><td>10 AWG</td><td>693 ft</td><td>346 ft</td><td>231 ft</td><td>173 ft</td><td>115 ft</td><td>86 ft</td><td>—</td></tr>
+            <tr><td>8 AWG</td><td>1102 ft</td><td>551 ft</td><td>367 ft</td><td>275 ft</td><td>184 ft</td><td>138 ft</td><td>110 ft</td></tr>
+            <tr><td>6 AWG</td><td>1749 ft</td><td>875 ft</td><td>583 ft</td><td>437 ft</td><td>292 ft</td><td>219 ft</td><td>175 ft</td></tr>
+            <tr><td>4 AWG</td><td>2779 ft</td><td>1390 ft</td><td>926 ft</td><td>695 ft</td><td>463 ft</td><td>347 ft</td><td>278 ft</td></tr>
+            <tr><td>2 AWG</td><td>4415 ft</td><td>2208 ft</td><td>1472 ft</td><td>1104 ft</td><td>736 ft</td><td>552 ft</td><td>441 ft</td></tr>
+            <tr><td>1/0</td><td>7018 ft</td><td>3509 ft</td><td>2339 ft</td><td>1755 ft</td><td>1170 ft</td><td>877 ft</td><td>702 ft</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">Formula: Distance = (CM × VD%) ÷ (K × I × 2) where K=12.9 for Cu, VD%=0.03, I=amps. Distances above are ONE-WAY run length. For 208V 3Φ use factor 1.73× longer runs; for 240V 1Φ use factor 2×.</div>
+    </div>
+  </div>
+
+  <!-- 15. Common Wire Types -->
+  <div class="cht-card">
+    <div class="cht-hd" onclick="toggleCht('cht-wiretypes')">
+      <span class="cht-icon">&#x1F3F7;&#xFE0F;</span>
+      <div class="cht-hd-txt"><div class="cht-title">Common Conductor Insulation Types</div><div class="cht-sub">Rating, temp, and application reference</div></div>
+      <span class="cht-chev" id="cht-wiretypes-chev">&#x25B6;</span>
+    </div>
+    <div class="cht-body" id="cht-wiretypes">
+      <div class="cht-scroll">
+        <table class="cht-tbl">
+          <thead><tr><th>Type</th><th>Max Temp</th><th>Wet/Dry</th><th>Typical Use</th></tr></thead>
+          <tbody>
+            <tr><td>THHN</td><td>90°C</td><td>Dry only</td><td>General branch circuits in conduit</td></tr>
+            <tr><td>THWN-2</td><td>90°C</td><td>Wet &amp; Dry</td><td>Conduit, including wet locations</td></tr>
+            <tr><td>THWN</td><td>75°C</td><td>Wet &amp; Dry</td><td>Conduit in wet/dry locations</td></tr>
+            <tr><td>THW</td><td>75°C</td><td>Wet &amp; Dry</td><td>General wiring in conduit</td></tr>
+            <tr><td>TW</td><td>60°C</td><td>Wet &amp; Dry</td><td>Older installs; general wiring</td></tr>
+            <tr><td>USE-2</td><td>90°C</td><td>Wet</td><td>Underground service entrance</td></tr>
+            <tr><td>RHH</td><td>90°C</td><td>Dry only</td><td>High-temp applications</td></tr>
+            <tr><td>RHW-2</td><td>90°C</td><td>Wet &amp; Dry</td><td>High-temp, wet-rated</td></tr>
+            <tr><td>XHHW-2</td><td>90°C</td><td>Wet &amp; Dry</td><td>Cross-linked polyethylene; versatile</td></tr>
+            <tr><td>NM-B</td><td>90°C</td><td>Dry only</td><td>Romex for residential branch circuits</td></tr>
+            <tr><td>UF-B</td><td>60°C</td><td>Wet/underground</td><td>Direct burial; landscape lighting</td></tr>
+            <tr><td>MC Cable</td><td>90°C</td><td>Dry only</td><td>Metal-clad; commercial/industrial</td></tr>
+            <tr><td>AC Cable</td><td>60°C</td><td>Dry only</td><td>Armored cable; residential/light comm.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cht-note">THHN and THWN-2 are often printed on the same jacket — use 75°C column for sizing even if 90°C rated, unless terminations are rated 90°C.</div>
+    </div>
+  </div>
+
+  <div class="cht-spacer"></div>
 </div>
 <!-- Save as Template Sheet -->
 <div class="note-save-tpl-ov" id="note-save-tpl-ov" onclick="closeSaveAsTemplateSheet()">
