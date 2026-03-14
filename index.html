@@ -4487,8 +4487,14 @@ function setCodeYear(year){
   if(sb)sb.classList.add('active');
   // Show/hide 2026-only conductor sizes in wire selects
   document.querySelectorAll('.opt-2026').forEach(function(o){o.style.display=year==='2026'?'':'none';});
-  // Refresh GFCI/AFCI tab if visible (guard: data arrays must be initialized first)
+  // Refresh GFCI/AFCI tab (guard: data arrays must be initialized first)
   if(typeof gfciRender==='function' && typeof _GFCI_DW!=='undefined' && _GFCI_DW && document.getElementById('gfci-dw-tbody')) gfciRender();
+  // Update quiz title immediately regardless of which tab is active
+  var qzTitleEl=document.getElementById('qz-title');
+  if(qzTitleEl) qzTitleEl.textContent='⚡ CODE '+year+' — EXAM PREP';
+  // If quiz tab is currently open, restart with new year's question pool right now
+  var qzPanel=document.getElementById('tab-quiz');
+  if(qzPanel && qzPanel.classList.contains('active') && typeof qzStart==='function') qzStart();
 }
 // ── Save to Notes ──
 var _jcPending=null;
