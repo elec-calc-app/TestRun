@@ -616,6 +616,25 @@ body { background: var(--bg); }
 .note-tpl-btn:active{background:#fef9c3;border-color:#f0c020;color:#92700a;}
 .note-tpl-lbl{display:block;font-size:10px;color:#9ca3af;font-weight:400;margin-top:3px;}
 .note-tpl-cancel{width:100%;margin-top:12px;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+.note-tpl-divider{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;margin:14px 0 8px;}
+.note-tpl-user{background:#fffef5;border-color:#f0c020!important;color:#92700a;position:relative;}
+.note-tpl-del{position:absolute;top:6px;right:6px;background:none;border:none;color:#9ca3af;font-size:12px;cursor:pointer;padding:0;line-height:1;}
+.note-tpl-del:active{color:#ef4444;}
+.note-tpl-manage{width:100%;margin-top:8px;background:none;border:none;color:#9ca3af;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:underline;}
+.note-save-tpl-ov{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:950;display:none;align-items:flex-end;}
+.note-save-tpl-ov.open{display:flex;}
+.note-save-tpl-sheet{background:var(--surface);border-radius:16px 16px 0 0;padding:20px 16px 36px;width:100%;box-sizing:border-box;}
+.note-save-tpl-title{font-size:15px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;margin-bottom:4px;}
+.note-save-tpl-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-bottom:14px;}
+.note-save-tpl-inp{width:100%;box-sizing:border-box;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:15px;font-family:'Inter',sans-serif;color:var(--text);outline:none;margin-bottom:12px;}
+.note-save-tpl-inp:focus{border-color:#f0c020;}
+.note-save-tpl-btn{width:100%;padding:13px;background:#f0c020;color:#000;border:none;border-radius:8px;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-bottom:8px;}
+.note-save-tpl-cancel{width:100%;padding:11px;background:var(--surface2);color:var(--sub);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+.note-card-actions{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.note-actions-row{display:flex;gap:8px;}
+.note-cl-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.note-cl-toggle{background:none;border:none;color:var(--muted);font-size:11px;font-family:'Roboto Mono',monospace;cursor:pointer;padding:0;}
+.note-cl-toggle:active{color:#f0c020;}
 /* Loading splash */
 #jc-splash{position:fixed;inset:0;background:#07090f;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;}
 #jc-splash.fade-out{opacity:0;pointer-events:none;}
@@ -3773,7 +3792,23 @@ function renderNotes(){
     '</div>';
   }).join('');
 }
-function openNoteTplSheet(){document.getElementById('note-tpl-ov').classList.add('open');}
+function openUserTpl(id){openManualNote('user:'+id);}
+function openNoteTplSheet(){
+  var tpls=getTemplates();
+  var sec=document.getElementById('note-tpl-user-section');
+  if(sec){
+    if(tpls.length){
+      sec.innerHTML='<div class="note-tpl-divider">My Templates</div><div class="note-tpl-grid">'+
+        tpls.map(function(t){
+          return '<button class="note-tpl-btn note-tpl-user" onclick="openUserTpl('+t.id+')">'+ escHtml(t.name)+
+            '<span class="note-tpl-lbl">'+t.checklist.length+' items</span>'+
+            '<button class="note-tpl-del" onclick="event.stopPropagation();deleteTemplate('+t.id+')">&#x2715;</button>'+
+            '</button>';
+        }).join('')+'</div>';
+    } else { sec.innerHTML=''; }
+  }
+  document.getElementById('note-tpl-ov').classList.add('open');
+}
 function closeNoteTplSheet(){var el=document.getElementById('note-tpl-ov');if(el)el.classList.remove('open');}
 function openManualNote(tpl){
   closeNoteTplSheet();
@@ -3789,6 +3824,25 @@ function openManualNote(tpl){
   } else if(tpl==='safety'){
     title='Safety Check';
     ['LOTO applied','PPE worn','Work area clear','Energized parts ID\'d','Permit obtained','Emergency contacts posted'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl==='dailylog'){
+    title='Daily Log — '+(new Date().toLocaleDateString());
+    ['Date / Crew Size','Work Completed Today','Materials Used','Equipment / Tools Needed','Issues or Delays','Safety Observations','Plan for Tomorrow'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl==='roughin'){
+    title='Rough-In Inspection';
+    ['Box heights correct','Conduit secured every 10ft','Fill % within limits','Stub-ups plumb and correct height','All boxes accessible','Grounds continuous','Wire gauge matches circuit size','No nails/screws within 1.25" of edge','Smoke detector locations correct','Ready for inspection'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl==='changeorder'){
+    title='Change Order';
+    ['Description of change','Reason / client request','Materials required','Labor estimate (hrs)','Material cost estimate ($)','Impact on schedule','Approved by','Date approved'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl==='trimout'){
+    title='Trim-Out Checklist';
+    ['Devices installed and seated','Cover plates on','Breakers torqued to spec','Panel directory labeled','GFCI/AFCI tested','Dimmers / special devices configured','Fixtures installed and aimed','All junction boxes covered','Final clean-up done','As-builts updated'].forEach(function(t,i){cl.push({id:now+i+1,text:t,done:false});});
+  } else if(tpl.indexOf('user:')===0){
+    var tplId=parseInt(tpl.slice(5));
+    var utpl=getTemplates().find(function(t){return t.id===tplId;});
+    if(utpl){
+      title=utpl.name;
+      utpl.checklist.forEach(function(c,i){cl.push({id:now+i+1,text:c.text,done:false});});
+    }
   }
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
   var newNote={id:now,ts:now,tab:'manual',tabName:'Note',title:title,body:'',lines:[],svg:null,annotation:'',photos:[],projectId:_activeProjectId,type:'manual',pinned:false,flagged:false,checklist:cl};
@@ -3799,6 +3853,78 @@ function openManualNote(tpl){
     var card=document.getElementById('mn-'+now);
     if(card){card.classList.add('expanded');var ti=card.querySelector('.manual-note-title-inp');if(ti)ti.focus();}
   },50);
+}
+// ── User Templates ──
+function getTemplates(){return JSON.parse(localStorage.getItem('jc_templates')||'[]');}
+function saveTemplates(t){localStorage.setItem('jc_templates',JSON.stringify(t));}
+function deleteTemplate(tplId){
+  saveTemplates(getTemplates().filter(function(t){return t.id!==tplId;}));
+  openNoteTplSheet();
+}
+function openSaveAsTemplateSheet(noteId){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var n=notes.find(function(x){return x.id===noteId;});
+  if(!n||(n.checklist||[]).length===0){alert('Add checklist items first — templates save the checklist structure.');return;}
+  var sheet=document.getElementById('note-save-tpl-sheet');
+  var inp=document.getElementById('note-save-tpl-name');
+  if(sheet)sheet._noteId=noteId;
+  if(inp)inp.value=n.title||'My Template';
+  var ov=document.getElementById('note-save-tpl-ov');
+  if(ov){ov.classList.add('open');setTimeout(function(){if(inp)inp.select();},200);}
+}
+function closeSaveAsTemplateSheet(){
+  var ov=document.getElementById('note-save-tpl-ov');
+  if(ov)ov.classList.remove('open');
+}
+function confirmSaveAsTemplate(){
+  var inp=document.getElementById('note-save-tpl-name');
+  var name=(inp?inp.value:'My Template').trim()||'My Template';
+  var sheet=document.getElementById('note-save-tpl-sheet');
+  var noteId=sheet?sheet._noteId:null;
+  if(!noteId)return;
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var n=notes.find(function(x){return x.id===noteId;});
+  if(!n)return;
+  var tpls=getTemplates();
+  tpls.unshift({id:Date.now(),name:name,checklist:(n.checklist||[]).map(function(c){return {text:c.text};})});
+  saveTemplates(tpls);
+  closeSaveAsTemplateSheet();
+  // Brief confirmation feedback
+  var btn=document.querySelector('.note-save-tpl-btn');
+  if(btn){var orig=btn.textContent;btn.textContent='Saved ✓';setTimeout(function(){btn.textContent=orig;},1200);}
+}
+// ── Duplicate Note ──
+function duplicateNote(id){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  var src=notes.find(function(n){return n.id===id;});
+  if(!src)return;
+  var now=Date.now();
+  var copy=JSON.parse(JSON.stringify(src));
+  copy.id=now;copy.ts=now;copy.pinned=false;copy.flagged=false;
+  copy.title=(src.title||'Note')+' (copy)';
+  if(copy.checklist)copy.checklist=copy.checklist.map(function(c,i){return {id:now+i+1,text:c.text,done:false};});
+  copy.body=src.body||'';
+  copy.photos=[];
+  notes.unshift(copy);
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+  setTimeout(function(){var el=document.getElementById('mn-'+now);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'start'});}},60);
+}
+// ── Check All / Uncheck All ──
+function toggleCheckAll(noteId){
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  notes.forEach(function(n){
+    if(n.id!==noteId)return;
+    if(!n.checklist||!n.checklist.length)return;
+    var allDone=n.checklist.every(function(c){return c.done;});
+    n.checklist.forEach(function(c){c.done=!allDone;});
+  });
+  localStorage.setItem('jc_notes',JSON.stringify(notes));
+  renderNotes();
+  setTimeout(function(){
+    var el=document.getElementById('mn-'+noteId);
+    if(el)el.classList.add('expanded');
+  },30);
 }
 function toggleNotePin(id){
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
@@ -3872,9 +3998,13 @@ function renderManualNoteCard(n){
   var clDone=cl.filter(function(c){return c.done;}).length;
   var pct=cl.length?Math.round(clDone/cl.length*100):0;
   var clBadge=cl.length?'<span class="note-cl-badge">'+clDone+'/'+cl.length+'</span>':'';
+  var allDone=cl.length&&cl.every(function(c){return c.done;});
   var clHtml=cl.length?
     '<div class="note-checklist">'+
-      '<div class="note-cl-progress"><div class="note-cl-progress-bar" style="width:'+pct+'%"></div></div>'+
+      '<div class="note-cl-header">'+
+        '<div class="note-cl-progress" style="flex:1"><div class="note-cl-progress-bar" style="width:'+pct+'%"></div></div>'+
+        '<button class="note-cl-toggle" onclick="toggleCheckAll('+n.id+')">'+(allDone?'Uncheck All':'Check All')+'</button>'+
+      '</div>'+
       cl.map(function(c){
         return '<div class="note-cl-item">'+
           '<div class="note-cl-check'+(c.done?' done':'')+'" onclick="toggleChecklistItem('+n.id+','+c.id+')">'+(c.done?'✓':'')+'</div>'+
@@ -3906,10 +4036,16 @@ function renderManualNoteCard(n){
       '<button class="note-cl-add-btn" onclick="addChecklistItem('+n.id+')">+ Add checklist item</button>'+
       '<textarea class="manual-note-body" placeholder="Notes…" rows="4" oninput="updateManualNoteBody('+n.id+',this.value);autoResizeTA(this)" style="font-size:16px!important;">'+escHtml(bodyText)+'</textarea>'+
       photosHtml+
-      '<div class="note-card-actions" style="margin-top:10px;">'+
-        '<button class="note-copy-btn" data-copy-id="'+n.id+'" onclick="copyNoteContent('+n.id+')">Copy</button>'+
-        '<button class="note-export-card-btn" onclick="jcExportNote('+n.id+')">Export</button>'+
-        '<button class="note-del-btn" onclick="jcDeleteNote('+n.id+')">Delete</button>'+
+      '<div class="note-card-actions">'+
+        '<div class="note-actions-row">'+
+          '<button class="note-copy-btn" onclick="copyNoteContent('+n.id+')">Copy</button>'+
+          '<button class="note-copy-btn" onclick="duplicateNote('+n.id+')">Duplicate</button>'+
+          '<button class="note-export-card-btn" onclick="jcExportNote('+n.id+')">Export</button>'+
+        '</div>'+
+        '<div class="note-actions-row">'+
+          '<button class="note-export-card-btn" style="flex:2;background:rgba(240,192,32,.1);border-color:#f0c020;color:#c9a010;" onclick="openSaveAsTemplateSheet('+n.id+')">&#128190; Save as Template</button>'+
+          '<button class="note-del-btn" onclick="jcDeleteNote('+n.id+')">Delete</button>'+
+        '</div>'+
       '</div>'+
     '</div>'+
   '</div>';
@@ -7317,10 +7453,15 @@ window.addEventListener('load',function(){
     <div class="note-tpl-title">New Note</div>
     <div class="note-tpl-grid">
       <button class="note-tpl-btn" onclick="openManualNote('blank')">Blank Note<span class="note-tpl-lbl">Free-form text</span></button>
-      <button class="note-tpl-btn" onclick="openManualNote('material')">Material Order<span class="note-tpl-lbl">Checklist + notes</span></button>
-      <button class="note-tpl-btn" onclick="openManualNote('inspection')">Site Inspection<span class="note-tpl-lbl">7-item checklist</span></button>
-      <button class="note-tpl-btn" onclick="openManualNote('safety')">Safety Check<span class="note-tpl-lbl">LOTO / PPE / hazards</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('dailylog')">Daily Log<span class="note-tpl-lbl">Crew · work · issues</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('material')">Material Order<span class="note-tpl-lbl">Items · qty · cost</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('changeorder')">Change Order<span class="note-tpl-lbl">Change · cost · approval</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('roughin')">Rough-In Check<span class="note-tpl-lbl">10-item field checklist</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('inspection')">Final Inspection<span class="note-tpl-lbl">Panel · grounds · AFCI</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('safety')">Safety Check<span class="note-tpl-lbl">LOTO · PPE · hazards</span></button>
+      <button class="note-tpl-btn" onclick="openManualNote('trimout')">Trim-Out Check<span class="note-tpl-lbl">Devices · covers · labels</span></button>
     </div>
+    <div id="note-tpl-user-section"></div>
     <button class="note-tpl-cancel" onclick="closeNoteTplSheet()">Cancel</button>
   </div>
 </div>
@@ -7335,6 +7476,16 @@ window.addEventListener('load',function(){
   <div class="jc-save-row">
     <input class="jc-save-input" id="jc-save-name" type="text" placeholder="Name this result…" />
     <button class="jc-save-btn" id="jc-save-btn" onclick="jcSaveNote()">Save</button>
+  </div>
+</div>
+<!-- Save as Template Sheet -->
+<div class="note-save-tpl-ov" id="note-save-tpl-ov" onclick="closeSaveAsTemplateSheet()">
+  <div class="note-save-tpl-sheet" id="note-save-tpl-sheet" onclick="event.stopPropagation()">
+    <div class="note-save-tpl-title">&#128190; Save as Template</div>
+    <div class="note-save-tpl-sub">Saves this checklist structure so you can reuse it on any future note.</div>
+    <input class="note-save-tpl-inp" id="note-save-tpl-name" type="text" placeholder="Template name…" />
+    <button class="note-save-tpl-btn" onclick="confirmSaveAsTemplate()">Save Template</button>
+    <button class="note-save-tpl-cancel" onclick="closeSaveAsTemplateSheet()">Cancel</button>
   </div>
 </div>
 <div class="ts-del-confirm" id="ts-del-confirm">
