@@ -441,7 +441,7 @@ body { background: var(--bg); }
   .code-note { padding:6px 20px 16px; font-family:'Roboto Mono',monospace; font-size:9px; color:var(--muted); line-height:1.4; text-align:center; }
 
   /* ── Fraction Calculator ── */
-  .fr-display { padding:12px 16px 20px; background:var(--card); }
+  .fr-display { padding:8px 16px 10px; background:var(--card); }
   .fr-expr { font-family:'Roboto Mono',monospace; font-size:14px; color:var(--muted); text-align:right; min-height:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .fr-main { font-family:'Inter',sans-serif; font-size:30px; font-weight:700; color:#000000; text-align:right; line-height:1.05; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:-.5px; }
   .fr-main.error { color:#fca5a5; font-size:18px; }
@@ -463,7 +463,7 @@ body { background: var(--bg); }
   .pn-bar-fill.warn { background:#f59e0b !important; }
   .pn-bar-fill.over { background:#dc2626 !important; }
   .pn-bar-info { font-family:'Roboto Mono',monospace; font-size:9px; color:#6b7280; min-width:80px; text-align:right; }
-  .fr-keys { padding:6px 6px 32px; display:grid; grid-template-columns:repeat(4,1fr); gap:4px; background:#1a1a1a; }
+  .fr-keys { padding:6px; display:grid; grid-template-columns:repeat(4,1fr); gap:4px; background:#1a1a1a; }
   .fk { font-family:'Roboto Mono',monospace; font-size:13px; font-weight:500; border-radius:7px; cursor:pointer; padding:6px 4px; border:1.5px solid #333; background:#2a2a2a; color:#ffffff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; line-height:1.2; transition:all .1s; -webkit-tap-highlight-color:transparent; box-shadow:0 1px 2px rgba(0,0,0,.05); }
   .fk:hover { border-color:#f0c020; background:#333; }
   .fk:active { transform:scale(.93); filter:brightness(.94); }
@@ -524,7 +524,7 @@ body { background: var(--bg); }
   .pc-row{display:flex;align-items:stretch;height:22px;}
   .pc-row+.pc-row{border-top:1px solid rgba(0,0,0,0.15);}
   .pc-row.pc-grp-sep{border-top:1.5px solid #374151;}
-  .pc-num-L{width:24px;font-size:11px;font-family:'Roboto Mono',monospace;font-weight:700;color:var(--sub);display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:var(--surface);flex-shrink:0;}
+  .pc-num-L{width:20px;font-size:8px;font-family:'Roboto Mono',monospace;font-weight:700;color:#374151;display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:#f3f4f6;flex-shrink:0;}
   .pc-num-R{width:24px;font-size:11px;font-family:'Roboto Mono',monospace;font-weight:700;color:var(--sub);display:flex;align-items:center;justify-content:flex-start;padding-left:3px;background:var(--surface);flex-shrink:0;}
   .pc-bar{flex:1;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:700;font-family:'Roboto Mono',monospace;color:rgba(255,255,255,0.95);}
   .pc-bar-L{justify-content:flex-end;}
@@ -4162,7 +4162,7 @@ function jcExportNote(id){
     if(cl.length){var clDoneC=cl.filter(function(c){return c.done;}).length;bodyHTML+='<div class="sec-hd">Checklist ('+clDoneC+'/'+cl.length+')</div><table class="kv-table"><tbody>'+cl.map(function(c){return '<tr><td style="width:24px;text-align:center;">'+(c.done?'<strong style="color:#16a34a;">✓</strong>':'○')+'</td><td style="'+(c.done?'text-decoration:line-through;color:#9ca3af;':'')+'">'+escHtml(c.text)+'</td></tr>';}).join('')+'</tbody></table>';}
     if(n.photos&&n.photos.length){var _npc2=n.photos.length===1?'rpt-photo-solo':'rpt-photo';bodyHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+n.photos.map(function(p){return '<img src="'+p+'" class="'+_npc2+'">';}).join('')+'</div>';}
     var html=buildPrintHTML(title,'Note · Created '+created,bodyHTML);
-    openExportSheet(title,txt.join('\n'),csv,html);
+    openExportSheet(title,txt.join('\n'),csv,html,n.photos||[]);
     return;
   }
   var lines=n.lines||[];
@@ -4188,9 +4188,10 @@ function jcExportNote(id){
   }).join('');
   bodyHTML='<table class="kv-table"><thead><tr><th>Field</th><th>Value</th><th>Details / Comments</th></tr></thead><tbody>'+rows+'</tbody></table>';
   if(n.annotation)bodyHTML+='<div class="sec-hd">Job Notes</div><div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;font-size:13px;line-height:1.6;">'+escHtml(n.annotation)+'</div>';
+  if(n.svg){bodyHTML+='<div class="sec-hd">Bend Diagram</div>'+'<div style="margin:12px 0 20px;text-align:center;background:#f9fafb;border-radius:10px;padding:20px;border:1px solid #e5e7eb;">'+n.svg+'</div>';}
   if(n.photos&&n.photos.length){var _npc=n.photos.length===1?'rpt-photo-solo':'rpt-photo';bodyHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+n.photos.map(function(p){return '<img src="'+p+'" class="'+_npc+'">';}).join('')+'</div>';}
   var html=buildPrintHTML(title,n.tabName+' · Created '+created,bodyHTML);
-  openExportSheet(title,txt.join('\n'),csv,html);
+  openExportSheet(title,txt.join('\n'),csv,html,n.photos||[]);
 }
 function jcExportAllNotes(){
   var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');if(!notes.length)return;
@@ -4291,8 +4292,8 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
   '</div>'+
   '</body></html>';
 }
-function openExportSheet(title,text,csv,html){
-  _exportData={title:title,text:text,csv:csv||text,html:html||null};
+function openExportSheet(title,text,csv,html,photos){
+  _exportData={title:title,text:text,csv:csv||text,html:html||null,photos:photos||[]};
   document.getElementById('export-sheet-title').textContent=title;
   document.getElementById('export-sheet-sub').textContent='Send or save this report';
   var nsBtn=document.getElementById('export-native-share');
@@ -4305,7 +4306,24 @@ function openExportSheet(title,text,csv,html){
 function doNativeShare(){
   if(!_exportData||!navigator.share)return;
   closeExportSheet();
-  navigator.share({title:_exportData.title,text:_exportData.text}).catch(function(){});
+  var htmlContent=_exportData.html||_exportData.text;
+  var slug=_exportData.title.replace(/[^a-z0-9]/gi,"_");
+  var files=[new File([htmlContent],slug+".html",{type:"text/html"})];
+  (_exportData.photos||[]).forEach(function(p,i){
+    var m=p.match(/^data:(image\/\w+);base64,(.+)$/);
+    if(!m)return;
+    var bytes=atob(m[2]),arr=new Uint8Array(bytes.length);
+    for(var j=0;j<bytes.length;j++)arr[j]=bytes.charCodeAt(j);
+    files.push(new File([arr],"photo_"+(i+1)+".jpg",{type:m[1]}));
+  });
+  var shareData={title:_exportData.title,files:files};
+  if(navigator.canShare&&navigator.canShare(shareData)){
+    navigator.share(shareData).catch(function(){
+      navigator.share({title:_exportData.title,text:_exportData.text}).catch(function(){});
+    });
+  }else{
+    navigator.share({title:_exportData.title,text:_exportData.text}).catch(function(){});
+  }
 }
 function closeExportSheet(){document.getElementById('export-sheet-ov').classList.remove('open');}
 function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('photo-lightbox').classList.add('open');}
@@ -4323,7 +4341,18 @@ function doExportPDF(){
 function doExportCopy(){
   if(!_exportData)return;
   var t=_exportData.text;
+  var h=_exportData.html;
   closeExportSheet();
+  if(h&&navigator.clipboard&&window.ClipboardItem){
+    try{
+      navigator.clipboard.write([new ClipboardItem({
+        "text/html":new Blob([h],{type:"text/html"}),
+        "text/plain":new Blob([t],{type:"text/plain"})
+      })]).catch(function(){_copyFallback(t);});
+    }catch(e){_copyFallback(t);}
+  }else{_copyFallback(t);}
+}
+function _copyFallback(t){
   if(navigator.clipboard){navigator.clipboard.writeText(t).catch(function(){});}
   else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}
 }
@@ -7450,7 +7479,7 @@ window.addEventListener('load',function(){
     <div class="export-sheet-sub" id="export-sheet-sub">Send or save this report</div>
     <button class="export-sheet-btn export-sheet-btn-primary" id="export-native-share" onclick="doNativeShare()" style="display:none;">
       <span class="export-sheet-btn-icon">📱</span>
-      <div><div class="export-sheet-btn-lbl">Send via...</div><div class="export-sheet-btn-sub">SMS, Email, AirDrop &amp; more</div></div>
+      <div><div class="export-sheet-btn-lbl">Send via...</div><div class="export-sheet-btn-sub">Full report + photos via SMS, Email, AirDrop</div></div>
     </button>
     <div class="export-sheet-divider" id="export-native-divider" style="display:none;"><span>File Exports</span></div>
     <button class="export-sheet-btn" onclick="doExportPDF()">
@@ -7459,7 +7488,7 @@ window.addEventListener('load',function(){
     </button>
     <button class="export-sheet-btn" onclick="doExportCopy()">
       <span class="export-sheet-btn-icon">📋</span>
-      <div><div class="export-sheet-btn-lbl">Copy to Clipboard</div><div class="export-sheet-btn-sub">Paste anywhere</div></div>
+      <div><div class="export-sheet-btn-lbl">Copy to Clipboard</div><div class="export-sheet-btn-sub">Rich format — paste into email, notes &amp; more</div></div>
     </button>
     <button class="export-sheet-btn" onclick="doExportCSV()">
       <span class="export-sheet-btn-icon">📊</span>
