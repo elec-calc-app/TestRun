@@ -137,7 +137,7 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .scan-page-del{position:absolute;top:7px;right:7px;background:rgba(220,38,38,.9);color:#fff;border:none;border-radius:6px;width:28px;height:28px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;}
 .scan-page-move{position:absolute;bottom:7px;right:7px;display:flex;gap:4px;}
 .scan-mv-btn{background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:5px;width:26px;height:26px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;}
-.scan-bar{background:var(--surface);border-top:1px solid var(--border);padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;align-items:center;}
+.scan-bar{background:var(--surface);border-top:1px solid var(--border);padding-bottom:calc(env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:0;}
 .scan-count{font-size:12px;font-weight:700;color:var(--muted);font-family:'Roboto Mono',monospace;flex-shrink:0;min-width:52px;}
 .scan-bar-btn{flex:1;border:none;border-radius:9px;padding:12px 8px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .scan-bar-btn:active{opacity:.85;}
@@ -147,7 +147,7 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .scan-meta-row{display:flex;gap:8px;padding:8px 12px 0;}
 .scan-meta-input{flex:1;background:var(--field);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:12px;font-family:'Inter',sans-serif;}
 .scan-meta-input::placeholder{color:var(--muted);}
-.scan-btn-row{display:flex;align-items:center;gap:8px;padding:8px 12px;}
+.scan-btn-row{display:flex;align-items:center;gap:8px;padding:8px 12px 10px;}
 .scan-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1100;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
 .scan-overlay.visible{display:flex;}
 .scan-overlay-lbl{color:#fff;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;}
