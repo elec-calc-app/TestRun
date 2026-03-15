@@ -1518,6 +1518,8 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-svc" onclick="switchTab('svc',this)">Service</button>
     <button class="tab-btn" id="tab-btn-gnd" onclick="switchTab('gnd',this)">Ground</button>
     <button class="tab-btn" id="tab-btn-xfmr" onclick="switchTab('xfmr',this)">Transformer</button>
+    <button class="tab-btn" id="tab-btn-pn" onclick="switchTab('pn',this)">Panel<span>Schedule</span></button>
+    <button class="tab-btn" id="tab-btn-feeder" onclick="switchTab('feeder',this)">Feeder<span>Sizing</span></button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -3144,7 +3146,7 @@ if('serviceWorker' in navigator){
   <!-- ══════════════════════════════════════════════
        TAB 9 — PANEL SCHEDULE
   ══════════════════════════════════════════════ -->
-  <div class="tab-panel" id="tab-pn" style="display:none!important;">
+  <div class="tab-panel" id="tab-pn">
     <div class="section-label">Panel Info</div>
     <div class="fields">
       <div class="field-row">
@@ -5279,6 +5281,108 @@ if('serviceWorker' in navigator){
     </div>
   </div>
 
+  <!-- ── FEEDER SIZING TAB ── -->
+  <div class="tab-panel" id="tab-feeder">
+    <div class="section-label">Feeder &amp; Branch Circuit Sizing</div>
+    <div class="fields">
+      <div class="field-row">
+        <div class="field-label">Phase</div>
+        <div class="sel-wrap"><select class="fi" id="fd-phase">
+          <option value="3" selected>3-Phase</option>
+          <option value="1">1-Phase</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">System Voltage (L-L) <button class="svc-ib" onclick="svcInfo('fd_voltage')">&#9432;</button></div>
+        <div class="sel-wrap"><select class="fi" id="fd-volts">
+          <option value="120">120V</option>
+          <option value="208">208V</option>
+          <option value="240">240V</option>
+          <option value="277">277V</option>
+          <option value="480" selected>480V</option>
+          <option value="600">600V</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Load Input <button class="svc-ib" onclick="svcInfo('fd_load')">&#9432;</button></div>
+        <div class="sel-wrap"><select class="fi" id="fd-load-mode" onchange="fdToggleLoad()">
+          <option value="amps" selected>Amps (known FLA)</option>
+          <option value="kva">kVA</option>
+          <option value="kw">kW (with PF)</option>
+        </select></div>
+      </div>
+      <div id="fd-inp-amps">
+        <div class="field-row">
+          <div class="field-label">Load Current (Amps)</div>
+          <input class="fi" id="fd-amps" type="number" min="1" max="9999" placeholder="e.g. 100"/>
+        </div>
+      </div>
+      <div id="fd-inp-kva" style="display:none;">
+        <div class="field-row">
+          <div class="field-label">Load (kVA)</div>
+          <input class="fi" id="fd-kva" type="number" min="0.1" max="9999" placeholder="e.g. 75"/>
+        </div>
+      </div>
+      <div id="fd-inp-kw" style="display:none;">
+        <div class="field-row">
+          <div class="field-label">Load (kW)</div>
+          <input class="fi" id="fd-kw" type="number" min="0.1" max="9999" placeholder="e.g. 60"/>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Power Factor (0.70 – 1.00)</div>
+          <input class="fi" id="fd-pf" type="number" min="0.70" max="1.00" step="0.01" value="0.85" placeholder="0.85"/>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Continuous Load? <button class="svc-ib" onclick="svcInfo('fd_cont')">&#9432;</button></div>
+        <div class="sel-wrap"><select class="fi" id="fd-cont">
+          <option value="yes" selected>Yes — 125% applied (most loads)</option>
+          <option value="no">No — 100% (motor or non-continuous)</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Conductor Material</div>
+        <div class="sel-wrap"><select class="fi" id="fd-mat">
+          <option value="copper" selected>Copper</option>
+          <option value="aluminum">Aluminum / CCA</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Terminal Temp Rating <button class="svc-ib" onclick="svcInfo('fd_temp')">&#9432;</button></div>
+        <div class="sel-wrap"><select class="fi" id="fd-temp">
+          <option value="75" selected>75°C (standard equipment)</option>
+          <option value="60">60°C (older/derated)</option>
+          <option value="90">90°C (90°C rated terminals)</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">One-Way Run Length (ft) <button class="svc-ib" onclick="svcInfo('fd_dist')">&#9432;</button></div>
+        <input class="fi" id="fd-dist" type="number" min="1" max="99999" placeholder="Leave blank to skip VD check"/>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Max Voltage Drop %</div>
+        <div class="sel-wrap"><select class="fi" id="fd-vd-pct">
+          <option value="3" selected>3% — Feeder (recommended)</option>
+          <option value="5">5% — Combined branch + feeder</option>
+          <option value="2">2% — Sensitive equipment</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="err-msg" id="fd-err"></div>
+    <div class="btn-row">
+      <button class="btn btn-calc" onclick="calculateFeeder()">Calculate</button>
+      <button class="btn btn-reset" onclick="resetFeeder()">Reset</button>
+    </div>
+    <div class="section-label" id="fd-results-label" style="display:none;">Results</div>
+    <div class="results" id="fd-results"></div>
+    <div class="disclaimer" id="fd-disclaimer" style="display:none;">
+      <div class="disclaimer-title">Important Notice</div>
+      <div class="disclaimer-text">Conductor sized per NEC Table 310.16 at the selected temperature column. OCPD sized at next standard rating at or above 125% of continuous load FLA (NEC §210.20, §215.3). Voltage drop check uses the DC resistance approximation — actual VD may vary with power factor, conductor reactance, and installation method. EMT conduit fill based on NEC Chapter 9 Table 1 (40% max fill). Design guidance only — verify conductor ampacity, conduit fill, and OCPD sizing with AHJ before installation.</div>
+    </div>
+    <div class="code-note" id="fd-note"></div>
+  </div>
+
   <div class="app-footer">
     <span style="font-family:'Roboto Mono',monospace; font-size:8px; letter-spacing:1px;">© 2026 Circuitmatic · circuitmatic.app · For reference only — verify with licensed electrician and local AHJ.</span>
   </div>
@@ -5950,6 +6054,7 @@ function setCodeYear(year){
   if(document.getElementById('xf-fla-results-label')&&document.getElementById('xf-fla-results-label').style.display!=='none')calculateXfmrFLA();
   if(document.getElementById('xf-ocpd-results-label')&&document.getElementById('xf-ocpd-results-label').style.display!=='none')calculateXfmrOCPD();
   if(document.getElementById('xf-sds-results-label')&&document.getElementById('xf-sds-results-label').style.display!=='none')calculateXfmrSDS();
+  if(document.getElementById('fd-results-label')&&document.getElementById('fd-results-label').style.display!=='none')calculateFeeder();
   // Update quiz title immediately regardless of which tab is active
   var qzTitleEl=document.getElementById('qz-title');
   if(qzTitleEl) qzTitleEl.textContent='⚡ CODE '+year+' — EXAM PREP';
@@ -10346,6 +10451,11 @@ var _SVC_INFO={
   bond_target:{t:'Bonding Target — Water Pipe vs Structural Steel',b:'Interior Metal Water Piping: Select this for the bonding jumper that connects the metal water supply pipe to the grounding system. Required on virtually every residential, commercial, and industrial building that has copper, galvanized, or other metal water pipe. Plastic (PVC, PEX) water piping does not require this bond.\n\nStructural Metal: Select this for the bonding jumper that ties a steel building frame or interconnected structural metal to the grounding system. More common in commercial and industrial construction. Not typically required in wood-frame residences.\n\nBoth: Select this if you need bonding jumpers for both in the same installation. Both are sized identically from Table 250.102(C)(1) — the calculator will show a result card for each.',r:'NEC §250.104'},
   xfmr_voltage:{t:'Transformer Voltage — What to Enter',b:'Always enter the line-to-line voltage for 3-phase transformers and line-to-neutral (or full secondary) voltage for 1-phase.\n\nCommon primary voltages:\n• 480V — most common in commercial/industrial 3-phase services\n• 208V — when fed from a 208Y/120 distribution system\n• 240V — common for 1-phase services\n• 4,160V or 12,470V — medium-voltage primary feeds from utility\n\nCommon secondary voltages:\n• 208V (3-phase) — standard distribution in commercial buildings (208Y/120V system)\n• 480V (3-phase) — power distribution to large equipment\n• 120V or 240V (1-phase) — residential and light commercial\n• 277V — lighting transformers on 480V systems\n\nNote: For a 208Y/120V system, enter 208V (the line-to-line value). The 120V line-to-neutral is used for branch circuit calculations, not transformer sizing.',r:'NEC §450 / IEEE C57'},
   xfmr_install:{t:'General vs. Supervised Installation',b:'This affects the maximum allowed primary overcurrent device size per Table 450.3(B).\n\n► General (Unsupervised) — the default for most installations:\nThe transformer is accessible to unqualified persons or in a location without continuous qualified supervision. Primary-only OCPD is limited to 125% of primary FLA (next standard size up). With secondary OCPD, the primary can go up to 250%.\n\n► Supervised Installation:\nThe transformer is in a locked electrical room, restricted access vault, or location accessible only to qualified electricians with continuous or regular monitoring. The primary OCPD can be sized up to 250% (or 300% for very small FLA) even without secondary OCPD. Most industrial plant electrical rooms and utility substations qualify. A typical commercial panel room does not automatically qualify — the AHJ makes the final determination.',r:'NEC Table 450.3(B)'},
+  fd_voltage:{t:'System Voltage — Which to Enter',b:'Always enter the line-to-line voltage:\n\n• 120/240V 1-phase: enter 240V (the full secondary). Use 120V only when sizing a single 120V circuit.\n• 208Y/120V 3-phase: enter 208V (line-to-line).\n• 480Y/277V 3-phase: enter 480V.\n• 277V: only for single-phase lighting circuits on a 480V system.\n\nFor voltage drop, using the correct line-to-line voltage keeps the math right. Using line-to-neutral gives an overly optimistic VD result.',r:'NEC §215 / §210'},
+  fd_load:{t:'Load Input Mode',b:'Choose the format that matches what you have on hand:\n\n► Amps (known FLA)\nUse this when you already know the full-load current from a nameplate, engineering schedule, or prior calculation. Most direct.\n\n► kVA\nUse this for transformer secondaries, UPS units, generators, or any load rated in kVA. The calculator converts to amps using your voltage and phase selection.\n\n► kW (with PF)\nUse this for loads rated in kilowatts — HVAC units, heaters, large motors with known power factor. The calculator divides kW by PF to get kVA, then converts to amps. If you are unsure of the actual power factor, 0.85 is a reasonable starting point for most motor-driven loads. Use 1.00 for pure resistive loads (heaters, incandescent lighting).',r:'NEC §220'},
+  fd_cont:{t:'Continuous vs. Non-Continuous Load',b:'A continuous load is one that runs at full current for 3 hours or more. Most commercial and industrial loads qualify.\n\nWhen a load is continuous, the conductor and OCPD must be sized at 125% of the load current per NEC §215.3 and §210.20.\n\nExamples of continuous loads:\n• Lighting (most commercial lighting runs 3+ hours)\n• HVAC equipment\n• Panel feeders serving mixed loads\n• Refrigeration equipment\n• Most industrial process equipment\n\nExamples of non-continuous (100%) loads:\n• Motors (use motor-specific sizing per Art. 430)\n• Receptacle circuits with intermittent use\n• Loads with built-in demand factors already applied',r:'NEC §215.3, §210.20'},
+  fd_temp:{t:'Terminal Temperature Rating',b:'The terminal temperature rating of the equipment determines which column of Table 310.16 you use for conductor sizing — not the cable\'s own temperature rating.\n\n► 75°C (most common)\nThe default for equipment 100A and above. Panels, breakers, and lugs are typically rated 75°C. Use THHN/THWN-2 wire (90°C rated) but size it from the 75°C column.\n\n► 60°C\nEquipment rated 60°C only. Older equipment, some residential devices. You can use any conductor rated 60°C or higher, but size from the 60°C column (more conservative).\n\n► 90°C\nOnly use when the equipment is specifically listed and marked for 90°C terminations. Rare in practice — most equipment tops out at 75°C.',r:'NEC §110.14(C), Table 310.16'},
+  fd_dist:{t:'One-Way Run Length for Voltage Drop',b:'Enter the one-way distance in feet from the source (panel or transformer) to the load.\n\nThe voltage drop formula accounts for current traveling out AND back through the conductors:\n• 1-Phase: VD% = (2 × I × R × L) ÷ V × 100\n• 3-Phase: VD% = (√3 × I × R × L) ÷ V × 100\nWhere R = conductor resistance in ohms/ft and L = one-way length.\n\nNEC recommends (but does not mandate) keeping feeder VD to 3% or less, and total branch + feeder VD to 5% or less. For sensitive equipment (medical, data centers, precision manufacturing), stay at 2% or below. Leave blank if you only want ampacity and OCPD sizing without a voltage drop check.',r:'NEC §215.2(A) Informational Note'},
   mc_nameplate:{t:'Where to Find Motor Information',b:'Everything you need for this calculator is on the motor nameplate — the metal data plate bolted to the motor frame (usually on the side or end).\n\nWhat to look for:\n\n• Horsepower (HP) — listed as "HP"\n• Voltage — listed as "VOLTS" — may show multiple voltages like 230/460\n• Phase — listed as "PH" — 1 for single-phase, 3 for three-phase\n• Motor Type — usually identified by NEMA Design letter (A, B, C, D) or "Squirrel Cage." If not listed, assume Squirrel Cage (Design B) — it is by far the most common\n• Service Factor (SF) — listed as "S.F." — if 1.15 or higher, overload protection is set to 125%; if not listed or below 1.15, use 115%\n\nIf the nameplate is missing or unreadable, check the motor spec sheet or the original equipment documentation.',r:'NEC §430.7 (Nameplate Requirements)'}
 };
 function svcInfo(key){
@@ -11247,6 +11357,223 @@ function calculateXfmrSDS(){
   document.getElementById('xf-sds-disclaimer').style.display='block';
   document.getElementById('xf-sds-note').textContent='NEC '+yr+' \u00a7250.30 \u00b7 '+phLbl+' \u00b7 '+kva+' kVA \u00b7 '+condMatLbl+' conductors \u00b7 Design guidance only \u00b7 Verify with AHJ';
   if(typeof jcResultsReady==='function')jcResultsReady('xfmr','SDS Grounding');
+}
+
+// ── Feeder / Branch Circuit Sizing ───────────────────────────────────────────
+// THHN wire areas (sq in) NEC Ch.9 Table 5 — [awg/kcmil, area]
+var _THHN_AREA={
+  '14':0.0097,'12':0.0133,'10':0.0211,'8':0.0366,'6':0.0507,'4':0.0824,'3':0.0973,
+  '2':0.1158,'1':0.1562,'1/0':0.1855,'2/0':0.2223,'3/0':0.2660,'4/0':0.3197,
+  '250':0.3970,'300':0.4608,'350':0.5242,'400':0.5863,'500':0.7073,
+  '600':0.8676,'700':1.0108,'750':1.0751,'800':1.1652,'900':1.2272,'1000':1.5482
+};
+// EMT conduit fill limits (40%) sq in — [trade size label, 40% area]
+var _EMT_FILL=[
+  ['1/2"',0.122],['3/4"',0.213],['1"',0.346],['1-1/4"',0.608],
+  ['1-1/2"',0.814],['2"',1.342],['2-1/2"',2.343],['3"',3.538],['3-1/2"',4.618],['4"',5.901]
+];
+// Ampacity tables — 75°C and 60°C and 90°C columns from Table 310.16
+var _AMP_CU={
+  '60':[['14',15],['12',20],['10',30],['8',40],['6',55],['4',70],['3',85],['2',95],['1',110],
+        ['1/0',125],['2/0',145],['3/0',165],['4/0',195],['250',215],['300',240],['350',260],
+        ['400',280],['500',320],['600',355],['700',385],['750',400],['800',410],['900',435],['1000',455]],
+  '75':[['14',20],['12',25],['10',35],['8',50],['6',65],['4',85],['3',100],['2',115],['1',130],
+        ['1/0',150],['2/0',175],['3/0',200],['4/0',230],['250',255],['300',285],['350',310],
+        ['400',335],['500',380],['600',420],['700',460],['750',475],['800',490],['900',520],['1000',545]],
+  '90':[['14',25],['12',30],['10',40],['8',55],['6',75],['4',95],['3',110],['2',130],['1',150],
+        ['1/0',170],['2/0',195],['3/0',225],['4/0',260],['250',290],['300',320],['350',350],
+        ['400',380],['500',430],['600',475],['700',520],['750',535],['800',555],['900',585],['1000',615]]
+};
+var _AMP_AL={
+  '60':[['12',15],['10',25],['8',30],['6',40],['4',55],['3',65],['2',75],['1',85],
+        ['1/0',100],['2/0',115],['3/0',130],['4/0',150],['250',170],['300',190],['350',210],
+        ['400',225],['500',260],['600',285],['700',310],['750',320],['800',330],['900',355],['1000',375]],
+  '75':[['12',20],['10',30],['8',40],['6',50],['4',65],['3',75],['2',90],['1',100],
+        ['1/0',120],['2/0',135],['3/0',155],['4/0',180],['250',205],['300',230],['350',250],
+        ['400',270],['500',310],['600',340],['700',375],['750',385],['800',395],['900',425],['1000',445]],
+  '90':[['12',25],['10',35],['8',45],['6',60],['4',75],['3',85],['2',100],['1',115],
+        ['1/0',135],['2/0',150],['3/0',175],['4/0',205],['250',230],['300',260],['350',280],
+        ['400',305],['500',350],['600',385],['700',420],['750',435],['800',450],['900',480],['1000',500]]
+};
+// DC resistance (ohms/kft) at 75°C for VD calc — copper and aluminum
+var _RES_CU={'14':3.140,'12':1.980,'10':1.240,'8':0.778,'6':0.491,'4':0.308,'3':0.245,'2':0.194,
+             '1':0.154,'1/0':0.122,'2/0':0.0967,'3/0':0.0766,'4/0':0.0608,
+             '250':0.0515,'300':0.0429,'350':0.0367,'400':0.0321,'500':0.0258,
+             '600':0.0214,'700':0.0184,'750':0.0171,'800':0.0161,'900':0.0143,'1000':0.0129};
+var _RES_AL={'14':5.17,'12':3.25,'10':2.04,'8':1.28,'6':0.808,'4':0.508,'3':0.403,'2':0.319,
+             '1':0.253,'1/0':0.201,'2/0':0.159,'3/0':0.126,'4/0':0.100,
+             '250':0.0847,'300':0.0707,'350':0.0605,'400':0.0529,'500':0.0424,
+             '600':0.0353,'700':0.0303,'750':0.0282,'800':0.0265,'900':0.0235,'1000':0.0212};
+
+function _fdFindWire(amps, mat, tempCol){
+  var tbl=mat==='copper'?_AMP_CU[tempCol]:_AMP_AL[tempCol];
+  if(!tbl)tbl=mat==='copper'?_AMP_CU['75']:_AMP_AL['75'];
+  for(var i=0;i<tbl.length;i++){if(tbl[i][1]>=amps)return tbl[i][0];}
+  return null;
+}
+function _fdConduit(wireSize, nConductors){
+  var area=_THHN_AREA[wireSize];
+  if(!area)return null;
+  var total=area*nConductors;
+  for(var i=0;i<_EMT_FILL.length;i++){if(_EMT_FILL[i][1]>=total)return _EMT_FILL[i][0];}
+  return '>4"';
+}
+function _fdVD(wireSize, amps, distFt, phase, volts, mat){
+  var res=mat==='copper'?_RES_CU[wireSize]:_RES_AL[wireSize];
+  if(!res)return null;
+  var ohms=(res/1000)*distFt;
+  // single-phase: VD = 2 * I * R; three-phase: VD = sqrt(3) * I * R
+  var vd=phase===3?Math.sqrt(3)*amps*ohms:2*amps*ohms;
+  return (vd/volts)*100;
+}
+function _fdWireForVD(amps, distFt, phase, volts, mat, maxPct){
+  // Find minimum wire size that keeps VD at or below maxPct
+  var res=mat==='copper'?_RES_CU:_RES_AL;
+  var sizes=['14','12','10','8','6','4','3','2','1','1/0','2/0','3/0','4/0',
+             '250','300','350','400','500','600','700','750','800','900','1000'];
+  for(var i=0;i<sizes.length;i++){
+    var sz=sizes[i];
+    var vdPct=_fdVD(sz,amps,distFt,phase,volts,mat);
+    if(vdPct!==null&&vdPct<=maxPct)return {size:sz,vdPct:vdPct};
+  }
+  return null;
+}
+
+function fdToggleLoad(){
+  var mode=document.getElementById('fd-load-mode').value;
+  document.getElementById('fd-inp-amps').style.display=mode==='amps'?'':'none';
+  document.getElementById('fd-inp-kva').style.display=mode==='kva'?'':'none';
+  document.getElementById('fd-inp-kw').style.display=mode==='kw'?'':'none';
+}
+function resetFeeder(){
+  document.getElementById('fd-phase').value='3';
+  document.getElementById('fd-volts').value='480';
+  document.getElementById('fd-load-mode').value='amps';
+  document.getElementById('fd-amps').value='';
+  document.getElementById('fd-kva').value='';
+  document.getElementById('fd-kw').value='';
+  document.getElementById('fd-pf').value='0.85';
+  document.getElementById('fd-cont').value='yes';
+  document.getElementById('fd-mat').value='copper';
+  document.getElementById('fd-temp').value='75';
+  document.getElementById('fd-dist').value='';
+  document.getElementById('fd-vd-pct').value='3';
+  fdToggleLoad();
+  document.getElementById('fd-err').className='err-msg';
+  document.getElementById('fd-results').innerHTML='';
+  document.getElementById('fd-results-label').style.display='none';
+  document.getElementById('fd-disclaimer').style.display='none';
+  document.getElementById('fd-note').textContent='';
+}
+function calculateFeeder(){
+  var errEl=document.getElementById('fd-err');
+  errEl.className='err-msg';
+  var ph=parseInt(document.getElementById('fd-phase').value);
+  var volts=parseFloat(document.getElementById('fd-volts').value);
+  var mode=document.getElementById('fd-load-mode').value;
+  var cont=document.getElementById('fd-cont').value==='yes';
+  var mat=document.getElementById('fd-mat').value;
+  var temp=document.getElementById('fd-temp').value;
+  var dist=parseFloat(document.getElementById('fd-dist').value);
+  var vdPct=parseFloat(document.getElementById('fd-vd-pct').value);
+  var yr=_codeYear||'2026';
+
+  // Resolve load amps
+  var loadA;
+  if(mode==='amps'){
+    loadA=parseFloat(document.getElementById('fd-amps').value);
+  }else if(mode==='kva'){
+    var kva=parseFloat(document.getElementById('fd-kva').value);
+    if(!kva||kva<=0){errEl.innerHTML='Enter a kVA value.';errEl.className='err-msg show';return;}
+    loadA=ph===3?(kva*1000)/(volts*Math.sqrt(3)):(kva*1000)/volts;
+  }else{
+    var kw=parseFloat(document.getElementById('fd-kw').value);
+    var pf=parseFloat(document.getElementById('fd-pf').value)||0.85;
+    if(!kw||kw<=0){errEl.innerHTML='Enter a kW value.';errEl.className='err-msg show';return;}
+    if(pf<0.5||pf>1){errEl.innerHTML='Power factor must be between 0.50 and 1.00.';errEl.className='err-msg show';return;}
+    var kva2=kw/pf;
+    loadA=ph===3?(kva2*1000)/(volts*Math.sqrt(3)):(kva2*1000)/volts;
+  }
+  if(!loadA||loadA<=0){errEl.innerHTML='Enter a valid load current.';errEl.className='err-msg show';return;}
+
+  var designA=cont?loadA*1.25:loadA;
+  var matLbl=mat==='copper'?'Copper':'Aluminum / CCA';
+  var phLbl=ph===3?'3-Phase':'1-Phase';
+
+  // Minimum conductor from ampacity
+  var minWire=_fdFindWire(designA,mat,temp);
+  if(!minWire){errEl.innerHTML='Load exceeds 1000 kcmil single conductor. Use parallel conductors — consult an engineer.';errEl.className='err-msg show';return;}
+
+  // OCPD — next standard size at or above designA
+  var ocpd=_nextOCPD(designA);
+
+  // Number of current-carrying conductors for conduit fill
+  // 3-phase: 3 phase + 1 neutral = 4 (neutral carries unbalanced only, counts for fill)
+  // 1-phase: 2 hots + 1 neutral = 3
+  var nCond=ph===3?4:3;
+  var conduit=_fdConduit(minWire,nCond);
+
+  var blocks=[];
+  blocks.push(makeBlock('neutral','Load Current',phLbl+' \u00b7 '+volts+'V',loadA.toFixed(1)+'A',
+    cont?'Continuous load \u2014 125% applied: '+loadA.toFixed(1)+' \u00d7 1.25 = '+designA.toFixed(1)+'A design current'
+        :'Non-continuous load \u2014 100% used: '+designA.toFixed(1)+'A design current'));
+  blocks.push(makeBlock('pass','Minimum Conductor Size','Table 310.16 \u00b7 '+temp+'\u00b0C',
+    sizeLabel(minWire)+' '+matLbl,
+    'Sized for '+designA.toFixed(1)+'A at '+temp+'\u00b0C column. '+
+    (cont?'NEC \u00a7215.3 requires conductors sized for 125% of continuous load.':'Sized for full load current.')));
+  blocks.push(makeBlock('pass','Minimum OCPD','NEC \u00a7240.6(A)',ocpd+'A',
+    'Next standard OCPD at or above '+designA.toFixed(1)+'A. '+(cont?'Sized for 125% continuous per \u00a7215.3.':'Sized for load current.')));
+  if(conduit){
+    blocks.push(makeBlock('neutral','Min. EMT Conduit (40% fill)','NEC Ch.9 Table 1',
+      'EMT '+conduit,nCond+' conductors \u00b7 '+sizeLabel(minWire)+' THHN \u00b7 40% fill limit'));
+  }
+
+  // Voltage drop check
+  if(!isNaN(dist)&&dist>0){
+    var vdActual=_fdVD(minWire,loadA,dist,ph,volts,mat);
+    var vdOK=vdActual!==null&&vdActual<=vdPct;
+    if(vdActual!==null){
+      var vdState=vdActual>5?'fail':vdActual>vdPct?'warn':vdActual>2?'neutral':'pass';
+      blocks.push(makeBlock(vdState,'Voltage Drop at '+sizeLabel(minWire),''+dist+' ft one-way',
+        vdActual.toFixed(2)+'%',
+        vdActual>vdPct?'Exceeds '+vdPct+'% limit \u2014 upsize conductor for VD':'Within '+vdPct+'% limit'));
+    }
+    if(!vdOK){
+      var vdWire=_fdWireForVD(loadA,dist,ph,volts,mat,vdPct);
+      if(vdWire&&vdWire.size!==minWire){
+        var vdOcpd=_nextOCPD(designA);
+        // also check if VD wire is larger than ampacity wire
+        var ampIdx=_WIDX[minWire]||0;
+        var vdIdx=_WIDX[vdWire.size]||0;
+        if(vdIdx>ampIdx){
+          blocks.push(makeBlock('warn','Upsize for Voltage Drop','VD governs',
+            sizeLabel(vdWire.size)+' '+matLbl,
+            'VD wire is larger than ampacity wire. Use '+sizeLabel(vdWire.size)+
+            ' to keep VD at '+vdWire.vdPct.toFixed(2)+'% ('+vdPct+'% limit). '+
+            'OCPD stays at '+vdOcpd+'A \u2014 larger wire is protected by the same OCPD.'));
+          var conduit2=_fdConduit(vdWire.size,nCond);
+          if(conduit2&&conduit2!==conduit){
+            blocks.push(makeBlock('neutral','Updated Conduit (VD wire)','NEC Ch.9','EMT '+conduit2,
+              nCond+' \u00d7 '+sizeLabel(vdWire.size)+' THHN'));
+          }
+        }
+      }
+    }
+  }
+
+  // Al restriction note
+  if(mat==='aluminum'){
+    blocks.push(makeBlock('neutral','Aluminum Conductor Note','Table 310.4','12 AWG minimum','Aluminum and copper-clad aluminum conductors must be 12 AWG or larger for feeders and branch circuits. Terminals must be rated for aluminum. Use anti-oxidant compound at connections.'));
+  }
+
+  document.getElementById('fd-results-label').style.display='block';
+  document.getElementById('fd-results').innerHTML=blocks.join('');
+  document.getElementById('fd-disclaimer').style.display='block';
+  document.getElementById('fd-note').textContent=
+    'NEC '+yr+' \u00a7215.3 / Table 310.16 \u00b7 '+phLbl+' \u00b7 '+volts+'V \u00b7 '+matLbl+
+    ' \u00b7 '+temp+'\u00b0C terminals'+((!isNaN(dist)&&dist>0)?' \u00b7 '+dist+'ft run':'')+
+    ' \u00b7 Design guidance only';
+  if(typeof jcResultsReady==='function')jcResultsReady('feeder','Feeder Sizing');
 }
 
 // ── GFCI / AFCI Lookup ───────────────────────────────────────────────────────
