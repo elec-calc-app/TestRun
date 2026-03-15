@@ -520,6 +520,7 @@ body.light-mode .svc-info-modal-body{color:#374151;}
     padding: 3px 8px;
     border-radius: 20px;
     border: 1.5px solid;
+    white-space: nowrap;
   }
   .result-block.pass .result-badge { color:var(--green); border-color:var(--green-bdr); background:rgba(5,150,105,.07); }
   .result-block.fail .result-badge { color:var(--red); border-color:var(--red-bdr); background:rgba(220,38,38,.07); }
@@ -4189,7 +4190,7 @@ if('serviceWorker' in navigator){
     </div>
     <div class="section-label" id="svc-results-label" style="display:none;">Results</div>
     <div class="results" id="svc-results"></div>
-    <div class="eng-panel" id="svc-breakdown-panel" style="display:none;margin:0 0 0 0;">
+    <div class="eng-panel" id="svc-breakdown-panel" style="display:none;margin:10px 0 0 0;">
       <div class="eng-panel-head" onclick="svcToggleBreakdown()">
         <span class="eng-panel-title">Calculation Breakdown</span>
         <span class="eng-toggle" id="svc-breakdown-toggle">▾</span>
