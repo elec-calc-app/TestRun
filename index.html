@@ -82,11 +82,11 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .cht-ocpd-chip.common{background:rgba(240,192,32,.15);color:#f0c020;border-color:#f0c020;}
 .cht-spacer{height:20px;}
 .sup-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
-.sup-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 12px;}
+.sup-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 12px;min-width:0;overflow:hidden;}
 .sup-name{font-size:12px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;margin-bottom:6px;}
-.sup-row{display:flex;align-items:baseline;gap:6px;margin-bottom:3px;}
-.sup-lbl{font-size:10px;color:var(--muted);font-family:'Inter',sans-serif;white-space:nowrap;}
-.sup-val{font-size:11px;font-weight:700;color:var(--text);font-family:'Roboto Mono',monospace;white-space:nowrap;}
+.sup-row{display:flex;align-items:baseline;gap:6px;margin-bottom:3px;min-width:0;}
+.sup-lbl{font-size:10px;color:var(--muted);font-family:'Inter',sans-serif;white-space:normal;flex-shrink:1;}
+.sup-val{font-size:11px;font-weight:700;color:var(--text);font-family:'Roboto Mono',monospace;white-space:nowrap;flex-shrink:0;}
 .sup-note{font-size:10px;color:var(--sub);font-family:'Inter',sans-serif;margin-top:5px;line-height:1.4;}
 .fiber-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px 14px;}
 .fiber-chip{display:flex;align-items:center;gap:7px;padding:7px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--border);}
@@ -3153,7 +3153,7 @@ if('serviceWorker' in navigator){
         <span class="cht-chev" id="cht-working-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-working">
-        <div class="cht-section-lbl">The Three Conditions — What's on the Other Side</div>
+        <div class="cht-section-lbl" style="display:flex;align-items:center;gap:5px;">The 3 Conditions <button class="svc-ib" onclick="svcInfo('wc_conds')" style="font-size:13px;padding:0;">ⓘ</button></div>
         <div class="sup-grid" style="grid-template-columns:1fr;gap:6px;padding:0 12px 10px;">
           <div class="sup-card">
             <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:start;">
@@ -8874,7 +8874,8 @@ var _SVC_INFO={
   ac:{t:'A/C Load (W)',b:'Enter the total nameplate or calculated load for air conditioning in watts.\n\nHow to find it: Check the data plate on the outdoor condenser unit. It usually shows amps and voltage — multiply them (Amps × Volts = Watts). Example: 20A × 240V = 4,800 W. For BTU ratings: divide BTU/hr by 3.41.\n\nNote: Only the LARGER of A/C or electric heat is included in the service calculation (§220.60). If you have both, enter both and the larger will be used automatically.',r:'NEC §220.60 / §120.60'},
   heat:{t:'Electric Heat (W)',b:'Enter the total nameplate load for all electric resistance heating in watts.\n\nHow to find it: Add up the wattage from all baseboard heaters, electric furnace, or heat strips. Each unit has a data plate. Electric furnaces are typically 10,000–20,000 W. Baseboard heaters are typically 500–2,000 W each.\n\nHeat pump users: Enter the emergency/auxiliary heat strip rating, not the compressor load.\n\nNote: Only the LARGER of A/C or electric heat is included per §220.60.',r:'NEC §220.60 / §120.60'},
   wh:{t:'Water Heater (W)',b:'Enter the nameplate wattage of the electric water heater.\n\nHow to find it: Look on the label on the side of the tank, usually near the top. Standard residential units are 3,500–4,500 W. Tanks with two elements still typically show only the upper element rating since they don\'t run simultaneously.\n\nIf unknown: Use 4,500 W as a conservative default.\n\nGas, propane, or tankless gas = 0 W.',r:'NEC §220.53'},
-  other:{t:'Other Fixed Loads (W)',b:'Enter the combined wattage of any other permanently installed fixed appliances not already listed above.\n\nCommon examples: dishwasher (1,200–1,500 W), garbage disposal (500–900 W), well pump (750–1,500 W), trash compactor (500 W), pool pump or hot tub equipment.\n\nHow to find it: Add the nameplate wattages from each appliance\'s data plate. If you have 4 or more fixed appliances, Standard Method applies a 75% demand factor automatically.\n\nDo not include EV chargers here — use the EV tab for those.',r:'NEC §220.53'}
+  other:{t:'Other Fixed Loads (W)',b:'Enter the combined wattage of any other permanently installed fixed appliances not already listed above.\n\nCommon examples: dishwasher (1,200–1,500 W), garbage disposal (500–900 W), well pump (750–1,500 W), trash compactor (500 W), pool pump or hot tub equipment.\n\nHow to find it: Add the nameplate wattages from each appliance\'s data plate. If you have 4 or more fixed appliances, Standard Method applies a 75% demand factor automatically.\n\nDo not include EV chargers here — use the EV tab for those.',r:'NEC §220.53'},
+  wc_conds:{t:'Working Space Conditions',b:'The condition is determined by what is on the OPPOSITE side of the working space from the exposed live parts.\n\nCondition 1: No live or uninsulated parts on the opposite side — concrete wall, brick, grounded metal wall, etc. Lowest hazard, smallest required depth.\n\nCondition 2: Grounded parts on the opposite side — grounded metal conduit, enclosures, structural steel. Moderate hazard.\n\nCondition 3: Exposed live parts on BOTH sides of the working space. Highest hazard, largest required depth.\n\nMost residential and light commercial panels face a wall → Condition 1. Switchgear rows facing each other → Condition 3.',r:'NEC Table 110.26(A)(1)'}
 };
 function svcInfo(key){
   var d=_SVC_INFO[key];
