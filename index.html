@@ -144,6 +144,10 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .scan-bar-add{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
 .scan-bar-pdf{background:#f0c020;color:#1a1200;}
 .scan-bar-clear{flex:0 0 auto;background:none;color:var(--muted);border:1px solid var(--border);padding:12px 14px;font-size:12px;border-radius:9px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;}
+.scan-meta-row{display:flex;gap:8px;padding:8px 12px 0;}
+.scan-meta-input{flex:1;background:var(--field);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:12px;font-family:'Inter',sans-serif;}
+.scan-meta-input::placeholder{color:var(--muted);}
+.scan-btn-row{display:flex;align-items:center;gap:8px;padding:8px 12px;}
 .scan-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1100;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
 .scan-overlay.visible{display:flex;}
 .scan-overlay-lbl{color:#fff;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;}
@@ -4446,10 +4450,16 @@ if('serviceWorker' in navigator){
       <div class="scan-pages-wrap" id="scan-pages-wrap" style="display:none;" id="scan-pages-wrap"></div>
       <!-- Bottom bar -->
       <div class="scan-bar" id="scan-bar" style="display:none;">
-        <span class="scan-count" id="scan-count">0 pages</span>
-        <button class="scan-bar-btn scan-bar-add" onclick="document.getElementById('scan-input').click()">+ Add Page</button>
-        <button class="scan-bar-btn scan-bar-pdf" onclick="scanGeneratePDF()">Create PDF</button>
-        <button class="scan-bar-clear" onclick="scanClearAll()">Clear</button>
+        <div class="scan-meta-row">
+          <input class="scan-meta-input" id="scan-job" type="text" placeholder="Job name (optional)" maxlength="60"/>
+          <input class="scan-meta-input" id="scan-notes" type="text" placeholder="Notes (optional)" maxlength="80"/>
+        </div>
+        <div class="scan-btn-row">
+          <span class="scan-count" id="scan-count">0 pages</span>
+          <button class="scan-bar-btn scan-bar-add" onclick="document.getElementById('scan-input').click()">+ Add Page</button>
+          <button class="scan-bar-btn scan-bar-pdf" onclick="scanGeneratePDF()">Create PDF</button>
+          <button class="scan-bar-clear" onclick="scanClearAll()">Clear</button>
+        </div>
       </div>
     </div>
     <!-- Hidden file input -->
@@ -12510,7 +12520,7 @@ function scanGeneratePDF(){
   if(!_scanPages.length)return;
   var jspdfLib=window.jspdf;
   if(!jspdfLib||!jspdfLib.jsPDF){
-    alert('PDF library is still loading — please wait a moment and try again.');
+    alert('PDF library is still loading \u2014 please wait a moment and try again.');
     return;
   }
   var overlay=document.getElementById('scan-overlay');
@@ -12519,15 +12529,24 @@ function scanGeneratePDF(){
   if(overlay)overlay.classList.add('visible');
   if(bar)bar.style.width='0%';
   if(lbl)lbl.textContent='Building PDF\u2026';
+
+  var jobEl=document.getElementById('scan-job');
+  var notesEl=document.getElementById('scan-notes');
+  var jobName=(jobEl&&jobEl.value.trim())||'';
+  var jobNotes=(notesEl&&notesEl.value.trim())||'';
+  var dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+
   var jsPDF=jspdfLib.jsPDF;
-  var first=_scanPages[0];
-  var pw=612, ph=Math.round(612*first.h/first.w);
-  var doc=new jsPDF({unit:'pt',format:[pw,ph],compress:true});
-  function processPage(i){
+  // Letter portrait - matches other app PDFs
+  var pgW=612, pgH=792;
+  var doc=new jsPDF({orientation:'portrait',unit:'pt',format:'letter',compress:true});
+  var total=_scanPages.length;
+
+  function drawPage(i){
     try{
-      if(i>=_scanPages.length){
+      if(i>=total){
         if(lbl)lbl.textContent='Saving\u2026';
-        var slug='scan_'+new Date().toLocaleDateString('en-US').replace(/\//g,'-');
+        var slug='scan_'+(jobName?jobName.replace(/[^a-zA-Z0-9]/g,'_')+'_':'')+new Date().toLocaleDateString('en-US').replace(/\//g,'-');
         var fname=slug+'.pdf';
         var blob=doc.output('blob');
         if(overlay)overlay.classList.remove('visible');
@@ -12537,20 +12556,66 @@ function scanGeneratePDF(){
         }else{scanDownload(blob,fname);}
         return;
       }
+
+      if(i>0) doc.addPage();
+
+      // ── Header bar ───────────────────────────────
+      doc.setFillColor(26,18,0);
+      doc.rect(0,0,pgW,54,'F');
+      // App name
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(20);
+      doc.setTextColor(240,192,32);
+      doc.text('CIRCUITMATiC',pgW/2,24,{align:'center'});
+      // Subtitle
+      doc.setFontSize(10);
+      doc.setTextColor(200,170,80);
+      var sub=jobName?'Site Photos \u2013 '+jobName:'Site Photos';
+      doc.text(sub,pgW/2,40,{align:'center'});
+
+      // ── Info strip ───────────────────────────────
+      doc.setFillColor(243,244,246);
+      doc.setDrawColor(220,220,220);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(40,62,pgW-80,22,3,3,'FD');
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(80,80,80);
+      var infoLeft='Date: '+dateStr+(jobNotes?'  \u00B7  '+jobNotes:'');
+      var infoRight='Photo '+(i+1)+' of '+total;
+      doc.text(infoLeft,48,76);
+      doc.text(infoRight,pgW-48,76,{align:'right'});
+
+      // ── Photo ────────────────────────────────────
       var p=_scanPages[i];
-      var w2=612,h2=Math.round(612*p.h/p.w);
-      if(i>0)doc.addPage([w2,h2]);
-      doc.addImage(p.dataUrl,'JPEG',0,0,w2,h2,undefined,'FAST');
-      if(bar)bar.style.width=Math.round((i+1)/_scanPages.length*100)+'%';
-      if(lbl)lbl.textContent='Page '+(i+1)+' of '+_scanPages.length+'\u2026';
-      setTimeout(function(){processPage(i+1);},0);
+      var areaX=40, areaY=92, areaW=pgW-80, areaH=pgH-92-36;
+      // Scale to fit area, keep aspect ratio
+      var scale=Math.min(areaW/p.w, areaH/p.h);
+      var iw=p.w*scale, ih=p.h*scale;
+      var ix=areaX+(areaW-iw)/2;
+      var iy=areaY+(areaH-ih)/2;
+      // Light border behind photo
+      doc.setFillColor(230,230,230);
+      doc.rect(ix-1,iy-1,iw+2,ih+2,'F');
+      doc.addImage(p.dataUrl,'JPEG',ix,iy,iw,ih,undefined,'FAST');
+
+      // ── Footer ───────────────────────────────────
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(150,150,150);
+      doc.text('Generated by Circuitmatic  \u00B7  For reference only',pgW/2,pgH-10,{align:'center'});
+
+      if(bar)bar.style.width=Math.round((i+1)/total*100)+'%';
+      if(lbl)lbl.textContent='Page '+(i+1)+' of '+total+'\u2026';
+      setTimeout(function(){drawPage(i+1);},0);
     }catch(err){
       if(overlay)overlay.classList.remove('visible');
       alert('Error creating PDF: '+err.message);
     }
   }
-  setTimeout(function(){processPage(0);},80);
+  setTimeout(function(){drawPage(0);},80);
 }
+
 function scanDownload(blob,fname){
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');a.href=url;a.download=fname;a.click();
