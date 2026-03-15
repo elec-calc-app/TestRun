@@ -1206,6 +1206,102 @@ body.text-xxlarge{zoom:1.45;}
 .stg-material-btn.active{background:#f0c020;color:#1a1200;}
 body:not(.light-mode) .stg-theme-btn[data-theme="dark"],
 body.light-mode .stg-theme-btn[data-theme="light"]{background:#f0c020!important;color:#1a1200!important;}
+
+/* ── Projects / Notes / Punch tab dark-mode overrides ── */
+/* All the elements below used hardcoded light colors — these overrides make them dark-mode aware */
+body:not(.light-mode) .notes-toolbar{background:var(--card);border-bottom-color:var(--border);}
+body:not(.light-mode) .notes-toolbar-title{color:var(--text);}
+body:not(.light-mode) .note-entry{border-bottom-color:var(--border);}
+body:not(.light-mode) .note-entry-line{color:var(--text);}
+body:not(.light-mode) .note-entry-sub{color:var(--sub);}
+body:not(.light-mode) .note-src-badge{color:#f0c020;}
+body:not(.light-mode) .note-svg{background:var(--surface2);border-color:var(--border);}
+body:not(.light-mode) .note-annotation{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .note-del-btn{border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .note-edit-btn{color:var(--border2);}
+body:not(.light-mode) .note-cl-progress{background:var(--surface2);}
+body:not(.light-mode) .note-cl-item{border-bottom-color:var(--border);}
+body:not(.light-mode) .note-cl-check{border-color:var(--border2);background:var(--surface2);}
+body:not(.light-mode) .note-cl-text{color:var(--text);}
+body:not(.light-mode) .note-cl-text.done{color:var(--muted);}
+body:not(.light-mode) .note-cl-add-btn{border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .note-cl-badge{background:rgba(22,163,74,0.18);color:#4ade80;}
+body:not(.light-mode) .note-copy-btn{border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .note-pinned-bar{background:rgba(240,192,32,0.14);color:#f0c020;}
+body:not(.light-mode) .manual-note-body{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .manual-note-ts{color:var(--muted);}
+body:not(.light-mode) .manual-badge{background:rgba(240,192,32,0.14);color:#f0c020;}
+body:not(.light-mode) .notes-empty strong{color:var(--sub);}
+body:not(.light-mode) .note-tpl-sheet{background:var(--card);}
+body:not(.light-mode) .note-tpl-title{color:var(--text);}
+body:not(.light-mode) .note-tpl-btn{background:var(--surface);border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .note-tpl-btn:active{background:rgba(240,192,32,0.1);border-color:rgba(240,192,32,0.4);color:#f0c020;}
+body:not(.light-mode) .note-tpl-lbl{color:var(--muted);}
+body:not(.light-mode) .note-tpl-cancel{background:var(--surface2);color:var(--sub);border:1px solid var(--border);}
+body:not(.light-mode) .note-tpl-divider{color:var(--muted);}
+body:not(.light-mode) .note-tpl-user{background:rgba(240,192,32,0.08);border-color:rgba(240,192,32,0.35)!important;color:#f0c020;}
+/* Projects list + detail */
+body:not(.light-mode) .proj-list-title{color:var(--text);}
+body:not(.light-mode) .proj-export-btn{background:var(--surface);color:var(--sub);border-color:var(--border);}
+body:not(.light-mode) .proj-export-btn:active{background:var(--surface2);}
+body:not(.light-mode) .proj-note-btn{background:rgba(240,192,32,0.08);color:#f0c020;border-color:rgba(240,192,32,0.35);}
+body:not(.light-mode) .proj-card{background:var(--card);border-color:var(--border);box-shadow:none;}
+body:not(.light-mode) .proj-card-name{color:var(--text);}
+body:not(.light-mode) .proj-card-po{color:var(--muted);}
+body:not(.light-mode) .proj-card-meta{color:var(--sub);}
+body:not(.light-mode) .proj-card-meta span{background:var(--surface2);color:var(--sub);}
+body:not(.light-mode) .proj-detail-name{color:var(--text);}
+body:not(.light-mode) .proj-detail-foreman{color:var(--sub);}
+/* Punch list */
+body:not(.light-mode) .punch-srch-inp{background:var(--surface);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-srch-inp::placeholder{color:var(--muted);}
+body:not(.light-mode) .punch-opts-btn{border-color:var(--border);color:var(--sub);background:var(--surface);}
+body:not(.light-mode) .punch-export-all-btn{background:var(--surface);color:var(--sub);border-color:var(--border);}
+body:not(.light-mode) .punch-export-btn{background:var(--surface);color:var(--sub);border-color:var(--border);}
+body:not(.light-mode) .punch-item-title{color:var(--text);}
+body:not(.light-mode) .punch-photo-thumb{border-color:var(--border);}
+body:not(.light-mode) .punch-photo-add{border-color:var(--border2);color:var(--sub);background:var(--surface);}
+body:not(.light-mode) .punch-note-inp{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-note-inp::placeholder{color:var(--muted);}
+body:not(.light-mode) .punch-notes-ta{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-status-sel{background:var(--surface);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-modal{background:var(--card);}
+body:not(.light-mode) .punch-modal-title{color:var(--text);}
+body:not(.light-mode) .punch-modal-inp{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-modal-inp::placeholder{color:var(--muted);}
+body:not(.light-mode) .punch-modal-sel{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-modal-ta{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-modal-photo-lbl{background:var(--surface);border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .punch-modal-cancel{background:var(--surface2);color:var(--sub);border-color:var(--border);}
+body:not(.light-mode) .punch-opts-modal{background:var(--card);}
+body:not(.light-mode) .punch-opts-title{color:var(--text);}
+body:not(.light-mode) .punch-cat-name-inp{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .punch-del-btn{border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .punch-empty{color:var(--sub);}
+/* Project export modal */
+body:not(.light-mode) .pe-modal{background:var(--card);}
+body:not(.light-mode) .pe-modal-title{color:var(--text);}
+body:not(.light-mode) .pe-modal-sub{color:var(--sub);}
+body:not(.light-mode) .pe-field-lbl{color:var(--sub);}
+body:not(.light-mode) .pe-select{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .pe-fmt-btn{background:var(--surface);border-color:var(--border);}
+body:not(.light-mode) .pe-fmt-btn-lbl{color:var(--text);}
+body:not(.light-mode) .pe-fmt-btn-sub{color:var(--sub);}
+body:not(.light-mode) .pe-cancel{color:var(--sub);}
+/* Company branding modal */
+body:not(.light-mode) .co-modal{background:var(--card);}
+body:not(.light-mode) .co-modal-title{color:var(--text);}
+body:not(.light-mode) .co-modal-sub{color:var(--sub);}
+body:not(.light-mode) .co-field-lbl{color:var(--sub);}
+body:not(.light-mode) .co-inp{background:var(--surface2);border-color:var(--border);color:var(--text);}
+body:not(.light-mode) .co-inp::placeholder{color:var(--muted);}
+body:not(.light-mode) .co-logo-lbl{background:var(--surface);border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .co-privacy-note{background:var(--surface2);border-color:var(--border);color:var(--sub);}
+body:not(.light-mode) .co-privacy-note a{color:var(--sub);}
+body:not(.light-mode) .co-cancel-btn{background:var(--surface2);color:var(--sub);}
+/* Result export button */
+body:not(.light-mode) .result-export-btn{background:var(--surface);color:var(--sub);border-color:var(--border);}
+
 .stg-overlay{position:fixed;inset:0;background:var(--bg);z-index:800;overflow-y:auto;display:none;-webkit-overflow-scrolling:touch;}
 .stg-overlay.open{display:block;}
 .stg-overlay-head{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 14px) 16px 14px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;}
