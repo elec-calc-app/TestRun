@@ -7597,6 +7597,10 @@ function onBenderChange(){updateBenderNote();updateBendHowTo();clrBend();}
 function updateBendHowTo(){
   var el=document.getElementById('bend-how-to');
   if(!el)return;
+  // remember open/closed state
+  var bodyEl=document.getElementById('bend-how-to-body');
+  var wasOpen=bodyEl&&bodyEl.style.display!=='none';
+
   var type=document.getElementById('bend-type').value;
   var bdr=document.getElementById('bend-bender').value;
   var mat=document.getElementById('bend-material').value;
@@ -7607,73 +7611,73 @@ function updateBendHowTo(){
     isMech?'Load the conduit into the shoe and roll to your mark on the degree scale':
     isHydro?'Load into the hydraulic shoe and pump to the degree mark':
     'Position your mark at the bender arrow';
-  var matNote=mat==='EMT'?'EMT springs back about 1° — overbend slightly':
-    mat==='IMC'?'IMC springs back about 3° — overbend to compensate':
-    mat==='RMC'?'Rigid springs back about 5° — overbend to hit your target':
-    'PVC has no springback — bend to the exact angle';
+  var matNote=mat==='EMT'?'EMT springs back about 1\u00b0 \u2014 overbend slightly':
+    mat==='IMC'?'IMC springs back about 3\u00b0 \u2014 overbend to compensate':
+    mat==='RMC'?'Rigid springs back about 5\u00b0 \u2014 overbend to hit your target':
+    'PVC has no springback \u2014 bend to the exact angle';
   var steps=[];
   if(type==='stub'){
     steps=[
-      'Measure from the end of the conduit and mark the distance shown under “Mark at.”',
-      placeVerb+' to 90°.',
+      'Measure from the end of the conduit and mark the distance shown under "Mark at."',
+      placeVerb+' to 90\u00b0.',
       matNote+'.',
-      'Check with a speed square — the stub should stand perfectly upright.',
-      'Gain: your cut length can be 5″ shorter than the calculated run to account for the bend.'
+      'Check with a speed square and a torpedo level \u2014 the stub must be perfectly plumb (straight up). Adjust the bend angle slightly if it leans.',
+      'Gain: your cut length can be 5\u2033 shorter than the calculated run to account for the bend.'
     ];
   }else if(type==='back90'){
     steps=[
       'Mark both distances on the conduit from the same end (1st Mark and 2nd Mark).',
-      'Bend the 1st mark to 90°. '+placeVerb+'.',
+      'Bend the 1st mark to 90\u00b0. '+placeVerb+'.',
       'Flip the conduit end-for-end. Place the 2nd mark at the bender arrow.',
-      'Bend to 90° again — both 90s must face the same direction and be in the same plane.',
-      matNote+'. The finished conduit makes a U-shape.'
+      'Bend to 90\u00b0 again \u2014 both 90s must face the same direction and lie in the same plane.',
+      matNote+'. Lay a level across both horizontal legs to confirm they are even and co-planar before installing.'
     ];
   }else if(type==='offset'){
     steps=[
       'Mark the 1st bend point from the end of the conduit.',
       placeVerb+' to the offset angle shown.',
-      'Without flipping the conduit, move to the 2nd mark. Rotate the conduit 180° so the first bend now faces down.',
+      'Without flipping the conduit, move to the 2nd mark. Rotate the conduit 180\u00b0 so the first bend now faces down.',
       'Bend to the same angle. The conduit should now run parallel to itself.',
-      'Deduct the Shrink amount from your total cut length — the bends pull the run shorter.'
+      'Lay a level on each straight run \u2014 both sections should read level (or equally pitched). Deduct the Shrink amount from your total cut length.'
     ];
   }else if(type==='saddle3'){
     steps=[
       'Mark all 3 points. Mark 2 is your centerline; Marks 1 and 3 are equal distances each side.',
-      'Place the center mark (Mark 2) at the bender arrow and bend to 45°.',
-      'Flip the conduit so the hump faces up. Place Mark 1 at the arrow and bend to 22.5°.',
-      'Flip end-for-end. Place Mark 3 at the arrow and bend to 22.5°.',
-      'The conduit should saddle smoothly over the obstacle. Add the Shrink to your cut length.'
+      'Place the center mark (Mark 2) at the bender arrow and bend to 45\u00b0.',
+      'Flip the conduit so the hump faces up. Place Mark 1 at the arrow and bend to 22.5\u00b0.',
+      'Flip end-for-end. Place Mark 3 at the arrow and bend to 22.5\u00b0.',
+      'Use a level on the flat sections on each side of the saddle to confirm they are even. Add the Shrink to your cut length.'
     ];
   }else if(type==='saddle4'){
     steps=[
       'Mark all 4 points on the conduit from the end.',
-      'Bend Mark 1 to the angle shown. Keep the bends in the same plane throughout.',
+      'Bend Mark 1 to the angle shown. Keep the bends in the same plane throughout \u2014 do not let the conduit twist between bends.',
       'Bend Mark 2 to the same angle in the opposite direction (reverse the conduit in the bender).',
-      'Repeat for Marks 3 and 4 — the conduit should clear the obstacle with flat runs on each side.',
-      'Add the Shrink amount to your total cut length.'
+      'Repeat for Marks 3 and 4 \u2014 the conduit should clear the obstacle with flat runs on each side.',
+      'Check both flat runs with a level to confirm they are parallel and co-planar. Add the Shrink amount to your total cut length.'
     ];
   }else if(type==='rolling'){
     steps=[
-      'Calculate the Roll Angle shown, then tilt your bender that many degrees from vertical — this makes the bend travel sideways AND up/down at the same time.',
-      'Keep the bender tilted at that angle for both bends.',
+      'Calculate the Roll Angle shown, then tilt your bender that many degrees from vertical \u2014 a torpedo level set against the bender handle helps dial in the exact tilt angle before you bend.',
+      'Keep the bender tilted at that same angle for both bends.',
       'Mark the 1st bend point and bend to the offset angle shown.',
-      'Rotate the conduit 180° (keeping the bender tilt the same), move to the 2nd mark, and bend the same angle.',
-      'The conduit now offsets in three dimensions. Deduct the Shrink from your cut length.'
+      'Rotate the conduit 180\u00b0 (keeping the bender tilt the same), move to the 2nd mark, and bend the same angle.',
+      'The conduit now offsets in three dimensions. Verify with a level that the exit run is plumb or level as designed. Deduct the Shrink from your cut length.'
     ];
   }else if(type==='parallel'){
     steps=[
       'Each conduit in the group gets its 1st mark shifted forward by the Stagger amount shown.',
       'Conduit 1: use the base 1st mark. Conduit 2: add one stagger. Conduit 3: add two staggers, and so on.',
       'Bend every conduit the same way: 1st mark at the angle shown, then 2nd mark at the same angle.',
-      'All conduits rise the same amount — the stagger keeps them evenly spaced after the offset.',
+      'After bending all conduits, lay a level across the group at the straight run \u2014 all rises should be at the same height and all runs parallel.',
       'Add the Shrink to every conduit\'s cut length.'
     ];
   }else if(type==='match'){
     steps=[
       'You\'re matching a new conduit to one already bent and in place.',
-      'The 1st Mark shown already includes the spacing offset — mark it from the end of the new conduit.',
+      'The 1st Mark shown already includes the spacing offset \u2014 mark it from the end of the new conduit.',
       'Bend the 1st mark to the angle shown, then the 2nd mark to the same angle.',
-      'The new conduit will run parallel to the existing one at the correct spacing.',
+      'Hold a level across both the existing and new conduit at the straight runs to confirm the new one matches the rise and is co-planar.',
       'Add the Shrink to your cut length.'
     ];
   }else if(type==='boxoffset'){
@@ -7682,18 +7686,32 @@ function updateBendHowTo(){
       'Mark the 1st and 2nd points from the end of the conduit.',
       'Bend the 1st mark to the angle shown.',
       'Move to the 2nd mark and bend the same angle back the other direction.',
-      'The conduit should now be parallel to itself, shifted over by the offset depth.'
+      'Hold a level against the straight run to confirm the offset has not introduced a twist. The conduit should be parallel to itself, shifted over by the offset depth.'
     ];
   }
-  var typeLabels={stub:'Stub-Up (90°)',back90:'Back-to-Back 90°',offset:'Offset',saddle3:'3-Bend Saddle',saddle4:'4-Bend Saddle',rolling:'Rolling Offset',parallel:'Parallel Offset',match:'Match Bend',boxoffset:'Box Offset'};
-  var html='<div style="font-size:10px;font-family:\'Roboto Mono\',monospace;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">'+
-    (typeLabels[type]||type)+' — How to bend it</div>';
-  html+='<ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;">';
+  var typeLabels={stub:'Stub-Up (90\u00b0)',back90:'Back-to-Back 90\u00b0',offset:'Offset',saddle3:'3-Bend Saddle',saddle4:'4-Bend Saddle',rolling:'Rolling Offset',parallel:'Parallel Offset',match:'Match Bend',boxoffset:'Box Offset'};
+  var title=(typeLabels[type]||type)+' \u2014 How to bend it';
+  var bodyDisplay=wasOpen?'block':'none';
+  var chevRot=wasOpen?'rotate(90deg)':'rotate(0deg)';
+  var html='<div onclick="toggleBendHowTo()" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;">'+
+    '<div style="font-size:10px;font-family:\'Roboto Mono\',monospace;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">'+title+'</div>'+
+    '<span id="bend-how-to-chev" style="font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;transform:'+chevRot+';">&#9654;</span>'+
+  '</div>'+
+  '<div id="bend-how-to-body" style="display:'+bodyDisplay+';margin-top:8px;">'+
+    '<ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;">';
   steps.forEach(function(s){
     html+='<li style="font-size:12px;font-family:\'Inter\',sans-serif;color:var(--text);line-height:1.5;">'+s+'</li>';
   });
-  html+='</ol>';
+  html+='</ol></div>';
   el.innerHTML=html;
+}
+function toggleBendHowTo(){
+  var body=document.getElementById('bend-how-to-body');
+  var chev=document.getElementById('bend-how-to-chev');
+  if(!body)return;
+  var isOpen=body.style.display!=='none';
+  body.style.display=isOpen?'none':'block';
+  if(chev)chev.style.transform=isOpen?'rotate(0deg)':'rotate(90deg)';
 }
 function updateBenderNote(){
   var note=document.getElementById('bend-bender-note');
