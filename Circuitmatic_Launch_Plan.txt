@@ -54,114 +54,30 @@ LAUNCH COSTS (one-time):
   Apple Developer Program          $99
   Google Play Developer            $25
   Domain (optional, only if cheap) $10-15
+  Netlify                          $5
   ─────────────────────────────────────
-  TOTAL:                           $124
+  TOTAL:                           $129
 
 ANNUAL COSTS:
   Apple Developer renewal          $99
   ─────────────────────────────────────
-  TOTAL:                           $99/year
+  TOTAL:                           $104/year
 
 No servers. No database. No hosting. No backend.
 App runs 100% on the user's device.
-Break-even: 24 downloads at $4.99. [Tax Write off]
+Break-even: 25 downloads at $4.99. [Tax Write off]
 
 =============================================================================
 5. PRICING [REVISIT]
 =============================================================================
 
-BASIC: $4.99 one-time
-  - Every calculator and table in the app
-  - If it calculates something, it's in Basic. Always.
-  - 100% offline
-  - Copy to clipboard
-  - Share as text via native share sheet
+Apprentice: 3-7 Free Trial
 
-PRO: $14.99 one-time In-App Purchase
-  - Job folders (create, name, organize by job site)
-  - Save any calculation to a job folder
-  - PDF report export (single calc, branded)
-  - Batch PDF export (full job folder → one document)
-  - Custom letterhead (company name, license #, logo)
-  - Photo attach to saved calculations
-  - QR verification code on exports
-  - CSV/Excel export for estimators
-  - Apprentice mode (Code article citations on every result)
+Journeymen: $3.99 A Month
+ - 
 
-RULES:
-  - Never lock a calculator behind Pro
-  - Never take away what was in Basic
-  - Pro = workflow/documentation tools ON TOP of the calculators
-  - No subscriptions until user base justifies it (1,000+ Pro users)
-
-FUTURE SUBSCRIPTION (only if/when justified): - Modest IDK
-  $29.99/year "Pro Teams"
-  - Cloud sync between devices
-  - Team sharing / multi-user job folders
-  - Only for users who need cross-device/team features
-  - Existing Pro one-time buyers keep everything they paid for
-
-=============================================================================
-6. REVENUE PROJECTIONS (conservative)
-=============================================================================
-
-Year 1:
-  ~1,200 Basic downloads × $4.99 × 85%              = ~$5,000
-  ~240 Pro conversions (20%) × $14.99 × 85%          = ~$3,050
-  TOTAL:                                               ~$8,000
-
-Year 2 (ranking builds, reviews compound):
-  ~2,500 Basic × $4.99 × 85%                         = ~$10,600
-  ~500 Pro (20%) × $14.99 × 85%                      = ~$6,400
-  TOTAL:                                               ~$17,000
-
-Year 3+ (with subscription tier):
-  Base + Pro:                                          ~$20,000
-  500 subscribers × $29.99 × 85%                      = ~$12,750
-  TOTAL:                                               ~$32,000
-
-=============================================================================
-8. LEGAL PROTECTION
-=============================================================================
-
-DISCLAIMER MODAL (build before launch):
-- Full-screen styled overlay matching dark/gold UI
-- NOT a browser confirm() dialog
-- NOT using localStorage
-- Session-level or show every fresh visit
-- Cannot interact with app until accepted
-- Text includes: professional reference only, verify with AHJ,
-  qualified professional acknowledgment
-
-IN-APP TERMS OF SERVICE:
-
-  "Circuitmatic | Terms of Service & Disclaimer
-
-  For Professional Reference Only: Circuitmatic is designed as a
-  supplementary tool for qualified electrical professionals.
-  Calculations are based on generalized interpretations of
-  electrical theory and standards.
-
-  No Liability: The developer of Circuitmatic shall not be held
-  liable for any damages, injuries, or financial losses resulting
-  from the use or misuse of this application. Users are solely
-  responsible for verifying all calculations against the official
-  National Electrical Code® (NEC) and local amendments.
-
-  AHJ Approval: Final installation approval is strictly subject
-  to the Authority Having Jurisdiction (AHJ).
-
-  No Warranty: This software is provided 'As-Is' without warranty
-  of any kind. By using Circuitmatic, you agree that you are a
-  qualified professional capable of identifying and correcting
-  any potential calculation discrepancies.
-
-  Calculations are for reference only. Circuitmatic is not a substitute
-  for professional engineering or on-site inspections.
-
-  NEC® and National Electrical Code® are registered trademarks
-  of the National Fire Protection Association (NFPA). This app
-  is not affiliated with or endorsed by NFPA."
+Foreman: $7.99 A Month
+- 
 
 ================================================================================
 10. APP STORE LISTING [DEFINITELY FIX - LESS CALC]
@@ -199,7 +115,7 @@ Your app's reputation lives or dies on accuracy. One wrong ampacity
 value = 1-star review = ranking death. Test once, test right.
 
 SOURCE OF TRUTH:
-  Your physical 2026 code book. Every number traces to a specific
+  Your physical 2020, 2023, 2026 code book. Every number traces to a specific
   table and article. No substitute.
 
 TEST CASES PER CALCULATOR (5 each):
@@ -211,18 +127,12 @@ TEST CASES PER CALCULATOR (5 each):
 
   ~8 tabs × 5 cases = 40 test cases. One afternoon with the book.
 
-SHORTCUT FOR TABLE LOOKUPS:
-  Photo the NEC table. Photo your app's output. Put them side by
-  side. Visually scan for mismatches. Eyes catch differences faster
-  than comparing numbers one at a time.
-
 ================================================================================
 16. LAUNCH CHECKLIST
 ================================================================================
 
 BUILD:
 [ ] All calculators and features built
-[ ] Both files (index.html + electricians_calculator.html) in sync
 
 TEST:
 [ ] QA spreadsheet completed — 5 test cases per calculator
@@ -231,47 +141,33 @@ TEST:
 [ ] Field feedback from crew
 
 PREPARE:
-[ ] Decide Basic vs Pro feature split
-[ ] Legal disclaimer modal built and tested
-[ ] Terms of Service accessible in-app
-[ ] Icon: 1024x1024 PNG, solid black background
+[ ] Decide Journeyman vs Foreman feature split
 [ ] Apple Developer account ($99)
 [ ] Google Play Developer account ($25)
 [ ] App wrapped in native container (Capacitor/PWABuilder)
 [ ] 6-8 screenshots at correct device resolutions
 [ ] App Store description finalized (update the .docx with new features)
-[ ] Tested on iPhone + Android device
+[ ] Tested on iPhone + Android + Tablet device
+[ ] Setup Netlify + Supabase if applicable
+[ ] Analytics?
+[ ] Electrical Bot Maby
+[ ] Buy Domains and setup email
 
 SUBMIT:
 [ ] Submit to App Store review
 [ ] Submit to Google Play review
-[ ] Set up support email
 
 ================================================================================
 
 FRONT END:
 
-- posthog [event tracking], [sentry] crash reporting, [plausible] traffic   monitoring. all free
+- posthog [event tracking], [sentry] crash reporting, [plausible] traffic   monitoring. all free *
 - polish up pipe bends or get 3d model views idk
 - Front end UI Pro
-- cloud sync
 - labor tracker
-- estimate/change order
-- OLD EYES SMALL TEXT
-
-DONE (built and in app):
-[x] EV charger circuit sizing (625.41)
-[x] GFCI / AFCI requirement lookup — code-year aware, dwelling + commercial + appliances
-[x] Apprentice mode / Exam prep — code-year filtered quiz (2020/2023/2026)
-[x] Dwelling unit service sizing wizard — Standard + Optional method, both Article 220 and 120
-[x] Voltage drop, ampacity, conduit fill, box fill, motor, bending, wire colors, dip switch, fractions
-[x] Code year toggle (2020/2023/2026) — live updates quiz, GFCI table, wire options
-[x] Disclaimer modal + Terms of Service in-app
 
 TO BUILD (next):
 
-[ ] Grounding Electrode Conductor sizing (250.66)
-[ ] Equipment Grounding Conductor sizing (250.122)
 [ ] Raceway derating quick-check (conductor count → derating factor)
 [ ] Burial depth table (300.5)
     - Input wiring method → minimum cover depth
@@ -292,16 +188,9 @@ TO BUILD (next):
 [ ] Solar/PV conductor sizing
 [ ] Article 220 commercial load calculations
 [ ] Standard residential circuit reference (quick cheat sheet)
-[ ] Smoke / CO detector placement reference
 [ ] Outdoor / wet location rules reference
-- FA Voltage Drop
-- Fiber color code
-- RJ45 Pinout Visual
-- 12 Strand Fiber Color Sequence
-- Data conduit fill
-- Torque chart
-- Support chart (romex, mc, emt/imc, rmc, pvc, fmc)
-
+[ ] FA Voltage Drop
+[ ] Data conduit fill
 
 ================================================================================
 UI REDESIGN — DO THIS LAST (after all features are built)
