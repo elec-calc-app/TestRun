@@ -178,6 +178,9 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .quiz-score-fail{color:#f87171;}
 .quiz-restart{width:100%;padding:14px;background:#f0c020;color:#1a1200;border:none;border-radius:9px;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-size:0.82rem;margin-top:8px;}
 .quiz-restart:hover{background:#ffe066;}
+.quiz-hint-btn{background:none;border:1px solid #1e293b;color:#64748b;font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Roboto Mono',monospace;margin-bottom:10px;transition:all .15s;letter-spacing:.5px;}
+.quiz-hint-btn:hover{border-color:#f0c020;color:#f0c020;}
+.quiz-hint-reveal{display:none;margin-bottom:10px;font-size:0.75rem;font-family:'Roboto Mono',monospace;color:#f0c020;background:rgba(240,192,32,.08);border:1px solid rgba(240,192,32,.2);padding:4px 10px;border-radius:6px;}
 body.light-mode .quiz-wrap{background:#f8fafc;}
 body.light-mode .quiz-card{background:#fff;border-color:#e2e8f0;}
 body.light-mode .quiz-stat{background:#f1f5f9;border-color:#e2e8f0;}
@@ -4235,6 +4238,8 @@ if('serviceWorker' in navigator){
       <div class="quiz-card" id="qz-card">
         <div id="qz-qa">
           <div class="quiz-q-text" id="qz-qtext"></div>
+          <button class="quiz-hint-btn" id="qz-hint-btn" onclick="qzHint()">Hint</button>
+          <div class="quiz-hint-reveal" id="qz-hint-reveal"></div>
           <div class="quiz-opts" id="qz-opts"></div>
           <div class="quiz-feedback" id="qz-feedback">
             <div class="quiz-ref" id="qz-ref">REF</div>
@@ -10348,6 +10353,8 @@ function qzRender(){
   document.getElementById('qz-qtext').textContent=q.q;
   document.getElementById('qz-feedback').style.display='none';
   document.getElementById('qz-next').style.display='none';
+  document.getElementById('qz-hint-btn').style.display='inline-block';
+  document.getElementById('qz-hint-reveal').style.display='none';
   var opts=document.getElementById('qz-opts');
   opts.innerHTML='';
   var shuffled=[...q.o].sort(function(){return Math.random()-0.5;});
@@ -10360,6 +10367,8 @@ function qzRender(){
 }
 function qzPick(choice,btn,q){
   document.querySelectorAll('.quiz-opt').forEach(function(b){b.disabled=true;});
+  document.getElementById('qz-hint-btn').style.display='none';
+  document.getElementById('qz-hint-reveal').style.display='none';
   if(choice===q.a){
     btn.classList.add('qz-ok');_qzScore++;
   } else {
@@ -10372,6 +10381,12 @@ function qzPick(choice,btn,q){
   document.getElementById('qz-next').style.display='block';
   document.getElementById('qz-correct').textContent=_qzScore;
   document.getElementById('qz-score').textContent=Math.round(_qzScore/(_qzCur+1)*100)+'%';
+}
+function qzHint(){
+  var q=_qzSet[_qzCur];
+  document.getElementById('qz-hint-reveal').textContent='NEC » '+(q.r||('NEC '+(_codeYear||'2026')));
+  document.getElementById('qz-hint-reveal').style.display='block';
+  document.getElementById('qz-hint-btn').style.display='none';
 }
 function qzNext(){
   _qzCur++;
