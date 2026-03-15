@@ -81,6 +81,12 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .cht-ocpd-chip{padding:5px 10px;border-radius:6px;background:var(--surface);color:var(--sub);font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;border:1px solid var(--border);}
 .cht-ocpd-chip.common{background:rgba(240,192,32,.15);color:#f0c020;border-color:#f0c020;}
 .cht-spacer{height:20px;}
+.fm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
+.fm-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:0;}
+.fm-formula{font-family:'Roboto Mono',monospace;font-size:13px;font-weight:700;color:#f0c020;margin-bottom:3px;line-height:1.3;}
+.fm-alts{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted);line-height:1.6;margin-bottom:3px;}
+.fm-desc{font-size:10px;color:var(--sub);font-family:'Inter',sans-serif;line-height:1.4;}
+.fm-wide{grid-column:span 2;}
 .sup-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
 .sup-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 12px;min-width:0;overflow:hidden;}
 .sup-name{font-size:12px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;margin-bottom:6px;}
@@ -3951,6 +3957,150 @@ if('serviceWorker' in navigator){
           </div><!-- end rj45-diagrams -->
           <div class="cht-note" style="margin-top:10px;">&#x1F4A1; <strong style="color:var(--text);">Crossover cable</strong> = one end T568A, other end T568B (connects two devices directly). <strong style="color:var(--text);">Straight-through</strong> = both ends same standard (connects device to switch/router). Pins 1,2 = Transmit &bull; Pins 3,6 = Receive (10/100 Mbps). Gigabit uses all 4 pairs.</div>
         </div>
+      </div>
+    </div>
+
+    <!-- 20. Electrical Math Reference -->
+    <div class="cht-card">
+      <div class="cht-hd" onclick="toggleCht('cht-formulas')">
+        <span class="cht-icon">&#x1F4D0;</span>
+        <div class="cht-hd-txt"><div class="cht-title">Electrical Math Reference</div><div class="cht-sub">Ohm's Law · Power · Series / Parallel · AC · Transformers · 3-Phase</div></div>
+        <span class="cht-chev" id="cht-formulas-chev">&#x25B6;</span>
+      </div>
+      <div class="cht-body" id="cht-formulas">
+
+        <div class="cht-section-lbl">Ohm's Law</div>
+        <div class="fm-grid">
+          <div class="fm-card fm-wide">
+            <div class="fm-formula">E = I × R</div>
+            <div class="fm-alts">I = E / R &nbsp;&nbsp; R = E / I</div>
+            <div class="fm-desc">E = Voltage (V) · I = Current (A) · R = Resistance (Ω)<br>The triangle: cover the unknown, the remaining two show the operation.</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">Power (Watts)</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">P = E × I</div>
+            <div class="fm-alts">E = P / I &nbsp;&nbsp; I = P / E</div>
+            <div class="fm-desc">Basic power — volts × amps</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">P = I² × R</div>
+            <div class="fm-alts">P = E² / R</div>
+            <div class="fm-desc">When you know current + resistance, or voltage + resistance</div>
+          </div>
+          <div class="fm-card fm-wide">
+            <div class="fm-formula">kW = (V × I × PF) / 1000</div>
+            <div class="fm-alts">kVA = (V × I) / 1000 &nbsp;&nbsp; kVAR = √(kVA² − kW²)</div>
+            <div class="fm-desc">Single-phase. PF = power factor (0–1). kVA = apparent power · kW = true power · kVAR = reactive power</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">Series Circuits</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">RT = R1 + R2 + R3</div>
+            <div class="fm-desc">Total resistance adds up</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">IT = I1 = I2 = I3</div>
+            <div class="fm-desc">Current is the same everywhere in the loop</div>
+          </div>
+          <div class="fm-card fm-wide">
+            <div class="fm-formula">ET = E1 + E2 + E3</div>
+            <div class="fm-desc">Voltages across each resistor add up to supply voltage (Kirchhoff's Voltage Law)</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">Parallel Circuits</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">1/RT = 1/R1 + 1/R2</div>
+            <div class="fm-alts">Equal values: RT = R / N</div>
+            <div class="fm-desc">Total resistance is always less than the smallest branch</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">IT = I1 + I2 + I3</div>
+            <div class="fm-desc">Branch currents add up to total (Kirchhoff's Current Law)</div>
+          </div>
+          <div class="fm-card fm-wide">
+            <div class="fm-formula">ET = E1 = E2 = E3</div>
+            <div class="fm-desc">Voltage is the same across every branch</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">AC — Reactance &amp; Impedance</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">XL = 2πfL</div>
+            <div class="fm-alts">f = Hz · L = Henrys</div>
+            <div class="fm-desc">Inductive reactance (Ω) — coils, motors, transformers. Voltage leads current (ELI)</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">Xc = 1 / (2πfC)</div>
+            <div class="fm-alts">f = Hz · C = Farads</div>
+            <div class="fm-desc">Capacitive reactance (Ω) — capacitors, power factor correction. Current leads voltage (ICE)</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">Z = √(R² + X²)</div>
+            <div class="fm-alts">X = XL − Xc (net)</div>
+            <div class="fm-desc">Impedance (Ω) — total opposition to AC current flow</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">PF = kW / kVA</div>
+            <div class="fm-alts">PF = cos(θ) &nbsp;&nbsp; θ = phase angle</div>
+            <div class="fm-desc">Power factor 0–1. Unity (1.0) = purely resistive load. Motors typically 0.8–0.95</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">RMS &amp; Peak Values</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">VRMS = Vpeak × 0.707</div>
+            <div class="fm-alts">Vpeak = VRMS × 1.414</div>
+            <div class="fm-desc">120V RMS = 170V peak. What your meter reads is RMS.</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">Vavg = Vpeak × 0.637</div>
+            <div class="fm-desc">Average value of a sine wave — used in some rectifier calculations</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">3-Phase Power</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">kVA = V × I × 1.732 / 1000</div>
+            <div class="fm-desc">3-phase apparent power. V = line-to-line voltage · 1.732 = √3</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">kW = V × I × 1.732 × PF / 1000</div>
+            <div class="fm-desc">3-phase true power. Add power factor for real kW.</div>
+          </div>
+          <div class="fm-card fm-wide">
+            <div class="fm-formula">I = kVA × 1000 / (V × 1.732)</div>
+            <div class="fm-desc">Find current from known kVA — useful for transformer sizing. Example: 75 kVA, 480V → I = 75000 / (480 × 1.732) = 90.2A</div>
+          </div>
+        </div>
+
+        <div class="cht-section-lbl">Transformers</div>
+        <div class="fm-grid">
+          <div class="fm-card">
+            <div class="fm-formula">V1 / V2 = N1 / N2</div>
+            <div class="fm-desc">Turns ratio = voltage ratio. More turns = higher voltage on that winding.</div>
+          </div>
+          <div class="fm-card">
+            <div class="fm-formula">V1 × I1 = V2 × I2</div>
+            <div class="fm-desc">Input VA = Output VA (ideal). Higher voltage side = lower current side.</div>
+          </div>
+          <div class="fm-card fm-wide">
+            <div class="fm-formula">Efficiency = (Pout / Pin) × 100%</div>
+            <div class="fm-alts">Example: 38.4 kW out / 40 kW in = 96%</div>
+            <div class="fm-desc">Transformer efficiency — output divided by input. Losses = heat in the core and windings.</div>
+          </div>
+        </div>
+
+        <div class="cht-note" style="margin:8px 12px 12px;">ELI the ICE man — In an <strong style="color:var(--text);">L</strong>inductor, <strong style="color:var(--text);">E</strong>voltage leads <strong style="color:var(--text);">I</strong>current. In a <strong style="color:var(--text);">C</strong>apacitor, <strong style="color:var(--text);">I</strong>current leads <strong style="color:var(--text);">E</strong>voltage.</div>
       </div>
     </div>
 
