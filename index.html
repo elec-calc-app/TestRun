@@ -562,6 +562,24 @@ body.light-mode .svc-info-modal-body{color:#374151;}
   .result-block.pass .result-sub { color: #047857; }
   .result-block.fail .result-sub { color: #b91c1c; }
   .result-block.neutral .result-sub { color: var(--muted); }
+  .result-block.ok { border-color: var(--green-bdr); background: var(--green-bg); }
+  .result-block.ok::before { background: var(--green); }
+  .result-block.ok .result-lbl { color: var(--green); }
+  .result-block.ok .result-badge { color:var(--green); border-color:var(--green-bdr); background:rgba(5,150,105,.07); }
+  .result-block.ok .result-val { color: var(--green); }
+  .result-block.ok .result-sub { color: #047857; }
+  .result-block.warn { border-color: var(--amber-bdr); background: var(--amber-bg); }
+  .result-block.warn::before { background: var(--amber); }
+  .result-block.warn .result-lbl { color: var(--amber); }
+  .result-block.warn .result-badge { color:var(--amber); border-color:var(--amber-bdr); background:rgba(180,83,9,.07); }
+  .result-block.warn .result-val { color: var(--amber); }
+  .result-block.warn .result-sub { color: var(--amber); }
+  .result-block.danger { border-color: var(--red-bdr); background: var(--red-bg); }
+  .result-block.danger::before { background: var(--red); }
+  .result-block.danger .result-lbl { color: var(--red); }
+  .result-block.danger .result-badge { color:var(--red); border-color:var(--red-bdr); background:rgba(220,38,38,.07); }
+  .result-block.danger .result-val { color: var(--red); }
+  .result-block.danger .result-sub { color: #b91c1c; }
 
   /* ── Engineering panel ── */
   .eng-panel { margin:10px 20px 0; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
@@ -712,6 +730,12 @@ body.light-mode .svc-info-modal-body{color:#374151;}
   body.light-mode .tab-panel.active .result-block.pass .result-sub { color: #047857; }
   body.light-mode .tab-panel.active .result-block.fail .result-sub { color: #b91c1c; }
   body.light-mode .tab-panel.active .result-block.neutral .result-sub { color: #047857; }
+  body.light-mode .tab-panel.active .result-block.ok .result-val { color: var(--green); }
+  body.light-mode .tab-panel.active .result-block.ok .result-sub { color: #047857; }
+  body.light-mode .tab-panel.active .result-block.warn .result-val { color: var(--amber); }
+  body.light-mode .tab-panel.active .result-block.warn .result-sub { color: var(--amber); }
+  body.light-mode .tab-panel.active .result-block.danger .result-val { color: var(--red); }
+  body.light-mode .tab-panel.active .result-block.danger .result-sub { color: #b91c1c; }
   body.light-mode .tab-panel.active .result-lbl { color: #888; }
   body.light-mode .tab-panel.active .disclaimer-text { color: #888 !important; }
   body.light-mode .tab-panel.active .divider { background: #ddd; }
@@ -9272,6 +9296,42 @@ function calculateEV() {
       'New construction dwelling units must include at least one EV-ready outlet in the garage or parking area.'));
   }
 
+  // Safety & Code Violation Checks
+  if (cond === 'aluminum' && wire && ['14','12','10'].indexOf(wire.size) !== -1) {
+    blocks.push(makeBlock('danger', 'Code Violation — Al Wire', '§310.106(D)',
+      wire.size + ' AWG Al Prohibited',
+      'Aluminum conductors 10 AWG and smaller are not permitted for branch circuits. Use copper or upsize to 8 AWG Al minimum.'));
+  }
+  if (voltage === 120 && nameplate > 20) {
+    blocks.push(makeBlock('danger', 'Dangerous — 120V Over 20A', '§625.17 / §210.21',
+      '120V EVSE Max is 20A',
+      'No standard 120V outlet is rated above 20A. Level 1 EVSE tops at 20A/120V. Verify the nameplate or switch to 240V.'));
+  }
+  if (nameplate > 80) {
+    blocks.push(makeBlock('warn', 'Verify Nameplate — Very High', 'UNUSUAL AMPERAGE',
+      nameplate + 'A Exceeds L2 Max',
+      'Residential Level 2 EVSE tops at 48A. Values above 80A suggest a commercial DC fast charger — verify the nameplate and consult a licensed engineer.'));
+  }
+  if (voltage === 208) {
+    blocks.push(makeBlock('warn', '208V — Verify EVSE Listing', '§625.2',
+      'Must Be Listed for 208V',
+      'Most residential EVSE units are rated for 240V. Using a 240V-only unit at 208V can cause malfunction or fire. Confirm the EVSE is listed for 208V.'));
+  }
+  if (ins === 'residential') {
+    blocks.push(makeBlock('warn', '60°C Insulation — Wet Locations', '§310.10(C)',
+      'Not Listed for Wet Use',
+      'TW/UF conductors (60°C) are not suitable for conduit in wet or damp locations. EVSE circuits in garages and outdoors require 75°C THWN or 90°C THHN.'));
+  }
+  if (qty > 1 && totalBreaker > 200) {
+    blocks.push(makeBlock('danger', 'Exceeds 200A Service', '§230.79',
+      totalBreaker + 'A Total Load',
+      qty + ' EVSEs require ' + totalBreaker + 'A — exceeding a standard 200A residential service. Verify service capacity or use a listed PCS per §625.42(A).'));
+  } else if (qty > 1 && totalBreaker > 100) {
+    blocks.push(makeBlock('warn', 'Large Service Load', 'VERIFY PANEL CAPACITY',
+      totalBreaker + 'A Required',
+      'This installation requires ' + totalBreaker + 'A — confirm your panel has sufficient capacity and available breaker spaces.'));
+  }
+
   document.getElementById('ev-results-label').style.display = 'block';
   document.getElementById('ev-results').innerHTML = blocks.join('');
   document.getElementById('ev-disclaimer').style.display = 'block';
@@ -9547,6 +9607,39 @@ function calculateSVC(){
     }
   });
   bk+='</table>';
+
+  // Safety & Code Violation Checks
+  var loadPct=Math.round((minAmps/svcSize)*100);
+  if(svcSize<100){
+    html+=makeBlock('danger','Code Violation — Undersized Service','§230.79(C)',
+      svcSize+'A Below Code Minimum',
+      'NEC §230.79(C) requires a minimum 100A service for most dwelling units. A '+svcSize+'A service is a code violation — upgrade to at least 100A.');
+  }else if(svcSize===100){
+    html+=makeBlock('warn','100A Service — Code Minimum Only','§230.79(C)',
+      'Tight for Modern Loads',
+      '100A is the NEC minimum for dwelling units. With EV chargers and heat pumps now common, 100A is often inadequate. Strongly consider 200A.');
+  }
+  if(loadPct>=90){
+    html+=makeBlock('danger','Near Service Capacity','OVERLOAD RISK',
+      loadPct+'% Load Factor',
+      'Calculated load is '+loadPct+'% of service size, leaving almost no headroom. Any future load (EV charger, heat pump) will likely require a service upgrade.');
+  }else if(loadPct>=75){
+    html+=makeBlock('warn','Limited Headroom','FUTURE CAPACITY',
+      loadPct+'% Load Factor',
+      'Calculated load uses '+loadPct+'% of the service. Future loads like an EV charger or heat pump may require upsizing. Consider a larger panel now.');
+  }
+  if(_svcMethod==='opt'&&svcSize<100){
+    html+=makeBlock('danger','Optional Method Not Applicable','§220.82(A)',
+      'Requires 100A+ Service',
+      'The Optional Method is only permitted for dwellings with a 100A or larger service. Switch to Standard Method for this service size.');
+  }
+  if(acW>2000&&heatW>2000){
+    var _larger=acW>=heatW?'A/C ('+(acW/1000).toFixed(1)+' kW)':'Elec. Heat ('+(heatW/1000).toFixed(1)+' kW)';
+    var _smaller=acW>=heatW?'Elec. Heat ('+(heatW/1000).toFixed(1)+' kW)':'A/C ('+(acW/1000).toFixed(1)+' kW)';
+    html+=makeBlock('warn','HVAC — Only Larger Load Counted','§220.60',
+      _larger+' Applied',
+      _smaller+' excluded per §220.60 (omit smaller of A/C vs. heat). Verify this reflects your actual system.');
+  }
 
   document.getElementById('svc-results').innerHTML=html;
   document.getElementById('svc-breakdown-body').innerHTML=bk;
