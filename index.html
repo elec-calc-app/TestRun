@@ -3855,48 +3855,34 @@ if('serviceWorker' in navigator){
         <input class="fi" id="svc-sqft" type="number" min="1" placeholder="e.g. 1800"/>
       </div>
       <div class="field-row">
-        <div class="field-label">Range / Oven</div>
+        <div class="field-label">Range / Oven (kW)</div>
         <div style="display:flex;gap:8px;align-items:center;flex:1;flex-wrap:wrap;">
           <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" id="svc-has-range" checked onchange="svcRangeToggle()"> Present</label>
           <input class="fi" id="svc-range-kw" type="number" min="1" max="60" placeholder="kW" value="12" style="max-width:72px;"/>
-          <span style="font-size:11px;color:var(--sub);">kW nameplate</span>
         </div>
       </div>
       <div class="field-row">
-        <div class="field-label">Electric Dryer</div>
+        <div class="field-label">Electric Dryer (W)</div>
         <div style="display:flex;gap:8px;align-items:center;flex:1;flex-wrap:wrap;">
           <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;"><input type="checkbox" id="svc-has-dryer" checked onchange="svcDryerToggle()"> Present</label>
-          <input class="fi" id="svc-dryer-w" type="number" min="1" placeholder="W" value="5000" style="max-width:80px;"/>
-          <span style="font-size:11px;color:var(--sub);">watts nameplate</span>
+          <input class="fi" id="svc-dryer-w" type="number" min="1" placeholder="watts" value="5000" style="max-width:90px;"/>
         </div>
       </div>
       <div class="field-row">
-        <div class="field-label">A/C Load</div>
-        <div style="display:flex;gap:8px;align-items:center;flex:1;">
-          <input class="fi" id="svc-ac-w" type="number" min="0" value="0" style="max-width:80px;"/>
-          <span style="font-size:11px;color:var(--sub);">watts (0 if none)</span>
-        </div>
+        <div class="field-label">A/C Load (W)</div>
+        <input class="fi" id="svc-ac-w" type="number" min="0" value="0" style="max-width:90px;"/>
       </div>
       <div class="field-row">
-        <div class="field-label">Electric Heat</div>
-        <div style="display:flex;gap:8px;align-items:center;flex:1;">
-          <input class="fi" id="svc-heat-w" type="number" min="0" value="0" style="max-width:80px;"/>
-          <span style="font-size:11px;color:var(--sub);">watts (0 if none)</span>
-        </div>
+        <div class="field-label">Electric Heat (W)</div>
+        <input class="fi" id="svc-heat-w" type="number" min="0" value="0" style="max-width:90px;"/>
       </div>
       <div class="field-row">
-        <div class="field-label">Water Heater</div>
-        <div style="display:flex;gap:8px;align-items:center;flex:1;">
-          <input class="fi" id="svc-wh-w" type="number" min="0" value="4500" style="max-width:80px;"/>
-          <span style="font-size:11px;color:var(--sub);">watts (0 if none)</span>
-        </div>
+        <div class="field-label">Water Heater (W)</div>
+        <input class="fi" id="svc-wh-w" type="number" min="0" value="4500" style="max-width:90px;"/>
       </div>
       <div class="field-row">
-        <div class="field-label">Other Fixed Loads</div>
-        <div style="display:flex;gap:8px;align-items:center;flex:1;">
-          <input class="fi" id="svc-other-w" type="number" min="0" value="0" style="max-width:80px;"/>
-          <span style="font-size:11px;color:var(--sub);">watts total</span>
-        </div>
+        <div class="field-label">Other Fixed Loads (W)</div>
+        <input class="fi" id="svc-other-w" type="number" min="0" value="0" style="max-width:90px;"/>
       </div>
       <div class="field-row">
         <div class="field-label">Conductor</div>
