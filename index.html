@@ -67,7 +67,7 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .cht-body{display:none;border-top:1px solid var(--border);padding:0 0 10px;}
 .cht-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .cht-tbl{border-collapse:collapse;width:100%;font-family:'Roboto Mono',monospace;font-size:11px;}
-.cht-tbl th{background:var(--surface);color:var(--sub);font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:5px 5px;text-align:right;border-bottom:1px solid var(--border);white-space:normal;line-height:1.2;position:sticky;top:0;}
+.cht-tbl th{background:var(--surface);color:var(--sub);font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:5px 5px;text-align:right;border-bottom:1px solid var(--border);white-space:normal;line-height:1.2;position:sticky;top:0;z-index:1;}
 .cht-tbl th:first-child{text-align:left;}
 .cht-tbl td{padding:5px 5px;text-align:right;color:var(--text);border-bottom:1px solid var(--border);white-space:nowrap;font-size:10px;}
 .cht-tbl td:first-child{text-align:left;font-weight:700;color:var(--sub);}
@@ -548,7 +548,7 @@ body.light-mode .svc-info-modal-body{color:#374151;}
   }
   .result-block.pass .result-sub { color: #047857; }
   .result-block.fail .result-sub { color: #b91c1c; }
-  .result-block.neutral .result-sub { color: #047857; }
+  .result-block.neutral .result-sub { color: var(--muted); }
 
   /* ── Engineering panel ── */
   .eng-panel { margin:10px 20px 0; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
@@ -561,7 +561,7 @@ body.light-mode .svc-info-modal-body{color:#374151;}
   .eng-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid var(--border); }
   .eng-row:last-child { border-bottom:none; }
   .eng-key { font-family:'Inter',sans-serif; font-size:11px; color:var(--sub); font-weight:500; }
-  .eng-val { font-family:'Roboto Mono',monospace; font-size:11px; color:#1a1a1a; font-weight:500; }
+  .eng-val { font-family:'Roboto Mono',monospace; font-size:11px; color:var(--text); font-weight:500; }
 
   /* ── Disclaimer ── */
   .disclaimer { margin:12px 20px 16px; padding:10px 13px; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; }
@@ -634,7 +634,7 @@ body.light-mode .svc-info-modal-body{color:#374151;}
   .wc-name { font-family: 'Roboto Mono', monospace; font-size: 11px; color: var(--text); flex: 1; }
   .wc-badge { display: inline-block; font-family: 'Roboto Mono', monospace; font-size: 7px; font-weight: 600; letter-spacing: 1px; padding: 1px 5px; border-radius: 10px; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; margin-left: 6px; vertical-align: middle; }
   .wc-code-note { margin: 0 12px 10px; padding: 7px 10px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; font-size: 10px; color: var(--sub); line-height: 1.5; font-family: 'Inter', sans-serif; }
-  .wc-code-note strong { color: #374151; font-weight: 600; }
+  .wc-code-note strong { color: var(--text); font-weight: 600; }
   .app-footer { text-align:center; padding:10px 20px calc(14px + env(safe-area-inset-bottom)); background:var(--bg); border-top:1px solid var(--border); margin-top:auto; color:var(--muted); }
   body.light-mode .app-footer { background:#ffffff; border-top-color:#f0f0f0; }
 
@@ -1302,6 +1302,14 @@ body:not(.light-mode) .co-privacy-note a{color:var(--sub);}
 body:not(.light-mode) .co-cancel-btn{background:var(--surface2);color:var(--sub);}
 /* Result export button */
 body:not(.light-mode) .result-export-btn{background:var(--surface);color:var(--sub);border-color:var(--border);}
+/* Panel Schedule dark mode */
+body:not(.light-mode) .pn-card{background:var(--card);border-color:var(--border);}
+body:not(.light-mode) .pn-card-head{background:var(--surface);border-bottom-color:var(--border);}
+body:not(.light-mode) .pn-ckt-num{color:var(--text);}
+body:not(.light-mode) .pn-bar-label{color:var(--sub);}
+body:not(.light-mode) .pn-bar-track{background:var(--surface2);border-color:var(--border);}
+body:not(.light-mode) .pn-bar-info{color:var(--muted);}
+body:not(.light-mode) .pn-remove{color:var(--muted);}
 
 .stg-state-ov{display:none;position:fixed;inset:0;background:var(--bg);z-index:810;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .stg-state-ov.open{display:block;}
@@ -9958,7 +9966,11 @@ function qzFinish(){
 // ── PDF Scanner ──────────────────────────────────────────────────
 var _scanPages=[];
 function scanSave(){
-  try{localStorage.setItem('jc_scan_pages',JSON.stringify(_scanPages));}catch(e){}
+  try{localStorage.setItem('jc_scan_pages',JSON.stringify(_scanPages));}catch(e){
+    if(e.name==='QuotaExceededError'||e.code===22){
+      alert('Storage full — export your scan as PDF before adding more pages.');
+    }
+  }
 }
 function scanLoad(){
   try{var d=localStorage.getItem('jc_scan_pages');if(d){_scanPages=JSON.parse(d)||[];}}catch(e){_scanPages=[];}
@@ -10040,32 +10052,37 @@ function scanGeneratePDF(){
   if(overlay)overlay.classList.add('visible');
   if(bar)bar.style.width='0%';
   if(lbl)lbl.textContent='Building PDF\u2026';
-  setTimeout(function(){
+  var jsPDF=jspdfLib.jsPDF;
+  var first=_scanPages[0];
+  var pw=612, ph=Math.round(612*first.h/first.w);
+  var doc=new jsPDF({unit:'pt',format:[pw,ph],compress:true});
+  function processPage(i){
     try{
-      var jsPDF=jspdfLib.jsPDF;
-      var first=_scanPages[0];
-      var pw=612, ph=Math.round(612*first.h/first.w);
-      var doc=new jsPDF({unit:'pt',format:[pw,ph],compress:true});
-      _scanPages.forEach(function(p,i){
-        var w2=612,h2=Math.round(612*p.h/p.w);
-        if(i>0)doc.addPage([w2,h2]);
-        doc.addImage(p.dataUrl,'JPEG',0,0,w2,h2,undefined,'FAST');
-        if(bar)bar.style.width=Math.round((i+1)/_scanPages.length*100)+'%';
-      });
-      if(lbl)lbl.textContent='Saving\u2026';
-      var slug='scan_'+new Date().toLocaleDateString('en-US').replace(/\//g,'-');
-      var fname=slug+'.pdf';
-      var blob=doc.output('blob');
-      if(overlay)overlay.classList.remove('visible');
-      var shareFile=new File([blob],fname,{type:'application/pdf'});
-      if(navigator.canShare&&navigator.canShare({files:[shareFile]})){
-        navigator.share({files:[shareFile],title:fname}).catch(function(){scanDownload(blob,fname);});
-      }else{scanDownload(blob,fname);}
+      if(i>=_scanPages.length){
+        if(lbl)lbl.textContent='Saving\u2026';
+        var slug='scan_'+new Date().toLocaleDateString('en-US').replace(/\//g,'-');
+        var fname=slug+'.pdf';
+        var blob=doc.output('blob');
+        if(overlay)overlay.classList.remove('visible');
+        var shareFile=new File([blob],fname,{type:'application/pdf'});
+        if(navigator.canShare&&navigator.canShare({files:[shareFile]})){
+          navigator.share({files:[shareFile],title:fname}).catch(function(){scanDownload(blob,fname);});
+        }else{scanDownload(blob,fname);}
+        return;
+      }
+      var p=_scanPages[i];
+      var w2=612,h2=Math.round(612*p.h/p.w);
+      if(i>0)doc.addPage([w2,h2]);
+      doc.addImage(p.dataUrl,'JPEG',0,0,w2,h2,undefined,'FAST');
+      if(bar)bar.style.width=Math.round((i+1)/_scanPages.length*100)+'%';
+      if(lbl)lbl.textContent='Page '+(i+1)+' of '+_scanPages.length+'\u2026';
+      setTimeout(function(){processPage(i+1);},0);
     }catch(err){
       if(overlay)overlay.classList.remove('visible');
       alert('Error creating PDF: '+err.message);
     }
-  },80);
+  }
+  setTimeout(function(){processPage(0);},80);
 }
 function scanDownload(blob,fname){
   var url=URL.createObjectURL(blob);
