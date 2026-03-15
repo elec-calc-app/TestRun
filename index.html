@@ -6991,39 +6991,111 @@ function jcExportNote(id){
   openExportSheet(title,txt.join('\n'),csv,html);
 }
 function jcExportAllNotes(){
-  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');if(!notes.length)return;
+  var notes=JSON.parse(localStorage.getItem('jc_notes')||'[]');
+  if(!notes.length)return;
   var now=_fmtDate();
-  // Plain text
-  var txt=['CIRCUITMATIC —ALL SAVED NOTES','Generated: '+now,'Total: '+notes.length+' notes','─'.repeat(36),''];
+  function _lbl(l){return l.label||l.lbl||'';}
+  function _val(l){return String(l.val||l.value||'');}
+  function _sub(l){return l.sub||l.desc||'';}
+
+  // Build full-detail HTML for every note
+  var sectionsHTML='';
   notes.forEach(function(n,i){
     var title=n.title||n.tabName||'Note';
-    txt.push((i+1)+'. '+title+' ['+n.tabName+'] · '+_fmtDateShort(n.ts||n.id));
-    (n.lines||[]).forEach(function(l){var sub=l.sub||l.desc||'';txt.push('   '+(l.label||l.lbl||'')+': '+(l.val||l.value||'')+(sub?' ('+sub+')':''));});
-    if(n.annotation)txt.push('   Note: '+n.annotation);
+    var created=_fmtDate(n.ts||n.id);
+    var noteHTML='';
+
+    // ── Section header ──
+    sectionsHTML+='<div style="margin-top:'+(i===0?'0':'36px')+';padding-top:'+(i===0?'0':'24px')+';'+(i===0?'':'border-top:2px solid #e5e7eb;')+'page-break-inside:avoid;">';
+    sectionsHTML+='<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;">';
+    sectionsHTML+='<div style="font-size:16px;font-weight:800;color:#111827;">'+escHtml(title)+'</div>';
+    sectionsHTML+='<div style="font-size:10px;color:#9ca3af;white-space:nowrap;margin-left:12px;"><span style="background:#f3f4f6;border-radius:4px;padding:2px 8px;font-weight:600;color:#374151;">'+escHtml(n.tabName)+'</span> &nbsp;'+escHtml(created)+'</div>';
+    sectionsHTML+='</div>';
+
+    if(n.type==='manual'){
+      // Manual note: body text, checklist, table, photos
+      if(n.body){
+        sectionsHTML+='<div style="background:#fffef5;border-left:3px solid #f0c020;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.7;color:#111827;white-space:pre-wrap;margin-bottom:12px;">'+escHtml(n.body)+'</div>';
+      }
+      var cl=n.checklist||[];
+      if(cl.length){
+        var clDone=cl.filter(function(x){return x.done;}).length;
+        sectionsHTML+='<div class="sec-hd">Checklist ('+clDone+'/'+cl.length+' done)</div>';
+        sectionsHTML+='<table class="kv-table"><tbody>'+cl.map(function(x){
+          return '<tr><td style="width:24px;text-align:center;">'+(x.done?'<strong style="color:#16a34a;">\u2713</strong>':'\u25cb')+'</td>'+
+            '<td style="'+(x.done?'text-decoration:line-through;color:#9ca3af;':'')+'">'+escHtml(x.text)+'</td></tr>';
+        }).join('')+'</tbody></table>';
+      }
+      var td=n.tableData||null;
+      if(td&&td.columns){
+        sectionsHTML+='<div class="sec-hd">Table</div><div style="overflow-x:auto;"><table class="kv-table"><thead><tr>'+
+          td.columns.map(function(col){return '<th>'+escHtml(col)+'</th>';}).join('')+'</tr></thead><tbody>'+
+          (td.rows||[]).map(function(r){return '<tr>'+(r.cells||[]).map(function(cell){return '<td>'+escHtml(cell||'')+'</td>';}).join('')+'</tr>';}).join('')+
+          '</tbody></table></div>';
+      }
+      if(n.photos&&n.photos.length){
+        var pc=n.photos.length===1?'rpt-photo-solo':'rpt-photo';
+        sectionsHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+
+          n.photos.map(function(p){return '<img src="'+p+'" class="'+pc+'">';}).join('')+'</div>';
+      }
+    } else {
+      // Calculator note: key-value lines table
+      var lines=n.lines||[];
+      if(lines.length){
+        sectionsHTML+='<table class="kv-table"><thead><tr><th>Field</th><th>Value</th><th>Details</th></tr></thead><tbody>'+
+          lines.map(function(l){
+            var sc=l.state==='pass'?'#15803d':l.state==='fail'?'#dc2626':'#1d4ed8';
+            return '<tr><td>'+escHtml(_lbl(l))+'</td>'+
+              '<td><strong style="color:'+sc+';">'+escHtml(_val(l))+'</strong></td>'+
+              '<td style="color:#6b7280;font-size:11px;">'+escHtml(_sub(l))+'</td></tr>';
+          }).join('')+'</tbody></table>';
+      }
+      if(n.annotation){
+        sectionsHTML+='<div class="sec-hd">Job Notes</div>'+
+          '<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;font-size:13px;line-height:1.6;">'+escHtml(n.annotation)+'</div>';
+      }
+      if(n.photos&&n.photos.length){
+        var pc2=n.photos.length===1?'rpt-photo-solo':'rpt-photo';
+        sectionsHTML+='<div class="sec-hd">Photos ('+n.photos.length+')</div><div class="rpt-photo-grid">'+
+          n.photos.map(function(p){return '<img src="'+p+'" class="'+pc2+'">';}).join('')+'</div>';
+      }
+    }
+    sectionsHTML+='</div>'; // end note section
+  });
+
+  var html=buildPrintHTML(
+    'All Saved Notes',
+    notes.length+' notes \u00b7 Generated '+now,
+    sectionsHTML
+  );
+
+  // Plain text fallback
+  var txt=['CIRCUITMATIC \u2014 ALL SAVED NOTES','Generated: '+now,'Total: '+notes.length+' notes','\u2500'.repeat(36),''];
+  notes.forEach(function(n,i){
+    var title=n.title||n.tabName||'Note';
+    txt.push((i+1)+'. '+title+' ['+n.tabName+'] \u00b7 '+_fmtDateShort(n.ts||n.id));
+    if(n.type==='manual'){
+      if(n.body)txt.push('   '+n.body.replace(/\n/g,'\n   '));
+      (n.checklist||[]).forEach(function(x){txt.push('   '+(x.done?'[x] ':'[ ] ')+x.text);});
+    } else {
+      (n.lines||[]).forEach(function(l){
+        var sub=_sub(l);
+        txt.push('   '+_lbl(l)+': '+_val(l)+(sub?' ('+sub+')':''));
+      });
+      if(n.annotation)txt.push('   Notes: '+n.annotation);
+    }
     txt.push('');
   });
   txt.push('Generated by Circuitmatic');
-  // CSV
+
+  // CSV summary
   var csv='#,Title,Tab,Date,Notes\n'+notes.map(function(n,i){
-    return (i+1)+',"'+(n.title||n.tabName||'').replace(/"/g,'""')+'",'+n.tabName+','+_fmtDateShort(n.ts||n.id)+',"'+(n.annotation||'').replace(/"/g,'""')+'"';
+    return (i+1)+',"'+(n.title||n.tabName||'').replace(/"/g,'""')+'",'+n.tabName+','+_fmtDateShort(n.ts||n.id)+',"'+(n.annotation||n.body||'').replace(/"/g,'""').substring(0,120)+'"';
   }).join('\n');
-  // HTML
-  var rows=notes.map(function(n,i){
-    var title=n.title||n.tabName||'Note';
-    var lines=n.lines||[];
-    var preview=lines.slice(0,3).map(function(l){return escHtml((l.label||l.lbl||'')+': '+(l.val||l.value||''));}).join(' &nbsp;·&nbsp; ');
-    return '<tr>'+
-      '<td style="color:#9ca3af;font-size:11px;">'+(i+1)+'</td>'+
-      '<td><strong>'+escHtml(title)+'</strong>'+(preview?'<div style="font-size:11px;color:#6b7280;margin-top:2px;">'+preview+'</div>':'')+'</td>'+
-      '<td><span style="font-size:11px;background:#f3f4f6;padding:2px 8px;border-radius:4px;font-weight:600;">'+escHtml(n.tabName)+'</span></td>'+
-      '<td style="font-size:11px;color:#9ca3af;white-space:nowrap;">'+_fmtDateShort(n.ts||n.id)+'</td>'+
-      (n.annotation?'<td style="font-size:11px;color:#374151;">'+escHtml(n.annotation)+'</td>':'<td style="color:#d1d5db;">—</td>')+
-    '</tr>';
-  }).join('');
-  var bodyHTML='<table><thead><tr><th>#</th><th>Title &amp; Preview</th><th>Tab</th><th>Date</th><th>Notes</th></tr></thead><tbody>'+rows+'</tbody></table>';
-  var html=buildPrintHTML('All Saved Notes',notes.length+' notes · Generated '+now,bodyHTML);
-  openExportSheet('Circuitmatic All Notes',txt.join('\n'),csv,html);
+
+  openExportSheet('All Notes ('+notes.length+')',txt.join('\n'),csv,html);
 }
+
 var _exportData=null;
 function _fmtDate(ms){var d=ms?new Date(ms):new Date();return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear()+' '+d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});}
 function _fmtDateShort(ms){var d=ms?new Date(ms):new Date();return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();}
@@ -7038,8 +7110,8 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
   // ── Center branding: company name OR CIRCUITMATIC ──
   var centerHtml;
   if(co.logo||co.name){
-    var lgPart=co.logo?'<img src="'+co.logo+'" style="height:34px;max-width:120px;object-fit:contain;display:block;margin:0 auto 4px;">':'';
-    var nmPart=co.name?'<div style="font-size:14px;font-weight:800;color:#f0c020;letter-spacing:1px;line-height:1.1;">'+co.name+'</div>':'';
+    var lgPart=co.logo?'<img src="'+co.logo+'" style="height:34px;max-width:80px;object-fit:contain;display:block;margin-bottom:2px;">':'';
+    var nmPart=co.name?'<div style="font-size:13px;font-weight:800;color:#f0c020;letter-spacing:.3px;line-height:1.2;">'+co.name+'</div>':'';
     var infoParts=[];
     if(co.address)infoParts.push(co.address);
     if(co.phone)infoParts.push(co.phone+(co.fax?' | Fax: '+co.fax:''));
@@ -7048,8 +7120,8 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
     var infoHtml=infoParts.length?'<div style="font-size:9px;color:#9ca3af;line-height:1.7;margin-top:3px;">'+infoParts.join('<br>')+'</div>':'';
     centerHtml=lgPart+nmPart+infoHtml;
   }else{
-    centerHtml='<div style="font-size:14px;font-weight:900;color:#f0c020;letter-spacing:3px;line-height:1.1;">CIRCUITMATIC</div>'+
-               '<div style="font-size:9px;color:#9ca3af;letter-spacing:1.8px;font-weight:500;margin-top:4px;text-transform:uppercase;">Electricians Toolkit</div>';
+    centerHtml='<div style="font-size:13px;font-weight:800;color:#f0c020;letter-spacing:.5px;line-height:1.2;">Circuitmatic</div>'+
+               '<div style="font-size:9px;color:#9ca3af;letter-spacing:.5px;font-weight:500;margin-top:2px;">Electricians Toolkit</div>';
   }
 
   // ── Right: report title + date (no project info here — moved to body) ──
@@ -7070,9 +7142,10 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
   return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+reportTitle+'</title><style>'+
     '*{box-sizing:border-box;margin:0;padding:0;}'+
     'body{font-family:"Helvetica Neue",Arial,sans-serif;color:#1a1a1a;background:#fff;font-size:13px;}'+
-    '.rpt-header{background:#07090f;color:#f0c020;padding:14px 20px;display:flex;align-items:center;gap:14px;}'+
-    '.rpt-center{flex:1;text-align:center;}'+
-    '.rpt-hd-right{flex-shrink:0;}'+
+    '.rpt-header{background:#07090f;color:#f0c020;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;}'+
+    '.rpt-brand{display:flex;align-items:center;gap:12px;}'+
+    '.rpt-brand-text{display:flex;flex-direction:column;justify-content:center;}'+
+    '.rpt-hd-right{flex-shrink:0;text-align:right;}'+
     '.rpt-body{padding:20px 24px;}'+
     '.rpt-title{font-size:20px;font-weight:800;color:#111;margin-bottom:2px;}'+
     '.rpt-subtitle{font-size:12px;color:#6b7280;margin-bottom:16px;padding-bottom:12px;border-bottom:3px solid #f0c020;}'+
@@ -7104,8 +7177,7 @@ function buildPrintHTML(reportTitle,subtitle,bodyHTML){
     '<button class="print-again-btn" onclick="window.print()">Print / Save PDF</button>'+
   '</div>'+
   '<div class="rpt-header">'+
-    iconHtml+
-    '<div class="rpt-center">'+centerHtml+'</div>'+
+    '<div class="rpt-brand">'+iconHtml+'<div class="rpt-brand-text">'+centerHtml+'</div></div>'+
     '<div class="rpt-hd-right">'+hdRight+'</div>'+
   '</div>'+
   '<div class="rpt-body">'+
@@ -10005,23 +10077,27 @@ function pcGeneratePDF(){
   var rowH=20,tableTop=132;
   sections.forEach(function(sec,sIdx){
     if(sIdx>0)doc.addPage();
-    doc.setFillColor(26,18,0);doc.rect(0,0,pgW,52,'F');
-    doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(240,192,32);
-    doc.text('CIRCUITMATiC',pgW/2,24,{align:'center'});
-    doc.setFontSize(10);doc.setTextColor(200,170,80);
-    doc.text('Phase Color Chart',pgW/2,40,{align:'center'});
+    doc.setFillColor(26,18,0);doc.rect(0,0,pgW,48,'F');
+    // Left: app name + subtitle
+    doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(240,192,32);
+    doc.text('Circuitmatic',20,20);
+    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(180,150,60);
+    doc.text('Electricians Toolkit',20,32);
+    // Right: chart title
+    doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(240,192,32);
+    doc.text('Phase Color Chart',pgW-20,20,{align:'right'});
+    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(180,150,60);
+    doc.text(sec.title,pgW-20,32,{align:'right'});
     doc.setFillColor(243,244,246);doc.setDrawColor(55,65,81);doc.setLineWidth(1.5);
-    doc.roundedRect(lM,62,usable,26,4,4,'FD');
-    doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(30,41,59);
-    doc.text(sec.title,pgW/2,80,{align:'center'});
+    doc.roundedRect(lM,56,usable,26,4,4,'FD');
     doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(107,114,128);
-    doc.text('PHASE LEGEND:',lM,107);
+    doc.text('PHASE LEGEND:',lM,101);
     [0,1,2].forEach(function(pi){
       var rgb=pcHexRgb(sec.phases[pi].c);
       var lx=lM+96+pi*110;
-      doc.setFillColor(rgb[0],rgb[1],rgb[2]);doc.rect(lx,96,14,12,'F');
+      doc.setFillColor(rgb[0],rgb[1],rgb[2]);doc.rect(lx,90,14,12,'F');
       doc.setFont('helvetica','bold');doc.setTextColor(30,41,59);
-      doc.text('Ph '+sec.phases[pi].ph+' = '+sec.phases[pi].n,lx+18,107);
+      doc.text('Ph '+sec.phases[pi].ph+' = '+sec.phases[pi].n,lx+18,101);
     });
     for(var i=0;i<21;i++){
       var lc=sec.start+i*2,rc=lc+1;
