@@ -184,8 +184,8 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .quiz-score-msg{margin-bottom:16px;font-size:0.88rem;line-height:1.5;}
 .quiz-score-pass{color:#4ade80;}
 .quiz-score-fail{color:#f87171;}
-.quiz-restart{width:100%;padding:14px;background:#f0c020;color:#1a1200;border:none;border-radius:9px;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-size:0.82rem;margin-top:8px;}
-.quiz-export-btn{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;line-height:1.3;text-align:center;min-width:72px;-webkit-tap-highlight-color:transparent;}
+.quiz-restart{flex:1;padding:14px;background:#f0c020;color:#1a1200;border:none;border-radius:9px;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-size:0.82rem;margin-top:8px;}
+.quiz-export-btn{flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:14px;font-size:0.82rem;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-top:8px;-webkit-tap-highlight-color:transparent;}
 .quiz-export-btn:active{opacity:.8;}
 .quiz-restart:hover{background:#ffe066;}
 .quiz-hint-btn{background:none;border:none;color:#334155;font-size:0.68rem;font-weight:500;padding:2px 0;cursor:pointer;font-family:'Roboto Mono',monospace;margin-bottom:10px;transition:color .15s;letter-spacing:.3px;opacity:0.6;}
@@ -4698,7 +4698,7 @@ if('serviceWorker' in navigator){
           <div class="quiz-score-msg" id="qz-msg"></div>
           <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px;">
             <button class="quiz-restart" onclick="qzStart()">↺ Retake Exam</button>
-            <button class="quiz-export-btn" onclick="qzExportPDF()">&#8681; Export<br>Results</button>
+            <button class="quiz-export-btn" onclick="qzExportPDF()">&#8681; Export Results</button>
           </div>
         </div>
       </div>
@@ -12749,7 +12749,7 @@ function qzExportPDF(){
     var markColor=ok?'#15803d':'#dc2626';
     var mark=ok?'\u2713':'\u2717';
     qHTML+=
-      '<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;margin-bottom:7px;page-break-inside:avoid;">' +
+      '<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;margin-bottom:7px;page-break-inside:avoid;'+(i>0&&i%5===0?'page-break-before:always;':'')+'">' +
         // Header row: number + category + mark
         '<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px;">' +
           '<div style="display:flex;align-items:baseline;gap:8px;">' +
