@@ -1640,7 +1640,6 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-bf" onclick="switchTab('bf',this)">Box Fill</button>
     <button class="tab-btn" id="tab-btn-mc" onclick="switchTab('mc',this)">Motor</button>
     <button class="tab-btn" id="tab-btn-dr" onclick="switchTab('dr',this)">Derate</button>
-    <button class="tab-btn" id="tab-btn-bd" onclick="switchTab('bd',this)">Burial</button>
     <button class="tab-btn" id="tab-btn-rc" onclick="switchTab('rc',this)">Recept</button>
     <button class="tab-btn" id="tab-btn-gs" onclick="switchTab('gs',this)">Gen Sz</button>
     <button class="tab-btn" id="tab-btn-cl" onclick="switchTab('cl',this)">Com Load</button>
@@ -2820,63 +2819,6 @@ if('serviceWorker' in navigator){
         <div class="disclaimer-text">Adjustment factors per NEC §310.15(C)(1) (2023/2026) / §310.15(B)(3)(a) (2020). Count only current-carrying conductors (CCCs) — neutrals carrying only unbalanced current (shared neutral on multi-wire circuits) may not count. EGCs never count. Ambient correction per §310.15(C)(2) using correction formula. Verify with AHJ. Design guidance only.</div>
       </div>
       <div class="code-note" id="dr-note"></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════
-       BURIAL DEPTH TAB (NEC Table 300.5)
-  ══════════════════════════════════════════════ -->
-  <div class="tab-panel" id="tab-bd">
-    <div class="bd-wrap">
-      <div class="section-label">Burial Depth — Table 300.5</div>
-
-      <div class="fields">
-        <div class="field-row">
-          <div class="field-label">Location Type</div>
-          <div class="sel-wrap"><select class="fi" id="bd-loc" onchange="bdHighlight()">
-            <option value="">— Select location —</option>
-            <option value="0">General — all locations not listed below</option>
-            <option value="1">Under 2&#34; concrete slab (no vehicles, slab &ge;6&#34; beyond install)</option>
-            <option value="2">Under a building</option>
-            <option value="3">Under 4&#34; concrete slab (no vehicles, slab &ge;6&#34; beyond install)</option>
-            <option value="4">Under streets, highways, roads, alleys, driveways, parking lots</option>
-            <option value="5">1 &amp; 2 family dwelling driveways &amp; outdoor parking (dwelling use only)</option>
-            <option value="6">Airport runways &amp; adjacent restricted areas</option>
-          </select></div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="section-label" style="margin-top:0;">Reference Table <span style="font-size:0.7rem;font-weight:500;color:var(--muted);">(minimum cover in inches)</span></div>
-      <div class="bd-scroll">
-        <table class="bd-ref-table" id="bd-table">
-          <thead>
-            <tr>
-              <th class="loc-head">Location</th>
-              <th>Direct<br>Burial</th>
-              <th>RMC /<br>IMC</th>
-              <th>Non&shy;metallic<br>Raceway</th>
-              <th>120V GFCI<br>&le;20A Res.</th>
-              <th>&le;30V Irrig. /<br>Landscape</th>
-            </tr>
-          </thead>
-          <tbody id="bd-tbody">
-          </tbody>
-        </table>
-      </div>
-
-      <div class="bd-legend">
-        <div class="bd-legend-item"><strong>RMC/IMC</strong> — Rigid Metal or Intermediate Metal Conduit</div>
-        <div class="bd-legend-item"><strong>Nonmetallic</strong> — PVC, HDPE, ENT listed for direct burial</div>
-        <div class="bd-legend-item"><strong>120V GFCI &le;20A</strong> — Residential branch circuits only</div>
-        <div class="bd-legend-item"><strong>&le;30V</strong> — Irrigation &amp; landscape lighting, UF cable or approved raceway</div>
-        <div class="bd-legend-item"><strong>Under Building</strong> — Must be in raceway; 0&#34; cover required once inside</div>
-      </div>
-      <div class="disclaimer" style="margin-top:14px;">
-        <div class="disclaimer-title">Important Notice</div>
-        <div class="disclaimer-text">NEC Table 300.5 (2023/2026). Local codes and AHJ requirements may be more restrictive. Depths are minimums — greater depth is always acceptable. Exception: Lesser depths permitted where protected by approved enclosures or raceway. Rocks and other hazards require additional protection per 300.5(D). Design guidance only.</div>
-      </div>
     </div>
   </div>
 
@@ -4929,6 +4871,52 @@ if('serviceWorker' in navigator){
             <div class="sup-note" style="margin-top:8px;">PVC expands with heat — use expansion fittings every 30 ft in exposed runs. Support within 3 ft of every box, conduit body, or fitting.</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="cht-card">
+      <div class="cht-hd" onclick="toggleCht('cht-burial')">
+        <span class="cht-icon">&#x26CF;</span>
+        <div class="cht-hd-txt"><div class="cht-title">Burial Depth — Table 300.5</div><div class="cht-sub">Minimum cover (inches) by location &amp; wiring method</div></div>
+        <span class="cht-chev" id="cht-burial-chev">&#x25B6;</span>
+      </div>
+      <div class="cht-body" id="cht-burial">
+        <div style="padding:10px 14px 4px;">
+          <div style="font-size:12px;color:var(--sub);margin-bottom:8px;">Select a location to highlight its row:</div>
+          <select class="fi" id="bd-loc" onchange="bdHighlight()" style="width:100%;margin-bottom:10px;">
+            <option value="">— All locations —</option>
+            <option value="0">General — all locations not listed below</option>
+            <option value="1">Under 2&#34; concrete slab (no vehicles)</option>
+            <option value="2">Under a building</option>
+            <option value="3">Under 4&#34; concrete slab (no vehicles)</option>
+            <option value="4">Under streets, highways, roads, driveways, parking lots</option>
+            <option value="5">1 &amp; 2 family dwelling driveways (dwelling use only)</option>
+            <option value="6">Airport runways &amp; adjacent restricted areas</option>
+          </select>
+        </div>
+        <div class="bd-scroll">
+          <table class="bd-ref-table" id="bd-table">
+            <thead>
+              <tr>
+                <th class="loc-head">Location</th>
+                <th>Direct<br>Burial</th>
+                <th>RMC /<br>IMC</th>
+                <th>Non&shy;metallic<br>Raceway</th>
+                <th>120V GFCI<br>&le;20A Res.</th>
+                <th>&le;30V Irrig. /<br>Landscape</th>
+              </tr>
+            </thead>
+            <tbody id="bd-tbody"></tbody>
+          </table>
+        </div>
+        <div class="bd-legend" style="padding:6px 14px;">
+          <div class="bd-legend-item"><strong>RMC/IMC</strong> — Rigid Metal or Intermediate Metal Conduit</div>
+          <div class="bd-legend-item"><strong>Nonmetallic</strong> — PVC, HDPE, ENT listed for direct burial</div>
+          <div class="bd-legend-item"><strong>120V GFCI &le;20A</strong> — Residential branch circuits only</div>
+          <div class="bd-legend-item"><strong>&le;30V</strong> — Irrigation &amp; landscape lighting, UF cable or approved raceway</div>
+          <div class="bd-legend-item"><strong>Under Building</strong> — Must be in raceway; 0&#34; cover required once inside</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);padding:4px 14px 8px;">Table 300.5 (2023/2026) · Minimums only — AHJ may require more · Rocks/hazards need extra protection per 300.5(D)</div>
       </div>
     </div>
 
