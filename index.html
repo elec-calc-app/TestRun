@@ -12478,9 +12478,10 @@ function pnRefreshBadges(){
     else if(poles===3&&pnIs3Ph(sys)){phDisplay='A-B-C';}
     var ne=document.getElementById('pn-cnum-'+id);
     var be=document.getElementById('pn-cph-'+id);
-    if(ne)ne.textContent=slot;
+    var cktLabel=poles===2?(slot+'-'+(slot+1)):poles===3?(slot+'-'+(slot+2)+'-'+(slot+4)):slot;
+    if(ne)ne.textContent=cktLabel;
     if(be){be.textContent=phDisplay;be.style.background=pnPhColor(ph);}
-    slot+=poles;
+    slot+=(poles===3?6:poles);
   });
 }
 function onPnSystemChange(){pnRefreshBadges();clrPN();}
@@ -12515,7 +12516,7 @@ function calculatePN(){
     }else{
       phW[0]+=w/3;phW[1]+=w/3;phW[2]+=w/3;
     }
-    slot+=poles;
+    slot+=(poles===3?6:poles);
   });
   var totalSlots=slot-1;
   var phA=phW.map(function(w){return w/lnv;});
