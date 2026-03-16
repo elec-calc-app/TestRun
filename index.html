@@ -3869,6 +3869,7 @@ if('serviceWorker' in navigator){
           <option value="120_240_1">120/240V · 1Ø · 3W</option>
           <option value="120_208_3">120/208V · 3Ø · 4W</option>
           <option value="277_480_3">277/480V · 3Ø · 4W</option>
+          <option value="240_3_3">240V · 3Ø · 3W (Delta)</option>
         </select></div>
       </div>
       <div class="field-row">
@@ -3892,6 +3893,10 @@ if('serviceWorker' in navigator){
     </div>
     <div class="divider"></div>
     <div class="section-label">Circuits <span style="font-size:9px;font-weight:400;color:var(--sub);">(breaker · description · watts)</span></div>
+    <div style="display:flex;align-items:center;gap:8px;padding:0 14px 10px;">
+      <input class="fi" id="pn-count" type="number" min="1" max="84" step="2" placeholder="# circuits" style="width:90px;font-size:12px;" onkeydown="if(event.key==='Enter')pnSetCount()"/>
+      <button class="btn btn-reset" style="flex:1;font-size:11px;" onclick="pnSetCount()">Set Panel Size</button>
+    </div>
     <div id="pn-circuits"></div>
     <div style="padding:0 14px 6px;">
       <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="pnAddCircuit()">+ Add Circuit</button>
@@ -12429,7 +12434,7 @@ function pcGeneratePDF(){
 var pnRowCount=0;
 var PN_BKR=[15,20,25,30,35,40,50,60,70,80,90,100,110,125,150,175,200,225,250,300];
 function pnIs3Ph(sys){return sys.indexOf('_3')>=0;}
-function pnLNV(sys){return sys==='277_480_3'?277:120;}
+function pnLNV(sys){return sys==='277_480_3'?277:sys==='240_3_3'?240:120;}
 function pnNumPh(sys){return pnIs3Ph(sys)?3:2;}
 function pnPhLabel(slotIdx,sys){return pnIs3Ph(sys)?['A','B','C'][slotIdx%3]:['L1','L2'][slotIdx%2];}
 function pnPhColor(ph){return{A:'#111827',B:'#dc2626',C:'#2563eb',L1:'#111827',L2:'#dc2626'}[ph]||'#6b7280';}
@@ -12579,10 +12584,19 @@ function calculatePN(){
   var ps=document.getElementById('pn-phase-section');
   ps.innerHTML=barHtml;ps.style.display='block';
 }
+function pnSetCount(){
+  var n=parseInt(document.getElementById('pn-count').value);
+  if(!n||n<1||n>84){return;}
+  document.getElementById('pn-circuits').innerHTML='';
+  pnRowCount=0;
+  clrPN();
+  for(var i=0;i<n;i++)pnAddCircuit();
+}
 function resetPN(){
   document.getElementById('pn-name').value='';
   document.getElementById('pn-system').value='120_240_1';
   document.getElementById('pn-main').value='200';
+  document.getElementById('pn-count').value='';
   document.getElementById('pn-circuits').innerHTML='';
   pnRowCount=0;
   clrPN();
