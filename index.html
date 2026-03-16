@@ -9774,7 +9774,7 @@ function cfdAddRow(){
   var opts=Object.keys(_CD_CABLES).map(function(k){return '<option value="'+k+'">'+_CD_CABLES[k].label+'</option>';}).join('');
   var row=document.createElement('div');
   row.className='field-row'; row.id=id;
-  row.innerHTML='<div class="field-label"><button class="btn btn-reset" style="padding:2px 7px;font-size:11px;" onclick="document.getElementById(''+id+'').remove()">✕</button></div>'
+  row.innerHTML='<div class="field-label"><button class="btn btn-reset" style="padding:2px 7px;font-size:11px;" onclick="this.closest(\'.field-row\').remove()">✕</button></div>'
     +'<div class="sel-wrap" style="flex:2;margin-right:6px;"><select class="fi cfd-type">'+opts+'</select></div>'
     +'<input type="number" class="fi cfd-qty" min="1" max="999" value="1" style="width:54px;text-align:center;" placeholder="Qty">';
   document.getElementById('cfd-cable-rows').appendChild(row);
@@ -13644,8 +13644,8 @@ function gfciRender() {
     document.getElementById('wire-l').classList.add('go');
     document.getElementById('wire-r').classList.add('go');
   },1400);
-  setTimeout(function(){ document.getElementById('anim-title').classList.add('show'); },1800);
-  setTimeout(function(){ document.getElementById('anim-eyebrow').classList.add('show'); },2000);
+  setTimeout(function(){ var el=document.getElementById('anim-title'); if(el) el.classList.add('show'); },1800);
+  setTimeout(function(){ var el=document.getElementById('anim-eyebrow'); if(el) el.classList.add('show'); },2000);
 })();
 </script>
 <!-- Punch Add Modal -->
