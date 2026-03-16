@@ -1662,6 +1662,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-feeder" onclick="switchTab('feeder',this)">Feeder</button>
     <button class="tab-btn" id="tab-btn-pv" onclick="switchTab('pv',this)">Solar/PV</button>
     <button class="tab-btn" id="tab-btn-af" onclick="switchTab('af',this)">Arc Flash</button>
+    <button class="tab-btn" id="tab-btn-fc" onclick="switchTab('fc',this)">Fault I</button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -6901,6 +6902,140 @@ if('serviceWorker' in navigator){
   </div>
 
 
+
+  <!-- ── FAULT CURRENT TAB ── -->
+  <div class="tab-panel" id="tab-fc">
+    <div class="section-label">Transformer</div>
+    <div class="fields">
+      <div class="field-row">
+        <div class="field-label">System Type</div>
+        <div class="sel-wrap"><select class="fi" id="fc-sys">
+          <option value="3ph">3-Phase</option>
+          <option value="1ph">1-Phase</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">kVA Rating</div>
+        <div class="sel-wrap"><select class="fi" id="fc-kva">
+          <option value="15">15 kVA</option>
+          <option value="25">25 kVA</option>
+          <option value="37.5">37.5 kVA</option>
+          <option value="45">45 kVA</option>
+          <option value="50">50 kVA</option>
+          <option value="75">75 kVA</option>
+          <option value="100">100 kVA</option>
+          <option value="112.5">112.5 kVA</option>
+          <option value="150">150 kVA</option>
+          <option value="167">167 kVA</option>
+          <option value="200">200 kVA</option>
+          <option value="225">225 kVA</option>
+          <option value="250">250 kVA</option>
+          <option value="300">300 kVA</option>
+          <option value="333">333 kVA</option>
+          <option value="500" selected>500 kVA</option>
+          <option value="750">750 kVA</option>
+          <option value="1000">1000 kVA</option>
+          <option value="1500">1500 kVA</option>
+          <option value="2000">2000 kVA</option>
+          <option value="2500">2500 kVA</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Secondary Voltage</div>
+        <div class="sel-wrap"><select class="fi" id="fc-volt">
+          <option value="120">120V (1Ø L-N)</option>
+          <option value="240" selected>120/240V (1Ø)</option>
+          <option value="208">208V (3Ø)</option>
+          <option value="240_3ph">240V (3Ø)</option>
+          <option value="480">480V (3Ø)</option>
+          <option value="600">600V (3Ø)</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Impedance %Z</div>
+        <div class="sel-wrap"><select class="fi" id="fc-z">
+          <option value="1.2">1.2% (small dry-type)</option>
+          <option value="1.5">1.5%</option>
+          <option value="2.0">2.0%</option>
+          <option value="2.5">2.5%</option>
+          <option value="3.0">3.0%</option>
+          <option value="3.5">3.5%</option>
+          <option value="4.0">4.0%</option>
+          <option value="4.5">4.5%</option>
+          <option value="5.0">5.0%</option>
+          <option value="5.5">5.5%</option>
+          <option value="5.75" selected>5.75% (typical utility)</option>
+          <option value="6.0">6.0%</option>
+          <option value="7.0">7.0%</option>
+          <option value="8.0">8.0%</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-label">Feeder to Panel</div>
+    <div class="fields">
+      <div class="field-row">
+        <div class="field-label">Conductor Size</div>
+        <div class="sel-wrap"><select class="fi" id="fc-wire">
+          <option value="14">14 AWG</option>
+          <option value="12">12 AWG</option>
+          <option value="10">10 AWG</option>
+          <option value="8">8 AWG</option>
+          <option value="6">6 AWG</option>
+          <option value="4">4 AWG</option>
+          <option value="3">3 AWG</option>
+          <option value="2">2 AWG</option>
+          <option value="1">1 AWG</option>
+          <option value="1/0">1/0 AWG</option>
+          <option value="2/0">2/0 AWG</option>
+          <option value="3/0" selected>3/0 AWG</option>
+          <option value="4/0">4/0 AWG</option>
+          <option value="250">250 kcmil</option>
+          <option value="300">300 kcmil</option>
+          <option value="350">350 kcmil</option>
+          <option value="400">400 kcmil</option>
+          <option value="500">500 kcmil</option>
+          <option value="600">600 kcmil</option>
+          <option value="750">750 kcmil</option>
+          <option value="1000">1000 kcmil</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">Material</div>
+        <div class="sel-wrap"><select class="fi" id="fc-mat">
+          <option value="cu">Copper</option>
+          <option value="al">Aluminum</option>
+        </select></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">One-Way Length (ft)</div>
+        <input type="number" class="fi" id="fc-len" min="1" max="9999" step="1" value="100" placeholder="ft">
+      </div>
+      <div class="field-row">
+        <div class="field-label">Parallel Sets</div>
+        <div class="sel-wrap"><select class="fi" id="fc-par">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="err-msg" id="fc-err"></div>
+    <div class="btn-row">
+      <button class="btn btn-calc" onclick="calculateFC()">Calculate</button>
+      <button class="btn btn-reset" onclick="resetFC()">Reset</button>
+    </div>
+    <div class="section-label" id="fc-results-label" style="display:none;">Results</div>
+    <div class="results" id="fc-results"></div>
+    <div class="disclaimer" id="fc-disclaimer" style="display:none;">
+      <div class="disclaimer-title">Important Notice</div>
+      <div class="disclaimer-text">Available fault current calculated using the point-to-point method. Transformer fault current assumes infinite primary bus (utility source with no upstream impedance) — actual available fault current may be lower. Conductor impedance from NEC Ch.9 Table 9 (AC resistance, 75°C, copper or aluminum in steel conduit). Motor contribution to fault current not included — add 4×FLA of connected motors for a more conservative estimate. Results represent maximum bolted 3-phase or line-to-line fault current; line-to-ground faults vary. OCPD interrupting rating must meet or exceed available fault current at point of installation — §110.9. Design guidance only — verify with a licensed engineer for service entrance and critical applications.</div>
+    </div>
+    <div class="code-note" id="fc-note"></div>
+  </div>
+
+
   <!-- ── FEEDER SIZING TAB ── -->
   <div class="tab-panel" id="tab-feeder">
     <div class="section-label">Feeder &amp; Branch Circuit Sizing</div>
@@ -10250,6 +10385,124 @@ function crpRender(){
     +'</div></div>';
 }
 
+
+
+// ── Available Fault Current (Point-to-Point Method) ───────────────────────────
+// NEC Ch.9 Table 9 — AC resistance Ω/1000ft at 75°C in steel conduit
+var _FC_R = {
+  cu: {'14':3.14,'12':1.98,'10':1.24,'8':0.778,'6':0.491,'4':0.308,'3':0.245,'2':0.194,
+       '1':0.154,'1/0':0.122,'2/0':0.0967,'3/0':0.0766,'4/0':0.0608,
+       '250':0.0515,'300':0.0429,'350':0.0367,'400':0.0321,'500':0.0258,
+       '600':0.0214,'750':0.0171,'1000':0.0129},
+  al: {'12':3.20,'10':2.00,'8':1.26,'6':0.808,'4':0.508,'3':0.403,'2':0.319,
+       '1':0.253,'1/0':0.201,'2/0':0.159,'3/0':0.126,'4/0':0.100,
+       '250':0.0847,'300':0.0707,'350':0.0605,'400':0.0529,'500':0.0424,
+       '600':0.0353,'750':0.0282,'1000':0.0212}
+};
+// Standard OCPD interrupting ratings (AIC)
+var _FC_AIC = [10000,14000,18000,22000,25000,35000,42000,65000,100000,150000,200000];
+
+function fcNextAIC(i){
+  for(var k=0;k<_FC_AIC.length;k++) if(_FC_AIC[k]>=i) return _FC_AIC[k];
+  return i;
+}
+function fcFmt(n){
+  if(n>=1000) return (n/1000).toFixed(2)+' kA';
+  return Math.round(n)+' A';
+}
+
+function calculateFC(){
+  var err=document.getElementById('fc-err');
+  err.textContent='';
+
+  var sys=document.getElementById('fc-sys').value;
+  var kva=parseFloat(document.getElementById('fc-kva').value);
+  var voltSel=document.getElementById('fc-volt').value;
+  var zPct=parseFloat(document.getElementById('fc-z').value);
+  var wireKey=document.getElementById('fc-wire').value;
+  var mat=document.getElementById('fc-mat').value;
+  var lenFt=parseFloat(document.getElementById('fc-len').value);
+  var par=parseInt(document.getElementById('fc-par').value);
+
+  if(!lenFt||lenFt<=0){err.textContent='Enter a valid conductor length.';return;}
+
+  // Parse voltage
+  var vLL = voltSel==='240_3ph'?240:parseFloat(voltSel);
+  var is3ph = (voltSel==='208'||voltSel==='240_3ph'||voltSel==='480'||voltSel==='600');
+  if(sys==='1ph') is3ph=false;
+
+  // Step 1: Isc at transformer secondary (infinite bus)
+  var zPu=zPct/100;
+  var Isc_xfmr;
+  if(is3ph){
+    Isc_xfmr = (kva*1000) / (1.732 * vLL * zPu);
+  } else {
+    Isc_xfmr = (kva*1000) / (vLL * zPu);
+  }
+
+  // Step 2: Conductor resistance
+  var rTable = _FC_R[mat];
+  if(!rTable[wireKey]){err.textContent='Resistance data not available for '+wireKey+' '+mat+'. Try a larger size.';return;}
+  var rPer1000 = rTable[wireKey];
+  // Effective resistance accounting for parallel sets
+  var rEff = (rPer1000 / 1000) * lenFt / par;  // Ω one-way per phase
+
+  // Step 3: f factor and Isc at panel
+  // f = (multiplier × L × Isc) / (C × V)
+  // Using impedance method: f = (Isc_xfmr × Zconductor) / V_phase
+  var Isc_panel;
+  var Zc;
+  if(is3ph){
+    // 3-phase: one-way conductor per phase, V_LN = VLL/√3
+    Zc = rEff;  // one-way impedance per phase
+    var vLN = vLL / 1.732;
+    // f = Isc × Zc / Vln
+    var f = (Isc_xfmr * Zc) / vLN;
+    Isc_panel = Isc_xfmr / (1 + f);
+  } else {
+    // 1-phase: round-trip (line + neutral), Vll
+    Zc = rEff * 2;  // line + neutral
+    var f = (Isc_xfmr * Zc) / vLL;
+    Isc_panel = Isc_xfmr / (1 + f);
+  }
+
+  var aic = fcNextAIC(Isc_panel);
+  var aicXfmr = fcNextAIC(Isc_xfmr);
+  var drop_pct = ((Isc_xfmr - Isc_panel) / Isc_xfmr * 100).toFixed(1);
+
+  var rl=document.getElementById('fc-results-label');
+  rl.style.display='block';
+  var rd=document.getElementById('fc-results');
+
+  rd.innerHTML=''
+    +'<div style="font-size:12px;color:var(--sub);padding:4px 0 10px;">'
+    +(is3ph?'3-Phase':'1-Phase')+' · '+vLL+'V · '+kva+' kVA · '+zPct+'% Z'
+    +' · '+wireKey+' '+mat.toUpperCase()+' × '+par+(par>1?' sets':' set')+' · '+lenFt+"'"
+    +'</div>'
+    +makeBlock('','At Transformer Secondary','',fcFmt(Isc_xfmr),'Min OCPD interrupting rating: '+fcNextAIC(Isc_xfmr).toLocaleString()+' AIC')
+    +makeBlock('','At Panel ('+lenFt+"' run)",'',fcFmt(Isc_panel),'Min OCPD interrupting rating: '+aic.toLocaleString()+' AIC · '+drop_pct+'% reduction from feeder impedance')
+    +makeBlock('','Required OCPD AIC Rating','',aic.toLocaleString()+' AIC','Minimum interrupting rating for breakers/fuses at this panel — §110.9')
+    +'<div style="font-size:11px;color:var(--text-dim);padding:6px 0 2px;">Conductor impedance: '+Zc.toFixed(4)+' Ω ('+(is3ph?'one-way/phase':'round-trip')+') · Effective R: '+(rEff*1000).toFixed(3)+' mΩ</div>';
+
+  document.getElementById('fc-disclaimer').style.display='block';
+  document.getElementById('fc-note').innerHTML='<div style="font-size:11px;color:var(--text-dim);padding:6px 14px 0;">Point-to-point method · NEC Ch.9 Table 9 conductor resistance · §110.9 interrupting rating</div>';
+  jcResultsReady('fc','Fault Current',null,'fc-results');
+}
+
+function resetFC(){
+  document.getElementById('fc-kva').value='500';
+  document.getElementById('fc-volt').value='240';
+  document.getElementById('fc-z').value='5.75';
+  document.getElementById('fc-wire').value='3/0';
+  document.getElementById('fc-mat').value='cu';
+  document.getElementById('fc-len').value='100';
+  document.getElementById('fc-par').value='1';
+  document.getElementById('fc-results').innerHTML='';
+  document.getElementById('fc-results-label').style.display='none';
+  document.getElementById('fc-disclaimer').style.display='none';
+  document.getElementById('fc-note').innerHTML='';
+  document.getElementById('fc-err').textContent='';
+}
 
 // ── Arc Flash Tab ─────────────────────────────────────────────────────────────
 function afShow(id, btn){
