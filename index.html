@@ -757,6 +757,7 @@ body.light-mode .gs-load-watts{background:#f8fafc;border-color:#e2e8f0;}
   .pn-card-body { display:flex; gap:6px; padding:5px 8px; align-items:center; }
   .pn-remove { margin-left:auto; font-size:16px; line-height:1; color:#9ca3af; background:none; border:none; cursor:pointer; padding:2px 4px; flex-shrink:0; }
   .pn-remove:hover { color:#dc2626; }
+  .pn-print-mode .pn-w-wrap{display:none;}
   .pn-bar-section { margin:0 16px 12px; }
   .pn-bar-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
   .pn-bar-label { font-family:'Roboto Mono',monospace; font-size:10px; font-weight:700; color:#374151; min-width:22px; }
@@ -3860,6 +3861,22 @@ if('serviceWorker' in navigator){
     <div class="section-label">Panel Info</div>
     <div class="fields">
       <div class="field-row">
+        <div class="field-label">Mode</div>
+        <div class="sel-wrap"><select class="fi" id="pn-mode" onchange="onPnModeChange()">
+          <option value="load">Load Calculation — connected load &amp; phase balance</option>
+          <option value="print">Panel Schedule — print for panel sleeve</option>
+        </select></div>
+      </div>
+      <div class="field-row" id="pn-sections-row" style="display:none;">
+        <div class="field-label">Sections</div>
+        <div class="sel-wrap"><select class="fi" id="pn-sections">
+          <option value="1">1 Section — all circuits, 1 page</option>
+          <option value="2">2 Sections — split in half (e.g. 1-42 / 43-84)</option>
+          <option value="3">3 Sections — thirds (e.g. 1-40 / 41-80 / 81-120)</option>
+          <option value="4">4 Sections — 4 pages</option>
+        </select></div>
+      </div>
+      <div class="field-row">
         <div class="field-label">Panel ID</div>
         <input class="fi" id="pn-name" type="text" placeholder="e.g. Main, MDP, LP-1"/>
       </div>
@@ -3873,7 +3890,7 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
       <div class="field-row">
-        <div class="field-label">Main Breaker</div>
+        <div class="field-label">Main Breaker / MLO</div>
         <div class="sel-wrap"><select class="fi" id="pn-main">
           <option value="0">No Main (MLO)</option>
           <option value="60">60A</option>
@@ -3904,7 +3921,8 @@ if('serviceWorker' in navigator){
     <div class="divider"></div>
     <div class="err-msg" id="pn-err"></div>
     <div class="btn-row">
-      <button class="btn btn-calc" onclick="calculatePN()">Calculate</button>
+      <button class="btn btn-calc" id="pn-calc-btn" onclick="calculatePN()">Calculate</button>
+      <button class="btn btn-calc" id="pn-export-btn" onclick="pnExportPrint()" style="display:none;background:#1d6b3e;">Export Schedule</button>
       <button class="btn btn-reset" onclick="resetPN()">Reset</button>
     </div>
     <div id="pn-phase-section"></div>
@@ -12458,7 +12476,7 @@ function pnAddCircuit(poles,bkr,desc,load){
     '</div>'+
     '<div class="pn-card-body">'+
       '<input class="fi" id="pn-desc-'+id+'" type="text" placeholder="Description" style="flex:1;min-width:0;font-size:12px;"/>'+
-      '<input class="fi" id="pn-load-'+id+'" type="number" placeholder="Watts" min="0" step="10" style="width:72px;flex-shrink:0;font-size:12px;"/>'+
+      '<span class="pn-w-wrap"><input class="fi" id="pn-load-'+id+'" type="number" placeholder="Watts" min="0" step="10" style="width:72px;flex-shrink:0;font-size:12px;"/></span>'+
     '</div>'+
   '</div>';
   document.getElementById('pn-circuits').insertAdjacentHTML('beforeend',html);
@@ -12499,6 +12517,7 @@ function clrPN(){
 }
 function showPNErr(m){clrPN();var e=document.getElementById('pn-err');e.innerHTML=m;e.className='err-msg show';}
 function calculatePN(){
+  if(document.getElementById('pn-mode').value==='print'){pnExportPrint();return;}
   if(document.activeElement)document.activeElement.blur();
   clrPN();
   var sys=document.getElementById('pn-system').value;
@@ -12592,8 +12611,141 @@ function pnSetCount(){
   clrPN();
   for(var i=0;i<n;i++)pnAddCircuit();
 }
+function onPnModeChange(){
+  var mode=document.getElementById('pn-mode').value;
+  var tab=document.getElementById('tab-pn');
+  var secRow=document.getElementById('pn-sections-row');
+  var calcBtn=document.getElementById('pn-calc-btn');
+  var expBtn=document.getElementById('pn-export-btn');
+  var resLabel=document.getElementById('pn-results-label');
+  var resDiv=document.getElementById('pn-results');
+  var phSec=document.getElementById('pn-phase-section');
+  if(mode==='print'){
+    tab.classList.add('pn-print-mode');
+    secRow.style.display='';
+    calcBtn.style.display='none';
+    expBtn.style.display='';
+    resLabel.style.display='none';
+    resDiv.innerHTML='';
+    if(phSec)phSec.innerHTML='';
+  }else{
+    tab.classList.remove('pn-print-mode');
+    secRow.style.display='none';
+    calcBtn.style.display='';
+    expBtn.style.display='none';
+  }
+  clrPN();
+}
+function pnExportPrint(){
+  var cards=document.querySelectorAll('.pn-card');
+  if(!cards.length){return;}
+  var circuits=[],slot=1;
+  cards.forEach(function(card){
+    var id=card.id.replace('pn-card-','');
+    var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
+    var bkr=document.getElementById('pn-bkr-'+id).value;
+    var desc=document.getElementById('pn-desc-'+id).value||'';
+    var cktLabel=poles===2?(slot+'-'+(slot+1)):poles===3?(slot+'-'+(slot+2)+'-'+(slot+4)):String(slot);
+    circuits.push({cktLabel:cktLabel,poles:poles,bkr:bkr,desc:desc});
+    slot+=(poles===3?6:poles);
+  });
+  var sections=parseInt(document.getElementById('pn-sections').value)||1;
+  var perSection=Math.ceil(circuits.length/sections);
+  var pname=document.getElementById('pn-name').value||'Panel';
+  var sys=document.getElementById('pn-system').value;
+  var mainVal=document.getElementById('pn-main').value;
+  var mainLbl=mainVal==='0'?'MLO (No Main)':mainVal+'A Main';
+  var sysLbl={'120_240_1':'120/240V 1\u00D83W','120_208_3':'120/208V 3\u00D84W','277_480_3':'277/480V 3\u00D84W','240_3_3':'240V 3\u00D83W \u0394'}[sys]||sys;
+  var css='body{font-family:Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000;font-size:11px;}'
+    +'.ps-page{page-break-after:always;padding:16px;max-width:760px;margin:0 auto;box-sizing:border-box;}'
+    +'.ps-page:last-child{page-break-after:auto;}'
+    +'.ps-hdr{border:2px solid #000;padding:7px 11px;margin-bottom:7px;}'
+    +'.ps-title{font-size:13px;font-weight:bold;letter-spacing:1.5px;margin-bottom:4px;}'
+    +'.ps-meta{font-size:10px;display:flex;gap:20px;flex-wrap:wrap;}'
+    +'.ps-meta b{font-weight:bold;}'
+    +'.ps-line{border-top:1px solid #555;display:inline-block;min-width:110px;margin-left:3px;vertical-align:bottom;}'
+    +'table{width:100%;border-collapse:collapse;}'
+    +'th,td{border:1px solid #000;padding:3px 5px;}'
+    +'th{background:#d0d0d0;font-weight:bold;text-align:center;font-size:10px;letter-spacing:.5px;text-transform:uppercase;}'
+    +'.tc{text-align:center;font-weight:bold;width:54px;white-space:nowrap;}'
+    +'.ta{text-align:center;width:34px;}'
+    +'.td{}'
+    +'.tdr{text-align:right;}'
+    +'.sp td{background:#e8e8e8;font-style:italic;}'
+    +'tr:nth-child(even) td{background:#f7f7f7;}'
+    +'.sp td{background:#e0e0e0 !important;}'
+    +'@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}';
+  var pages='';
+  for(var s=0;s<sections;s++){
+    var sc=circuits.slice(s*perSection,Math.min((s+1)*perSection,circuits.length));
+    if(!sc.length)continue;
+    var tbody='';
+    var i=0;
+    while(i<sc.length){
+      var c=sc[i];
+      if(c.poles>1){
+        tbody+='<tr class="sp"><td class="tc">'+escHtml(c.cktLabel)+'</td>'
+          +'<td class="td" colspan="3">'+escHtml(c.desc||'\u2014')+'</td>'
+          +'<td class="ta">'+escHtml(c.bkr)+'A</td>'
+          +'<td class="tc"></td></tr>';
+        i++;
+      }else{
+        var c2=(i+1<sc.length&&sc[i+1].poles===1)?sc[i+1]:null;
+        tbody+='<tr>';
+        tbody+='<td class="tc">'+escHtml(c.cktLabel)+'</td>';
+        tbody+='<td class="td">'+escHtml(c.desc||'\u2014')+'</td>';
+        tbody+='<td class="ta">'+escHtml(c.bkr)+'A</td>';
+        if(c2){
+          tbody+='<td class="ta">'+escHtml(c2.bkr)+'A</td>';
+          tbody+='<td class="td tdr">'+escHtml(c2.desc||'\u2014')+'</td>';
+          tbody+='<td class="tc">'+escHtml(c2.cktLabel)+'</td>';
+          i+=2;
+        }else{
+          tbody+='<td class="ta"></td><td class="td"></td><td class="tc"></td>';
+          i++;
+        }
+        tbody+='</tr>';
+      }
+    }
+    pages+='<div class="ps-page">'
+      +'<div class="ps-hdr">'
+        +'<div class="ps-title">PANEL SCHEDULE</div>'
+        +'<div class="ps-meta">'
+          +'<span><b>Panel:</b> '+escHtml(pname)+'</span>'
+          +'<span><b>System:</b> '+sysLbl+'</span>'
+          +'<span><b>Main:</b> '+mainLbl+'</span>'
+          +(sections>1?'<span><b>Section:</b> '+(s+1)+' / '+sections+'</span>':'')
+          +'<span><b>Date:</b> <span class="ps-line"></span></span>'
+          +'<span><b>Location:</b> <span class="ps-line" style="min-width:160px;"></span></span>'
+        +'</div>'
+      +'</div>'
+      +'<table>'
+        +'<thead><tr>'
+          +'<th class="tc">CKT #</th>'
+          +'<th class="td">DESCRIPTION</th>'
+          +'<th class="ta">A</th>'
+          +'<th class="ta">A</th>'
+          +'<th class="td">DESCRIPTION</th>'
+          +'<th class="tc">CKT #</th>'
+        +'</tr></thead>'
+        +'<tbody>'+tbody+'</tbody>'
+      +'</table>'
+    +'</div>';
+  }
+  var win=window.open('','_blank','width=840,height=700');
+  if(!win){alert('Allow pop-ups to export the panel schedule.');return;}
+  win.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Panel Schedule \u2014 '+escHtml(pname)+'</title><style>'+css+'</style></head><body>'+pages+'</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){win.print();},400);
+}
 function resetPN(){
   document.getElementById('pn-name').value='';
+  document.getElementById('pn-mode').value='load';
+  document.getElementById('pn-sections-row').style.display='none';
+  document.getElementById('pn-calc-btn').style.display='';
+  document.getElementById('pn-export-btn').style.display='none';
+  document.getElementById('tab-pn').classList.remove('pn-print-mode');
   document.getElementById('pn-system').value='120_240_1';
   document.getElementById('pn-main').value='200';
   document.getElementById('pn-count').value='';
