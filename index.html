@@ -1954,8 +1954,9 @@ if('serviceWorker' in navigator){
       <div class="field-row">
         <div class="field-label">Calculator</div>
         <div class="sel-wrap"><select class="fi" id="cf-mode" onchange="onCFModeChange()">
-          <option value="fill">Conduit Fill</option>
-          <option value="bend">Conduit Bend</option>
+          <option value="fill">Conduit Fill (Power)</option>
+          <option value="data">Conduit Fill (Data)</option>
+          <option value="bend">Conduit Bends</option>
         </select></div>
       </div>
     </div>
@@ -2017,6 +2018,64 @@ if('serviceWorker' in navigator){
         <div class="disclaimer-text">Fill percentages from Electrical Code Ch.9 Table 1 (1 wire=53%, 2 wires=31%, 3+ wires=40%). Conduit areas from Table 4. Wire areas from Table 5. Nipple exception per Chapter 9 Note 4 (≤600mm/24in = 60% fill, CCC derating per 310.15(C)(1) does not apply per Note 5). Note: Annex C pre-tabulated fill counts use actual conductor OD with manufacturing tolerances, which are larger than Table 5 nominal areas — Annex C will show fewer conductors per conduit. Both methods are code-compliant; this calculator uses Table 5 per Ch.9 calculation method. For design guidance only — verify with AHJ before installation.</div>
       </div>
       <div class="code-note" id="cf-note"></div>
+    </div>
+
+    <!-- ── DATA FILL MODE ── -->
+    <div id="cf-data-section" style="display:none;">
+      <div class="section-label">Conduit</div>
+      <div class="fields">
+        <div class="field-row">
+          <div class="field-label">Conduit Type</div>
+          <div class="sel-wrap"><select class="fi" id="cfd-conduit">
+            <option value="EMT">EMT — Art. 358</option>
+            <option value="RMC">RMC — Art. 344</option>
+            <option value="IMC">IMC — Art. 342</option>
+            <option value="PVC40">PVC Sch. 40 — Art. 352</option>
+            <option value="PVC80">PVC Sch. 80 — Art. 352</option>
+            <option value="ENT">ENT — Art. 362</option>
+          </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Trade Size</div>
+          <div class="sel-wrap"><select class="fi" id="cfd-size">
+            <option value="0.5">½"</option>
+            <option value="0.75">¾"</option>
+            <option value="1" selected>1"</option>
+            <option value="1.25">1¼"</option>
+            <option value="1.5">1½"</option>
+            <option value="2">2"</option>
+            <option value="2.5">2½"</option>
+            <option value="3">3"</option>
+            <option value="3.5">3½"</option>
+            <option value="4">4"</option>
+          </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Nipple ≤24"</div>
+          <div class="sel-wrap"><select class="fi" id="cfd-nipple">
+            <option value="no" selected>No — standard fill rules</option>
+            <option value="yes">Yes — 60% fill allowed (Note 4)</option>
+          </select></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-label">Cables</div>
+      <div class="fields" id="cfd-cable-rows"></div>
+      <div style="padding:0 14px 10px;">
+        <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="cfdAddRow()">+ Add Cable</button>
+      </div>
+      <div class="err-msg" id="cfd-err"></div>
+      <div class="btn-row">
+        <button class="btn btn-calc" onclick="calculateCFD()">Calculate</button>
+        <button class="btn btn-reset" onclick="resetCFD()">Reset</button>
+      </div>
+      <div class="section-label" id="cfd-results-label" style="display:none;">Results</div>
+      <div class="results" id="cfd-results"></div>
+      <div class="disclaimer" id="cfd-disclaimer" style="display:none;">
+        <div class="disclaimer-title">Important Notice</div>
+        <div class="disclaimer-text">Data cable fill uses Ch.9 Table 1 fill percentages (1 cable=53%, 2 cables=31%, 3+ cables=40%). Conduit areas from Ch.9 Table 4. Cable OD dimensions are nominal manufacturer values — actual OD varies; verify with cable data sheet. Low-voltage/communications cables (Art. 725, 800) are not required to follow Ch.9 but applying 40% fill is standard practice for pull ease and future capacity. For design guidance only — verify with AHJ before installation.</div>
+      </div>
+      <div class="code-note" id="cfd-note"></div>
     </div>
 
     <!-- ── BEND MODE ── -->
@@ -6932,8 +6991,9 @@ var _i18n = {
         'Yes — 3 hrs+ (×125%)': 'Sí — 3 hrs+ (×125%)'
       },
       'cf-mode': {
-        'Conduit Fill': 'Llenado de Conduit',
-        'Conduit Bend': 'Doblado de Conduit'
+        'Conduit Fill (Power)': 'Llenado de Conduit (Eléctrico)',
+        'Conduit Fill (Data)': 'Llenado de Conduit (Datos)',
+        'Conduit Bends': 'Doblado de Conduit'
       },
       'cf-conduit': {
         'EMT — Art. 358': 'EMT — Art. 358',
@@ -9670,8 +9730,131 @@ function resetCF(){
 function onCFModeChange(){
   var mode=document.getElementById('cf-mode').value;
   document.getElementById('cf-fill-section').style.display=mode==='fill'?'block':'none';
+  document.getElementById('cf-data-section').style.display=mode==='data'?'block':'none';
   document.getElementById('cf-bend-section').style.display=mode==='bend'?'block':'none';
 }
+
+// ── Data Conduit Fill ─────────────────────────────────────────────────────────
+// Cable OD (inches) — nominal values from typical manufacturer specs
+var _CD_CABLES = {
+  'Cat5e':          {od:0.204, label:'Cat5e (UTP)'},
+  'Cat6':           {od:0.235, label:'Cat6 (UTP)'},
+  'Cat6A UTP':      {od:0.354, label:'Cat6A (UTP)'},
+  'Cat6A STP':      {od:0.310, label:'Cat6A (STP/FTP)'},
+  'Cat8':           {od:0.354, label:'Cat8'},
+  'RG-6':           {od:0.275, label:'RG-6 Coax'},
+  'RG-6 Quad':      {od:0.298, label:'RG-6 Quad Shield'},
+  'RG-59':          {od:0.242, label:'RG-59 Coax'},
+  'RG-11':          {od:0.405, label:'RG-11 Coax'},
+  'Fiber SM 2-4ct': {od:0.197, label:'Fiber SM 2–4ct'},
+  'Fiber SM 6ct':   {od:0.236, label:'Fiber SM 6ct'},
+  'Fiber SM 12ct':  {od:0.354, label:'Fiber SM 12ct'},
+  'Fiber MM 2-4ct': {od:0.197, label:'Fiber MM 2–4ct'},
+  'Fiber MM 6ct':   {od:0.236, label:'Fiber MM 6ct'},
+  'Fiber MM 12ct':  {od:0.354, label:'Fiber MM 12ct'},
+  'HDMI':           {od:0.390, label:'HDMI Cable'},
+  'Speaker 14awg':  {od:0.200, label:'Speaker 14 AWG'},
+  'Speaker 12awg':  {od:0.230, label:'Speaker 12 AWG'},
+  'Audio Snake 8ch':{od:0.550, label:'Audio Snake 8ch'},
+};
+
+// Same conduit inner areas as power fill (_CF_DATA) — keyed by type+size
+var _CD_CONDUIT = {
+  'EMT':   {'0.5':0.304,'0.75':0.533,'1':0.864,'1.25':1.496,'1.5':2.036,'2':3.356,'2.5':5.858,'3':8.846,'3.5':11.545,'4':14.753},
+  'RMC':   {'0.5':0.285,'0.75':0.508,'1':0.832,'1.25':1.453,'1.5':1.986,'2':3.291,'2.5':5.673,'3':8.631,'3.5':11.258,'4':14.448},
+  'IMC':   {'0.5':0.342,'0.75':0.586,'1':0.959,'1.25':1.647,'1.5':2.225,'2':3.630,'2.5':6.075,'3':9.354,'3.5':12.554,'4':16.755},
+  'PVC40': {'0.5':0.285,'0.75':0.508,'1':0.832,'1.25':1.453,'1.5':1.986,'2':3.291,'2.5':5.673,'3':8.085,'3.5':10.694,'4':13.631},
+  'PVC80': {'0.5':0.217,'0.75':0.409,'1':0.688,'1.25':1.237,'1.5':1.711,'2':2.874,'2.5':5.136,'3':7.528,'3.5':10.076,'4':12.882},
+  'ENT':   {'0.5':0.285,'0.75':0.508,'1':0.832,'1.25':1.453,'1.5':1.986,'2':3.291,'2.5':null, '3':null,  '3.5':null,  '4':null  }
+};
+
+var _cfd_row_id = 0;
+function cfdAddRow(){
+  var id='cfd-r'+(++_cfd_row_id);
+  var opts=Object.keys(_CD_CABLES).map(function(k){return '<option value="'+k+'">'+_CD_CABLES[k].label+'</option>';}).join('');
+  var row=document.createElement('div');
+  row.className='field-row'; row.id=id;
+  row.innerHTML='<div class="field-label"><button class="btn btn-reset" style="padding:2px 7px;font-size:11px;" onclick="document.getElementById(''+id+'').remove()">✕</button></div>'
+    +'<div class="sel-wrap" style="flex:2;margin-right:6px;"><select class="fi cfd-type">'+opts+'</select></div>'
+    +'<input type="number" class="fi cfd-qty" min="1" max="999" value="1" style="width:54px;text-align:center;" placeholder="Qty">';
+  document.getElementById('cfd-cable-rows').appendChild(row);
+}
+
+function resetCFD(){
+  document.getElementById('cfd-cable-rows').innerHTML='';
+  document.getElementById('cfd-results').innerHTML='';
+  document.getElementById('cfd-results-label').style.display='none';
+  document.getElementById('cfd-disclaimer').style.display='none';
+  document.getElementById('cfd-note').innerHTML='';
+  document.getElementById('cfd-err').textContent='';
+  _cfd_row_id=0;
+  cfdAddRow();
+}
+
+function calculateCFD(){
+  var err=document.getElementById('cfd-err');
+  err.textContent='';
+  var condType=document.getElementById('cfd-conduit').value;
+  var size=document.getElementById('cfd-size').value;
+  var nipple=document.getElementById('cfd-nipple').value==='yes';
+
+  var condArea=(_CD_CONDUIT[condType]||{})[size];
+  if(!condArea){err.textContent='Conduit size not available for selected type.';return;}
+
+  var types=document.querySelectorAll('#cfd-cable-rows .cfd-type');
+  var qtys=document.querySelectorAll('#cfd-cable-rows .cfd-qty');
+  if(!types.length){err.textContent='Add at least one cable.';return;}
+
+  var cables=[];
+  var totalCables=0;
+  for(var i=0;i<types.length;i++){
+    var k=types[i].value;
+    var q=parseInt(qtys[i].value)||0;
+    if(q<1){err.textContent='Qty must be at least 1 for each cable.';return;}
+    var od=_CD_CABLES[k].od;
+    var area=Math.PI*Math.pow(od/2,2);
+    cables.push({key:k,label:_CD_CABLES[k].label,od:od,area:area,qty:q,totalArea:area*q});
+    totalCables+=q;
+  }
+
+  var fillLimit=nipple?0.60:(totalCables===1?0.53:totalCables===2?0.31:0.40);
+  var allowedArea=condArea*fillLimit;
+  var usedArea=cables.reduce(function(s,c){return s+c.totalArea;},0);
+  var pct=usedArea/condArea*100;
+  var pass=usedArea<=allowedArea;
+
+  var rows=cables.map(function(c){
+    return '<tr><td style="padding:3px 6px;">'+c.label+'</td>'
+      +'<td style="padding:3px 6px;text-align:center;">'+c.qty+'</td>'
+      +'<td style="padding:3px 6px;text-align:right;">'+c.od.toFixed(3)+'"</td>'
+      +'<td style="padding:3px 6px;text-align:right;">'+c.totalArea.toFixed(4)+' in²</td></tr>';
+  }).join('');
+
+  var rl=document.getElementById('cfd-results-label');
+  rl.style.display='block';
+  var rd=document.getElementById('cfd-results');
+  rd.innerHTML=''
+    +'<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">'
+    +'<thead><tr style="border-bottom:1px solid var(--border);">'
+    +'<th style="padding:3px 6px;text-align:left;">Cable</th>'
+    +'<th style="padding:3px 6px;">Qty</th>'
+    +'<th style="padding:3px 6px;text-align:right;">OD</th>'
+    +'<th style="padding:3px 6px;text-align:right;">Total Area</th>'
+    +'</tr></thead><tbody>'+rows+'</tbody></table>'
+    +makeBlock('','Fill Used','',pct.toFixed(1)+'%','of '+condArea.toFixed(3)+' in² conduit area')
+    +makeBlock('','Limit',pass?'PASS':'FAIL',(fillLimit*100).toFixed(0)+'%',
+       (totalCables===1?'1 cable rule (53%)':totalCables===2?'2 cable rule (31%)':nipple?'nipple rule (60%)':'3+ cable rule (40%)')+(pass?' — fits':' — OVER'))
+    +makeBlock('','Available Space','',( condArea - usedArea).toFixed(4)+' in²','remaining in conduit')
+    +makeBlock('','Cables in Run','',totalCables+' total',''+cables.length+' type'+(cables.length!==1?'s':''));
+
+  document.getElementById('cfd-disclaimer').style.display='block';
+  document.getElementById('cfd-note').innerHTML='<div style="font-size:11px;color:var(--text-dim);padding:6px 14px 0;">Ch.9 Table 4 conduit areas · Nominal cable ODs — verify with manufacturer data sheet</div>';
+  jcResultsReady('cfd','Conduit Fill (Data)',null,'cfd-results');
+}
+
+
+// seed data fill row on load
+(function(){cfdAddRow();})();
 
 // ── Conduit Bend ──────────────────────────────────────────────────────────────
 // Take-up (deduct) by conduit size — how much to subtract from stub height to get your mark
