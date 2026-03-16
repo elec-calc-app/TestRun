@@ -1525,7 +1525,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-gnd" onclick="switchTab('gnd',this)">Ground</button>
     <button class="tab-btn" id="tab-btn-xfmr" onclick="switchTab('xfmr',this)">Transformer</button>
     <button class="tab-btn" id="tab-btn-pn" onclick="switchTab('pn',this)">Panel Sched</button>
-    <button class="tab-btn" id="tab-btn-feeder" onclick="switchTab('feeder',this)">Feeder Sz</button>
+    <button class="tab-btn" id="tab-btn-feeder" onclick="switchTab('feeder',this)">Feeder</button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -8141,8 +8141,8 @@ function exportPunchAll(){
   openExportSheet('Circuitmatic Punch List',txt.join('\n'),csvRows.join('\n'),html);
 }
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function jcResultsReady(tab,tabName,svgHtml){
-  var resEl=document.getElementById(tab+'-results');
+function jcResultsReady(tab,tabName,svgHtml,divId){
+  var resEl=document.getElementById(divId||(tab+'-results'));
   if(!resEl)return;
   var blocks=resEl.querySelectorAll('.result-block');
   if(!blocks.length)return;
@@ -10437,6 +10437,7 @@ function calculatePN(){
   blocks.push(makeBlock('neutral','Circuit Count',totalSlots+' SLOTS',cards.length+' breakers',spares+' spare (no load) · '+totalSlots+' slots used'));
   document.getElementById('pn-results-label').style.display='block';
   document.getElementById('pn-results').innerHTML=blocks.join('');
+  if(typeof jcResultsReady==='function')jcResultsReady('pn','Panel Schedule',null,'pn-results');
   var phColors=['#111827','#dc2626','#2563eb'];
   var barHtml='<div class="pn-bar-section">';
   for(var i=0;i<nph;i++){
@@ -11090,7 +11091,7 @@ function calculateEGC(){
   document.getElementById('egc-results').innerHTML=blocks.join('');
   document.getElementById('egc-disclaimer').style.display='block';
   document.getElementById('egc-note').textContent='NEC '+yr+' §250.122 Table 250.122 · '+matLabel+' · Design guidance only · Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('gnd','EGC Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('gnd','EGC Sizing',null,'egc-results');
 }
 
 // ── GEC ──────────────────────────────────────────────────────────────────────
@@ -11167,7 +11168,7 @@ function calculateGEC(){
   document.getElementById('gec-results').innerHTML=blocks.join('');
   document.getElementById('gec-disclaimer').style.display='block';
   document.getElementById('gec-note').textContent='NEC '+yr+' §250.66 Table 250.66 · '+svcMatLabel+' service · '+gecMatLabel+' GEC · Design guidance only · Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('gnd','GEC Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('gnd','GEC Sizing',null,'gec-results');
 }
 
 // ── SBJ / SSBJ Calculators ─────────────────────────────────────────────────
@@ -11228,7 +11229,7 @@ function calculateSBJ(){
   document.getElementById('sbj-results').innerHTML=blocks.join('');
   document.getElementById('sbj-disclaimer').style.display='block';
   document.getElementById('sbj-note').textContent='NEC '+yr+' \u00a7250.28(D) \u2192 Table 250.102(C)(1) \u00b7 '+phMatLbl+' phase \u00b7 '+bjMatLbl+' SBJ \u00b7 Design guidance only \u00b7 Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('gnd','SBJ Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('gnd','SBJ Sizing',null,'sbj-results');
 }
 
 // ── SSBJ ─────────────────────────────────────────────────────────────────────
@@ -11282,7 +11283,7 @@ function calculateSSBJ(){
   document.getElementById('ssbj-results').innerHTML=blocks.join('');
   document.getElementById('ssbj-disclaimer').style.display='block';
   document.getElementById('ssbj-note').textContent='NEC '+yr+' \u00a7250.102(C) \u00b7 Table 250.102(C)(1) \u00b7 '+phMatLbl+' phase \u00b7 '+bjMatLbl+' SSBJ \u00b7 '+nRac+' raceway(s) \u00b7 Design guidance only \u00b7 Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('gnd','SSBJ Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('gnd','SSBJ Sizing',null,'ssbj-results');
 }
 
 // ── EBJ (Equipment Bonding Jumper) ───────────────────────────────────────────
@@ -11321,7 +11322,7 @@ function calculateEBJ(){
   document.getElementById('ebj-results').innerHTML=blocks.join('');
   document.getElementById('ebj-disclaimer').style.display='block';
   document.getElementById('ebj-note').textContent='NEC '+yr+' \u00a7250.102(D) \u00b7 Table 250.122 \u00b7 '+matLbl+' EBJ \u00b7 Design guidance only \u00b7 Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('gnd','EBJ Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('gnd','EBJ Sizing',null,'ebj-results');
 }
 
 // ── Metal Water Pipe & Structural Steel Bonding ───────────────────────────────
@@ -11365,7 +11366,7 @@ function calculateBond(){
   document.getElementById('bond-results').innerHTML=blocks.join('');
   document.getElementById('bond-disclaimer').style.display='block';
   document.getElementById('bond-note').textContent='NEC '+yr+' \u00a7250.104 \u00b7 Table 250.102(C)(1) \u00b7 '+svcMatLbl+' service \u00b7 '+bjMatLbl+' jumper \u00b7 Design guidance only \u00b7 Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('gnd','Bonding Jumper Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('gnd','Bonding Jumper Sizing',null,'bond-results');
 }
 
 // ── Transformer Calculator ────────────────────────────────────────────────────
@@ -11462,7 +11463,7 @@ function calculateXfmrFLA(){
   document.getElementById('xf-fla-results').innerHTML=blocks.join('');
   document.getElementById('xf-fla-disclaimer').style.display='block';
   document.getElementById('xf-fla-note').textContent=phLbl+' \u00b7 '+priV+'V\u2192'+secV+'V \u00b7 '+(fromLoad?stdKVA+' kVA recommended':kva+' kVA')+' \u00b7 Design guidance only';
-  if(typeof jcResultsReady==='function')jcResultsReady('xfmr','Transformer FLA');
+  if(typeof jcResultsReady==='function')jcResultsReady('xfmr','Transformer FLA',null,'xf-fla-results');
 }
 
 // ── OCPD ─────────────────────────────────────────────────────────────────────
@@ -11555,7 +11556,7 @@ function calculateXfmrOCPD(){
   document.getElementById('xf-ocpd-results').innerHTML=blocks.join('');
   document.getElementById('xf-ocpd-disclaimer').style.display='block';
   document.getElementById('xf-ocpd-note').textContent='NEC '+yr+' \u00a7450.3(B) \u00b7 '+phLbl+' \u00b7 '+kva+' kVA \u00b7 '+install+' installation \u00b7 Design guidance only \u00b7 Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('xfmr','Transformer OCPD');
+  if(typeof jcResultsReady==='function')jcResultsReady('xfmr','Transformer OCPD',null,'xf-ocpd-results');
 }
 
 // ── SDS Ground ────────────────────────────────────────────────────────────────
@@ -11633,7 +11634,7 @@ function calculateXfmrSDS(){
   document.getElementById('xf-sds-results').innerHTML=blocks.join('');
   document.getElementById('xf-sds-disclaimer').style.display='block';
   document.getElementById('xf-sds-note').textContent='NEC '+yr+' \u00a7250.30 \u00b7 '+phLbl+' \u00b7 '+kva+' kVA \u00b7 '+condMatLbl+' conductors \u00b7 Design guidance only \u00b7 Verify with AHJ';
-  if(typeof jcResultsReady==='function')jcResultsReady('xfmr','SDS Grounding');
+  if(typeof jcResultsReady==='function')jcResultsReady('xfmr','SDS Grounding',null,'xf-sds-results');
 }
 
 // ── Feeder / Branch Circuit Sizing ───────────────────────────────────────────
@@ -11850,7 +11851,7 @@ function calculateFeeder(){
     'NEC '+yr+' \u00a7215.3 / Table 310.16 \u00b7 '+phLbl+' \u00b7 '+volts+'V \u00b7 '+matLbl+
     ' \u00b7 '+temp+'\u00b0C terminals'+((!isNaN(dist)&&dist>0)?' \u00b7 '+dist+'ft run':'')+
     ' \u00b7 Design guidance only';
-  if(typeof jcResultsReady==='function')jcResultsReady('feeder','Feeder Sizing');
+  if(typeof jcResultsReady==='function')jcResultsReady('feeder','Feeder Sizing',null,'fd-results');
 }
 
 // ── GFCI / AFCI Lookup ───────────────────────────────────────────────────────
