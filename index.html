@@ -209,7 +209,7 @@ body { background: var(--bg); }
 .gfci-mode-row{display:flex;gap:8px;margin-bottom:14px;}
 .gfci-mode-btn{flex:1;padding:9px 6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--sub);font-size:0.78rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .18s;}
 .gfci-mode-btn.active{background:rgba(240,192,32,.12);border-color:#f0c020;color:#f0c020;}
-.gfci-section-head{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#f0c020;margin:14px 0 6px;padding:6px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;}
+.gfci-section-head{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);margin:14px 0 6px;padding:6px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;}
 .gfci-table{width:100%;border-collapse:collapse;margin-bottom:10px;}
 .gfci-table th{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--sub);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;}
 .gfci-table th.center{text-align:center;}
@@ -224,7 +224,7 @@ body { background: var(--bg); }
 .gfci-code-note{font-size:0.72rem;color:var(--sub);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:14px;line-height:1.6;}
 .gfci-code-note strong{color:var(--text);}
 .gfci-alert{background:rgba(240,192,32,.08);border:1px solid rgba(240,192,32,.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:0.8rem;color:var(--text);line-height:1.5;}
-.gfci-alert-title{font-weight:700;color:#f0c020;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.gfci-alert-title{font-weight:700;color:var(--text);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
 body.light-mode .gfci-mode-btn{background:#f8fafc;border-color:#e2e8f0;color:#64748b;}
 body.light-mode .gfci-mode-btn.active{background:rgba(240,192,32,.1);border-color:#d4a000;color:#b45309;}
 body.light-mode .gfci-table td{color:#1e293b;}
@@ -4813,7 +4813,7 @@ if('serviceWorker' in navigator){
         <div id="gfci-ap-alert" class="gfci-alert"></div>
         <div class="gfci-section-head">Specific Appliances — §210.8(D)</div>
         <table class="gfci-table">
-          <thead><tr><th>Appliance</th><th class="center">GFCI Req.</th><th>Added</th></tr></thead>
+          <thead><tr><th>Appliance</th><th class="center">GFCI Req.</th></tr></thead>
           <tbody id="gfci-ap-tbody"></tbody>
         </table>
         <div class="gfci-code-note">Applies to equipment rated <strong>150V or less to ground, 60A or less</strong>, single- or 3-phase, all occupancies. §210.8(D)</div>
@@ -12023,7 +12023,7 @@ function gfciRender() {
       var addedCell = isNew2023
         ? '<span class="gfci-badge gfci-new">New 2023</span>'
         : '<span style="font-size:0.75rem;color:var(--sub);">Pre-2023</span>';
-      apRows += '<tr><td>'+appliance+'</td><td class="center">'+reqCell+'</td><td>'+addedCell+'</td></tr>';
+      apRows += '<tr><td>'+appliance+'</td><td class="center">'+reqCell+'</td></tr>';
     });
     apTbody.innerHTML = apRows;
   }
