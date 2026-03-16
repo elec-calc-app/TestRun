@@ -12499,20 +12499,32 @@ function pnRemove(id){
 }
 function pnRefreshBadges(){
   var sys=document.getElementById('pn-system').value;
-  var nph=pnNumPh(sys),slot=1;
+  var nph=pnNumPh(sys),slot=1,blk={};
+  function nxt(s){while(blk[s])s++;return s;}
   document.querySelectorAll('.pn-card').forEach(function(card){
     var id=card.id.replace('pn-card-','');
     var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
+    slot=nxt(slot);
     var ph=pnPhLabel(slot-1,sys);
-    var phDisplay=ph;
-    if(poles===2){phDisplay=ph+'-'+pnPhLabel(slot,sys);}
-    else if(poles===3&&pnIs3Ph(sys)){phDisplay='A-B-C';}
+    var phDisplay=ph,cktLabel;
+    if(poles===1){
+      cktLabel=String(slot);
+      slot++;
+    }else if(poles===2){
+      cktLabel=slot+'-'+(slot+1);
+      phDisplay=ph+'-'+pnPhLabel(slot,sys);
+      blk[slot]=blk[slot+1]=true;
+      slot+=2;
+    }else{
+      cktLabel=slot+','+(slot+2)+','+(slot+4);
+      if(pnIs3Ph(sys))phDisplay='A-B-C';
+      blk[slot]=blk[slot+2]=blk[slot+4]=true;
+      slot++;
+    }
     var ne=document.getElementById('pn-cnum-'+id);
     var be=document.getElementById('pn-cph-'+id);
-    var cktLabel=poles===2?(slot+'-'+(slot+1)):poles===3?(slot+'-'+(slot+2)+'-'+(slot+4)):slot;
     if(ne)ne.textContent=cktLabel;
     if(be){be.textContent=phDisplay;be.style.background=pnPhColor(ph);}
-    slot+=(poles===3?6:poles);
   });
 }
 function onPnSystemChange(){pnRefreshBadges();clrPN();}
@@ -12533,22 +12545,29 @@ function calculatePN(){
   var lnv=pnLNV(sys),nph=pnNumPh(sys),is3=pnIs3Ph(sys);
   var cards=document.querySelectorAll('.pn-card');
   if(!cards.length){showPNErr('Add at least one circuit.');return;}
-  var phW=[0,0,0],totalW=0,slot=1,spares=0;
+  var phW=[0,0,0],totalW=0,slot=1,spares=0,blk={};
+  function nxtS(s){while(blk[s])s++;return s;}
   cards.forEach(function(card){
     var id=card.id.replace('pn-card-','');
     var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
     var w=parseFloat(document.getElementById('pn-load-'+id).value)||0;
-    if(!w){spares++;slot+=poles;return;}
+    slot=nxtS(slot);
+    if(!w){
+      if(poles===1){slot++;}
+      else if(poles===2){blk[slot]=blk[slot+1]=true;slot+=2;}
+      else{blk[slot]=blk[slot+2]=blk[slot+4]=true;slot++;}
+      spares++;return;
+    }
     totalW+=w;
     if(poles===1){
-      phW[(slot-1)%nph]+=w;
+      phW[(slot-1)%nph]+=w;slot++;
     }else if(poles===2){
-      phW[(slot-1)%nph]+=w/2;
-      phW[slot%nph]+=w/2;
+      phW[(slot-1)%nph]+=w/2;phW[slot%nph]+=w/2;
+      blk[slot]=blk[slot+1]=true;slot+=2;
     }else{
       phW[0]+=w/3;phW[1]+=w/3;phW[2]+=w/3;
+      blk[slot]=blk[slot+2]=blk[slot+4]=true;slot++;
     }
-    slot+=(poles===3?6:poles);
   });
   var totalSlots=slot-1;
   var phA=phW.map(function(w){return w/lnv;});
@@ -12647,15 +12666,19 @@ function onPnModeChange(){
 function pnExportPrint(){
   var cards=document.querySelectorAll('.pn-card');
   if(!cards.length){return;}
-  var circuits=[],slot=1;
+  var circuits=[],slot=1,blkE={};
+  function nxtE(s){while(blkE[s])s++;return s;}
   cards.forEach(function(card){
     var id=card.id.replace('pn-card-','');
     var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
     var bkr=document.getElementById('pn-bkr-'+id).value;
     var desc=document.getElementById('pn-desc-'+id).value||'';
-    var cktLabel=poles===2?(slot+'-'+(slot+1)):poles===3?(slot+'-'+(slot+2)+'-'+(slot+4)):String(slot);
+    slot=nxtE(slot);
+    var cktLabel;
+    if(poles===1){cktLabel=String(slot);slot++;}
+    else if(poles===2){cktLabel=slot+'-'+(slot+1);blkE[slot]=blkE[slot+1]=true;slot+=2;}
+    else{cktLabel=slot+','+(slot+2)+','+(slot+4);blkE[slot]=blkE[slot+2]=blkE[slot+4]=true;slot++;}
     circuits.push({cktLabel:cktLabel,poles:poles,bkr:bkr,desc:desc});
-    slot+=(poles===3?6:poles);
   });
   var sections=parseInt(document.getElementById('pn-sections').value)||1;
   var perSection=Math.ceil(circuits.length/sections);
