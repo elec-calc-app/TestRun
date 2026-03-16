@@ -631,6 +631,22 @@ body.light-mode .svc-info-modal-body{color:#374151;}
 .dr-note strong{color:var(--text);}
 body.light-mode .dr-ccc-inp{background:#f8fafc;border-color:#e2e8f0;}
 body.light-mode .dr-note{background:#f8fafc;border-color:#e2e8f0;}
+/* ── Burial Depth Tab ── */
+.bd-wrap{padding:12px 14px 24px;max-width:600px;margin:0 auto;}
+.bd-ref-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.75rem;}
+.bd-ref-table th{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:var(--sub);padding:6px 8px;border-bottom:2px solid var(--border);text-align:center;line-height:1.3;}
+.bd-ref-table th.loc-head{text-align:left;}
+.bd-ref-table td{padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text);text-align:center;vertical-align:middle;}
+.bd-ref-table td.loc-cell{text-align:left;font-size:0.72rem;color:var(--text);line-height:1.4;}
+.bd-ref-table tr:last-child td{border-bottom:none;}
+.bd-ref-table tr.bd-hl td{background:rgba(240,192,32,.1);color:#f0c020;font-weight:700;}
+.bd-ref-table tr.bd-hl td.loc-cell{color:#f0c020;}
+.bd-depth{font-weight:900;font-family:'Roboto Mono',monospace;font-size:0.9rem;}
+.bd-note-cell{font-size:0.65rem;color:var(--muted);font-style:italic;}
+.bd-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--border);}
+.bd-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.bd-legend-item{font-size:0.68rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;line-height:1.4;}
+.bd-legend-item strong{color:var(--text);}
 /* ── Fraction Calculator ── */
   .fr-display { padding:8px 16px 10px; background:var(--card); }
   .fr-expr { font-family:'Roboto Mono',monospace; font-size:14px; color:var(--muted); text-align:right; min-height:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -1529,6 +1545,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-bf" onclick="switchTab('bf',this)">Box Fill</button>
     <button class="tab-btn" id="tab-btn-mc" onclick="switchTab('mc',this)">Motor</button>
     <button class="tab-btn" id="tab-btn-dr" onclick="switchTab('dr',this)">Derate</button>
+    <button class="tab-btn" id="tab-btn-bd" onclick="switchTab('bd',this)">Burial</button>
     <button class="tab-btn" id="tab-btn-fr" onclick="switchTab('fr',this)">Fracs</button>
     <button class="tab-btn" id="tab-btn-dip" onclick="switchTab('dip',this)">Dip SW</button>
     <button class="tab-btn" id="tab-btn-wc" onclick="switchTab('wc',this)">Colors</button>
@@ -2573,6 +2590,63 @@ if('serviceWorker' in navigator){
         <div class="disclaimer-text">Adjustment factors per NEC §310.15(C)(1) (2023/2026) / §310.15(B)(3)(a) (2020). Count only current-carrying conductors (CCCs) — neutrals carrying only unbalanced current (shared neutral on multi-wire circuits) may not count. EGCs never count. Ambient correction per §310.15(C)(2) using correction formula. Verify with AHJ. Design guidance only.</div>
       </div>
       <div class="code-note" id="dr-note"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       BURIAL DEPTH TAB (NEC Table 300.5)
+  ══════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-bd">
+    <div class="bd-wrap">
+      <div class="section-label">Burial Depth — NEC Table 300.5</div>
+
+      <div class="fields">
+        <div class="field-row">
+          <div class="field-label">Location Type</div>
+          <div class="sel-wrap"><select class="fi" id="bd-loc" onchange="bdHighlight()">
+            <option value="">— Select location —</option>
+            <option value="0">General — all locations not listed below</option>
+            <option value="1">Under 2&#34; concrete slab (no vehicles, slab &ge;6&#34; beyond install)</option>
+            <option value="2">Under a building</option>
+            <option value="3">Under 4&#34; concrete slab (no vehicles, slab &ge;6&#34; beyond install)</option>
+            <option value="4">Under streets, highways, roads, alleys, driveways, parking lots</option>
+            <option value="5">1 &amp; 2 family dwelling driveways &amp; outdoor parking (dwelling use only)</option>
+            <option value="6">Airport runways &amp; adjacent restricted areas</option>
+          </select></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-label" style="margin-top:0;">Reference Table <span style="font-size:0.7rem;font-weight:500;color:var(--muted);">(minimum cover in inches)</span></div>
+      <div class="bd-scroll">
+        <table class="bd-ref-table" id="bd-table">
+          <thead>
+            <tr>
+              <th class="loc-head">Location</th>
+              <th>Direct<br>Burial</th>
+              <th>RMC /<br>IMC</th>
+              <th>Non&shy;metallic<br>Raceway</th>
+              <th>120V GFCI<br>&le;20A Res.</th>
+              <th>&le;30V Irrig. /<br>Landscape</th>
+            </tr>
+          </thead>
+          <tbody id="bd-tbody">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bd-legend">
+        <div class="bd-legend-item"><strong>RMC/IMC</strong> — Rigid Metal or Intermediate Metal Conduit</div>
+        <div class="bd-legend-item"><strong>Nonmetallic</strong> — PVC, HDPE, ENT listed for direct burial</div>
+        <div class="bd-legend-item"><strong>120V GFCI &le;20A</strong> — Residential branch circuits only</div>
+        <div class="bd-legend-item"><strong>&le;30V</strong> — Irrigation &amp; landscape lighting, UF cable or approved raceway</div>
+        <div class="bd-legend-item"><strong>Under Building</strong> — Must be in raceway; 0&#34; cover required once inside</div>
+      </div>
+      <div class="disclaimer" style="margin-top:14px;">
+        <div class="disclaimer-title">Important Notice</div>
+        <div class="disclaimer-text">NEC Table 300.5 (2023/2026). Local codes and AHJ requirements may be more restrictive. Depths are minimums — greater depth is always acceptable. Exception: Lesser depths permitted where protected by approved enclosures or raceway. Rocks and other hazards require additional protection per 300.5(D). Design guidance only.</div>
+      </div>
     </div>
   </div>
 
@@ -12078,6 +12152,46 @@ function calculateDR(){
     'NEC '+yr+' §310.15(C)(1) · '+ccc+' CCCs · '+matLbl+' · '+tempLbl+
     (sizeVal?' · '+(sizeVal+(parseInt(sizeVal)>=250?' kcmil':' AWG')):'')+'· Design guidance only';
   if(typeof jcResultsReady==='function')jcResultsReady('dr','Raceway Derating',null,'dr-results');
+}
+
+
+// ── Burial Depth (NEC Table 300.5) ───────────────────────────────────────────
+var _BD_DATA=[
+  {label:'General — all locations not specified below',          depths:[24, 6, 18, 12,  6], note:''},
+  {label:'Under 2\u2033 concrete slab — no vehicular traffic',  depths:[18, 6, 12,  6,  6], note:'Slab extends \u22656\u2033 beyond install'},
+  {label:'Under a building',                                     depths:[ 0, 0,  0,  0,  0], note:'Must be in raceway'},
+  {label:'Under 4\u2033 concrete slab — no vehicular traffic',  depths:[18, 4,  4,  6,  6], note:'Slab extends \u22656\u2033 beyond install'},
+  {label:'Under streets, highways, roads, alleys, parking lots', depths:[24,24, 24, 24, 24], note:''},
+  {label:'1 & 2 family dwelling driveways & outdoor parking',    depths:[18,18, 18, 12,  6], note:'Dwelling-related purposes only'},
+  {label:'Airport runways & adjacent restricted areas',          depths:[18,18, 18, 18, 18], note:''},
+];
+(function bdInit(){
+  var tbody=document.getElementById('bd-tbody');
+  if(!tbody)return;
+  var rows='';
+  _BD_DATA.forEach(function(loc,i){
+    rows+='<tr id="bd-row-'+i+'">';
+    rows+='<td class="loc-cell">'+loc.label+(loc.note?'<br><span class="bd-note-cell">'+loc.note+'</span>':'')+'</td>';
+    loc.depths.forEach(function(d){
+      rows+='<td><span class="bd-depth">'+(d===0?'0*':d+'″')+'</span></td>';
+    });
+    rows+='</tr>';
+  });
+  tbody.innerHTML=rows;
+})();
+function bdHighlight(){
+  var sel=document.getElementById('bd-loc').value;
+  for(var i=0;i<_BD_DATA.length;i++){
+    var row=document.getElementById('bd-row-'+i);
+    if(row){
+      if(sel!==''&&parseInt(sel)===i){
+        row.classList.add('bd-hl');
+        row.scrollIntoView({behavior:'smooth',block:'nearest'});
+      }else{
+        row.classList.remove('bd-hl');
+      }
+    }
+  }
 }
 
 // ── GFCI / AFCI Lookup ───────────────────────────────────────────────────────
