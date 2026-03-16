@@ -668,6 +668,26 @@ body.light-mode .dr-note{background:#f8fafc;border-color:#e2e8f0;}
 .rc-qr-title{font-size:0.72rem;font-weight:700;color:#f0c020;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
 .rc-qr-body{font-size:0.78rem;color:var(--text);line-height:1.6;}
 .rc-qr-ref{font-size:0.67rem;color:var(--muted);margin-top:3px;}
+/* ── Generator Sizing Tab ── */
+.gs-wrap{padding:12px 14px 24px;max-width:600px;margin:0 auto;}
+.gs-cat-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);margin:14px 0 6px;padding:5px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;}
+.gs-load-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+.gs-load-row:last-child{border-bottom:none;}
+.gs-load-check{width:18px;height:18px;accent-color:#f0c020;flex-shrink:0;cursor:pointer;}
+.gs-load-name{flex:1;font-size:0.82rem;color:var(--text);cursor:pointer;}
+.gs-load-name.gs-dim{color:var(--muted);}
+.gs-load-watts{width:80px;background:var(--field);color:var(--text);border:1px solid var(--border);border-radius:7px;padding:5px 8px;font-size:0.82rem;font-family:'Roboto Mono',monospace;font-weight:700;text-align:right;outline:none;}
+.gs-load-watts:focus{border-color:#f0c020;}
+.gs-load-unit{font-size:0.72rem;color:var(--muted);width:24px;flex-shrink:0;}
+.gs-totals{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:14px;}
+.gs-total-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);}
+.gs-total-row:last-child{border-bottom:none;padding-top:10px;margin-top:4px;}
+.gs-total-lbl{font-size:0.8rem;color:var(--sub);}
+.gs-total-val{font-size:0.9rem;font-weight:900;font-family:'Roboto Mono',monospace;color:var(--text);}
+.gs-total-val.gs-gold{color:#f0c020;}
+.gs-size-badge{display:inline-block;background:rgba(240,192,32,.15);border:1.5px solid #f0c020;border-radius:10px;padding:8px 20px;font-size:1.3rem;font-weight:900;font-family:'Roboto Mono',monospace;color:#f0c020;margin-top:10px;}
+.gs-surge-note{font-size:0.72rem;color:var(--muted);margin-top:6px;line-height:1.6;}
+body.light-mode .gs-load-watts{background:#f8fafc;border-color:#e2e8f0;}
 /* ── Fraction Calculator ── */
   .fr-display { padding:8px 16px 10px; background:var(--card); }
   .fr-expr { font-family:'Roboto Mono',monospace; font-size:14px; color:var(--muted); text-align:right; min-height:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -1568,6 +1588,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-dr" onclick="switchTab('dr',this)">Derate</button>
     <button class="tab-btn" id="tab-btn-bd" onclick="switchTab('bd',this)">Burial</button>
     <button class="tab-btn" id="tab-btn-rc" onclick="switchTab('rc',this)">Recept</button>
+    <button class="tab-btn" id="tab-btn-gs" onclick="switchTab('gs',this)">Gen Sz</button>
     <button class="tab-btn" id="tab-btn-fr" onclick="switchTab('fr',this)">Fracs</button>
     <button class="tab-btn" id="tab-btn-dip" onclick="switchTab('dip',this)">Dip SW</button>
     <button class="tab-btn" id="tab-btn-wc" onclick="switchTab('wc',this)">Colors</button>
@@ -2744,6 +2765,158 @@ if('serviceWorker' in navigator){
       <div class="disclaimer">
         <div class="disclaimer-title">Important Notice</div>
         <div class="disclaimer-text">Receptacle spacing per NEC §210.52 (2023/2026). Requirements cover 1 &amp; 2 family dwellings and guest rooms of hotels/motels. Wall space ≥2 ft measured along the floor line requires a receptacle. Countertop sections separated by range/sink/refrigerator are measured separately. Island/peninsula receptacle requirement applies when dimension ≥24″ × 12″. Design guidance only — verify with AHJ.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       GENERATOR SIZING TAB
+  ══════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-gs">
+    <div class="gs-wrap">
+      <div class="section-label">Generator Sizing — Quick Check</div>
+      <div class="fi-sub" style="margin-bottom:10px;">Check loads to include, adjust wattages for your equipment.</div>
+
+      <div class="gs-cat-label">Critical / Always-On</div>
+      <div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_lights_chk" checked onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_lights_chk">Lighting (all circuits)</label>
+          <input type="number" class="gs-load-watts" id="gs_lights_w" value="1200" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_fridge_chk" checked onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_fridge_chk">Refrigerator</label>
+          <input type="number" class="gs-load-watts" id="gs_fridge_w" value="200" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_sump_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_sump_chk">Sump Pump</label>
+          <input type="number" class="gs-load-watts" id="gs_sump_w" value="800" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_well_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_well_chk">Well Pump</label>
+          <input type="number" class="gs-load-watts" id="gs_well_w" value="1500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+      </div>
+      <div class="gs-cat-label">HVAC</div>
+      <div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_ac_sm_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_ac_sm_chk">Central A/C — 2 ton (small)</label>
+          <input type="number" class="gs-load-watts" id="gs_ac_sm_w" value="2800" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_ac_md_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_ac_md_chk">Central A/C — 3 ton (medium)</label>
+          <input type="number" class="gs-load-watts" id="gs_ac_md_w" value="3500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_ac_lg_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_ac_lg_chk">Central A/C — 4 ton (large)</label>
+          <input type="number" class="gs-load-watts" id="gs_ac_lg_w" value="4800" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_hp_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_hp_chk">Heat Pump (3 ton)</label>
+          <input type="number" class="gs-load-watts" id="gs_hp_w" value="4500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_furnace_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_furnace_chk">Electric Furnace</label>
+          <input type="number" class="gs-load-watts" id="gs_furnace_w" value="7500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+      </div>
+      <div class="gs-cat-label">Kitchen & Laundry</div>
+      <div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_range_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_range_chk">Electric Range / Oven</label>
+          <input type="number" class="gs-load-watts" id="gs_range_w" value="3500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_microwave_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_microwave_chk">Microwave</label>
+          <input type="number" class="gs-load-watts" id="gs_microwave_w" value="1200" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_dishwash_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_dishwash_chk">Dishwasher</label>
+          <input type="number" class="gs-load-watts" id="gs_dishwash_w" value="1500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_dryer_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_dryer_chk">Electric Dryer</label>
+          <input type="number" class="gs-load-watts" id="gs_dryer_w" value="5000" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_wh_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_wh_chk">Electric Water Heater</label>
+          <input type="number" class="gs-load-watts" id="gs_wh_w" value="4500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+      </div>
+      <div class="gs-cat-label">Other</div>
+      <div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_freezer_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_freezer_chk">Chest / Upright Freezer</label>
+          <input type="number" class="gs-load-watts" id="gs_freezer_w" value="200" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_tv_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_tv_chk">TV / Entertainment</label>
+          <input type="number" class="gs-load-watts" id="gs_tv_w" value="400" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_other1_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_other1_chk">Other Load 1</label>
+          <input type="number" class="gs-load-watts" id="gs_other1_w" value="500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+        <div class="gs-load-row">
+          <input type="checkbox" class="gs-load-check" id="gs_other2_chk"  onchange="gsCalc()">
+          <label class="gs-load-name" for="gs_other2_chk">Other Load 2</label>
+          <input type="number" class="gs-load-watts" id="gs_other2_w" value="500" min="0" step="50" oninput="gsCalc()">
+          <span class="gs-load-unit">W</span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-calc" onclick="gsCalc()">Calculate</button>
+        <button class="btn btn-reset" onclick="gsReset()">Reset</button>
+      </div>
+
+      <div id="gs-totals" style="display:none;" class="gs-totals">
+        <div class="gs-total-row"><span class="gs-total-lbl">Running Load Total</span><span class="gs-total-val" id="gs-run-total">—</span></div>
+        <div class="gs-total-row"><span class="gs-total-lbl">+ 25% Headroom</span><span class="gs-total-val" id="gs-headroom">—</span></div>
+        <div class="gs-total-row"><span class="gs-total-lbl">Largest Motor Start Surge</span><span class="gs-total-val" id="gs-surge-val">—</span></div>
+        <div class="gs-total-row" style="flex-direction:column;align-items:flex-start;">
+          <span class="gs-total-lbl">Recommended Minimum Size</span>
+          <div id="gs-rec-badge" class="gs-size-badge" style="margin-top:8px;">— kW</div>
+          <div class="gs-surge-note" id="gs-surge-note"></div>
+        </div>
+      </div>
+
+      <div class="disclaimer" style="margin-top:14px;">
+        <div class="disclaimer-title">Important Notice</div>
+        <div class="disclaimer-text">Generator sizing is an estimate only. Motor starting surge (LRA) can be 2–3× running wattage — verify with nameplate data. Do not run all loads simultaneously on an undersized generator. Transfer switches and interlock kits must be installed by a licensed electrician per §702 (Optional Standby Systems). Portable generators must never be operated indoors or near openings. Design guidance only.</div>
       </div>
     </div>
   </div>
@@ -12433,6 +12606,55 @@ function rcCalc() {
 }
 // Init on load
 document.addEventListener('DOMContentLoaded', function(){ if(document.getElementById('rc-results')) rcCalc(); });
+
+
+// ── Generator Sizing ──────────────────────────────────────────────────────────
+var _GS_START_MULT={'gs_lights':1.0,'gs_fridge':3.0,'gs_sump':2.0,'gs_well':2.5,'gs_ac_sm':2.5,'gs_ac_md':2.5,'gs_ac_lg':2.5,'gs_hp':2.0,'gs_furnace':1.2,'gs_range':1.0,'gs_microwave':1.0,'gs_dishwash':1.0,'gs_dryer':1.0,'gs_wh':1.0,'gs_freezer':3.0,'gs_tv':1.0,'gs_other1':1.0,'gs_other2':1.0};
+var _GS_SIZES=[5,6,7.5,8,10,12,14,15,17,20,22,25,30,35,40,45,50,60,75,100];
+function gsNextSize(kw){
+  for(var i=0;i<_GS_SIZES.length;i++){if(_GS_SIZES[i]>=kw)return _GS_SIZES[i];}
+  return Math.ceil(kw/5)*5;
+}
+function gsCalc(){
+  var totalW=0, surgeExtra=0, surgeId='', surgeW=0, surgeRun=0;
+  var checks=document.querySelectorAll('.gs-load-check');
+  checks.forEach(function(chk){
+    if(!chk.checked)return;
+    var id=chk.id.replace('_chk','');
+    var wEl=document.getElementById(id+'_w');
+    var w=wEl?parseFloat(wEl.value)||0:0;
+    totalW+=w;
+    var mult=_GS_START_MULT[id]||1;
+    if(mult>1){
+      var extra=w*(mult-1);
+      if(extra>surgeExtra){surgeExtra=extra;surgeId=id;surgeW=w;surgeRun=w;}
+    }
+  });
+  if(totalW===0){document.getElementById('gs-totals').style.display='none';return;}
+  var withHeadroom=totalW*1.25;
+  var withSurge=totalW-surgeRun+surgeRun*(_GS_START_MULT[surgeId]||1);
+  var neededW=Math.max(withHeadroom,withSurge);
+  var neededKW=neededW/1000;
+  var recKW=gsNextSize(neededKW);
+
+  document.getElementById('gs-run-total').textContent=(totalW/1000).toFixed(2)+' kW ('+totalW.toLocaleString()+' W)';
+  document.getElementById('gs-headroom').textContent=(withHeadroom/1000).toFixed(2)+' kW';
+  document.getElementById('gs-surge-val').textContent=surgeId?(surgeW/1000).toFixed(2)+' kW × '+(_GS_START_MULT[surgeId]||1)+'x = '+(surgeRun*(_GS_START_MULT[surgeId]||1)/1000).toFixed(2)+' kW start surge':'No motor loads selected';
+  document.getElementById('gs-rec-badge').textContent=recKW+' kW';
+  var surgeNote='Running load with 25% headroom: '+(withHeadroom/1000).toFixed(1)+' kW';
+  if(surgeId&&withSurge>withHeadroom){
+    surgeNote+=' — Motor start surge governs: '+(withSurge/1000).toFixed(1)+' kW. Consider a generator with soft-start capability or a larger unit.';
+  }
+  document.getElementById('gs-surge-note').textContent=surgeNote;
+  document.getElementById('gs-totals').style.display='block';
+}
+function gsReset(){
+  document.querySelectorAll('.gs-load-check').forEach(function(chk){
+    var defaultChecked=['gs_lights_chk','gs_fridge_chk'];
+    chk.checked=defaultChecked.indexOf(chk.id)>=0;
+  });
+  gsCalc();
+}
 
 // ── GFCI / AFCI Lookup ───────────────────────────────────────────────────────
 
