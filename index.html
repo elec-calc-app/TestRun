@@ -12519,26 +12519,28 @@ function calculatePN(){
   var phW=[0,0,0],totalW=0,slot=1,spares=0,blk={};
   function nxtS(s){while(blk[s])s++;return s;}
   function nxtOddS(s){if(s%2===0)s++;while(blk[s])s+=2;return s;}
+  function nxtEvenS(s){if(s%2!==0)s++;while(blk[s])s+=2;return s;}
+  function nxtSideS(s){return s%2===0?nxtEvenS(s):nxtOddS(s);}
   cards.forEach(function(card){
     var id=card.id.replace('pn-card-','');
     var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
     var w=parseFloat(document.getElementById('pn-load-'+id).value)||0;
-    if(poles===1)slot=nxtS(slot);else slot=nxtOddS(slot);
+    if(poles===1)slot=nxtS(slot);else slot=nxtSideS(slot);
     if(!w){
       if(poles===1){slot++;}
-      else if(poles===2){blk[slot]=blk[slot+1]=true;slot+=2;}
-      else{blk[slot]=blk[slot+2]=blk[slot+4]=true;slot++;}
+      else if(poles===2){blk[slot]=blk[slot+2]=true;slot=slot+1;}
+      else{blk[slot]=blk[slot+2]=blk[slot+4]=true;slot=slot+1;}
       spares++;return;
     }
     totalW+=w;
     if(poles===1){
       phW[(slot-1)%nph]+=w;slot++;
     }else if(poles===2){
-      phW[(slot-1)%nph]+=w/2;phW[slot%nph]+=w/2;
-      blk[slot]=blk[slot+1]=true;slot+=2;
+      phW[(slot-1)%nph]+=w/2;phW[(slot+1)%nph]+=w/2;
+      blk[slot]=blk[slot+2]=true;slot=slot+1;
     }else{
       phW[0]+=w/3;phW[1]+=w/3;phW[2]+=w/3;
-      blk[slot]=blk[slot+2]=blk[slot+4]=true;slot++;
+      blk[slot]=blk[slot+2]=blk[slot+4]=true;slot=slot+1;
     }
   });
   var totalSlots=slot-1;
@@ -12696,6 +12698,8 @@ function pnExportPrint(){
   var circuits=[],slot=1,blkE={};
   function nxtE(s){while(blkE[s])s++;return s;}
   function nxtOddE(s){if(s%2===0)s++;while(blkE[s])s+=2;return s;}
+  function nxtEvenE(s){if(s%2!==0)s++;while(blkE[s])s+=2;return s;}
+  function nxtSideE(s){return s%2===0?nxtEvenE(s):nxtOddE(s);}
   cards.forEach(function(card){
     var id=card.id.replace('pn-card-','');
     var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
@@ -12703,13 +12707,13 @@ function pnExportPrint(){
     var desc=document.getElementById('pn-desc-'+id).value||'';
     var ss;
     if(poles===1){ss=nxtE(slot);slot=ss+1;}
-    else if(poles===2){ss=nxtOddE(slot);blkE[ss]=blkE[ss+1]=true;slot=ss+2;}
-    else{ss=nxtOddE(slot);blkE[ss]=blkE[ss+2]=blkE[ss+4]=true;slot=ss+1;}
-    var cktLabel=poles===2?(ss+'-'+(ss+1)):poles===3?(ss+','+(ss+2)+','+(ss+4)):String(ss);
+    else if(poles===2){ss=nxtSideE(slot);blkE[ss]=blkE[ss+2]=true;slot=ss+1;}
+    else{ss=nxtSideE(slot);blkE[ss]=blkE[ss+2]=blkE[ss+4]=true;slot=ss+1;}
+    var cktLabel=poles===2?(ss+'-'+(ss+2)):poles===3?(ss+','+(ss+2)+','+(ss+4)):String(ss);
     circuits.push({cktLabel:cktLabel,poles:poles,bkr:bkr,desc:desc,ss:ss});
   });
   var slotMap={};circuits.forEach(function(c){slotMap[c.ss]=c;});
-  var maxSlot=0;circuits.forEach(function(c){var e=c.poles===3?(c.ss+4):c.poles===2?(c.ss+1):c.ss;if(e>maxSlot)maxSlot=e;});
+  var maxSlot=0;circuits.forEach(function(c){var e=c.poles===3?(c.ss+4):c.poles===2?(c.ss+2):c.ss;if(e>maxSlot)maxSlot=e;});
   var maxRow=Math.ceil(maxSlot/2)||1;
   var sections=parseInt(document.getElementById('pn-sections').value)||1;
   var perSecRows=Math.ceil(maxRow/sections);
@@ -12736,9 +12740,9 @@ function pnExportPrint(){
     +'.tdr{text-align:right;}'
     +'tr:nth-child(even) td:not([rowspan]){background:#f7f7f7;}'
     +'@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}';
-  // Build one section's tbody using slotMap + rowspan for 3P
+  // Build one section's tbody using slotMap + rowspan for 2P/3P on either side
   function buildTbody(rowStart,rowEnd){
-    var covLeft={},tb='';
+    var covLeft={},covRight={},tb='';
     for(var row=rowStart;row<=rowEnd;row++){
       var ls=row*2-1,rs=row*2;
       var lc=slotMap[ls],rc=slotMap[rs];
@@ -12746,31 +12750,46 @@ function pnExportPrint(){
       if(!covLeft[row]){
         if(lc&&lc.poles===3){
           var rspan=Math.min(3,rowEnd-row+1);
-          if(rspan===3){covLeft[row+1]=covLeft[row+2]=true;}
+          if(rspan>=2)covLeft[row+1]=true;
+          if(rspan===3)covLeft[row+2]=true;
           var ra=rspan>1?' rowspan="'+rspan+'"':'';
           tb+='<td class="tc"'+ra+'>'+escHtml(lc.cktLabel)+'</td>'
-            +'<td class="td"'+ra+'>'+escHtml(lc.desc||'\u2014')+'</td>'
+            +'<td class="td"'+ra+'>'+escHtml(lc.desc||'—')+'</td>'
             +'<td class="ta"'+ra+'>'+escHtml(lc.bkr)+'A</td>';
         }else if(lc&&lc.poles===2){
-          tb+='<td class="tc">'+escHtml(lc.cktLabel)+'</td>'
-            +'<td class="td" colspan="3" style="font-style:italic;text-align:center;">'+escHtml(lc.desc||'\u2014')+'</td>'
-            +'<td class="ta">'+escHtml(lc.bkr)+'A</td>'
-            +'<td class="tc"></td></tr>';
-          continue;
+          covLeft[row+1]=true;
+          tb+='<td class="tc" rowspan="2">'+escHtml(lc.cktLabel)+'</td>'
+            +'<td class="td" rowspan="2">'+escHtml(lc.desc||'—')+'</td>'
+            +'<td class="ta" rowspan="2">'+escHtml(lc.bkr)+'A</td>';
         }else if(lc){
           tb+='<td class="tc">'+escHtml(lc.cktLabel)+'</td>'
-            +'<td class="td">'+escHtml(lc.desc||'\u2014')+'</td>'
+            +'<td class="td">'+escHtml(lc.desc||'—')+'</td>'
             +'<td class="ta">'+escHtml(lc.bkr)+'A</td>';
         }else{
           tb+='<td class="tc"></td><td class="td"></td><td class="ta"></td>';
         }
       }
-      if(rc){
-        tb+='<td class="ta">'+escHtml(rc.bkr)+'A</td>'
-          +'<td class="td tdr">'+escHtml(rc.desc||'\u2014')+'</td>'
-          +'<td class="tc">'+escHtml(rc.cktLabel)+'</td>';
-      }else{
-        tb+='<td class="ta"></td><td class="td"></td><td class="tc"></td>';
+      if(!covRight[row]){
+        if(rc&&rc.poles===3){
+          var rspanR=Math.min(3,rowEnd-row+1);
+          if(rspanR>=2)covRight[row+1]=true;
+          if(rspanR===3)covRight[row+2]=true;
+          var raR=rspanR>1?' rowspan="'+rspanR+'"':'';
+          tb+='<td class="ta"'+raR+'>'+escHtml(rc.bkr)+'A</td>'
+            +'<td class="td tdr"'+raR+'>'+escHtml(rc.desc||'—')+'</td>'
+            +'<td class="tc"'+raR+'>'+escHtml(rc.cktLabel)+'</td>';
+        }else if(rc&&rc.poles===2){
+          covRight[row+1]=true;
+          tb+='<td class="ta" rowspan="2">'+escHtml(rc.bkr)+'A</td>'
+            +'<td class="td tdr" rowspan="2">'+escHtml(rc.desc||'—')+'</td>'
+            +'<td class="tc" rowspan="2">'+escHtml(rc.cktLabel)+'</td>';
+        }else if(rc){
+          tb+='<td class="ta">'+escHtml(rc.bkr)+'A</td>'
+            +'<td class="td tdr">'+escHtml(rc.desc||'—')+'</td>'
+            +'<td class="tc">'+escHtml(rc.cktLabel)+'</td>';
+        }else{
+          tb+='<td class="ta"></td><td class="td"></td><td class="tc"></td>';
+        }
       }
       tb+='</tr>';
     }
