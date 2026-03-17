@@ -3901,8 +3901,9 @@ if('serviceWorker' in navigator){
       <button class="btn btn-reset" style="flex:1;font-size:11px;" onclick="pnSetCount()">Set Panel Size</button>
     </div>
     <div id="pn-circuits"></div>
-    <div style="padding:0 14px 6px;">
-      <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="pnAddCircuit()">+ Add Circuit</button>
+    <div style="padding:0 14px 6px;display:flex;gap:8px;">
+      <button class="btn btn-reset" style="flex:1;font-size:11px;" onclick="pnAddCircuit()">+ Add Circuit</button>
+      <button class="btn btn-reset" style="flex:1;font-size:11px;" onclick="resetPN()">Clear All</button>
     </div>
     <div class="err-msg" id="pn-err"></div>
     <div style="padding:4px 14px 2px;">
@@ -3911,9 +3912,6 @@ if('serviceWorker' in navigator){
     <div class="btn-row">
       <button class="btn btn-calc" id="pn-calc-btn" onclick="calculatePN()">Calculate</button>
       <button class="btn btn-calc" id="pn-export-btn" onclick="pnCheckBlanksAndExport()" style="display:none;background:#f0c020;color:#000000;">Export Schedule</button>
-    </div>
-    <div style="padding:2px 14px 10px;">
-      <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="resetPN()">Clear All</button>
     </div>
     <div id="pn-phase-section"></div>
     <div id="pn-results-label" class="section-label" style="display:none;"></div>
@@ -12825,7 +12823,7 @@ function pnExportPrint(){
       +'</table>'
     +'</div>';
   }
-  var printBar='<div class="no-print" style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #ccc;padding:10px 16px;display:flex;gap:10px;align-items:center;"><button onclick="window.print()" style="background:#f0c020;color:#000;border:none;border-radius:6px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;">&#x1F5A8; Print / Save PDF</button><button onclick="window.close()" style="background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;">← Close</button><span style="font-size:11px;color:#6b7280;margin-left:8px;">Close this tab to return to Circuitmatic.</span></div>';
+  var printBar='<div class="no-print" style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #ccc;padding:10px 16px;display:flex;gap:10px;align-items:center;"><button onclick="window.close()" style="background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;">← Close</button><button onclick="window.print()" style="background:#f0c020;color:#000;border:none;border-radius:6px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;">&#x1F5A8; Print / Save PDF</button><span style="font-size:11px;color:#6b7280;margin-left:8px;">Close this tab to return to Circuitmatic.</span></div>';
   var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Panel Schedule — '+escHtml(pname)+'</title><style>'+css+'@media print{.no-print{display:none!important;}}</style></head><body>'+printBar+pages+'</body></html>';
   var blob=new Blob([html],{type:'text/html'});
   var blobUrl=URL.createObjectURL(blob);
