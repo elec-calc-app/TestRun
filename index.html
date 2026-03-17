@@ -399,7 +399,7 @@ body.light-mode .svc-info-modal-body{color:#374151;}
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #f0c020;
-    padding: 14px 20px 8px;
+    padding: 22px 20px 8px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1678,7 +1678,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Configuration</div>
     <div class="fields">
       <div class="field-row">
@@ -1727,7 +1726,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Inputs</div>
     <div class="fields">
       <div class="field-row">
@@ -1824,7 +1822,6 @@ if('serviceWorker' in navigator){
         <input class="fi" id="a-load" type="number" placeholder="e.g. 40" min="0"/>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Configuration</div>
     <div class="fields">
       <div class="field-row">
@@ -1877,7 +1874,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Derating Factors</div>
     <div class="fields">
       <div class="field-row">
@@ -1961,7 +1957,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
 
     <!-- ── FILL MODE ── -->
     <div id="cf-fill-section">
@@ -2001,8 +1996,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="section-label">Conductors</div>
+        <div class="section-label">Conductors</div>
       <div class="fields" id="cf-wire-rows"></div>
       <div style="padding:0 14px 10px;">
         <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="cfAddRow()">+ Add Conductor</button>
@@ -2059,8 +2053,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="section-label">Cables</div>
+        <div class="section-label">Cables</div>
       <div class="fields" id="cfd-cable-rows"></div>
       <div style="padding:0 14px 10px;">
         <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="cfdAddRow()">+ Add Cable</button>
@@ -2434,8 +2427,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="section-label">Add Segments</div>
+        <div class="section-label">Add Segments</div>
       <div class="fields">
         <div class="field-row">
           <div class="field-label">Straight (ft)</div>
@@ -2461,8 +2453,7 @@ if('serviceWorker' in navigator){
           <button class="btn btn-reset" style="width:100%;font-size:11px;border-color:var(--gold);color:var(--gold);" onclick="crpAddPullPoint()">&#8627; Mark Pull Point</button>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="section-label">Run</div>
+        <div class="section-label">Run</div>
       <div id="crp-list" style="padding:0 14px;min-height:40px;font-size:13px;"></div>
       <div id="crp-summary" style="padding:8px 14px 4px;"></div>
       <div style="padding:4px 14px 10px;">
@@ -2539,13 +2530,11 @@ if('serviceWorker' in navigator){
         <input class="fi" id="bf-custom-vol" type="number" placeholder="in³" min="0" step="0.1"/>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Conductors <span style="font-size:9px;font-weight:400;color:var(--sub);">(314.16(B)(1))</span></div>
     <div class="fields" id="bf-cond-rows"></div>
     <div style="padding:0 14px 6px;">
       <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="bfAddCondRow()">+ Add Conductor Group</button>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Deductions &amp; Fittings</div>
     <div class="fields">
       <div class="field-row">
@@ -2689,7 +2678,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Branch-Circuit OCPD <span style="font-size:9px;font-weight:400;color:var(--sub);">(430.52)</span></div>
     <div class="fields">
       <div class="field-row">
@@ -2702,7 +2690,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Conductor <span style="font-size:9px;font-weight:400;color:var(--sub);">(430.22 — 125% FLC)</span></div>
     <div class="fields">
       <div class="field-row">
@@ -2804,8 +2791,7 @@ if('serviceWorker' in navigator){
           </div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="dr-err"></div>
+        <div class="err-msg" id="dr-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateDR()">Calculate</button>
         <button class="btn btn-reset" onclick="resetDR()">Reset</button>
@@ -2884,8 +2870,7 @@ if('serviceWorker' in navigator){
       <!-- Bathroom / garage / outdoor / basement: quick ref only -->
       <div id="rc-inputs-static" style="display:none;"></div>
 
-      <div class="divider"></div>
-      <div class="err-msg" id="rc-err"></div>
+        <div class="err-msg" id="rc-err"></div>
       <div id="rc-results"></div>
       <div id="rc-quick-ref" class="rc-quick-ref"></div>
 
@@ -3168,8 +3153,7 @@ if('serviceWorker' in navigator){
         </div>
       </div>
 
-      <div class="divider"></div>
-      <div class="err-msg" id="cl-err"></div>
+        <div class="err-msg" id="cl-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateCL()">Calculate</button>
         <button class="btn btn-reset" onclick="resetCL()">Reset</button>
@@ -3912,7 +3896,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Circuits <span style="font-size:9px;font-weight:400;color:var(--sub);">(breaker · description · watts)</span></div>
     <div style="display:flex;align-items:center;gap:8px;padding:0 14px 10px;">
       <input class="fi" id="pn-count" type="number" min="1" max="84" step="2" placeholder="# circuits" style="width:90px;font-size:12px;" onkeydown="if(event.key==='Enter')pnSetCount()"/>
@@ -3922,7 +3905,6 @@ if('serviceWorker' in navigator){
     <div style="padding:0 14px 6px;">
       <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="pnAddCircuit()">+ Add Circuit</button>
     </div>
-    <div class="divider"></div>
     <div class="err-msg" id="pn-err"></div>
     <div style="padding:4px 14px 2px;">
       <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593; Back to Top</button>
@@ -5961,7 +5943,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="err-msg" id="ev-err"></div>
     <div class="btn-row">
       <button class="btn btn-calc" onclick="calculateEV()">Calculate</button>
@@ -6031,7 +6012,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="err-msg" id="svc-err"></div>
     <div class="btn-row">
       <button class="btn btn-calc" onclick="calculateSVC()">Calculate</button>
@@ -6086,8 +6066,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="egc-err"></div>
+        <div class="err-msg" id="egc-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateEGC()">Calculate</button>
         <button class="btn btn-reset" onclick="resetEGC()">Reset</button>
@@ -6157,8 +6136,7 @@ if('serviceWorker' in navigator){
           </div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="gec-err"></div>
+        <div class="err-msg" id="gec-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateGEC()">Calculate</button>
         <button class="btn btn-reset" onclick="resetGEC()">Reset</button>
@@ -6222,8 +6200,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="sbj-err"></div>
+        <div class="err-msg" id="sbj-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateSBJ()">Calculate</button>
         <button class="btn btn-reset" onclick="resetSBJ()">Reset</button>
@@ -6290,8 +6267,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="ssbj-err"></div>
+        <div class="err-msg" id="ssbj-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateSSBJ()">Calculate</button>
         <button class="btn btn-reset" onclick="resetSSBJ()">Reset</button>
@@ -6320,8 +6296,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="ebj-err"></div>
+        <div class="err-msg" id="ebj-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateEBJ()">Calculate</button>
         <button class="btn btn-reset" onclick="resetEBJ()">Reset</button>
@@ -6386,8 +6361,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="bond-err"></div>
+        <div class="err-msg" id="bond-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateBond()">Calculate</button>
         <button class="btn btn-reset" onclick="resetBond()">Reset</button>
@@ -6471,8 +6445,7 @@ if('serviceWorker' in navigator){
           <input class="fi" id="xf-fla-load" type="number" min="0" max="99999" placeholder="Leave blank if entering KVA above"/>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="xf-fla-panel-err"></div>
+        <div class="err-msg" id="xf-fla-panel-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateXfmrFLA()">Calculate</button>
         <button class="btn btn-reset" onclick="resetXfmrFLA()">Reset</button>
@@ -6549,8 +6522,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="xf-ocpd-panel-err"></div>
+        <div class="err-msg" id="xf-ocpd-panel-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateXfmrOCPD()">Calculate</button>
         <button class="btn btn-reset" onclick="resetXfmrOCPD()">Reset</button>
@@ -6622,8 +6594,7 @@ if('serviceWorker' in navigator){
           </select></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="err-msg" id="xf-sds-panel-err"></div>
+        <div class="err-msg" id="xf-sds-panel-err"></div>
       <div class="btn-row">
         <button class="btn btn-calc" onclick="calculateXfmrSDS()">Calculate</button>
         <button class="btn btn-reset" onclick="resetXfmrSDS()">Reset</button>
@@ -6655,7 +6626,6 @@ if('serviceWorker' in navigator){
         <input type="number" class="fi" id="pv-mps" min="1" max="50" step="1" value="10" placeholder="e.g. 10">
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Array Configuration</div>
     <div class="fields">
       <div class="field-row">
@@ -6663,7 +6633,6 @@ if('serviceWorker' in navigator){
         <input type="number" class="fi" id="pv-strings" min="1" max="100" step="1" value="2" placeholder="e.g. 2">
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Installation Conditions</div>
     <div class="fields">
       <div class="field-row">
@@ -6698,7 +6667,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Inverter AC Output</div>
     <div class="fields">
       <div class="field-row">
@@ -7054,7 +7022,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="section-label">Feeder to Panel</div>
     <div class="fields">
       <div class="field-row">
@@ -7206,7 +7173,6 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="divider"></div>
     <div class="err-msg" id="fd-err"></div>
     <div class="btn-row">
       <button class="btn btn-calc" onclick="calculateFeeder()">Calculate</button>
