@@ -83,7 +83,7 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .cht-ocpd-chip{padding:5px 10px;border-radius:6px;background:var(--surface);color:var(--sub);font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;border:1px solid var(--border);}
 .cht-ocpd-chip.common{background:rgba(240,192,32,.15);color:#f0c020;border-color:#f0c020;}
 .cht-spacer{height:20px;}
-.cht-cat-hdr{display:flex;align-items:center;gap:12px;padding:14px 16px 5px;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
+.cht-cat-hdr{display:flex;align-items:center;gap:12px;padding:14px 16px 5px;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#f0c020;}
 .cht-cat-hdr::after{content:"";flex:1;height:1px;background:var(--border);}
 .fm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
 .fm-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:0;}
@@ -120,7 +120,7 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 
 .cht-2col{display:grid;grid-template-columns:1fr 1fr;gap:0;}
 .cht-2col .cht-tbl{min-width:0;}
-.cht-section-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:6px 14px 3px;font-family:'Roboto Mono',monospace;}
+.cht-section-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f0c020;padding:6px 14px 3px;font-family:'Roboto Mono',monospace;}
 /* ── PDF Scanner ── */
 .scan-wrap{display:flex;flex-direction:column;flex:1;overflow-y:auto;background:var(--bg);}
 .scan-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:48px 24px;gap:14px;text-align:center;}
@@ -3911,7 +3911,7 @@ if('serviceWorker' in navigator){
     </div>
     <div class="btn-row">
       <button class="btn btn-calc" id="pn-calc-btn" onclick="calculatePN()">Calculate</button>
-      <button class="btn btn-calc" id="pn-export-btn" onclick="pnCheckBlanksAndExport()" style="display:none;background:#1d6b3e;">Export Schedule</button>
+      <button class="btn btn-calc" id="pn-export-btn" onclick="pnCheckBlanksAndExport()" style="display:none;background:#f0c020;color:#000000;">Export Schedule</button>
     </div>
     <div style="padding:2px 14px 10px;">
       <button class="btn btn-reset" style="width:100%;font-size:11px;" onclick="resetPN()">Clear All</button>
