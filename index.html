@@ -2007,6 +2007,13 @@ if('serviceWorker' in navigator){
       </div>
       <div class="section-label" id="cf-results-label" style="display:none;">Results</div>
       <div class="results" id="cf-results"></div>
+      <div class="eng-panel" id="cf-breakdown-panel" style="display:none;margin:0 0 0 0;">
+        <div class="eng-panel-head" onclick="toggleCFBreakdown()">
+          <span class="eng-panel-title">Calculation Breakdown</span>
+          <span class="eng-toggle" id="cf-breakdown-toggle">&#x25BE;</span>
+        </div>
+        <div class="eng-body" id="cf-breakdown-body"></div>
+      </div>
       <div class="disclaimer" id="cf-disclaimer" style="display:none;">
         <div class="disclaimer-title">Important Notice</div>
         <div class="disclaimer-text">Fill percentages from Electrical Code Ch.9 Table 1 (1 wire=53%, 2 wires=31%, 3+ wires=40%). Conduit areas from Table 4. Wire areas from Table 5. Nipple exception per Chapter 9 Note 4 (≤600mm/24in = 60% fill, CCC derating per 310.15(C)(1) does not apply per Note 5). Note: Annex C pre-tabulated fill counts use actual conductor OD with manufacturing tolerances, which are larger than Table 5 nominal areas — Annex C will show fewer conductors per conduit. Both methods are code-compliant; this calculator uses Table 5 per Ch.9 calculation method. For design guidance only — verify with AHJ before installation.</div>
@@ -10238,8 +10245,16 @@ function clrCF(){
   document.getElementById('cf-err').className='err-msg';
   document.getElementById('cf-results').innerHTML='';
   document.getElementById('cf-results-label').style.display='none';
+  document.getElementById('cf-breakdown-panel').style.display='none';
+  var bd=document.getElementById('cf-breakdown-body');if(bd)bd.innerHTML='';
+  var bt=document.getElementById('cf-breakdown-toggle');if(bt)bt.className='eng-toggle';
+  var bb=document.getElementById('cf-breakdown-body-el');if(bb)bb.className='eng-body';
   document.getElementById('cf-disclaimer').style.display='none';
   document.getElementById('cf-note').textContent='';
+}
+function toggleCFBreakdown(){
+  var b=document.getElementById('cf-breakdown-body'),t=document.getElementById('cf-breakdown-toggle');
+  var o=b.classList.contains('open');b.className=o?'eng-body':'eng-body open';t.className=o?'eng-toggle':'eng-toggle open';
 }
 function showCFErr(m){clrCF();var e=document.getElementById('cf-err');e.innerHTML=m;e.className='err-msg show';}
 
@@ -10299,18 +10314,28 @@ function calculateCF(){
   var fillRule=nipple?'Nipple 60% (Note 4)':totalWireCount===1?'1 Wire — 53%':totalWireCount===2?'2 Wires — 31%':'3+ Wires — 40%';
   var condLabel=condType+' '+tradeSize+'" · Total area '+totalArea.toFixed(3)+' in²';
 
-  var blocks=[];
-  // Block 1 — conduit info
-  blocks.push(makeBlock('pass','Conduit Area','TABLE 4',totalArea.toFixed(3)+' in²',condLabel));
-  // Block 2 — wire fill
-  blocks.push(makeBlock('pass','Wire Area Used','TABLE 5',totalWireArea.toFixed(4)+' in²',wireLines));
-  // Block 3 — fill result
+  // Main result block
   var fillBadge=pass?'✓ WITHIN '+allowedPct+'%':'▲ EXCEEDS '+allowedPct+'%';
-  blocks.push(makeBlock(pass?'pass':'fail','Conduit Fill',fillBadge,fillPct.toFixed(1)+'%',
-    fillRule+' · Allowed: '+allowedArea.toFixed(4)+' in² · '+(pass?'Remaining: '+remaining.toFixed(4)+' in²':'Over by: '+Math.abs(remaining).toFixed(4)+' in²')));
+  var mainBlock=makeBlock(pass?'pass':'fail','Conduit Fill',fillBadge,fillPct.toFixed(1)+'%',
+    fillRule+' · '+(pass?'Remaining: '+remaining.toFixed(4)+' in²':'Over by: '+Math.abs(remaining).toFixed(4)+' in²'));
+
+  // Breakdown rows
+  var bkRows='<table style="width:100%;border-collapse:collapse;font-size:11px;">';
+  bkRows+='<tr><td style="padding:4px 6px;color:var(--muted);">Conduit</td><td style="padding:4px 6px;text-align:right;font-family:monospace;">'+condLabel+'</td></tr>';
+  bkRows+='<tr><td style="padding:4px 6px;color:var(--muted);">Conduit Area</td><td style="padding:4px 6px;text-align:right;font-family:monospace;">'+totalArea.toFixed(3)+' in²</td></tr>';
+  bkRows+='<tr><td style="padding:4px 6px;color:var(--muted);">Fill Rule</td><td style="padding:4px 6px;text-align:right;font-family:monospace;">'+fillRule+' → '+allowedArea.toFixed(4)+' in² max</td></tr>';
+  wires.forEach(function(w){
+    var awgLabel=parseInt(w.awg)>=250?w.awg+' kcmil':w.awg+' AWG';
+    bkRows+='<tr><td style="padding:4px 6px;color:var(--muted);">'+w.qty+'× '+awgLabel+' '+w.type.split('/')[0]+'</td><td style="padding:4px 6px;text-align:right;font-family:monospace;">'+w.qty+'×'+w.area.toFixed(4)+' = '+w.total.toFixed(4)+' in²</td></tr>';
+  });
+  bkRows+='<tr style="border-top:1px solid var(--border);"><td style="padding:4px 6px;font-weight:600;">Wire Area Total</td><td style="padding:4px 6px;text-align:right;font-family:monospace;font-weight:600;">'+totalWireArea.toFixed(4)+' in²</td></tr>';
+  bkRows+='<tr><td style="padding:4px 6px;font-weight:600;">Fill %</td><td style="padding:4px 6px;text-align:right;font-family:monospace;font-weight:600;color:'+(pass?'#16a34a':'#dc2626')+';">'+fillPct.toFixed(1)+'% (limit '+allowedPct+'%)</td></tr>';
+  bkRows+='</table>';
 
   document.getElementById('cf-results-label').style.display='block';
-  document.getElementById('cf-results').innerHTML=blocks.join('');
+  document.getElementById('cf-results').innerHTML=mainBlock;
+  document.getElementById('cf-breakdown-body').innerHTML=bkRows;
+  document.getElementById('cf-breakdown-panel').style.display='';
   document.getElementById('cf-disclaimer').style.display='block';
   document.getElementById('cf-note').textContent='Code '+_codeYear+' Ch.9 Table 1, Table 4, Table 5 · Design guidance only · Verify with AHJ';
   jcResultsReady('cf','Conduit Fill');
