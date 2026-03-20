@@ -61,11 +61,11 @@ body.light-mode .calc-wrap { background: var(--card); }
 body.light-mode .tab-btn { color: #6b7280; }
 body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-radius: 8px; }
 /* ── Charts Tab ── */
-.charts-hdr{padding:18px 16px 4px;}.charts-hdr-title{font-size:17px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;}.charts-hdr-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;margin-bottom:4px;}
+.charts-hdr{padding:18px 16px 4px;}.charts-hdr-title{font-size:17px;font-weight:700;color:var(--text);}.charts-hdr-sub{font-size:12px;color:var(--muted);margin-top:2px;margin-bottom:4px;}
 .cht-card{margin:6px 12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
 .cht-hd{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;-webkit-user-select:none;user-select:none;}
 .cht-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
-.cht-hd-txt{flex:1;}.cht-title{font-size:13px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;}.cht-sub{font-size:11px;color:var(--muted);font-family:'Inter',sans-serif;}
+.cht-hd-txt{flex:1;}.cht-title{font-size:13px;font-weight:700;color:var(--text);}.cht-sub{font-size:11px;color:var(--muted);}
 .cht-chev{font-size:11px;color:var(--muted);flex-shrink:0;transition:transform .2s;}
 .cht-body{display:none;border-top:1px solid var(--border);padding:0 0 8px;}
 .cht-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
@@ -73,16 +73,16 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .cht-tbl th{background:var(--surface);color:var(--sub);font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:5px 5px;text-align:right;border-bottom:1px solid var(--border);white-space:normal;line-height:1.2;position:sticky;top:0;z-index:1;}
 .cht-tbl th:first-child{text-align:left;}
 .cht-tbl td{padding:5px 5px;text-align:right;color:var(--text);border-bottom:1px solid var(--border);white-space:nowrap;font-size:10px;}
-.cht-tbl td:first-child{text-align:left;font-weight:700;color:var(--sub);}
+.cht-tbl td:first-child{text-align:left;font-weight:400;color:var(--sub);}
 .cht-tbl tr:last-child td{border-bottom:none;}
 .cht-tbl tr:hover td{background:var(--surface);}
-.cht-amp-hi{color:#4ade80!important;font-weight:700;}
-.cht-amp-md{color:#facc15!important;font-weight:600;}
+.cht-amp-hi{color:#4ade80!important;font-weight:400;}
+.cht-amp-md{color:#facc15!important;font-weight:400;}
 .cht-amp-lo{color:var(--text)!important;}
-.cht-note{font-size:11px;color:var(--muted);font-family:'Inter',sans-serif;padding:6px 14px 0;line-height:1.5;}
+.cht-note{font-size:11px;color:var(--muted);padding:6px 14px 0;line-height:1.5;}
 .cht-ocpd-grid{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;}
-.cht-ocpd-chip{padding:5px 10px;border-radius:6px;background:var(--surface);color:var(--sub);font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;border:1px solid var(--border);}
-.cht-ocpd-chip.common{background:rgba(240,192,32,.15);color:#f0c020;border-color:#f0c020;}
+.cht-ocpd-chip{padding:5px 10px;border-radius:6px;background:var(--surface);color:var(--sub);font-family:'Roboto Mono',monospace;font-size:12px;font-weight:400;border:1px solid var(--border);}
+.cht-ocpd-chip.common{background:rgba(240,192,32,.85);color:#000;border-color:#f0c020;}
 .cht-spacer{height:20px;}
 .cht-cat-hdr{display:flex;align-items:center;gap:12px;padding:14px 16px 5px;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#f0c020;}
 .cht-cat-hdr::after{content:"";flex:1;height:1px;background:var(--border);}
@@ -90,25 +90,25 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .fm-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:0;}
 .fm-formula{font-family:'Roboto Mono',monospace;font-size:13px;font-weight:700;color:#f0c020;margin-bottom:3px;line-height:1.3;}
 .fm-alts{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted);line-height:1.6;margin-bottom:3px;}
-.fm-desc{font-size:10px;color:var(--sub);font-family:'Inter',sans-serif;line-height:1.4;}
+.fm-desc{font-size:10px;color:var(--sub);line-height:1.4;}
 .fm-wide{grid-column:span 2;}
 .sup-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
 .sup-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 12px;min-width:0;overflow:hidden;}
-.sup-name{font-size:12px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;margin-bottom:6px;}
+.sup-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;}
 .sup-row{display:flex;align-items:baseline;gap:6px;margin-bottom:3px;min-width:0;}
-.sup-lbl{font-size:10px;color:var(--muted);font-family:'Inter',sans-serif;white-space:normal;flex-shrink:1;}
-.sup-val{font-size:11px;font-weight:700;color:var(--text);font-family:'Roboto Mono',monospace;white-space:nowrap;flex-shrink:0;}
-.sup-note{font-size:10px;color:var(--sub);font-family:'Inter',sans-serif;margin-top:5px;line-height:1.4;}
+.sup-lbl{font-size:10px;color:var(--muted);white-space:normal;flex-shrink:1;}
+.sup-val{font-size:11px;font-weight:400;color:var(--text);font-family:'Roboto Mono',monospace;white-space:nowrap;flex-shrink:0;}
+.sup-note{font-size:10px;color:var(--sub);margin-top:5px;line-height:1.4;}
 .fiber-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px 14px;}
 .fiber-chip{display:flex;align-items:center;gap:7px;padding:7px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--border);}
 .fiber-dot{width:18px;height:18px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,.15);}
-.fiber-num{font-size:9px;font-weight:700;color:var(--muted);font-family:'Roboto Mono',monospace;line-height:1;}
-.fiber-name{font-size:10px;font-weight:600;color:var(--text);font-family:'Inter',sans-serif;line-height:1;}
+.fiber-num{font-size:9px;font-weight:400;color:var(--muted);line-height:1;}
+.fiber-name{font-size:10px;font-weight:400;color:var(--text);line-height:1;}
 .rj45-wrap{padding:12px 14px;}
 .rj45-std-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'Roboto Mono',monospace;margin-bottom:8px;}
 .rj45-diagrams{display:flex;flex-direction:column;gap:12px;}
 .rj45-blk{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 8px;}
-.rj45-title{font-size:11px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif;text-align:center;margin-bottom:8px;}
+.rj45-title{font-size:11px;font-weight:700;color:var(--text);text-align:center;margin-bottom:8px;}
 .rj45-connector{background:#2a2a2a;border-radius:0 0 8px 8px;border:2px solid #555;border-top:none;padding:6px 4px 10px;margin-bottom:6px;width:100%;box-sizing:border-box;}
 .rj45-pins-row{display:flex;gap:2px;justify-content:center;margin-bottom:4px;}
 .rj45-pin{width:18px;height:22px;border-radius:2px 2px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:2px;font-size:8px;font-weight:700;color:#fff;font-family:'Roboto Mono',monospace;flex-shrink:0;}
@@ -121,7 +121,7 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 
 .cht-2col{display:grid;grid-template-columns:1fr 1fr;gap:0;}
 .cht-2col .cht-tbl{min-width:0;}
-.cht-section-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f0c020;padding:6px 14px 3px;font-family:'Roboto Mono',monospace;}
+.cht-section-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f0c020;padding:6px 14px 3px;}
 /* ── PDF Scanner ── */
 .scan-wrap{display:flex;flex-direction:column;flex:1;overflow-y:auto;background:var(--bg);}
 .scan-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:48px 24px;gap:14px;text-align:center;}
@@ -163,8 +163,8 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .quiz-stat-row{display:flex;gap:8px;width:100%;max-width:600px;margin-bottom:10px;}
 .quiz-stat{flex:1;background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:8px 10px;text-align:center;}
 .quiz-stat-lbl{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:.5px;}
-.quiz-stat-val{font-size:0.9rem;font-weight:700;color:#111827;margin-top:2px;font-family:'Roboto Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.quiz-stat-val.sm{font-size:0.65rem;}
+.quiz-stat-val{font-size:0.9rem;font-weight:400;color:#f1f5f9;margin-top:2px;font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.quiz-stat-val.sm{font-size:0.8rem;}
 .quiz-card{width:100%;max-width:600px;background:#111827;border:1px solid #1e293b;border-radius:14px;padding:18px;}
 .quiz-q-text{font-size:0.97rem;font-weight:600;color:#f1f5f9;margin-bottom:16px;line-height:1.55;}
 .quiz-opts{display:grid;gap:8px;}
@@ -179,10 +179,10 @@ body.light-mode .tab-btn.active { color: #1a1200; background: #ffffff; border-ra
 .quiz-next-btn:hover{background:#ffe066;}
 .quiz-score-screen{display:none;text-align:center;padding:16px 0;}
 .quiz-end-title{font-family:'Orbitron',monospace;font-size:1.3rem;font-weight:900;color:#f0c020;letter-spacing:3px;text-transform:uppercase;text-shadow:0 0 16px rgba(240,192,32,0.4);margin-bottom:14px;}
-.quiz-score-sublbl{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#374151;margin-bottom:2px;}
-.quiz-score-num{font-size:3.2rem;font-family:'Roboto Mono',monospace;color:#111827;margin:4px 0 6px;}
-.quiz-score-label{font-size:0.85rem;color:#374151;margin-bottom:10px;}
-.quiz-score-msg{margin-bottom:16px;font-size:0.88rem;line-height:1.5;}
+.quiz-score-sublbl{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#94a3b8;margin-bottom:2px;}
+.quiz-score-num{font-size:3.2rem;font-family:'Roboto Mono',monospace;color:#f0c020;margin:4px 0 6px;}
+.quiz-score-label{font-size:0.85rem;color:#94a3b8;margin-bottom:10px;}
+.quiz-score-msg{margin-bottom:16px;font-size:0.88rem;line-height:1.5;color:#94a3b8;}
 .quiz-score-pass{color:#4ade80;}
 .quiz-score-fail{color:#f87171;}
 .quiz-restart{flex:1;padding:14px;background:#f0c020;color:#1a1200;border:none;border-radius:9px;font-weight:900;font-family:'Roboto Mono',monospace;cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-size:0.82rem;margin-top:8px;}
@@ -208,24 +208,24 @@ body { background: var(--bg); }
 /* ── GFCI/AFCI Tab ─────────────────────────────────────────────────────────── */
 .gfci-wrap{padding:12px 14px 24px;max-width:640px;margin:0 auto;}
 .gfci-mode-row{display:flex;gap:8px;margin-bottom:14px;}
-.gfci-mode-btn{flex:1;padding:9px 6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--sub);font-size:0.78rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .18s;}
+.gfci-mode-btn{flex:1;padding:9px 6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--sub);font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px;transition:all .18s;}
 .gfci-mode-btn.active{background:rgba(240,192,32,.12);border-color:#f0c020;color:#f0c020;}
-.gfci-section-head{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);margin:14px 0 6px;padding:6px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;}
+.gfci-section-head{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);margin:14px 0 6px;padding:6px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;}
 .gfci-table{width:100%;border-collapse:collapse;margin-bottom:10px;}
-.gfci-table th{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--sub);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;}
+.gfci-table th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--sub);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;}
 .gfci-table th.center{text-align:center;}
-.gfci-table td{font-size:0.82rem;padding:7px 8px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
+.gfci-table td{font-size:12px;padding:7px 8px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
 .gfci-table tr:last-child td{border-bottom:none;}
 .gfci-table td.center{text-align:center;}
-.gfci-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.3px;}
+.gfci-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.3px;}
 .gfci-yes{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
 .gfci-no{background:var(--surface);color:var(--muted);border:1px solid var(--border);}
 .gfci-new{background:rgba(240,192,32,.15);color:#f0c020;border:1px solid rgba(240,192,32,.3);}
-.gfci-year-note{font-size:0.72rem;color:var(--muted);margin-top:2px;}
-.gfci-code-note{font-size:0.72rem;color:var(--sub);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:14px;line-height:1.6;}
+.gfci-year-note{font-size:11px;color:var(--muted);margin-top:2px;}
+.gfci-code-note{font-size:11px;color:var(--sub);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:14px;line-height:1.6;}
 .gfci-code-note strong{color:var(--text);}
-.gfci-alert{background:rgba(240,192,32,.08);border:1px solid rgba(240,192,32,.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:0.8rem;color:var(--text);line-height:1.5;}
-.gfci-alert-title{font-weight:700;color:var(--text);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.gfci-alert{background:rgba(240,192,32,.08);border:1px solid rgba(240,192,32,.25);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--text);line-height:1.5;}
+.gfci-alert-title{font-weight:700;color:var(--text);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
 body.light-mode .gfci-mode-btn{background:#f8fafc;border-color:#e2e8f0;color:#64748b;}
 body.light-mode .gfci-mode-btn.active{background:rgba(240,192,32,.1);border-color:#d4a000;color:#b45309;}
 body.light-mode .gfci-table td{color:#1e293b;}
@@ -372,7 +372,7 @@ body.light-mode .svc-info-modal-body{color:#374151;}
     font-size: 12px;
     font-weight: 600;
     letter-spacing: .2px;
-    color: #888888;
+    color: #ffffff;
     background: #111111;
     border: none;
     border-radius: 8px;
@@ -634,19 +634,19 @@ body.light-mode .dr-ccc-inp{background:#f8fafc;border-color:#e2e8f0;}
 body.light-mode .dr-note{background:#f8fafc;border-color:#e2e8f0;}
 /* ── Burial Depth Tab ── */
 .bd-wrap{padding:12px 14px 24px;max-width:600px;margin:0 auto;}
-.bd-ref-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.75rem;}
-.bd-ref-table th{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:var(--sub);padding:6px 8px;border-bottom:2px solid var(--border);text-align:center;line-height:1.3;}
+.bd-ref-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px;}
+.bd-ref-table th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:var(--sub);padding:6px 8px;border-bottom:2px solid var(--border);text-align:center;line-height:1.3;}
 .bd-ref-table th.loc-head{text-align:left;}
-.bd-ref-table td{padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text);text-align:center;vertical-align:middle;}
-.bd-ref-table td.loc-cell{text-align:left;font-size:0.72rem;color:var(--text);line-height:1.4;}
+.bd-ref-table td{padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text);text-align:center;vertical-align:middle;font-size:12px;}
+.bd-ref-table td.loc-cell{text-align:left;font-size:12px;color:var(--text);line-height:1.4;}
 .bd-ref-table tr:last-child td{border-bottom:none;}
 .bd-ref-table tr.bd-hl td{background:rgba(240,192,32,.1);color:#f0c020;font-weight:700;}
 .bd-ref-table tr.bd-hl td.loc-cell{color:#f0c020;}
-.bd-depth{font-weight:900;font-family:'Roboto Mono',monospace;font-size:0.9rem;}
-.bd-note-cell{font-size:0.65rem;color:var(--muted);font-style:italic;}
+.bd-depth{font-weight:400;font-size:12px;}
+.bd-note-cell{font-size:10px;color:var(--muted);font-style:italic;}
 .bd-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--border);}
 .bd-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.bd-legend-item{font-size:0.68rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;line-height:1.4;}
+.bd-legend-item{font-size:10px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;line-height:1.4;}
 .bd-legend-item strong{color:var(--text);}
 /* ── Receptacle Spacing Tab ── */
 .rc-wrap{padding:12px 14px 24px;max-width:600px;margin:0 auto;}
@@ -704,16 +704,16 @@ body.light-mode .gs-load-watts{background:#f8fafc;border-color:#e2e8f0;}
 /* ── Residential Circuit Reference Tab ── */
 .rr-wrap{padding:12px 14px 24px;max-width:620px;margin:0 auto;}
 .rr-group{margin-bottom:16px;}
-.rr-group-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);padding:5px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;margin-bottom:6px;}
+.rr-group-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);padding:5px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;margin-bottom:6px;}
 .rr-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;margin-bottom:6px;display:flex;gap:12px;align-items:flex-start;}
 .rr-badge{flex-shrink:0;background:rgba(240,192,32,.12);border:1px solid rgba(240,192,32,.35);border-radius:8px;padding:5px 10px;text-align:center;min-width:62px;}
-.rr-badge-amp{font-size:1rem;font-weight:900;font-family:'Roboto Mono',monospace;color:#f0c020;line-height:1.1;}
-.rr-badge-volt{font-size:0.65rem;font-weight:700;color:var(--muted);line-height:1.2;}
+.rr-badge-amp{font-size:14px;font-weight:700;color:#f0c020;line-height:1.1;}
+.rr-badge-volt{font-size:10px;font-weight:700;color:var(--muted);line-height:1.2;}
 .rr-info{flex:1;min-width:0;}
-.rr-title{font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:3px;}
-.rr-desc{font-size:0.75rem;color:var(--sub);line-height:1.5;}
+.rr-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.rr-desc{font-size:12px;color:var(--sub);line-height:1.5;}
 .rr-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
-.rr-tag{font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.3px;}
+.rr-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.3px;}
 .rr-tag.req{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.3);}
 .rr-tag.rec{background:rgba(96,165,250,.12);color:#60a5fa;border:1px solid rgba(96,165,250,.3);}
 .rr-tag.new{background:rgba(240,192,32,.12);color:#f0c020;border:1px solid rgba(240,192,32,.3);}
@@ -722,21 +722,21 @@ body.light-mode .gs-load-watts{background:#f8fafc;border-color:#e2e8f0;}
 /* ── Wet / Outdoor Location Rules Tab ── */
 .wl-wrap{padding:12px 14px 24px;max-width:620px;margin:0 auto;}
 .wl-loc-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
-.wl-loc-btn{flex:1;min-width:80px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:8px 6px;font-size:0.75rem;font-weight:700;color:var(--text);cursor:pointer;text-align:center;transition:all .15s;}
+.wl-loc-btn{flex:1;min-width:80px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:8px 6px;font-size:12px;font-weight:700;color:var(--text);cursor:pointer;text-align:center;transition:all .15s;}
 .wl-loc-btn:hover{border-color:#f0c020;color:#f0c020;}
 .wl-loc-btn.wl-active{background:rgba(240,192,32,.12);border-color:#f0c020;color:#f0c020;}
 .wl-panel{display:none;}
 .wl-panel.wl-show{display:block;}
 .wl-group{margin-bottom:12px;}
-.wl-group-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);padding:5px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;margin-bottom:6px;}
+.wl-group-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text);padding:5px 10px;background:rgba(240,192,32,.07);border-left:3px solid #f0c020;border-radius:0 6px 6px 0;margin-bottom:6px;}
 .wl-item{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 13px;margin-bottom:5px;}
-.wl-item-title{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:7px;}
-.wl-item-body{font-size:0.76rem;color:var(--sub);line-height:1.6;}
+.wl-item-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:7px;}
+.wl-item-body{font-size:12px;color:var(--sub);line-height:1.6;}
 .wl-ok{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;}
 .wl-no{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f87171;flex-shrink:0;}
 .wl-warn{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f0c020;flex-shrink:0;}
-.wl-matrix{width:100%;border-collapse:collapse;font-size:0.74rem;margin-bottom:8px;}
-.wl-matrix th{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--sub);padding:6px 8px;border-bottom:2px solid var(--border);text-align:left;}
+.wl-matrix{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:8px;}
+.wl-matrix th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--sub);padding:6px 8px;border-bottom:2px solid var(--border);text-align:left;}
 .wl-matrix td{padding:7px 8px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;}
 .wl-matrix tr:last-child td{border-bottom:none;}
 .wl-matrix td.wl-ok-cell{color:#4ade80;font-weight:700;text-align:center;}
@@ -752,6 +752,7 @@ body.light-mode .gs-load-watts{background:#f8fafc;border-color:#e2e8f0;}
   .fr-dash { color:#f0c020; font-weight:900; }
   /* ── Panel Schedule ── */
   .pn-card { background:#fff; border:1.5px solid #e5e7eb; border-radius:10px; margin:0 16px 8px; overflow:hidden; }
+  .pn-card.pn-card-over { border-color:#ef4444!important; }
   .pn-card-head { display:flex; align-items:center; gap:6px; padding:3px 8px; background:#f9fafb; border-bottom:1px solid #e5e7eb; }
   .pn-ckt-num { font-family:'Roboto Mono',monospace; font-size:11px; font-weight:700; color:#111827; min-width:26px; }
   .pn-phase-badge { font-family:'Roboto Mono',monospace; font-size:9px; font-weight:700; padding:2px 6px; border-radius:8px; color:#fff; flex-shrink:0; }
@@ -1537,6 +1538,7 @@ body:not(.light-mode) .result-export-btn{background:var(--surface);color:var(--s
 /* Panel Schedule dark mode */
 body:not(.light-mode) .pn-card{background:var(--card);border-color:var(--border);}
 body:not(.light-mode) .pn-card-head{background:var(--surface);border-bottom-color:var(--border);}
+.pn-print-mode .pn-w-wrap{display:none!important;}
 body:not(.light-mode) .pn-ckt-num{color:var(--text);}
 body:not(.light-mode) .pn-bar-label{color:var(--sub);}
 body:not(.light-mode) .pn-bar-track{background:var(--surface2);border-color:var(--border);}
@@ -1571,6 +1573,28 @@ body.light-mode .stg-state-grp-hd.yrlocal span,body.light-mode .stg-state-badge.
 .stg-overlay-head{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 14px) 16px 14px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;}
 .stg-overlay-title{font-family:'Orbitron',sans-serif;font-size:15px;color:#f0c020;letter-spacing:.04em;}
 .stg-overlay-close{background:none;border:none;color:#9ca3af;font-size:20px;cursor:pointer;padding:4px 6px;line-height:1;}
+/* ── Drill Layout Tab ── */
+.drill-wrap{padding:12px 14px 80px;}
+.dl-entry-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px;}
+.dl-entry-sel{flex:1;background:transparent;border:none;color:var(--text);font-size:13px;outline:none;-webkit-appearance:none;appearance:none;min-width:0;}
+.dl-qty-inp{width:44px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:13px;padding:3px 6px;text-align:center;}
+.dl-rm-btn{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0;}
+.dl-hole-row{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);}
+.dl-hole-row:last-child{border-bottom:none;}
+.dl-hole-size{font-family:'Roboto Mono',monospace;font-size:13px;font-weight:700;color:#f0c020;min-width:60px;}
+.dl-hole-info{font-size:12px;color:var(--sub);}
+.dl-meas-tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;}
+.dl-meas-tbl th{text-align:left;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.04em;padding:4px 5px;border-bottom:1px solid var(--border);white-space:nowrap;}
+.dl-meas-tbl td{padding:5px 5px;color:var(--text);border-bottom:1px solid var(--border);font-family:'Roboto Mono',monospace;font-size:10px;white-space:nowrap;}
+.dl-meas-tbl tr:last-child td{border-bottom:none;}
+.dl-warn{background:#fbbf24;border:1px solid #d97706;border-radius:8px;padding:8px 12px;font-size:12px;color:#000;margin-top:6px;line-height:1.5;font-weight:600;}
+.dl-diagram-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;}
+.dl-add-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:#f0c020;font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer;margin-top:4px;}
+.dl-calc-btn{width:100%;background:#f0c020;border:none;border-radius:10px;color:#000;font-size:15px;font-weight:700;padding:13px;cursor:pointer;margin-top:10px;letter-spacing:.3px;}
+.dl-section{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#f0c020;margin:16px 0 8px;}
+.dl-no-entries{font-size:12px;color:var(--muted);padding:6px 2px;}
+body.light-mode .dl-entry-sel{color:var(--text);}
+body.light-mode .dl-calc-btn{background:#f0c020;color:#000;}
 </style>
 <style>
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -1661,6 +1685,7 @@ if('serviceWorker' in navigator){
     <button class="tab-btn" id="tab-btn-pv" onclick="switchTab('pv',this)">Solar/PV</button>
     <button class="tab-btn" id="tab-btn-af" onclick="switchTab('af',this)">Arc Flash</button>
     <button class="tab-btn" id="tab-btn-fc" onclick="switchTab('fc',this)">Fault I</button>
+    <button class="tab-btn" id="tab-btn-drill" onclick="switchTab('drill',this)">Drill</button>
   </div>
   <div class="tab-scroll-track"><div class="tab-scroll-thumb" id="tab-scroll-thumb"></div></div>
 
@@ -2523,7 +2548,7 @@ if('serviceWorker' in navigator){
               <input type="number" class="fi" id="crp-pb-largest" min="0.5" max="6" step="0.25" placeholder="auto">
             </div>
           </div>
-          <button class="btn btn-reset" style="width:100%;font-size:12px;font-weight:600;border-color:var(--gold);color:#fff;background:var(--gold);" onclick="crpAddPullPoint()">&#8627; Mark Pull Point</button>
+          <button class="btn btn-reset" style="width:100%;font-size:12px;font-weight:600;border-color:#000;color:#000;background:var(--gold);" onclick="crpAddPullPoint()">&#8627; Mark Pull Point</button>
         </div>
 
       </div>
@@ -3315,6 +3340,71 @@ if('serviceWorker' in navigator){
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════════════
+       DRILL LAYOUT TAB
+  ══════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-drill">
+    <div class="drill-wrap">
+      <div class="section-label">Drill Layout</div>
+      <div class="fi-sub" style="margin-bottom:10px;">Select enclosure and face, add knockout sizes, then calculate for precise hole positions and a drill layout diagram.</div>
+
+      <div class="fields">
+        <div class="field-row">
+          <div class="field-label">Type</div>
+          <div class="sel-wrap"><select class="fi" id="dl-box-type" onchange="dlBoxTypeChange()">
+            <option value="jbox">Junction Box</option>
+            <option value="trough">Wireway / Trough</option>
+          </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Size</div>
+          <div class="sel-wrap"><select class="fi" id="dl-box-size" onchange="dlUpdateCustomRow();dlCalc()"></select></div>
+        </div>
+        <div class="field-row" id="dl-length-row" style="display:none;">
+          <div class="field-label">Length</div>
+          <div class="sel-wrap"><select class="fi" id="dl-trough-len" onchange="dlUpdateFaceLabels();dlCalc()">
+            <option value="12">12"</option>
+            <option value="16">16"</option>
+            <option value="24">24"</option>
+            <option value="36">36"</option>
+            <option value="48">48"</option>
+            <option value="60">60"</option>
+            <option value="72">72"</option>
+          </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Pattern</div>
+          <div class="sel-wrap"><select class="fi" id="dl-pattern" onchange="dlCalc()">
+            <option value="offset">Offset — staggered rows</option>
+            <option value="match">Match — columns aligned</option>
+          </select></div>
+        </div>
+        <div id="dl-custom-row" style="display:none;">
+          <div class="field-row">
+            <div class="field-label">Width (in)</div>
+            <input type="number" class="fi" id="dl-cust-w" value="6" min="1" max="48" step="0.125" oninput="dlCalc()">
+          </div>
+          <div class="field-row">
+            <div class="field-label">Height (in)</div>
+            <input type="number" class="fi" id="dl-cust-h" value="6" min="1" max="48" step="0.125" oninput="dlCalc()">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:14px;">Holes to Drill</div>
+      <div id="dl-entries"></div>
+      <button class="dl-add-btn" onclick="dlAddEntry()">+ Add Hole</button>
+
+      <div id="dl-result" style="display:none;">
+        <div id="dl-hole-list"></div>
+        <div id="dl-warnings"></div>
+        <div class="section-label" style="margin-top:14px;">Layout Diagram</div>
+        <div id="dl-diagram"></div>
+        <div id="dl-measurements"></div>
+      </div>
+    </div>
+  </div>
+
 
 <div class="stg-state-ov" id="stg-state-ov">
   <div class="stg-state-head">
@@ -3925,17 +4015,16 @@ if('serviceWorker' in navigator){
       <div class="field-row">
         <div class="field-label">Mode</div>
         <div class="sel-wrap"><select class="fi" id="pn-mode" onchange="onPnModeChange()">
-          <option value="load">Load Calculation — connected load &amp; phase balance</option>
-          <option value="print">Panel Schedule — print for panel sleeve</option>
+          <option value="load">Load Calculation</option>
+          <option value="print">Panel Schedule</option>
         </select></div>
       </div>
       <div class="field-row" id="pn-sections-row" style="display:none;">
         <div class="field-label">Sections</div>
         <div class="sel-wrap"><select class="fi" id="pn-sections">
-          <option value="1">1 Section — all circuits, 1 page</option>
-          <option value="2">2 Sections — split in half (e.g. 1-42 / 43-84)</option>
-          <option value="3">3 Sections — thirds (e.g. 1-40 / 41-80 / 81-120)</option>
-          <option value="4">4 Sections — 4 pages</option>
+          <option value="1">1 Section</option>
+          <option value="2">2 Sections</option>
+          <option value="3">3 Sections</option>
         </select></div>
       </div>
       <div class="field-row">
@@ -3974,11 +4063,26 @@ if('serviceWorker' in navigator){
         </select></div>
       </div>
     </div>
-    <div class="section-label">Circuits <span style="font-size:9px;font-weight:400;color:var(--sub);">(breaker · description · watts)</span></div>
-    <div style="display:flex;align-items:center;gap:8px;padding:0 14px 10px;">
-      <input class="fi" id="pn-count" type="number" min="1" max="84" step="2" placeholder="# circuits" style="width:90px;font-size:12px;" onkeydown="if(event.key==='Enter')pnSetCount()"/>
-      <button class="btn btn-reset" style="flex:1;font-size:11px;" onclick="pnSetCount()">Set Panel Size</button>
+    <div class="section-label">Circuits</div>
+    <div style="display:flex;align-items:center;gap:4px;padding:0 14px 4px;">
+      <input class="fi" id="pn-count" type="number" min="1" max="84" step="2" placeholder="# of CKTs" style="width:66px;font-size:11px;" onkeydown="if(event.key==='Enter')pnSetCount()" oninput="pnRefreshBadges()"/>
+      <button class="btn btn-reset" style="font-size:10px;padding:5px 7px;white-space:nowrap;flex-shrink:0;" onclick="pnSetCount()">Set Panel</button>
+      <span id="pn-card-opts" style="display:none;align-items:center;gap:4px;flex:1;min-width:0;">
+        <div class="sel-wrap" style="flex:1;min-width:110px;"><select class="fi" id="pn-export-fmt" style="font-size:10px;padding:4px 20px 4px 5px;">
+          <option value="schedule">Panel Schedule</option>
+          <option value="card">Panel Card</option>
+        </select></div>
+        <button onclick="pnToggleInfo()" title="" style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--sub);color:#fff;border:none;font-size:11px;font-weight:700;cursor:pointer;padding:0;line-height:22px;text-align:center;">i</button>
+        <input class="fi" id="pn-card-h" type="number" placeholder='H"' min="1" max="20" step="0.5" style="width:34px;font-size:11px;flex-shrink:0;padding:4px 3px;" title=""/>
+        <input class="fi" id="pn-card-w" type="number" placeholder='W"' min="1" max="20" step="0.5" style="width:34px;font-size:11px;flex-shrink:0;padding:4px 3px;" title=""/>
+      </span>
     </div>
+    <div id="pn-type-info" style="display:none;margin:0 14px 6px;background:#1a1a2e;color:#f1f5f9;font-size:11px;border-radius:8px;padding:10px 12px;line-height:1.5;border:1px solid #374151;">
+      <b style="color:#f0c020;">Panel Schedule</b> — Full layout with A (ampere) columns and panel info header. Use for formal job documentation.<br>
+      <b style="color:#f0c020;">Panel Card</b> — Circuit list only. No A columns or header. Enter H&times;W in inches to size the card for cutting from 8&frac12;&times;11. Default: 4&times;7 in.
+      <div style="text-align:right;margin-top:6px;"><span onclick="pnToggleInfo()" style="font-size:10px;color:#9ca3af;cursor:pointer;text-decoration:underline;">close</span></div>
+    </div>
+    <div id="pn-ckt-hint" style="font-size:10px;color:var(--sub);padding:0 14px 8px;">(breaker &middot; description &middot; watts)</div>
     <div id="pn-circuits"></div>
     <div style="padding:0 14px 6px;display:flex;gap:8px;">
       <button class="btn btn-reset" style="flex:1;font-size:11px;" onclick="pnAddCircuit()">+ Add Circuit</button>
@@ -4008,7 +4112,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-ampacity')">
         <span class="cht-icon">&#x26A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Conductor Ampacity — Copper</div><div class="cht-sub">60°C · 75°C · 90°C in raceway or cable</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Conductor Ampacity (Copper)</div><div class="cht-sub">60/75/90°C ratings in raceway or cable</div></div>
         <span class="cht-chev" id="cht-ampacity-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-ampacity">
@@ -4040,7 +4144,6 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Single conductor in raceway or cable. Derate for ambient temp above 30°C (86°F) and for more than 3 current-carrying conductors.</div>
       </div>
     </div>
 
@@ -4048,7 +4151,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-alamp')">
         <span class="cht-icon">&#x1F529;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Conductor Ampacity — Aluminum</div><div class="cht-sub">60°C · 75°C · 90°C — AL or CU-clad AL</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Conductor Ampacity (Aluminum)</div><div class="cht-sub">AL and CU-clad AL — 60/75/90°C ratings</div></div>
         <span class="cht-chev" id="cht-alamp-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-alamp">
@@ -4079,7 +4182,7 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Aluminum or copper-clad aluminum conductors. Not for use below 12 AWG for branch circuits.</div>
+        <div class="cht-note">Not permitted below 12 AWG for branch circuits.</div>
       </div>
     </div>
 
@@ -4087,7 +4190,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wiretypes')">
         <span class="cht-icon">&#x1F3F7;&#xFE0F;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Common Conductor Insulation Types</div><div class="cht-sub">Rating, temp, and application reference</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Wire Insulation Types</div><div class="cht-sub">THHN, THWN, USE-2, XHHW and more — temp rating and where it can go</div></div>
         <span class="cht-chev" id="cht-wiretypes-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wiretypes">
@@ -4116,7 +4219,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wirearea')">
         <span class="cht-icon">&#x1F4D0;</span>
-        <div class="cht-hd-txt"><div class="cht-title">THHN/THWN Wire Cross-Section</div><div class="cht-sub">OD and area for conduit fill calculations</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Wire Cross-Section (THHN/THWN)</div><div class="cht-sub">OD and area for conduit fill</div></div>
         <span class="cht-chev" id="cht-wirearea-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wirearea">
@@ -4143,7 +4246,7 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Wire counts based on 40% fill (3+ conductors). Actual fill must account for all conductors including EGC.</div>
+        <div class="cht-note">Actual fill must account for all conductors including EGC.</div>
       </div>
     </div>
 
@@ -4151,7 +4254,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-tempcorr')">
         <span class="cht-icon">&#x1F321;&#xFE0F;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Temperature Correction Factors</div><div class="cht-sub">Derate ampacity for ambient temp above 30°C</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Temperature Correction Factors</div><div class="cht-sub">Multiply ampacity when ambient goes above 30°C (86°F)</div></div>
         <span class="cht-chev" id="cht-tempcorr-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-tempcorr">
@@ -4175,7 +4278,7 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Multiply the tabulated ampacity by the correction factor. If both adjustment (bundling) and correction (temp) apply, multiply both factors together, then apply to the base ampacity.</div>
+        <div class="cht-note">If bundling and temp correction both apply, multiply both factors together.</div>
       </div>
     </div>
 
@@ -4183,7 +4286,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-bundle')">
         <span class="cht-icon">&#x1FAA2;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Bundling / Adjustment Factors</div><div class="cht-sub">Derate for more than 3 current-carrying conductors</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Bundling Adjustment Factors</div><div class="cht-sub">More than 3 current-carrying conductors in a raceway or cable</div></div>
         <span class="cht-chev" id="cht-bundle-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-bundle">
@@ -4200,7 +4303,7 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Applies when more than 3 current-carrying conductors are in a raceway, cable, or Earth for 24"+ continuously. Neutrals carrying only unbalanced current from non-linear loads must be counted. EGC is NOT a current-carrying conductor.</div>
+        <div class="cht-note">Neutrals on non-linear loads count as CCC. EGC does not.</div>
       </div>
     </div>
 
@@ -4208,7 +4311,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-vd')">
         <span class="cht-icon">&#x1F4C9;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Voltage Drop — Max Distance (ft)</div><div class="cht-sub">3% max drop · copper · 120V 1-phase</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Voltage Drop (Max Run Length)</div><div class="cht-sub">3% recommendation · copper · 120V single-phase</div></div>
         <span class="cht-chev" id="cht-vd-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-vd">
@@ -4227,7 +4330,7 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Formula: Distance = (CM × VD%) ÷ (K × I × 2) where K=12.9 for Cu, VD%=0.03, I=amps. Distances above are ONE-WAY run length. For 208V 3Φ use factor 1.73× longer runs; for 240V 1Φ use factor 2×.</div>
+        <div class="cht-note">One-way run length at 3% drop. For 240V 1Φ multiply by 2×; for 208V 3Φ multiply by 1.73×.</div>
       </div>
     </div>
 
@@ -4238,7 +4341,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-emt')">
         <span class="cht-icon">&#x1F527;</span>
-        <div class="cht-hd-txt"><div class="cht-title">EMT Conduit Fill</div><div class="cht-sub">Max usable area by fill percentage</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">EMT Conduit Fill</div><div class="cht-sub">Usable area by fill %</div></div>
         <span class="cht-chev" id="cht-emt-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-emt">
@@ -4259,7 +4362,6 @@ if('serviceWorker' in navigator){
             </tbody>
           </table>
         </div>
-        <div class="cht-note">Areas in square inches. Use 40% fill for 3+ conductors, 31% for 2, 53% for 1. Add areas for each conductor and compare to the allowed column.</div>
       </div>
     </div>
 
@@ -4267,7 +4369,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-rigid')">
         <span class="cht-icon">&#x1FA9B;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Rigid / IMC Conduit Fill</div><div class="cht-sub">RMC and IMC usable fill areas</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">RMC & IMC Conduit Fill</div><div class="cht-sub">Rigid metal and intermediate metal conduit fill areas</div></div>
         <span class="cht-chev" id="cht-rigid-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-rigid">
@@ -4298,7 +4400,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-boxfill')">
         <span class="cht-icon">&#x1F4E6;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Box Fill — Volume Allowance</div><div class="cht-sub">Cubic inches per conductor / fitting</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Box Fill (Volume Allowance)</div><div class="cht-sub">Cubic inch allowances per conductor and fitting</div></div>
         <span class="cht-chev" id="cht-boxfill-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-boxfill">
@@ -4324,7 +4426,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-support')">
         <span class="cht-icon">&#x1F4CC;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Support Spacing — Cheat Sheet</div><div class="cht-sub">NM, MC, EMT, ENT, IMC, RMC, MI, FMC, PVC</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Support Spacing</div><div class="cht-sub">Max strap intervals for NM, MC, EMT, ENT, RMC, IMC, FMC, PVC</div></div>
         <span class="cht-chev" id="cht-support-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-support">
@@ -4410,23 +4512,10 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-burial')">
         <span class="cht-icon">&#x26CF;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Burial Depth — Table 300.5</div><div class="cht-sub">Minimum cover (inches) by location &amp; wiring method</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Burial Depth</div><div class="cht-sub">Min. cover in inches by location and wiring method</div></div>
         <span class="cht-chev" id="cht-burial-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-burial">
-        <div style="padding:10px 14px 4px;">
-          <div style="font-size:12px;color:var(--sub);margin-bottom:8px;">Select a location to highlight its row:</div>
-          <select class="fi" id="bd-loc" onchange="bdHighlight()" style="width:100%;margin-bottom:10px;">
-            <option value="">— All locations —</option>
-            <option value="0">General — all locations not listed below</option>
-            <option value="1">Under 2&#34; concrete slab (no vehicles)</option>
-            <option value="2">Under a building</option>
-            <option value="3">Under 4&#34; concrete slab (no vehicles)</option>
-            <option value="4">Under streets, highways, roads, driveways, parking lots</option>
-            <option value="5">1 &amp; 2 family dwelling driveways (dwelling use only)</option>
-            <option value="6">Airport runways &amp; adjacent restricted areas</option>
-          </select>
-        </div>
         <div class="bd-scroll">
           <table class="bd-ref-table" id="bd-table">
             <thead>
@@ -4449,7 +4538,7 @@ if('serviceWorker' in navigator){
           <div class="bd-legend-item"><strong>&le;30V</strong> — Irrigation &amp; landscape lighting, UF cable or approved raceway</div>
           <div class="bd-legend-item"><strong>Under Building</strong> — Must be in raceway; 0&#34; cover required once inside</div>
         </div>
-        <div style="font-size:11px;color:var(--text-dim);padding:4px 14px 8px;">Table 300.5 (2023/2026) · Minimums only — AHJ may require more · Rocks/hazards need extra protection per 300.5(D)</div>
+        <div style="font-size:11px;color:var(--text-dim);padding:4px 14px 8px;">Minimums only — AHJ may require more · Rocks/hazards need extra protection per 300.5(D)</div>
       </div>
     </div>
 
@@ -4459,15 +4548,15 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wl-defs')">
         <span class="cht-icon">&#x1F4CD;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Location Types — Dry / Damp / Wet</div><div class="cht-sub">How to classify any installation location</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Location Types (Dry, Damp, Wet)</div><div class="cht-sub">How to figure out what type of location you're working in</div></div>
         <span class="cht-chev" id="cht-wl-defs-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wl-defs">
         <div class="wl-wrap" style="padding:8px 0;">
           <div class="wl-group"><div class="wl-group-title">The Three Location Types</div>
             <div class="wl-item"><div class="wl-item-title"><span class="wl-ok"></span>Dry Location</div><div class="wl-item-body">Indoors, protected from weather and moisture at all times. Standard indoor wiring methods apply. No special listings required.</div></div>
-            <div class="wl-item"><div class="wl-item-title"><span class="wl-warn"></span>Damp Location</div><div class="wl-item-body">Partially protected from weather — covered porches, canopies, under roof overhangs, car washes, refrigerated coolers. Equipment must be listed for <strong>damp</strong> locations minimum. Moisture can be present but the area is sheltered from direct rain.</div></div>
-            <div class="wl-item"><div class="wl-item-title"><span class="wl-no"></span>Wet Location</div><div class="wl-item-body">Directly exposed to weather, rain, or standing water — exterior walls, rooftops, underground, in concrete, or any location subject to saturation. Equipment must be listed for <strong>wet</strong> locations. Wet-rated covers, fittings, and wiring methods required.</div></div>
+            <div class="wl-item"><div class="wl-item-title"><span class="wl-warn"></span>Damp Location</div><div class="wl-item-body">Partially protected from weather — covered porches, canopies, under roof overhangs, car washes, refrigerated coolers. Equipment must be listed for damp locations minimum. Moisture can be present but the area is sheltered from direct rain.</div></div>
+            <div class="wl-item"><div class="wl-item-title"><span class="wl-no"></span>Wet Location</div><div class="wl-item-body">Directly exposed to weather, rain, or standing water — exterior walls, rooftops, underground, in concrete, or any location subject to saturation. Equipment must be listed for wet locations. Wet-rated covers, fittings, and wiring methods required.</div></div>
           </div>
           <div class="wl-group"><div class="wl-group-title">How to Tell Which You Have</div>
             <div class="wl-item"><div class="wl-item-title"><span class="wl-warn"></span>Covered Porch / Carport</div><div class="wl-item-body">Usually damp — sheltered from rain but not enclosed. Use damp-rated fixtures and in-use covers on receptacles.</div></div>
@@ -4482,7 +4571,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wl-wire')">
         <span class="cht-icon">&#x1F50C;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Wiring Methods by Location</div><div class="cht-sub">What's permitted — dry, damp, and wet</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Wiring Methods by Location</div><div class="cht-sub">What's allowed in dry, damp, and wet locations</div></div>
         <span class="cht-chev" id="cht-wl-wire-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wl-wire">
@@ -4501,14 +4590,14 @@ if('serviceWorker' in navigator){
             <tr><td>SE Cable</td><td class="wl-ok-cell">✔</td><td class="wl-cond-cell">*</td><td class="wl-no-cell">−</td><td style="font-size:0.7rem;color:var(--muted);">Service entrance — damp only if listed; not for direct burial or wet locations</td></tr>
           </tbody></table>
         </div>
-        <div class="fi-sub" style="margin:6px 14px 10px;">✔ = Permitted &nbsp; − = Not Permitted &nbsp; * = Conditional / check listing</div>
+        <div class="fi-sub" style="margin:6px 14px 10px;font-size:10px;color:var(--muted);">✔ = Permitted &nbsp; − = Not Permitted &nbsp; * = Conditional / check listing</div>
       </div>
     </div>
 
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wl-dev')">
         <span class="cht-icon">&#x1F532;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Devices &amp; Boxes — Outdoor Requirements</div><div class="cht-sub">Covers, GFCI, NEMA ratings, fittings</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Outdoor Devices & Boxes</div><div class="cht-sub">WP covers, GFCI rules, NEMA ratings, and fittings</div></div>
         <span class="cht-chev" id="cht-wl-dev-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wl-dev">
@@ -4520,7 +4609,7 @@ if('serviceWorker' in navigator){
             <div class="wl-item"><div class="wl-item-title"><span class="wl-no"></span>Standard Indoor Devices Outdoors</div><div class="wl-item-body">Regular unrated outlets, switches, and covers cannot be used in wet or damp outdoor locations. Devices must be specifically listed for the location type.</div></div>
           </div>
           <div class="wl-group"><div class="wl-group-title">Boxes &amp; Enclosures</div>
-            <div class="wl-item"><div class="wl-item-title"><span class="wl-ok"></span>NEMA Ratings for Outdoor Enclosures</div><div class="wl-item-body"><strong>NEMA 3R</strong> — Rain-tight, suitable for outdoor use. Most common for panels and disconnect enclosures.<br><strong>NEMA 4</strong> — Watertight, can withstand hose-down.<br><strong>NEMA 4X</strong> — Watertight and corrosion-resistant (stainless or fiberglass). Best for coastal or chemical environments.</div></div>
+            <div class="wl-item"><div class="wl-item-title"><span class="wl-ok"></span>NEMA Ratings for Outdoor Enclosures</div><div class="wl-item-body">NEMA 3R — Rain-tight, suitable for outdoor use. Most common for panels and disconnect enclosures.<br>NEMA 4 — Watertight, can withstand hose-down.<br>NEMA 4X — Watertight and corrosion-resistant (stainless or fiberglass). Best for coastal or chemical environments.</div></div>
             <div class="wl-item"><div class="wl-item-title"><span class="wl-ok"></span>Conduit Fittings</div><div class="wl-item-body">All fittings used in wet locations must be listed for wet locations — including couplings, connectors, and straps. Standard indoor set-screw fittings are not acceptable in wet locations, even in a NEMA 3R enclosure. Use compression or rain-tight fittings.</div></div>
             <div class="wl-item"><div class="wl-item-title"><span class="wl-warn"></span>Sealing Wet Location Boxes</div><div class="wl-item-body">Underground junction boxes must be suitable for wet locations and filled with a listed compound, or be a listed drain-type enclosure. Above-ground boxes in wet locations need gasketed covers.</div></div>
           </div>
@@ -4531,7 +4620,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wl-equip')">
         <span class="cht-icon">&#x1F4A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Fixtures &amp; Equipment — Outdoor</div><div class="cht-sub">Luminaires, HVAC disconnects, pools &amp; spas</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Outdoor Fixtures & Equipment</div><div class="cht-sub">Luminaires, HVAC disconnects, pools and spas</div></div>
         <span class="cht-chev" id="cht-wl-equip-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wl-equip">
@@ -4544,7 +4633,7 @@ if('serviceWorker' in navigator){
           <div class="wl-group"><div class="wl-group-title">HVAC &amp; Mechanical Equipment</div>
             <div class="wl-item"><div class="wl-item-title"><span class="wl-ok"></span>Outdoor A/C Disconnects</div><div class="wl-item-body">The disconnect for an outdoor A/C unit or heat pump must be within sight of the unit and rated for the outdoor location. NEMA 3R enclosure minimum. The branch circuit wiring to the unit uses LFMC for the final connection to allow for vibration.</div></div>
             <div class="wl-item"><div class="wl-item-title"><span class="wl-ok"></span>Cord-Connected Outdoor Equipment</div><div class="wl-item-body">Equipment cords used outdoors must be listed for outdoor (W-suffix) use — not standard indoor extension cords. Outdoor-rated cords resist moisture, UV, and temperature extremes.</div></div>
-            <div class="wl-item"><div class="wl-item-title"><span class="wl-warn"></span>Pools, Spas &amp; Hot Tubs</div><div class="wl-item-body">Swimming pools, hot tubs, spas, and fountains have their own detailed requirements including bonding, clearances, and special wiring methods. Refer to Article 680 in the adopted code for your jurisdiction — consult a licensed electrician.</div></div>
+            <div class="wl-item"><div class="wl-item-title"><span class="wl-warn"></span>Pools, Spas &amp; Hot Tubs</div><div class="wl-item-body">Article 680 governs — special bonding, clearances, and wiring methods apply. Use LFMC for equipment connections and equipotential bonding grid around the water.</div></div>
           </div>
         </div>
       </div>
@@ -4553,7 +4642,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-wl-mistakes')">
         <span class="cht-icon">&#x26A0;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Common Outdoor Wiring Mistakes</div><div class="cht-sub">Violations inspectors catch most often</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Common Outdoor Wiring Mistakes</div><div class="cht-sub">What inspectors are actually looking for</div></div>
         <span class="cht-chev" id="cht-wl-mistakes-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-wl-mistakes">
@@ -4577,7 +4666,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-ocpd')">
         <span class="cht-icon">&#x1F534;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Standard OCPD Ampere Ratings</div><div class="cht-sub">Common breaker and fuse sizes</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Standard Breaker & Fuse Sizes</div><div class="cht-sub">Standard ampere ratings for breakers and fuses</div></div>
         <span class="cht-chev" id="cht-ocpd-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-ocpd">
@@ -4621,7 +4710,7 @@ if('serviceWorker' in navigator){
           <span class="cht-ocpd-chip">5000</span>
           <span class="cht-ocpd-chip">6000</span>
         </div>
-        <div class="cht-note">Gold = most common residential/commercial sizes. When conductor ampacity falls between standard ratings, round UP to the next standard size (exceptions apply for small conductors).</div>
+        <div class="cht-note">Gold = most common sizes. Round UP to the next standard size when ampacity falls between ratings.</div>
       </div>
     </div>
 
@@ -4629,7 +4718,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-working')">
         <span class="cht-icon">&#x26A0;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Working Space — §110.26</div><div class="cht-sub">Depth · Width · Height · Dedicated Space</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Working Space</div><div class="cht-sub">Clearance depth, width, headroom, and dedicated space</div></div>
         <span class="cht-chev" id="cht-working-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-working">
@@ -4638,11 +4727,11 @@ if('serviceWorker' in navigator){
           <div class="sup-card">
             <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:start;">
               <span style="font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace;color:#f0c020;">C1</span>
-              <span style="font-size:11px;font-family:'Inter',sans-serif;color:var(--text);">Exposed live parts one side — <strong>no live parts or insulated parts</strong> on other side (concrete wall, grounded metal, etc.)</span>
+              <span style="font-size:11px;font-family:'Inter',sans-serif;color:var(--text);">Exposed live parts one side — no live parts or insulated parts on other side (concrete wall, grounded metal, etc.)</span>
               <span style="font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace;color:#f0c020;">C2</span>
-              <span style="font-size:11px;font-family:'Inter',sans-serif;color:var(--text);">Exposed live parts one side — <strong>grounded parts</strong> (metal conduit, enclosures) on the other side</span>
+              <span style="font-size:11px;font-family:'Inter',sans-serif;color:var(--text);">Exposed live parts one side — grounded parts (metal conduit, enclosures) on the other side</span>
               <span style="font-size:11px;font-weight:800;font-family:'Roboto Mono',monospace;color:#f0c020;">C3</span>
-              <span style="font-size:11px;font-family:'Inter',sans-serif;color:var(--text);">Exposed live parts on <strong>both sides</strong> — most hazardous, largest clearance required</span>
+              <span style="font-size:11px;font-family:'Inter',sans-serif;color:var(--text);">Exposed live parts on both sides — most hazardous, largest clearance required</span>
             </div>
           </div>
         </div>
@@ -4706,7 +4795,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-nema')">
         <span class="cht-icon">&#x1F50C;</span>
-        <div class="cht-hd-txt"><div class="cht-title">NEMA Plug &amp; Receptacle Configurations</div><div class="cht-sub">Common wiring device configurations &mdash; amps, volts, poles &amp; typical use</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">NEMA Plugs & Receptacles</div><div class="cht-sub">Amps, volts, poles, and what they're used for</div></div>
         <span class="cht-chev" id="cht-nema-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-nema" style="display:none;">
@@ -4716,17 +4805,17 @@ if('serviceWorker' in navigator){
           <table style="width:100%;border-collapse:collapse;font-size:11px;">
             <thead>
               <tr style="background:var(--surface2);">
-                <th style="padding:5px 8px;text-align:left;color:var(--accent);font-size:10px;letter-spacing:.05em;white-space:nowrap;">Config</th>
-                <th style="padding:5px 8px;text-align:center;color:var(--accent);font-size:10px;">Amps</th>
-                <th style="padding:5px 8px;text-align:center;color:var(--accent);font-size:10px;">Volts</th>
-                <th style="padding:5px 8px;text-align:center;color:var(--accent);font-size:10px;">Poles/Wires</th>
-                <th style="padding:5px 8px;text-align:left;color:var(--accent);font-size:10px;">Blade Pattern</th>
-                <th style="padding:5px 8px;text-align:left;color:var(--accent);font-size:10px;">Typical Use</th>
+                <th style="padding:5px 8px;text-align:left;color:var(--sub);font-size:10px;letter-spacing:.05em;white-space:nowrap;">Config</th>
+                <th style="padding:5px 8px;text-align:center;color:var(--sub);font-size:10px;">Amps</th>
+                <th style="padding:5px 8px;text-align:center;color:var(--sub);font-size:10px;">Volts</th>
+                <th style="padding:5px 8px;text-align:center;color:var(--sub);font-size:10px;">Poles/Wires</th>
+                <th style="padding:5px 8px;text-align:left;color:var(--sub);font-size:10px;">Blade Pattern</th>
+                <th style="padding:5px 8px;text-align:left;color:var(--sub);font-size:10px;">Typical Use</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 5-15</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 5-15</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">15A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
@@ -4734,7 +4823,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Standard household outlet</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 5-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 5-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
@@ -4742,7 +4831,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Kitchen, bath, garage circuits</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 6-15</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 6-15</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">15A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
@@ -4750,7 +4839,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Small 240V tools, equipment</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 6-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 6-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
@@ -4758,7 +4847,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Welders, compressors, 240V tools</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 6-30</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 6-30</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">30A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
@@ -4766,7 +4855,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Heavy welders, EV (some older)</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 6-50</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 6-50</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">50A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
@@ -4774,7 +4863,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">EV charging (Level 2), large welders</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 10-30</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 10-30</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">30A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 3W</td>
@@ -4782,7 +4871,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Old dryer outlet (pre-1996)</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 10-50</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 10-50</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">50A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 3W</td>
@@ -4790,7 +4879,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Old range outlet (pre-1996)</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 14-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 14-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 4W</td>
@@ -4798,7 +4887,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Generator outlets, industrial equipment</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 14-30</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 14-30</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">30A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 4W</td>
@@ -4806,7 +4895,7 @@ if('serviceWorker' in navigator){
                 <td style="padding:5px 8px;color:var(--sub);">Modern dryer outlet</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA 14-50</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA 14-50</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">50A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 4W</td>
@@ -4822,65 +4911,65 @@ if('serviceWorker' in navigator){
           <table style="width:100%;border-collapse:collapse;font-size:11px;">
             <thead>
               <tr style="background:var(--surface2);">
-                <th style="padding:5px 8px;text-align:left;color:var(--accent);font-size:10px;white-space:nowrap;">Config</th>
-                <th style="padding:5px 8px;text-align:center;color:var(--accent);font-size:10px;">Amps</th>
-                <th style="padding:5px 8px;text-align:center;color:var(--accent);font-size:10px;">Volts</th>
-                <th style="padding:5px 8px;text-align:center;color:var(--accent);font-size:10px;">Poles/Wires</th>
-                <th style="padding:5px 8px;text-align:left;color:var(--accent);font-size:10px;">Typical Use</th>
+                <th style="padding:5px 8px;text-align:left;color:var(--sub);font-size:10px;white-space:nowrap;">Config</th>
+                <th style="padding:5px 8px;text-align:center;color:var(--sub);font-size:10px;">Amps</th>
+                <th style="padding:5px 8px;text-align:center;color:var(--sub);font-size:10px;">Volts</th>
+                <th style="padding:5px 8px;text-align:center;color:var(--sub);font-size:10px;">Poles/Wires</th>
+                <th style="padding:5px 8px;text-align:left;color:var(--sub);font-size:10px;">Typical Use</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L5-15</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L5-15</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">15A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
                 <td style="padding:5px 8px;color:var(--sub);">UPS systems, A/V equipment, IT gear</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L5-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L5-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
                 <td style="padding:5px 8px;color:var(--sub);">Server rooms, commercial UPS</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L6-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L6-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
                 <td style="padding:5px 8px;color:var(--sub);">Industrial 240V equipment, generators</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L6-30</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L6-30</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">30A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">2P / 3W</td>
                 <td style="padding:5px 8px;color:var(--sub);">Large generators, commercial HVAC</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L14-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L14-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 4W</td>
                 <td style="padding:5px 8px;color:var(--sub);">Portable generators, transfer switches</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L14-30</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L14-30</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">30A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">125/250V</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">3P / 4W</td>
                 <td style="padding:5px 8px;color:var(--sub);">Standby generators, manual transfer switches</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L21-20</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L21-20</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">20A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">120/208V 3&phi;</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">4P / 5W</td>
                 <td style="padding:5px 8px;color:var(--sub);">Commercial 3-phase UPS, data centers</td>
               </tr>
               <tr style="background:var(--surface);">
-                <td style="padding:5px 8px;font-weight:700;color:var(--text);white-space:nowrap;">NEMA L21-30</td>
+                <td style="padding:5px 8px;font-weight:400;color:var(--text);white-space:nowrap;">NEMA L21-30</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">30A</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">120/208V 3&phi;</td>
                 <td style="padding:5px 8px;text-align:center;color:var(--sub);">4P / 5W</td>
@@ -4890,21 +4979,21 @@ if('serviceWorker' in navigator){
           </table>
         </div>
 
-        <div class="cht-note" style="margin:10px 0 4px;">NEMA 10-series outlets have no separate ground &mdash; neutral and ground bonded at panel. Replaced by 14-series in 1996. Existing 10-30/10-50 installations may remain; new installs require 14-series grounded type. Twist-lock (L-series) blades rotate to lock &mdash; required where accidental disconnection is a hazard.</div>
+        <div class="cht-note" style="margin:10px 0 4px;">NEMA 10-series has no separate ground — replaced by 14-series in 1996. Twist-lock (L-series) blades lock against accidental disconnection.</div>
       </div>
     </div>
 
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-gfci-dw')">
         <span class="cht-icon">&#x26A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">GFCI &amp; AFCI — Dwelling Units</div><div class="cht-sub">§210.8(A) required locations by code year</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">GFCI & AFCI (Dwelling Units)</div><div class="cht-sub">Required locations by code year</div></div>
         <span class="cht-chev" id="cht-gfci-dw-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-gfci-dw">
         <div style="padding:8px 14px 4px;">
           <div id="gfci-dw-2026-alert" class="gfci-alert" style="display:none;">
             <div class="gfci-alert-title">&#x26A1; 2026 Code Changes</div>
-            Outdoor outlets now GFCI-required up to <strong>60A</strong> (was 50A — §210.8(F)). New appliance requirements added.
+            Outdoor outlets now GFCI-required up to 60A (was 50A — §210.8(F)). New appliance requirements added.
           </div>
           <div class="gfci-section-head">GFCI — Dwelling Unit Locations · §210.8(A)</div>
           <table class="gfci-table">
@@ -4919,7 +5008,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-gfci-cm')">
         <span class="cht-icon">&#x26A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">GFCI — Commercial &amp; Other Than Dwelling</div><div class="cht-sub">§210.8(B) required locations</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">GFCI (Commercial & Other Than Dwelling)</div><div class="cht-sub">Required locations in commercial and non-dwelling occupancies</div></div>
         <span class="cht-chev" id="cht-gfci-cm-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-gfci-cm">
@@ -4937,7 +5026,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-gfci-ap')">
         <span class="cht-icon">&#x26A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">GFCI — Specific Appliances</div><div class="cht-sub">§210.8(D) appliance requirements</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">GFCI (Specific Appliances)</div><div class="cht-sub">Appliance-specific GFCI requirements</div></div>
         <span class="cht-chev" id="cht-gfci-ap-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-gfci-ap">
@@ -4948,7 +5037,7 @@ if('serviceWorker' in navigator){
             <thead><tr><th>Appliance</th><th class="center">GFCI Req.</th></tr></thead>
             <tbody id="gfci-ap-tbody"></tbody>
           </table>
-          <div class="gfci-code-note">Applies to equipment rated <strong>150V or less to ground, 60A or less</strong>, single- or 3-phase, all occupancies. §210.8(D)</div>
+          <div class="gfci-code-note">Applies to equipment rated 150V or less to ground, 60A or less, single- or 3-phase, all occupancies. §210.8(D)</div>
         </div>
       </div>
     </div>
@@ -4958,7 +5047,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-egc')">
         <span class="cht-icon">&#x1F7E2;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Equipment Grounding Conductor (EGC)</div><div class="cht-sub">Minimum size by OCPD rating</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Equipment Grounding Conductor (EGC)</div><div class="cht-sub">Min. size by breaker or fuse rating</div></div>
         <span class="cht-chev" id="cht-egc-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-egc">
@@ -4998,7 +5087,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-gec')">
         <span class="cht-icon">&#x1F30D;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Grounding Electrode Conductor (GEC)</div><div class="cht-sub">Service entrance GEC sizing by largest service conductor</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Grounding Electrode Conductor (GEC)</div><div class="cht-sub">Size by the largest service entrance conductor</div></div>
         <span class="cht-chev" id="cht-gec-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-gec">
@@ -5026,7 +5115,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-mot3')">
         <span class="cht-icon">&#x2699;&#xFE0F;</span>
-        <div class="cht-hd-txt"><div class="cht-title">3-Phase Motor — Full Load Amps</div><div class="cht-sub">460V · Design B squirrel cage induction</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">3-Phase Motor Full Load Amps</div><div class="cht-sub">460V Design B squirrel cage</div></div>
         <span class="cht-chev" id="cht-mot3-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-mot3">
@@ -5072,7 +5161,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-mot1')">
         <span class="cht-icon">&#x1F50C;</span>
-        <div class="cht-hd-txt"><div class="cht-title">1-Phase Motor — Full Load Amps</div><div class="cht-sub">115V and 230V single-phase motors</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Single-Phase Motor Full Load Amps</div><div class="cht-sub">115V and 230V full load amps</div></div>
         <span class="cht-chev" id="cht-mot1-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-mot1">
@@ -5105,7 +5194,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-rj45')">
         <span class="cht-icon">&#x1F50C;</span>
-        <div class="cht-hd-txt"><div class="cht-title">RJ-45 Pinout — T568A &amp; T568B</div><div class="cht-sub">Cat5e / Cat6 data cable wiring (connector front view)</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">RJ45 Pinout (T568A & T568B)</div><div class="cht-sub">Cat5e/Cat6 wiring — connector front face view</div></div>
         <span class="cht-chev" id="cht-rj45-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-rj45">
@@ -5175,7 +5264,7 @@ if('serviceWorker' in navigator){
             </div>
 
           </div><!-- end rj45-diagrams -->
-          <div class="cht-note" style="margin-top:10px;">&#x1F4A1; <strong style="color:var(--text);">Crossover cable</strong> = one end T568A, other end T568B (connects two devices directly). <strong style="color:var(--text);">Straight-through</strong> = both ends same standard (connects device to switch/router). Pins 1,2 = Transmit &bull; Pins 3,6 = Receive (10/100 Mbps). Gigabit uses all 4 pairs.</div>
+          <div class="cht-note" style="margin-top:10px;">Straight-through = both ends same standard (device to switch). Crossover = one end T568A, other T568B (device to device). Gigabit uses all 4 pairs.</div>
         </div>
       </div>
     </div>
@@ -5184,7 +5273,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-fiber')">
         <span class="cht-icon">&#x1F4A1;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Fiber Optic Color Code</div><div class="cht-sub">12-fiber standard (TIA-598-C) — strand &amp; tube colors</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Fiber Optic Color Code</div><div class="cht-sub">12-strand color sequence</div></div>
         <span class="cht-chev" id="cht-fiber-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-fiber">
@@ -5268,7 +5357,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-fa-spacing')">
         <span class="cht-icon">&#x1F6A8;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Fire Alarm &mdash; Detector Spacing</div><div class="cht-sub">NFPA 72 smoke &amp; heat detector placement rules</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Fire Alarm Detector Spacing</div><div class="cht-sub">Smoke and heat detector placement</div></div>
         <span class="cht-chev" id="cht-fa-spacing-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-fa-spacing">
@@ -5278,12 +5367,12 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Rule</th><th>Value</th><th>Notes</th></tr></thead>
             <tbody>
-              <tr><td>Max spacing (listed)</td><td>30 ft</td><td>30 ft is the typical listed spacing for standard smoke detectors. Always check the manufacturer label &mdash; if the device is listed at a shorter distance, that tighter value governs.</td></tr>
-              <tr><td>Max coverage area</td><td>900 sq ft</td><td>30 ft &times; 30 ft grid. Reduce for irregular rooms.</td></tr>
-              <tr><td>Max distance from wall</td><td>S &divide; 2</td><td>Keep every detector within 15 ft of any wall (half the 30 ft max spacing). Corners and dead-air spaces need coverage too.</td></tr>
-              <tr><td>Corridor &le;5 ft wide</td><td>30 ft apart</td><td>Single row on ceiling centerline. End walls: detector within 15 ft of the end.</td></tr>
-              <tr><td>Corridor 5&ndash;10 ft wide</td><td>Standard spacing</td><td>Use smooth ceiling rules; detector within 5 ft of each end wall.</td></tr>
-              <tr><td>Min ceiling height</td><td>No min</td><td>Max ceiling height per listing &mdash; typically 12 ft for standard detectors.</td></tr>
+              <tr><td>Max spacing (listed)</td><td>30 ft</td><td>Per listing — tighter listed value governs.</td></tr>
+              <tr><td>Max coverage area</td><td>900 sq ft</td><td>30 ft × 30 ft grid. Reduce for irregular rooms.</td></tr>
+              <tr><td>Max distance from wall</td><td>S ÷ 2</td><td>Within 15 ft of any wall.</td></tr>
+              <tr><td>Corridor ≤5 ft wide</td><td>30 ft apart</td><td>Single row, centerline. Within 15 ft of end walls.</td></tr>
+              <tr><td>Corridor 5–10 ft wide</td><td>Standard spacing</td><td>Within 5 ft of each end wall.</td></tr>
+              <tr><td>Max ceiling height</td><td>Per listing</td><td>Typically 12 ft for standard detectors.</td></tr>
             </tbody>
           </table>
         </div>
@@ -5293,10 +5382,10 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Beam Depth</th><th>Beam Spacing</th><th>Rule</th></tr></thead>
             <tbody>
-              <tr><td>Less than 4 in</td><td>Any</td><td>Treat as smooth ceiling &mdash; standard spacing applies.</td></tr>
-              <tr><td>4 in or deeper</td><td>3 ft or less</td><td>Treat as smooth ceiling &mdash; standard spacing applies.</td></tr>
-              <tr><td>4 in or deeper</td><td>More than 3 ft</td><td>Locate detectors on the ceiling in each beam bay (the space between beams). Space along the bay per smooth ceiling rules.</td></tr>
-              <tr><td>More than 12 in deep</td><td>More than 12 ft apart</td><td>Deep beams block hot gas flow significantly &mdash; treat each bay between beams as its own separate area and place detectors accordingly.</td></tr>
+              <tr><td>Less than 4 in</td><td>Any</td><td>Treat as smooth ceiling.</td></tr>
+              <tr><td>4 in or deeper</td><td>3 ft or less</td><td>Treat as smooth ceiling.</td></tr>
+              <tr><td>4 in or deeper</td><td>More than 3 ft</td><td>Place detector in each beam bay; space per smooth ceiling rules.</td></tr>
+              <tr><td>More than 12 in deep</td><td>More than 12 ft apart</td><td>Treat each bay as its own area — place detectors accordingly.</td></tr>
             </tbody>
           </table>
         </div>
@@ -5306,9 +5395,9 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Situation</th><th>Requirement</th></tr></thead>
             <tbody>
-              <tr><td>Peak / ridge of sloped ceiling</td><td>Put the first detector within 3 ft of the highest point. Smoke and heat naturally collect at the peak &mdash; covering it first gives the earliest possible alarm.</td></tr>
-              <tr><td>Spacing below the peak</td><td>Measure from the peak downward; additional detectors spaced per listed spacing along the slope.</td></tr>
-              <tr><td>Peaked ceiling &gt;10 ft at peak</td><td>Consider adding detectors on the lower portions &mdash; the high peak area is covered, but lower combustibles may not activate it fast enough.</td></tr>
+              <tr><td>Peak / ridge</td><td>First detector within 3 ft of highest point.</td></tr>
+              <tr><td>Spacing below peak</td><td>Additional detectors per listed spacing along slope.</td></tr>
+              <tr><td>Peak &gt;10 ft high</td><td>Consider detectors on lower portions as well.</td></tr>
             </tbody>
           </table>
         </div>
@@ -5318,14 +5407,14 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Rule</th><th>Standard Spacing</th><th>Notes</th></tr></thead>
             <tbody>
-              <tr><td>Max spacing (smooth ceiling, 10 ft high)</td><td>50 ft / 2,500 sq ft</td><td>Most fixed-temp and rate-of-rise detectors are listed at 50 ft spacing on smooth ceilings &le;10 ft.</td></tr>
-              <tr><td>Ceiling 10&ndash;12 ft</td><td>0.91 &times; listed</td><td>Tighten spacing to 91% of listed value (e.g., 50 ft listed &rarr; 45.5 ft max) for this ceiling height range.</td></tr>
-              <tr><td>Ceiling 12&ndash;14 ft</td><td>0.84 &times; listed</td><td>Tighten spacing to 84% of listed value (e.g., 50 ft &rarr; 42 ft max).</td></tr>
-              <tr><td>Ceiling 14&ndash;16 ft</td><td>0.77 &times; listed</td><td>Tighten spacing to 77% of listed value (e.g., 50 ft &rarr; 38.5 ft max).</td></tr>
-              <tr><td>Ceiling 16&ndash;18 ft</td><td>0.71 &times; listed</td><td>Tighten spacing to 71% of listed value (e.g., 50 ft &rarr; 35.5 ft max).</td></tr>
-              <tr><td>Ceiling 18&ndash;20 ft</td><td>0.64 &times; listed</td><td>Tighten spacing to 64% of listed value (e.g., 50 ft &rarr; 32 ft max). Above 20 ft, check the detector&rsquo;s specific listing &mdash; not all units are rated that high.</td></tr>
-              <tr><td>Max distance from wall</td><td>S &divide; 2</td><td>Same rule as smoke: no detector more than half the spacing from any wall.</td></tr>
-              <tr><td>Fixed-temp vs rate-of-rise</td><td>Same spacing rules</td><td>Rate-of-rise detectors will not activate in slowly developing fires (e.g., smoldering). Fixed-temp activates at rated temp regardless of rise rate. Combination type covers both.</td></tr>
+              <tr><td>≤10 ft ceiling</td><td>50 ft / 2,500 sq ft</td><td>Standard listed spacing.</td></tr>
+              <tr><td>10–12 ft</td><td>0.91 × listed</td><td>45.5 ft max at 50 ft listed.</td></tr>
+              <tr><td>12–14 ft</td><td>0.84 × listed</td><td>42 ft max at 50 ft listed.</td></tr>
+              <tr><td>14–16 ft</td><td>0.77 × listed</td><td>38.5 ft max at 50 ft listed.</td></tr>
+              <tr><td>16–18 ft</td><td>0.71 × listed</td><td>35.5 ft max at 50 ft listed.</td></tr>
+              <tr><td>18–20 ft</td><td>0.64 × listed</td><td>32 ft max. Above 20 ft, check listing.</td></tr>
+              <tr><td>Max distance from wall</td><td>S ÷ 2</td><td>No detector more than half the spacing from any wall.</td></tr>
+              <tr><td>Rate-of-rise vs fixed-temp</td><td>Same spacing</td><td>Rate-of-rise won't trigger on slow smoldering fires. Combination type covers both.</td></tr>
             </tbody>
           </table>
         </div>
@@ -5352,7 +5441,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-fa-wiring')">
         <span class="cht-icon">&#x1F9EF;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Fire Alarm &mdash; Article 760 Wiring</div><div class="cht-sub">PLFA &amp; NPLFA cable types, Class A/B, CI requirements</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Fire Alarm Wiring</div><div class="cht-sub">PLFA/NPLFA cables, Class A and B circuits, CI ratings</div></div>
         <span class="cht-chev" id="cht-fa-wiring-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-fa-wiring">
@@ -5362,8 +5451,8 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Type</th><th>Power Source</th><th>Wire Size Min</th><th>Key Rule</th></tr></thead>
             <tbody>
-              <tr><td><strong>PLFA</strong><br>Power-Limited</td><td>Listed PLFA power supply &le;250V, &le;100VA</td><td>26 AWG minimum (listed cable)</td><td>May use listed PLFA cable (FPL, FPLR, FPLP). Keep FA conductors in their own raceway — mixing with non-FA wiring is generally not allowed. Verify any exceptions with the AHJ.</td></tr>
-              <tr><td><strong>NPLFA</strong><br>Non-Power-Limited</td><td>Unlimited power source (standard panel circuit)</td><td>18 AWG initiating; 12 AWG if &gt;2A notification</td><td>Wire it like a branch circuit for that location &mdash; NM-B in stud walls, conduit in exposed areas, etc. Keep it in its own raceway separate from power and lighting.</td></tr>
+              <tr><td>PLFA<br>Power-Limited</td><td>Listed PLFA supply ≤250V, ≤100VA</td><td>26 AWG min (listed cable)</td><td>Use FPL/FPLR/FPLP cable. Keep in its own raceway — no mixing with non-FA wiring.</td></tr>
+              <tr><td>NPLFA<br>Non-Power-Limited</td><td>Standard panel circuit</td><td>18 AWG initiating; 12 AWG if &gt;2A notification</td><td>Wire as a branch circuit for that location. Own raceway, separate from power and lighting.</td></tr>
             </tbody>
           </table>
         </div>
@@ -5373,10 +5462,10 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Cable Type</th><th>Rating</th><th>Where Permitted</th><th>Can Substitute For</th></tr></thead>
             <tbody>
-              <tr><td><strong>FPLP</strong></td><td>Plenum</td><td>Air-handling spaces, plenum ceilings, ducts</td><td>FPLR, FPL (anywhere below)</td></tr>
-              <tr><td><strong>FPLR</strong></td><td>Riser</td><td>Vertical runs in shafts, between floors</td><td>FPL (general use)</td></tr>
-              <tr><td><strong>FPL</strong></td><td>General</td><td>General use &mdash; not in plenums or risers</td><td>&mdash; (cannot substitute up)</td></tr>
-              <tr><td><strong>FPLCI</strong></td><td>Circuit Integrity</td><td>Circuits required to operate during fire (2-hr rating)</td><td>Can substitute for FPL/FPLR/FPLP in CI applications</td></tr>
+              <tr><td>FPLP</td><td>Plenum</td><td>Air-handling spaces, plenum ceilings, ducts</td><td>FPLR, FPL (anywhere below)</td></tr>
+              <tr><td>FPLR</td><td>Riser</td><td>Vertical runs in shafts, between floors</td><td>FPL (general use)</td></tr>
+              <tr><td>FPL</td><td>General</td><td>General use &mdash; not in plenums or risers</td><td>&mdash; (cannot substitute up)</td></tr>
+              <tr><td>FPLCI</td><td>Circuit Integrity</td><td>Circuits required to operate during fire (2-hr rating)</td><td>Can substitute for FPL/FPLR/FPLP in CI applications</td></tr>
             </tbody>
           </table>
         </div>
@@ -5407,9 +5496,9 @@ if('serviceWorker' in navigator){
           <table class="cht-tbl">
             <thead><tr><th>Class</th><th>Topology</th><th>Fault Behavior</th><th>Typical Use</th></tr></thead>
             <tbody>
-              <tr><td><strong>Class B</strong></td><td>Single-path (home run to panel)</td><td>Open fault disables all devices beyond the fault point. Ground fault: trouble only.</td><td>Residential, small commercial. Less wire, simpler install.</td></tr>
-              <tr><td><strong>Class A</strong></td><td>Loop / ring (both ends return to panel)</td><td>Single open fault: system stays fully operational. Ground fault: trouble, no device loss.</td><td>High-rise, hospitals, assembly occupancies where loss of coverage is not acceptable.</td></tr>
-              <tr><td><strong>Class X</strong></td><td>Loop with isolators</td><td>Single short or open: no device loss. Isolator modules contain the fault.</td><td>Critical occupancies. Most robust; requires isolator at each device or group.</td></tr>
+              <tr><td>Class B</td><td>Single-path (home run to panel)</td><td>Open fault disables all devices beyond the fault point. Ground fault: trouble only.</td><td>Residential, small commercial. Less wire, simpler install.</td></tr>
+              <tr><td>Class A</td><td>Loop / ring (both ends return to panel)</td><td>Single open fault: system stays fully operational. Ground fault: trouble, no device loss.</td><td>High-rise, hospitals, assembly occupancies where loss of coverage is not acceptable.</td></tr>
+              <tr><td>Class X</td><td>Loop with isolators</td><td>Single short or open: no device loss. Isolator modules contain the fault.</td><td>Critical occupancies. Most robust; requires isolator at each device or group.</td></tr>
             </tbody>
           </table>
         </div>
@@ -5451,7 +5540,7 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-torque')">
         <span class="cht-icon">&#x1F527;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Torque Reference Chart</div><div class="cht-sub">Wire terminals, lug screws &amp; bolts</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Torque Specs</div><div class="cht-sub">Wire lugs, terminals, and bolts</div></div>
         <span class="cht-chev" id="cht-torque-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-torque">
@@ -5505,12 +5594,11 @@ if('serviceWorker' in navigator){
     <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-rescircuit')">
         <span class="cht-icon">&#x1F3E0;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Residential Circuit Reference</div><div class="cht-sub">Common circuits, sizing, and protection requirements</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Common Residential Circuits</div><div class="cht-sub">Wire size, breaker size, and protection requirements</div></div>
         <span class="cht-chev" id="cht-rescircuit-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-rescircuit">
         <div class="rr-wrap" style="padding:0 0 8px;">
-      <div class="fi-sub" style="margin-bottom:12px;">Quick-reference guide for common residential circuits, sizing, and requirements.</div>
       <div class="rr-tags" style="margin-bottom:14px;gap:6px;display:flex;flex-wrap:wrap;">
         <span class="rr-tag req">Required by code</span>
         <span class="rr-tag rec">Recommended practice</span>
@@ -5732,8 +5820,7 @@ if('serviceWorker' in navigator){
         </div>
       </div>
       <div class="disclaimer" style="margin:10px 0 0;">
-        <div class="disclaimer-title">Important Notice</div>
-        <div class="disclaimer-text">This reference is a general guide based on common residential wiring practices and widely adopted code requirements. Local jurisdictions may have additional or different requirements. Always verify with your local AHJ before installation. Wire sizing, breaker ratings, and protection requirements must be confirmed against the actual equipment nameplate and applicable adopted code edition. Design guidance only.</div>
+        <div class="disclaimer-text">General reference only — always verify against equipment nameplate and local AHJ requirements.</div>
       </div>
         </div>
       </div>
@@ -5742,7 +5829,7 @@ if('serviceWorker' in navigator){
         <div class="cht-card">
       <div class="cht-hd" onclick="toggleCht('cht-formulas')">
         <span class="cht-icon">&#x1F4D0;</span>
-        <div class="cht-hd-txt"><div class="cht-title">Electrical Math Reference</div><div class="cht-sub">Ohm's Law · Power · Series / Parallel · AC · Transformers · 3-Phase</div></div>
+        <div class="cht-hd-txt"><div class="cht-title">Electrical Math</div><div class="cht-sub">Ohm's Law, power, series/parallel, AC, transformers, 3-phase</div></div>
         <span class="cht-chev" id="cht-formulas-chev">&#x25B6;</span>
       </div>
       <div class="cht-body" id="cht-formulas">
@@ -6534,7 +6621,7 @@ if('serviceWorker' in navigator){
       </div>
       <div class="code-note" id="xf-fla-note"></div>
     </div>
-    <div id="xf-ocpd-panel">
+    <div id="xf-ocpd-panel" style="display:none">
       <div class="section-label">Overcurrent Protection — §450.3</div>
       <div class="fields">
         <div class="field-row">
@@ -6611,7 +6698,7 @@ if('serviceWorker' in navigator){
       </div>
       <div class="code-note" id="xf-ocpd-note"></div>
     </div>
-    <div id="xf-sds-panel">
+    <div id="xf-sds-panel" style="display:none">
       <div class="section-label">Separately Derived System (SDS) Grounding</div>
       <div class="fields">
         <div class="field-row">
@@ -9872,6 +9959,7 @@ function switchTab(tab,btn){
   document.getElementById('tab-'+tab).classList.add('active');
   btn.classList.add('active');
   if(tab==='notes'){renderProjList();}
+  if(tab==='quiz'){if(typeof qzStart==='function')qzStart();}
 }
 
 // ── Voltage Drop ──────────────────────────────────────────────────────────────
@@ -12749,9 +12837,9 @@ function pnAddCircuit(poles,bkr,desc,load){
   var id=pnRowCount,p=poles||1,b=bkr||20;
   var html='<div class="pn-card" id="pn-card-'+id+'">'+
     '<div class="pn-card-head">'+
-      '<span class="pn-ckt-num" id="pn-cnum-'+id+'">—</span>'+
+      '<span class="pn-ckt-num" id="pn-cnum-'+id+'" title="">—</span>'+
       '<span class="pn-phase-badge" id="pn-cph-'+id+'" style="background:#9ca3af;">—</span>'+
-      '<div class="sel-wrap" style="flex:0 0 50px;"><select class="fi" id="pn-poles-'+id+'" onchange="pnRefreshBadges()" style="font-size:11px;padding:4px 18px 4px 6px;">'+
+      '<div class="sel-wrap" style="flex:0 0 50px;"><select class="fi" id="pn-poles-'+id+'" onchange="pnSyncSlots()" style="font-size:11px;padding:4px 18px 4px 6px;">'+
         '<option value="1"'+(p===1?' selected':'')+'>1P</option>'+
         '<option value="2"'+(p===2?' selected':'')+'>2P</option>'+
         '<option value="3"'+(p===3?' selected':'')+'>3P</option>'+
@@ -12774,9 +12862,9 @@ function pnRemove(id){
   if(c)c.parentNode.removeChild(c);
   pnRefreshBadges();clrPN();
 }
-function pnRefreshBadges(){
+function pnCountSlots(){
   var sys=document.getElementById('pn-system').value;
-  var nph=pnNumPh(sys),slot=1,blk={};
+  var slot=1,blk={},maxUsed=0;
   function nxt(s){while(blk[s])s++;return s;}
   function nxtOdd(s){if(s%2===0)s++;while(blk[s])s+=2;return s;}
   function nxtEven(s){if(s%2!==0)s++;while(blk[s])s+=2;return s;}
@@ -12784,31 +12872,79 @@ function pnRefreshBadges(){
   document.querySelectorAll('.pn-card').forEach(function(card){
     var id=card.id.replace('pn-card-','');
     var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
-    var ph,phDisplay,cktLabel;
+    if(poles===1){slot=nxt(slot);maxUsed=Math.max(maxUsed,slot);slot++;}
+    else if(poles===2){slot=nxtSide(slot);blk[slot]=blk[slot+2]=true;maxUsed=Math.max(maxUsed,slot+2);slot++;}
+    else{slot=nxtSide(slot);blk[slot]=blk[slot+2]=blk[slot+4]=true;maxUsed=Math.max(maxUsed,slot+4);slot++;}
+  });
+  return maxUsed;
+}
+function pnSyncSlots(){
+  var maxCktEl=document.getElementById('pn-count');
+  var maxCkt=maxCktEl&&maxCktEl.value?parseInt(maxCktEl.value):0;
+  pnRefreshBadges();
+  if(!maxCkt)return;
+  // First pass: revert over-cards to 1P (keeps the card, just can't be multi-pole here)
+  document.querySelectorAll('.pn-card.pn-card-over').forEach(function(c){
+    var id=c.id.replace('pn-card-','');
+    var sel=document.getElementById('pn-poles-'+id);
+    if(sel)sel.value='1';
+  });
+  pnRefreshBadges();
+  // Second pass: remove any cards still over after revert (genuinely past panel end)
+  document.querySelectorAll('.pn-card.pn-card-over').forEach(function(c){c.parentNode.removeChild(c);});
+  pnRefreshBadges();
+  var guard=0;
+  while(pnCountSlots()<maxCkt&&guard++<100){pnAddCircuit();}
+}
+function pnRefreshBadges(){
+  var sys=document.getElementById('pn-system').value;
+  var nph=pnNumPh(sys),slot=1,blk={};
+  var maxCktEl=document.getElementById('pn-count');
+  var maxCkt=maxCktEl&&maxCktEl.value?parseInt(maxCktEl.value):84;
+  function nxt(s){while(blk[s])s++;return s;}
+  function nxtOdd(s){if(s%2===0)s++;while(blk[s])s+=2;return s;}
+  function nxtEven(s){if(s%2!==0)s++;while(blk[s])s+=2;return s;}
+  function nxtSide(s){return s%2===0?nxtEven(s):nxtOdd(s);}
+  document.querySelectorAll('.pn-card').forEach(function(card){
+    var id=card.id.replace('pn-card-','');
+    var poles=parseInt(document.getElementById('pn-poles-'+id).value)||1;
+    var ph,ph2,phDisplay,cktLabel,highSlot;
     if(poles===1){
       slot=nxt(slot);
-      ph=pnPhLabel(slot-1,sys);phDisplay=ph;
+      ph=pnPhLabel(slot-1,sys);phDisplay=ph;ph2=null;
+      highSlot=slot;
       cktLabel=String(slot);slot++;
     }else if(poles===2){
       slot=nxtSide(slot);
-      ph=pnPhLabel(slot-1,sys);
+      ph=pnPhLabel(slot-1,sys);ph2=pnPhLabel(slot+1,sys);
+      highSlot=slot+2;
       cktLabel=slot+'-'+(slot+2);
-      phDisplay=ph+'-'+pnPhLabel(slot+1,sys);
+      phDisplay=ph+'-'+ph2;
       blk[slot]=blk[slot+2]=true;slot=slot+1;
     }else{
       slot=nxtSide(slot);
-      ph=pnPhLabel(slot-1,sys);
+      ph=pnPhLabel(slot-1,sys);ph2=null;
+      highSlot=slot+4;
       cktLabel=slot+','+(slot+2)+','+(slot+4);
       phDisplay=pnIs3Ph(sys)?'A-B-C':ph;
       blk[slot]=blk[slot+2]=blk[slot+4]=true;slot++;
     }
+    var over=maxCkt&&highSlot>maxCkt;
+    card.classList.toggle('pn-card-over',!!over);
     var ne=document.getElementById('pn-cnum-'+id);
     var be=document.getElementById('pn-cph-'+id);
-    if(ne)ne.textContent=cktLabel;
-    if(be){be.textContent=phDisplay;be.style.background=pnPhColor(ph);}
+    if(ne)ne.textContent=over?'⚠ OVER':cktLabel;
+    if(be){
+      be.textContent=over?'OVER':phDisplay;
+      if(over){be.style.background='#ef4444';}
+      else if(poles===3&&pnIs3Ph(sys)){be.style.background='linear-gradient(to right,#111827 33%,#dc2626 33% 67%,#2563eb 67%)';}
+      else if(poles===2&&ph2){be.style.background='linear-gradient(to right,'+pnPhColor(ph)+' 50%,'+pnPhColor(ph2)+' 50%)';}
+      else{be.style.background=pnPhColor(ph);}
+    }
   });
 }
 function onPnSystemChange(){pnRefreshBadges();clrPN();}
+function pnToggleInfo(){var d=document.getElementById('pn-type-info');if(d)d.style.display=d.style.display==='none'?'block':'none';}
 function clrPN(){
   document.getElementById('pn-err').className='err-msg';
   document.getElementById('pn-results').innerHTML='';
@@ -12917,13 +13053,18 @@ function calculatePN(){
 function pnSetCount(){
   var n=parseInt(document.getElementById('pn-count').value);
   if(!n||n<1||n>84){return;}
-  var cards=Array.from(document.querySelectorAll('.pn-card'));
-  var cur=cards.length;
-  if(n===cur)return;
-  if(n>cur){
-    for(var i=0;i<n-cur;i++)pnAddCircuit();
+  var used=pnCountSlots();
+  if(n===used)return;
+  if(n>used){
+    var guard=0;
+    while(pnCountSlots()<n&&guard++<100)pnAddCircuit();
   }else{
-    cards.slice(n).forEach(function(c){c.parentNode.removeChild(c);});
+    var guard2=0;
+    while(pnCountSlots()>n&&guard2++<100){
+      var all=document.querySelectorAll('.pn-card');
+      if(!all.length)break;
+      all[all.length-1].parentNode.removeChild(all[all.length-1]);
+    }
     pnRefreshBadges();clrPN();
   }
 }
@@ -12936,12 +13077,17 @@ function onPnModeChange(){
   var resLabel=document.getElementById('pn-results-label');
   var resDiv=document.getElementById('pn-results');
   var phSec=document.getElementById('pn-phase-section');
+  var hint=document.getElementById('pn-ckt-hint');
+  var cardOpts=document.getElementById('pn-card-opts');
+  var infoPanel=document.getElementById('pn-type-info');
   if(mode==='print'){
     tab.classList.add('pn-print-mode');
     secRow.style.display='';
     calcBtn.style.display='none';
     expBtn.style.display='';
     if(phSec)phSec.innerHTML='';
+    if(hint)hint.textContent='(breaker \u00b7 description)';
+    if(cardOpts)cardOpts.style.display='flex';
   }else{
     tab.classList.remove('pn-print-mode');
     secRow.style.display='none';
@@ -12950,6 +13096,9 @@ function onPnModeChange(){
     resLabel.style.display='none';
     resDiv.innerHTML='';
     if(phSec)phSec.innerHTML='';
+    if(hint)hint.textContent='(breaker \u00b7 description \u00b7 watts)';
+    if(cardOpts)cardOpts.style.display='none';
+    if(infoPanel)infoPanel.style.display='none';
   }
 }
 function pnCheckBlanksAndExport(){
@@ -13034,6 +13183,9 @@ function pnExportPrint(){
   var mainLbl=mainVal==='0'?'MLO (No Main)':mainVal+'A Main';
   var dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
   var sysLbl={'120_240_1':'120/240V 1\u00D83W','120_208_3':'120/208V 3\u00D84W','277_480_3':'277/480V 3\u00D84W','240_3_3':'240V 3\u00D83W \u0394'}[sys]||sys;
+  var exportFmt=(document.getElementById('pn-export-fmt')||{}).value||'schedule';
+  var cardH=parseFloat((document.getElementById('pn-card-h')||{}).value)||4;
+  var cardW=parseFloat((document.getElementById('pn-card-w')||{}).value)||7;
   var css='body{font-family:Arial,sans-serif;margin:0;padding:0;background:#fff;color:#000;font-size:11px;}'
     +'.ps-page{page-break-after:always;padding:16px;max-width:760px;margin:0 auto;box-sizing:border-box;}'
     +'.ps-page:last-child{page-break-after:auto;}'
@@ -13049,95 +13201,184 @@ function pnExportPrint(){
     +'.td{}'
     +'.tdr{text-align:right;}'
     +'tr:nth-child(even) td:not([rowspan]){background:#f7f7f7;}'
+    +'.pc-page{width:'+cardW+'in;height:'+cardH+'in;overflow:hidden;page-break-after:always;padding:0.1in;box-sizing:border-box;border:1.5px dashed #999;margin:0.2in auto;display:flex;flex-direction:column;}'
+    +'.pc-page:last-child{page-break-after:auto;}'
+    +'.pc-page table{flex:1;width:100%;border-collapse:collapse;table-layout:fixed;height:100%;}'
+    +'.pc-page thead tr{height:auto;}'
+    +'.pc-page tbody{height:100%;}'
+    +'.pc-page tbody tr{height:1px;}'
+    +'.pc-page th{background:#d8d8d8;font-weight:bold;text-align:center;font-size:7px;letter-spacing:.3px;text-transform:uppercase;padding:1px 2px;border:1px solid #000;white-space:nowrap;overflow:hidden;}'
+    +'.pc-page td{border:1px solid #000;padding:1px 3px;font-size:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}'
+    +'.pc-page .tc{text-align:center;font-weight:bold;width:36px;}'
+    +'.pc-page .td{text-align:left;}'
+    +'.pc-name{background:#f0c020;color:#000;font-weight:bold;font-size:8px;text-align:center;padding:2px 4px;border:1px solid #000;border-top:none;letter-spacing:.5px;white-space:nowrap;overflow:hidden;}'
+    +'@page{size:8.5in 11in;margin:0.2in;}'
     +'@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}';
-  // Build one section's tbody using slotMap + rowspan for 2P/3P on either side
+  // Build one section's tbody — tc (ckt#) always individual rows, only td+ta merge for multi-pole
   function buildTbody(rowStart,rowEnd){
-    var covLeft={},covRight={},tb='';
+    var covLeftInner={},covRightInner={},extraLeftCkt={},extraRightCkt={},tb='';
     for(var row=rowStart;row<=rowEnd;row++){
-      if(covLeft[row]&&covRight[row]){tb+='<tr style="display:none"></tr>';continue;}
       var ls=row*2-1,rs=row*2;
       var lc=slotMap[ls],rc=slotMap[rs];
       tb+='<tr>';
-      if(!covLeft[row]){
+      // LEFT SIDE
+      if(!covLeftInner[row]){
         if(lc&&lc.poles===3){
           var rspan=Math.min(3,rowEnd-row+1);
-          if(rspan>=2)covLeft[row+1]=true;
-          if(rspan===3)covLeft[row+2]=true;
+          if(rspan>=2){covLeftInner[row+1]=true;extraLeftCkt[row+1]=lc.ss+2;}
+          if(rspan===3){covLeftInner[row+2]=true;extraLeftCkt[row+2]=lc.ss+4;}
           var ra=rspan>1?' rowspan="'+rspan+'"':'';
-          tb+='<td class="tc"'+ra+'>'+escHtml(lc.cktLabel)+'</td>'
+          tb+='<td class="tc">'+lc.ss+'</td>'
             +'<td class="td"'+ra+'>'+escHtml(lc.desc||'—')+'</td>'
             +'<td class="ta"'+ra+'>'+lc.poles+'P–'+escHtml(lc.bkr)+'A</td>';
         }else if(lc&&lc.poles===2){
-          covLeft[row+1]=true;
-          tb+='<td class="tc" rowspan="2">'+escHtml(lc.cktLabel)+'</td>'
+          covLeftInner[row+1]=true;extraLeftCkt[row+1]=lc.ss+2;
+          tb+='<td class="tc">'+lc.ss+'</td>'
             +'<td class="td" rowspan="2">'+escHtml(lc.desc||'—')+'</td>'
             +'<td class="ta" rowspan="2">'+lc.poles+'P–'+escHtml(lc.bkr)+'A</td>';
         }else if(lc){
-          tb+='<td class="tc">'+escHtml(lc.cktLabel)+'</td>'
+          tb+='<td class="tc">'+lc.ss+'</td>'
             +'<td class="td">'+escHtml(lc.desc||'—')+'</td>'
             +'<td class="ta">'+lc.poles+'P–'+escHtml(lc.bkr)+'A</td>';
         }else{
           tb+='<td class="tc"></td><td class="td"></td><td class="ta"></td>';
         }
+      }else{
+        tb+='<td class="tc">'+(extraLeftCkt[row]||'')+'</td>';
       }
-      if(!covRight[row]){
+      // RIGHT SIDE
+      if(!covRightInner[row]){
         if(rc&&rc.poles===3){
           var rspanR=Math.min(3,rowEnd-row+1);
-          if(rspanR>=2)covRight[row+1]=true;
-          if(rspanR===3)covRight[row+2]=true;
+          if(rspanR>=2){covRightInner[row+1]=true;extraRightCkt[row+1]=rc.ss+2;}
+          if(rspanR===3){covRightInner[row+2]=true;extraRightCkt[row+2]=rc.ss+4;}
           var raR=rspanR>1?' rowspan="'+rspanR+'"':'';
           tb+='<td class="ta"'+raR+'>'+rc.poles+'P–'+escHtml(rc.bkr)+'A</td>'
             +'<td class="td tdr"'+raR+'>'+escHtml(rc.desc||'—')+'</td>'
-            +'<td class="tc"'+raR+'>'+escHtml(rc.cktLabel)+'</td>';
+            +'<td class="tc">'+rc.ss+'</td>';
         }else if(rc&&rc.poles===2){
-          covRight[row+1]=true;
+          covRightInner[row+1]=true;extraRightCkt[row+1]=rc.ss+2;
           tb+='<td class="ta" rowspan="2">'+rc.poles+'P–'+escHtml(rc.bkr)+'A</td>'
             +'<td class="td tdr" rowspan="2">'+escHtml(rc.desc||'—')+'</td>'
-            +'<td class="tc" rowspan="2">'+escHtml(rc.cktLabel)+'</td>';
+            +'<td class="tc">'+rc.ss+'</td>';
         }else if(rc){
           tb+='<td class="ta">'+rc.poles+'P–'+escHtml(rc.bkr)+'A</td>'
             +'<td class="td tdr">'+escHtml(rc.desc||'—')+'</td>'
-            +'<td class="tc">'+escHtml(rc.cktLabel)+'</td>';
+            +'<td class="tc">'+rc.ss+'</td>';
         }else{
           tb+='<td class="ta"></td><td class="td"></td><td class="tc"></td>';
         }
+      }else{
+        tb+='<td class="tc">'+(extraRightCkt[row]||'')+'</td>';
+      }
+      tb+='</tr>';
+    }
+    return tb;
+  }
+  // Panel Card tbody — same slot logic but no A columns (4 cols: CKT# | DESC | DESC | CKT#)
+  function buildTbodyCard(rowStart,rowEnd){
+    var covL={},covR={},exL={},exR={},tb='';
+    for(var row=rowStart;row<=rowEnd;row++){
+      var ls=row*2-1,rs=row*2;
+      var lc=slotMap[ls],rc=slotMap[rs];
+      tb+='<tr>';
+      // LEFT
+      if(!covL[row]){
+        if(lc&&lc.poles===3){
+          var rspan=Math.min(3,rowEnd-row+1);
+          if(rspan>=2){covL[row+1]=true;exL[row+1]=lc.ss+2;}
+          if(rspan===3){covL[row+2]=true;exL[row+2]=lc.ss+4;}
+          var ra=rspan>1?' rowspan="'+rspan+'"':'';
+          tb+='<td class="tc">'+lc.ss+'</td><td class="td"'+ra+'>'+escHtml(lc.desc||'—')+'</td>';
+        }else if(lc&&lc.poles===2){
+          covL[row+1]=true;exL[row+1]=lc.ss+2;
+          tb+='<td class="tc">'+lc.ss+'</td><td class="td" rowspan="2">'+escHtml(lc.desc||'—')+'</td>';
+        }else if(lc){
+          tb+='<td class="tc">'+lc.ss+'</td><td class="td">'+escHtml(lc.desc||'—')+'</td>';
+        }else{
+          tb+='<td class="tc"></td><td class="td"></td>';
+        }
+      }else{
+        tb+='<td class="tc">'+(exL[row]||'')+'</td>';
+      }
+      // RIGHT
+      if(!covR[row]){
+        if(rc&&rc.poles===3){
+          var rspanR=Math.min(3,rowEnd-row+1);
+          if(rspanR>=2){covR[row+1]=true;exR[row+1]=rc.ss+2;}
+          if(rspanR===3){covR[row+2]=true;exR[row+2]=rc.ss+4;}
+          var raR=rspanR>1?' rowspan="'+rspanR+'"':'';
+          tb+='<td class="td"'+raR+'>'+escHtml(rc.desc||'—')+'</td><td class="tc">'+rc.ss+'</td>';
+        }else if(rc&&rc.poles===2){
+          covR[row+1]=true;exR[row+1]=rc.ss+2;
+          tb+='<td class="td" rowspan="2">'+escHtml(rc.desc||'—')+'</td><td class="tc">'+rc.ss+'</td>';
+        }else if(rc){
+          tb+='<td class="td">'+escHtml(rc.desc||'—')+'</td><td class="tc">'+rc.ss+'</td>';
+        }else{
+          tb+='<td class="td"></td><td class="tc"></td>';
+        }
+      }else{
+        tb+='<td class="tc">'+(exR[row]||'')+'</td>';
       }
       tb+='</tr>';
     }
     return tb;
   }
   var pages='';
-  for(var s=0;s<sections;s++){
-    var rowStart=s*perSecRows+1,rowEnd=Math.min((s+1)*perSecRows,maxRow);
-    if(rowStart>maxRow)continue;
-    var slotRange=(rowStart*2-1)+'\u2013'+(rowEnd*2);
-    pages+='<div class="ps-page">'
-      +'<div class="ps-hdr">'
-        +'<div class="ps-title">PANEL SCHEDULE</div>'
-        +'<div class="ps-meta">'
-          +'<span><b>Panel:</b> '+escHtml(pname)+'</span>'
-          +'<span><b>System:</b> '+sysLbl+'</span>'
-          +'<span><b>Main:</b> '+mainLbl+'</span>'
-          +(loc?'<span><b>Location:</b> '+escHtml(loc)+'</span>':'')
-          +(sections>1?'<span><b>Section:</b> '+(s+1)+' / '+sections+' (Ckts '+slotRange+')</span>':'')
-          +'<span><b>Date:</b> '+escHtml(dateStr)+'</span>'
+  if(exportFmt==='card'){
+    // Panel Card: no header, no A columns, panel name footer row in gold
+    for(var s=0;s<sections;s++){
+      var rowStart=s*perSecRows+1,rowEnd=Math.min((s+1)*perSecRows,maxRow);
+      if(rowStart>maxRow)continue;
+      var isLastSec=(s===sections-1);
+      pages+='<div class="pc-page">'
+        +'<table>'
+          +'<thead><tr>'
+            +'<th class="tc" style="width:44px;">CKT</th>'
+            +'<th class="td">DESCRIPTION</th>'
+            +'<th class="td tdr">DESCRIPTION</th>'
+            +'<th class="tc" style="width:44px;">CKT</th>'
+          +'</tr></thead>'
+          +'<tbody>'+buildTbodyCard(rowStart,rowEnd)
+          +(isLastSec?'<tr><td colspan="4" class="pc-name">'+escHtml(pname.toUpperCase())+'</td></tr>':'')
+          +'</tbody>'
+        +'</table>'
+      +'</div>';
+    }
+  }else{
+    for(var s=0;s<sections;s++){
+      var rowStart=s*perSecRows+1,rowEnd=Math.min((s+1)*perSecRows,maxRow);
+      if(rowStart>maxRow)continue;
+      var slotRange=(rowStart*2-1)+'\u2013'+(rowEnd*2);
+      pages+='<div class="ps-page">'
+        +'<div class="ps-hdr">'
+          +'<div class="ps-title">PANEL SCHEDULE</div>'
+          +'<div class="ps-meta">'
+            +'<span><b>Panel:</b> '+escHtml(pname)+'</span>'
+            +'<span><b>System:</b> '+sysLbl+'</span>'
+            +'<span><b>Main:</b> '+mainLbl+'</span>'
+            +(loc?'<span><b>Location:</b> '+escHtml(loc)+'</span>':'')
+            +(sections>1?'<span><b>Section:</b> '+(s+1)+' / '+sections+' (Ckts '+slotRange+')</span>':'')
+            +'<span><b>Date:</b> '+escHtml(dateStr)+'</span>'
+          +'</div>'
         +'</div>'
-      +'</div>'
-      +'<table>'
-        +'<thead><tr>'
-          +'<th class="tc" style="width:52px;">CKT #</th>'
-          +'<th class="td">DESCRIPTION</th>'
-          +'<th class="ta" style="width:56px;font-size:9px;">A</th>'
-          +'<th class="ta" style="width:56px;font-size:9px;">A</th>'
-          +'<th class="td">DESCRIPTION</th>'
-          +'<th class="tc" style="width:52px;">CKT #</th>'
-        +'</tr></thead>'
-        +'<tbody>'+buildTbody(rowStart,rowEnd)+'</tbody>'
-      +'</table>'
-    +'</div>';
+        +'<table>'
+          +'<thead><tr>'
+            +'<th class="tc" style="width:52px;">CKT #</th>'
+            +'<th class="td">DESCRIPTION</th>'
+            +'<th class="ta" style="width:56px;font-size:9px;">A</th>'
+            +'<th class="ta" style="width:56px;font-size:9px;">A</th>'
+            +'<th class="td">DESCRIPTION</th>'
+            +'<th class="tc" style="width:52px;">CKT #</th>'
+          +'</tr></thead>'
+          +'<tbody>'+buildTbody(rowStart,rowEnd)+'</tbody>'
+        +'</table>'
+      +'</div>';
+    }
   }
-  var printBar='<div class="no-print" style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #ccc;padding:10px 16px;display:flex;gap:10px;align-items:center;"><button onclick="window.close()" style="background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;">← Close</button><button onclick="window.print()" style="background:#f0c020;color:#000;border:none;border-radius:6px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;">&#x1F5A8; Print / Save PDF</button><span style="font-size:11px;color:#6b7280;margin-left:8px;">Close this tab to return to Circuitmatic.</span></div>';
-  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Panel Schedule — '+escHtml(pname)+'</title><style>'+css+'@media print{.no-print{display:none!important;}}</style></head><body>'+printBar+pages+'</body></html>';
+  var printTitle=exportFmt==='card'?'Panel Card':'Panel Schedule';
+  var printBar='<div class="no-print" style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #ccc;padding:10px 16px;display:flex;gap:10px;align-items:center;"><button onclick="window.close()" style="background:#f4f4f5;color:#374151;border:1px solid #d1d5db;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;">\u2190 Close</button><button onclick="window.print()" style="background:#f0c020;color:#000;border:none;border-radius:6px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;">&#x1F5A8; Print / Save PDF</button><span style="font-size:11px;color:#6b7280;margin-left:8px;">Close this tab to return to Circuitmatic.</span></div>';
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+printTitle+' \u2014 '+escHtml(pname)+'</title><style>'+css+'@media print{.no-print{display:none!important;}}</style></head><body>'+printBar+pages+'</body></html>';
   var blob=new Blob([html],{type:'text/html'});
   var blobUrl=URL.createObjectURL(blob);
   var win=window.open(blobUrl,'_blank');
@@ -13163,7 +13404,12 @@ function pnExportPrint(){
   var rd=document.getElementById('pn-results');
   rl.textContent='Panel Schedule';rl.style.display='block';
   rd.innerHTML=prevHtml;
-  if(typeof jcResultsReady==='function')jcResultsReady('pn','Panel Schedule',null,'pn-results');
+  // Set _jcPending to the panel schedule table so save captures the layout
+  _jcPending={tab:'pn',tabName:'Panel Schedule',lines:[{lbl:'Panel',val:pname,state:'neutral',sub:sysLbl+' \u00b7 '+mainLbl+(loc?' \u00b7 '+loc:'')}],svg:prevHtml};
+  var _pnAct=document.createElement('div');
+  _pnAct.className='result-actions';
+  _pnAct.innerHTML='<button class="result-save-btn" onclick="jcShowSave()">Save to Notes</button><button class="result-export-btn" onclick="jcExport()">Share &amp; Export</button>';
+  rd.appendChild(_pnAct);
 }
 function resetPN(){
   document.getElementById('pn-name').value='';
@@ -13207,19 +13453,18 @@ window.addEventListener('load',function(){
   setDefMaterial(localStorage.getItem('jc_def_material')||'CU',true);
   setUnits(localStorage.getItem('jc_units') || 'ft', true);
   applyLang(localStorage.getItem('jc_lang') || 'en', true);
-  // Load scan pages
-  scanLoad();
+  // scanLoad() called after its definition in the later script block
   // Init bender how-to bar
   updateBendHowTo();
   // Init quiz
   qzStart();
-  // Init GFCI/AFCI tab
-  gfciRender();
+  // gfciRender() called after data arrays are defined later in this script block
   // Init settings code year buttons
   var _sy=localStorage.getItem('jc_code_year')||'2026';
   document.querySelectorAll('.stg-cy-btn').forEach(function(b){b.classList.remove('active');});
   var _sb=document.getElementById('stg-cy-'+_sy);
   if(_sb)_sb.classList.add('active');
+  dlInit();
 });
 
 // ── EV Charger Sizing ────────────────────────────────────────────────────────
@@ -15259,6 +15504,635 @@ function gfciRender() {
     apTbody.innerHTML = apRows;
   }
 }
+gfciRender();
+
+// ── DRILL LAYOUT TAB ──────────────────────────────────────────────────────────
+var DL_JBOX=[
+  {label:'6" x 6" x 4"',w:6,h:6,d:4},
+  {label:'6" x 6" x 6"',w:6,h:6,d:6},
+  {label:'8" x 8" x 4"',w:8,h:8,d:4},
+  {label:'8" x 8" x 6"',w:8,h:8,d:6},
+  {label:'10" x 10" x 4"',w:10,h:10,d:4},
+  {label:'10" x 10" x 6"',w:10,h:10,d:6},
+  {label:'12" x 12" x 4"',w:12,h:12,d:4},
+  {label:'12" x 12" x 6"',w:12,h:12,d:6},
+  {label:'16" x 16" x 4"',w:16,h:16,d:4},
+  {label:'16" x 16" x 6"',w:16,h:16,d:6},
+  {label:'20" x 20" x 4"',w:20,h:20,d:4},
+  {label:'20" x 20" x 6"',w:20,h:20,d:6},
+  {label:'24" x 24" x 6"',w:24,h:24,d:6},
+  {label:'24" x 24" x 8"',w:24,h:24,d:8},
+  {label:'30" x 30" x 6"',w:30,h:30,d:6},
+  {label:'30" x 30" x 8"',w:30,h:30,d:8},
+  {label:'Custom...',custom:true}
+];
+var DL_TROUGH_SEC=[
+  {label:'4" x 4"',w:4,h:4},
+  {label:'6" x 6"',w:6,h:6},
+  {label:'8" x 8"',w:8,h:8},
+  {label:'10" x 10"',w:10,h:10},
+  {label:'12" x 12"',w:12,h:12},
+  {label:'Custom...',custom:true}
+];
+var DL_TROUGH_LENS=[12,16,24,36,48,60,72];
+var DL_KO=[
+  {conduit:'1/2"',d:0.875},
+  {conduit:'3/4"',d:1.125},
+  {conduit:'1"',d:1.375},
+  {conduit:'1-1/4"',d:1.75},
+  {conduit:'1-1/2"',d:2},
+  {conduit:'2"',d:2.5},
+  {conduit:'2-1/2"',d:3.125},
+  {conduit:'3"',d:3.625},
+  {conduit:'3-1/2"',d:4.125},
+  {conduit:'4"',d:4.625}
+];
+// Locknut outer diameter by conduit trade size (per spec)
+var DL_LOCKNUT_OD={
+  '1/2"':1.25,'3/4"':1.50,'1"':1.75,
+  '1-1/4"':2.19,'1-1/2"':2.38,'2"':2.88,
+  '2-1/2"':3.625,'3"':4.125,'3-1/2"':4.625,'4"':5.125
+};
+var _dlEntries=[],_dlIdx=0;
+var _dlHoleOrder=[],_dlEntriesHash='';
+var _dlDrag=null;
+var _dlSvgInfo={scale:1,ox:0,oy:0};
+
+function dlGcd(a,b){return b===0?a:dlGcd(b,a%b);}
+function dlFrac(v){
+  var s=Math.round(v*16)/16;
+  var w=Math.floor(s);
+  var n=Math.round((s-w)*16);
+  if(n===0)return w.toString();
+  if(n===16)return (w+1).toString();
+  var g=dlGcd(n,16);
+  return (w>0?w+'-':'')+n/g+'/'+(16/g);
+}
+
+function dlInit(){
+  dlBoxTypeChange();
+  dlAddEntry();
+}
+
+function dlBoxTypeChange(){
+  var type=document.getElementById('dl-box-type').value;
+  var isTrough=type==='trough';
+  var sizes=isTrough?DL_TROUGH_SEC:DL_JBOX;
+  var sel=document.getElementById('dl-box-size');
+  sel.innerHTML='';
+  sizes.forEach(function(s,i){
+    var o=document.createElement('option');
+    o.value=i;o.textContent=s.label;
+    sel.appendChild(o);
+  });
+  var lr=document.getElementById('dl-length-row');
+  if(lr)lr.style.display=isTrough?'':'none';
+  dlUpdateCustomRow();
+  dlUpdateFaceLabels();
+  if(_dlEntries.length>0)dlCalc();
+}
+
+function dlUpdateCustomRow(){
+  var type=document.getElementById('dl-box-type').value;
+  var isTrough=type==='trough';
+  var sizes=isTrough?DL_TROUGH_SEC:DL_JBOX;
+  var idx=parseInt(document.getElementById('dl-box-size').value)||0;
+  var sz=sizes[idx];
+  var isCustom=sz&&sz.custom;
+  var cr=document.getElementById('dl-custom-row');
+  var lr=document.getElementById('dl-length-row');
+  if(cr)cr.style.display=isCustom?'':'none';
+  if(lr&&isTrough)lr.style.display=isCustom?'none':'';
+}
+
+function dlUpdateJboxFaceLabel(){
+  var idx=parseInt(document.getElementById('dl-box-size').value)||0;
+  var sz=DL_JBOX[idx];
+  if(!sz||sz.custom)return;
+  var jfs=document.getElementById('dl-jbox-face');
+  if(!jfs)return;
+  jfs.options[0].text='Front / Back ('+sz.w+'" x '+sz.h+'")';
+  jfs.options[1].text='Side ('+sz.w+'" x '+sz.d+'")';
+}
+
+function dlUpdateFaceLabels(){
+  var type=document.getElementById('dl-box-type').value;
+  if(type!=='trough')return;
+  var idx=parseInt(document.getElementById('dl-box-size').value)||0;
+  var sz=DL_TROUGH_SEC[idx];
+  if(!sz||sz.custom)return;
+  var len=parseInt(document.getElementById('dl-trough-len').value)||24;
+  var fs=document.getElementById('dl-face-sel');
+  if(!fs)return;
+  fs.options[0].text='Side ('+sz.w+'" x '+len+'")';
+}
+
+function dlGetFace(){
+  var type=document.getElementById('dl-box-type').value;
+  if(type==='trough'){
+    var idx=parseInt(document.getElementById('dl-box-size').value)||0;
+    var sz=DL_TROUGH_SEC[idx];
+    if(sz&&sz.custom){
+      return{w:parseFloat(document.getElementById('dl-cust-w').value)||4,h:parseFloat(document.getElementById('dl-cust-h').value)||4};
+    }
+    if(!sz)return{w:4,h:4};
+    var len=parseInt(document.getElementById('dl-trough-len').value)||24;
+    return{w:len,h:sz.h};
+  }
+  var idx=parseInt(document.getElementById('dl-box-size').value)||0;
+  var sz=DL_JBOX[idx];
+  if(!sz)return{w:6,h:6};
+  if(sz.custom){
+    return{w:parseFloat(document.getElementById('dl-cust-w').value)||6,h:parseFloat(document.getElementById('dl-cust-h').value)||6};
+  }
+  // Always drill the side face: W × D
+  return{w:sz.w,h:sz.d};
+}
+
+function dlAddEntry(){
+  var idx=_dlIdx++;
+  _dlEntries.push({idx:idx,koIdx:0,qty:1});
+  dlRenderEntries();
+}
+
+function dlRemoveEntry(idx){
+  _dlEntries=_dlEntries.filter(function(e){return e.idx!==idx;});
+  dlRenderEntries();
+  dlCalcIfEntries();
+}
+
+function dlEntryKo(idx,val){
+  var e=_dlEntries.find(function(e){return e.idx===idx;});
+  if(e)e.koIdx=parseInt(val)||0;
+  dlCalcIfEntries();
+}
+
+function dlEntryQty(idx,val){
+  var e=_dlEntries.find(function(e){return e.idx===idx;});
+  if(e)e.qty=Math.max(1,parseInt(val)||1);
+  dlCalcIfEntries();
+}
+
+function dlCalcIfEntries(){
+  if(_dlEntries.length>0)dlCalc();
+  else{var r=document.getElementById('dl-result');if(r)r.style.display='none';}
+}
+
+function dlRenderEntries(){
+  var c=document.getElementById('dl-entries');
+  if(!c)return;
+  if(_dlEntries.length===0){
+    c.innerHTML='<div class="dl-no-entries">No holes added — tap Add Hole below.</div>';
+    return;
+  }
+  var opts=DL_KO.map(function(ko,i){
+    return '<option value="'+i+'">'+ko.conduit+' trade size  —  '+dlFrac(ko.d)+'" holesaw</option>';
+  }).join('');
+  c.innerHTML=_dlEntries.map(function(e){
+    return '<div class="dl-entry-row">'+
+      '<select class="dl-entry-sel" data-eidx="'+e.idx+'" onchange="dlEntryKo('+e.idx+',this.value)">'+opts+'</select>'+
+      '<input type="number" class="dl-qty-inp" value="'+e.qty+'" min="1" oninput="dlEntryQty('+e.idx+',this.value)">'+
+      '<span style="font-size:11px;color:var(--muted)">holes</span>'+
+      '<button class="dl-rm-btn" onclick="dlRemoveEntry('+e.idx+')">&#x2715;</button>'+
+      '</div>';
+  }).join('');
+  _dlEntries.forEach(function(e){
+    var sel=c.querySelector('select[data-eidx="'+e.idx+'"]');
+    if(sel)sel.value=e.koIdx;
+  });
+}
+
+function dlCalc(){
+  dlUpdateCustomRow();
+  var face=dlGetFace();
+  dlSyncHoleOrder();
+  var holes=_dlHoleOrder.map(function(h){return{conduit:h.conduit,d:h.d};});
+  var resDiv=document.getElementById('dl-result');
+  var holeDiv=document.getElementById('dl-hole-list');
+  var diagDiv=document.getElementById('dl-diagram');
+  var measDiv=document.getElementById('dl-measurements');
+  var warnDiv=document.getElementById('dl-warnings');
+  if(!resDiv)return;
+  if(holes.length===0){resDiv.style.display='none';return;}
+  resDiv.style.display='';
+  // Hole summary
+  var summary={};
+  holes.forEach(function(h){
+    if(!summary[h.conduit])summary[h.conduit]={conduit:h.conduit,d:h.d,count:0};
+    summary[h.conduit].count++;
+  });
+  var hHtml='<div class="dl-section">Holes Required</div>';
+  Object.keys(summary).forEach(function(k){
+    var s=summary[k];
+    hHtml+='<div class="dl-hole-row">'+
+      '<span class="dl-hole-size">'+s.count+' x '+dlFrac(s.d)+'"</span>'+
+      '<span class="dl-hole-info">'+dlFrac(s.d)+'" holesaw</span>'+
+      '</div>';
+  });
+  holeDiv.innerHTML=hHtml;
+  var patEl=document.getElementById('dl-pattern');
+  var pattern=patEl?patEl.value:'offset';
+  var result=dlLayout(holes,face.w,face.h,pattern);
+  var positioned=result.positioned;
+  var warns=[];
+  if(!result.valid){
+    var msg=result.error||'Holes are too close for proper locknut installation.';
+    var next=dlNextSizeLabel(holes,pattern);
+    if(next)msg+=' Try a '+next+'.';
+    warnDiv.innerHTML='<div class="dl-warn">'+msg+'</div>';
+    diagDiv.innerHTML='';
+    measDiv.innerHTML='';
+    return;
+  }
+  holes.forEach(function(h){
+    if(h.d>face.w-1||h.d>face.h-1)
+      warns.push(dlFrac(h.d)+'" holesaw ('+h.conduit+' trade size) is large relative to this enclosure face.');
+  });
+  warnDiv.innerHTML=warns.map(function(w){return '<div class="dl-warn">'+w+'</div>';}).join('');
+  diagDiv.innerHTML=dlRenderSVG(positioned,face.w,face.h);
+  dlSetupDrag(positioned);
+  measDiv.innerHTML=dlRenderMeasurements(positioned,face.w,face.h);
+}
+
+function dlLayout(holes,faceW,faceH,pattern){
+  // Returns {positioned, valid, error, em, maxLnOD}
+  if(!holes.length)return{positioned:[],valid:true,error:null,em:0,maxLnOD:0};
+
+  var W=parseFloat(String(faceW).replace(/"/g,''))||0;
+  var H=parseFloat(String(faceH).replace(/"/g,''))||0;
+  var N=holes.length;
+  var snap=function(v){return Math.round(v*16)/16;};
+
+  holes.forEach(function(h){h.lnOD=DL_LOCKNUT_OD[h.conduit]||1.25;});
+  var maxLnOD=Math.max.apply(null,holes.map(function(h){return h.lnOD;}));
+  var EM=maxLnOD/2+0.5;
+  var uW=Math.max(0,W-2*EM);
+  var uH=Math.max(0,H-2*EM);
+  var minSpacing=maxLnOD+0.25;
+
+  if(N===1){
+    var p0={conduit:holes[0].conduit,d:holes[0].d,lnOD:holes[0].lnOD,cx:snap(W/2),cy:snap(H/2),row:0,overflow:false};
+    return{positioned:[p0],valid:true,error:null,em:EM,maxLnOD:maxLnOD};
+  }
+
+  // Step A: max possible rows given enclosure height
+  var maxPossibleRows=Math.floor(uH/minSpacing)+1;
+
+  // Step B: find optimal row count — smallest r where Sx >= minSpacing
+  var activeRows=maxPossibleRows,Sx=0;
+  var found=false;
+  for(var r=1;r<=maxPossibleRows;r++){
+    var maxHolesInRow=Math.ceil(N/r);
+    Sx=uW/(maxHolesInRow>1?maxHolesInRow-0.5:1);
+    if(Sx>=minSpacing){activeRows=r;found=true;break;}
+  }
+  if(!found){
+    return{positioned:[],valid:false,error:'Enclosure too small for this layout.',em:EM,maxLnOD:maxLnOD};
+  }
+
+  // Distribute holes round-robin across rows
+  var rowCounts=[];
+  for(var ri=0;ri<activeRows;ri++)rowCounts.push(0);
+  for(var i=0;i<N;i++)rowCounts[i%activeRows]++;
+
+  // Recalculate Sx from actual max row count
+  var maxRowCount=Math.max.apply(null,rowCounts);
+  Sx=uW/(maxRowCount>1?maxRowCount-0.5:1);
+
+  // Even Y distribution: divide total height into (activeRows+1) equal gaps
+  var Sy=H/(activeRows+1);
+  // Safety: Sy must be >= locknut radius + 0.25" from edge (hole won't be too close to wall or neighbor)
+  if(Sy<maxLnOD/2+0.25){
+    return{positioned:[],valid:false,error:'Enclosure too small for this layout.',em:EM,maxLnOD:maxLnOD};
+  }
+  var isOffset=(pattern==='offset');
+  var positioned=[],hi=0;
+
+  for(var ri2=0;ri2<activeRows;ri2++){
+    var count=rowCounts[ri2];
+    var cy=snap((ri2+1)*Sy);
+    var xShift=(isOffset&&ri2%2!==0)?Sx/2:0;
+    for(var ci=0;ci<count;ci++){
+      var cx=snap(EM+(ci*Sx)+xShift);
+      var h=holes[hi++];
+      positioned.push({conduit:h.conduit,d:h.d,lnOD:h.lnOD,cx:cx,cy:cy,row:ri2,overflow:false});
+    }
+  }
+
+  // Euclidean distance collision + absolute bounds check
+  var valid=true,error=null;
+  outer:for(var a=0;a<positioned.length;a++){
+    if(positioned[a].cx+positioned[a].lnOD/2>W||positioned[a].cx-positioned[a].lnOD/2<0){
+      valid=false;error='Holes are too close for proper locknut installation.';break;
+    }
+    for(var b=a+1;b<positioned.length;b++){
+      var dx=positioned[a].cx-positioned[b].cx;
+      var dy=positioned[a].cy-positioned[b].cy;
+      var dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<minSpacing){valid=false;error='Holes are too close for proper locknut installation.';break outer;}
+    }
+  }
+  return{positioned:positioned,valid:valid,error:error,em:EM,maxLnOD:maxLnOD};
+}
+
+function dlEntriesHash(){return _dlEntries.map(function(e){return e.koIdx+':'+e.qty;}).join('|');}
+function dlSyncHoleOrder(){
+  var h=dlEntriesHash();
+  if(h===_dlEntriesHash)return;
+  _dlEntriesHash=h;
+  var arr=[];
+  _dlEntries.forEach(function(e){
+    var ko=DL_KO[e.koIdx];
+    if(!ko)return;
+    for(var i=0;i<e.qty;i++)arr.push({koIdx:e.koIdx,conduit:ko.conduit,d:ko.d});
+  });
+  _dlHoleOrder=arr;
+}
+function dlPointerToSvg(e,svgEl){
+  var rect=svgEl.getBoundingClientRect();
+  var vb=svgEl.viewBox.baseVal;
+  var sx=vb.width/rect.width,sy=vb.height/rect.height;
+  return{x:(e.clientX-rect.left)*sx,y:(e.clientY-rect.top)*sy};
+}
+function dlSetupDrag(positioned){
+  var svgEl=document.querySelector('#dl-diagram svg');
+  if(!svgEl||!positioned.length)return;
+  positioned.forEach(function(p,i){
+    var g=svgEl.querySelector('#dlh-'+i);
+    if(!g)return;
+    var startSvg=null,moved=false;
+    g.addEventListener('pointerdown',function(e){
+      e.preventDefault();
+      svgEl.setPointerCapture(e.pointerId);
+      startSvg=dlPointerToSvg(e,svgEl);
+      moved=false;
+      _dlDrag={idx:i,g:g,positioned:positioned};
+      g.style.filter='drop-shadow(0px 6px 14px rgba(0,0,0,0.65))';
+      g.style.opacity='0.80';
+      g.style.cursor='grabbing';
+    });
+    g.addEventListener('pointermove',function(e){
+      if(!_dlDrag||_dlDrag.idx!==i||!startSvg)return;
+      var cur=dlPointerToSvg(e,svgEl);
+      var dx=cur.x-startSvg.x,dy=cur.y-startSvg.y;
+      moved=true;
+      g.setAttribute('transform','translate('+dx+','+dy+')');
+    });
+    g.addEventListener('pointerup',function(e){
+      if(!_dlDrag||_dlDrag.idx!==i)return;
+      var drag=_dlDrag;
+      _dlDrag=null;
+      g.removeAttribute('style');
+      g.setAttribute('transform','');
+      if(!moved)return;
+      var cur=dlPointerToSvg(e,svgEl);
+      var info=_dlSvgInfo;
+      var best=-1,bestD=Infinity;
+      drag.positioned.forEach(function(pp,j){
+        var px=info.ox+pp.cx*info.scale,py=info.oy+pp.cy*info.scale;
+        var d=Math.sqrt((cur.x-px)*(cur.x-px)+(cur.y-py)*(cur.y-py));
+        if(d<bestD){bestD=d;best=j;}
+      });
+      if(best>=0&&best!==drag.idx){
+        var item=_dlHoleOrder.splice(drag.idx,1)[0];
+        _dlHoleOrder.splice(best,0,item);
+        dlCalc();
+      }
+    });
+  });
+}
+
+function dlNextSizeLabel(holes,pattern){
+  // Returns label of next standard enclosure that will fit the current layout
+  if(!holes.length)return null;
+  holes.forEach(function(h){h.lnOD=h.lnOD||DL_LOCKNUT_OD[h.conduit]||1.25;});
+  var maxLnOD=Math.max.apply(null,holes.map(function(h){return h.lnOD;}));
+  var N=holes.length;
+  function wouldFit(fW,fH){
+    if(N<=1)return true;
+    var W=parseFloat(String(fW).replace(/"/g,''))||0;
+    var H=parseFloat(String(fH).replace(/"/g,''))||0;
+    var em=maxLnOD/2+0.5;
+    var uW=Math.max(0,W-2*em);
+    var uH=Math.max(0,H-2*em);
+    var minSpacing=maxLnOD+0.25;
+    var maxRows=Math.floor(uH/minSpacing)+1;
+    for(var r=1;r<=maxRows;r++){
+      var mh=Math.ceil(N/r);
+      var Sx=uW/(mh>1?mh-0.5:1);
+      if(Sx>=minSpacing)return true;
+    }
+    return false;
+  }
+  var type=document.getElementById('dl-box-type').value;
+  if(type==='trough'){
+    var secIdx=parseInt(document.getElementById('dl-box-size').value)||0;
+    var curLen=parseInt(document.getElementById('dl-trough-len').value)||24;
+    var curLi=DL_TROUGH_LENS.indexOf(curLen);
+    var sec=DL_TROUGH_SEC[secIdx];
+    for(var li=curLi+1;li<DL_TROUGH_LENS.length;li++){
+      if(wouldFit(DL_TROUGH_LENS[li],sec?sec.h:4))
+        return (sec?sec.w+'\u2033x'+sec.h+'\u2033x':'')+DL_TROUGH_LENS[li]+'" wireway';
+    }
+    for(var si=secIdx+1;si<DL_TROUGH_SEC.length-1;si++){
+      if(DL_TROUGH_SEC[si].custom)continue;
+      for(var li2=0;li2<DL_TROUGH_LENS.length;li2++){
+        if(wouldFit(DL_TROUGH_LENS[li2],DL_TROUGH_SEC[si].h))
+          return DL_TROUGH_SEC[si].w+'\u2033x'+DL_TROUGH_SEC[si].h+'\u2033x'+DL_TROUGH_LENS[li2]+'" wireway';
+      }
+    }
+  }else{
+    var jIdx=parseInt(document.getElementById('dl-box-size').value)||0;
+    for(var ji=jIdx+1;ji<DL_JBOX.length-1;ji++){
+      var sz=DL_JBOX[ji];
+      if(sz.custom)continue;
+      if(wouldFit(sz.w,sz.d))return sz.label+' junction box';
+    }
+  }
+  return null;
+}
+
+function dlRenderSVG(positioned,faceW,faceH){
+  var PL=40,PT=42,PR=64,PB=64;
+  var isLong=faceW>=faceH*3;
+  var maxFW=isLong?800:420;
+  var maxFH=isLong?240:360;
+  var scale=Math.min((maxFW-PL-PR)/faceW,(maxFH-PT-PB)/faceH);
+  scale=Math.max(scale,22);
+  if(!isLong&&scale>68)scale=68;
+  var bW=faceW*scale,bH=faceH*scale;
+  var svgW=bW+PL+PR,svgH=bH+PT+PB;
+  var ox=PL,oy=PT;
+  var RED='#dc2626',BLK='#111111';
+  _dlSvgInfo={scale:scale,ox:ox,oy:oy};
+
+  var s='<svg viewBox="0 0 '+svgW+' '+svgH+'" width="100%" style="max-width:'+Math.round(svgW)+'px;display:block;" xmlns="http://www.w3.org/2000/svg">';
+
+  // ── Box face (grey) ──
+  s+='<rect x="'+ox+'" y="'+oy+'" width="'+bW+'" height="'+bH+'" fill="#8d9db0" stroke="#4a5060" stroke-width="1.5"/>';
+  // Center guide lines
+  s+='<line x1="'+(ox+bW/2)+'" y1="'+oy+'" x2="'+(ox+bW/2)+'" y2="'+(oy+bH)+'" stroke="#9ca3af" stroke-width="0.5" stroke-dasharray="3,4"/>'+
+     '<line x1="'+ox+'" y1="'+(oy+bH/2)+'" x2="'+(ox+bW)+'" y2="'+(oy+bH/2)+'" stroke="#9ca3af" stroke-width="0.5" stroke-dasharray="3,4"/>';
+
+  // ── Overall dimensions — BLACK, flush to outer box edges ──
+  // Width: above box, extension lines from top corners upward
+  var dAbove=oy-16;
+  s+='<line x1="'+ox+'" y1="'+oy+'" x2="'+ox+'" y2="'+(dAbove-4)+'" stroke="'+BLK+'" stroke-width="0.8"/>'+           // left ext
+     '<line x1="'+(ox+bW)+'" y1="'+oy+'" x2="'+(ox+bW)+'" y2="'+(dAbove-4)+'" stroke="'+BLK+'" stroke-width="0.8"/>'+  // right ext
+     '<line x1="'+ox+'" y1="'+dAbove+'" x2="'+(ox+bW)+'" y2="'+dAbove+'" stroke="'+BLK+'" stroke-width="1"/>'+         // dim line
+     '<line x1="'+ox+'" y1="'+(dAbove-4)+'" x2="'+ox+'" y2="'+(dAbove+4)+'" stroke="'+BLK+'" stroke-width="1"/>'+      // tick L
+     '<line x1="'+(ox+bW)+'" y1="'+(dAbove-4)+'" x2="'+(ox+bW)+'" y2="'+(dAbove+4)+'" stroke="'+BLK+'" stroke-width="1"/>'+  // tick R
+     '<text x="'+(ox+bW/2)+'" y="'+(dAbove-7)+'" text-anchor="middle" font-size="15" font-weight="bold" fill="'+BLK+'" font-family="Roboto Mono,monospace">'+dlFrac(faceW)+'"</text>';
+  // Height: left of box, extension lines from left corners leftward
+  var dLeft=ox-20,midY=oy+bH/2;
+  s+='<line x1="'+ox+'" y1="'+oy+'" x2="'+(dLeft-4)+'" y2="'+oy+'" stroke="'+BLK+'" stroke-width="0.8"/>'+            // top ext
+     '<line x1="'+ox+'" y1="'+(oy+bH)+'" x2="'+(dLeft-4)+'" y2="'+(oy+bH)+'" stroke="'+BLK+'" stroke-width="0.8"/>'+  // bot ext
+     '<line x1="'+dLeft+'" y1="'+oy+'" x2="'+dLeft+'" y2="'+(oy+bH)+'" stroke="'+BLK+'" stroke-width="1"/>'+           // dim line
+     '<line x1="'+(dLeft-4)+'" y1="'+oy+'" x2="'+(dLeft+4)+'" y2="'+oy+'" stroke="'+BLK+'" stroke-width="1"/>'+        // tick T
+     '<line x1="'+(dLeft-4)+'" y1="'+(oy+bH)+'" x2="'+(dLeft+4)+'" y2="'+(oy+bH)+'" stroke="'+BLK+'" stroke-width="1"/>'+  // tick B
+     '<text x="'+(dLeft-7)+'" y="'+midY+'" text-anchor="middle" font-size="15" font-weight="bold" fill="'+BLK+'" font-family="Roboto Mono,monospace" transform="rotate(-90,'+(dLeft-7)+','+midY+')">'+dlFrac(faceH)+'"</text>';
+
+  // ── Holes ──
+  positioned.forEach(function(p,i){
+    var px=ox+p.cx*scale,py=oy+p.cy*scale,pr=(p.d/2)*scale;
+    var xs=Math.min(pr*0.42,9);
+    s+='<g id="dlh-'+i+'" style="cursor:grab;touch-action:none;">';
+    s+='<circle cx="'+px+'" cy="'+py+'" r="'+pr+'" fill="none" stroke="#111" stroke-width="1.5" stroke-dasharray="4,3"/>';
+    s+='<line x1="'+(px-xs)+'" y1="'+(py-xs)+'" x2="'+(px+xs)+'" y2="'+(py+xs)+'" stroke="#111" stroke-width="1.3"/>'+
+       '<line x1="'+(px+xs)+'" y1="'+(py-xs)+'" x2="'+(px-xs)+'" y2="'+(py+xs)+'" stroke="#111" stroke-width="1.3"/>';
+    s+='<text x="'+px+'" y="'+(py-pr-3)+'" text-anchor="middle" font-size="9" font-weight="700" fill="#111" font-family="Roboto Mono,monospace">'+(i+1)+'</text>';
+    s+='</g>';
+  });
+
+  // ── Horizontal layout chain (RED) — below box ──
+  // Points: left wall + each unique hole center X + right wall
+  var chainY=oy+bH+24;
+  var xPts=[0];
+  positioned.forEach(function(p){var rx=Math.round(p.cx*1000)/1000;if(xPts.indexOf(rx)<0)xPts.push(rx);});
+  xPts.push(faceW);
+  xPts.sort(function(a,b){return a-b;});
+  // Detect tight spacing: any gap < 1.25" physical OR < 35px screen
+  var isTightSpacing=false;
+  for(var txi=1;txi<xPts.length;txi++){
+    if((xPts[txi]-xPts[txi-1])*scale<35){isTightSpacing=true;break;}
+  }
+  var STD_TY=chainY+13,STG_TY=chainY+29;
+  var tickBottom=isTightSpacing?STG_TY+4:chainY+4;
+  s+='<line x1="'+ox+'" y1="'+chainY+'" x2="'+(ox+bW)+'" y2="'+chainY+'" stroke="'+RED+'" stroke-width="0.8"/>';
+  // Wall ticks from box bottom
+  s+='<line x1="'+ox+'" y1="'+(oy+bH)+'" x2="'+ox+'" y2="'+(chainY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>'+
+     '<line x1="'+(ox+bW)+'" y1="'+(oy+bH)+'" x2="'+(ox+bW)+'" y2="'+(chainY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+  // Hole center drop lines: from hole bottom circle edge to baseline
+  positioned.forEach(function(p){
+    var px=ox+p.cx*scale,pr=(p.d/2)*scale;
+    s+='<line x1="'+px+'" y1="'+(oy+p.cy*scale+pr)+'" x2="'+px+'" y2="'+(chainY+4)+'" stroke="'+RED+'" stroke-width="0.8" stroke-dasharray="3,2"/>';
+  });
+  // Extension lines for staggered segments (from baseline+4 down to staggered text area)
+  if(isTightSpacing){
+    for(var xi=1;xi<xPts.length;xi++){
+      if((xi-1)%2===1){ // odd-index segment → staggered
+        var ex0=ox+xPts[xi-1]*scale,ex1=ox+xPts[xi]*scale;
+        s+='<line x1="'+ex0+'" y1="'+(chainY+4)+'" x2="'+ex0+'" y2="'+(STG_TY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>'+
+           '<line x1="'+ex1+'" y1="'+(chainY+4)+'" x2="'+ex1+'" y2="'+(STG_TY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+      }
+    }
+  }
+  for(var xi=1;xi<xPts.length;xi++){
+    var dist=xPts[xi]-xPts[xi-1];
+    var midPx=ox+(xPts[xi-1]+xPts[xi])/2*scale;
+    var isStg=isTightSpacing&&(xi-1)%2===1;
+    var textY=isStg?STG_TY:STD_TY;
+    s+='<text x="'+midPx+'" y="'+textY+'" text-anchor="middle" font-size="7.5" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(dist*16)/16)+'"</text>';
+  }
+
+  // ── Vertical layout chain (RED) — right of box ──
+  // top edge → each row center → bottom edge; extension lines connect to rightmost hole
+  var chainX=ox+bW+24;
+
+  // Build maps: rowY → leftmost and rightmost hole px X
+  var rowLeftPx={},rowRightPx={};
+  positioned.forEach(function(p){
+    var ry=Math.round(p.cy*1000)/1000;
+    var px=ox+p.cx*scale;
+    if(rowLeftPx[ry]===undefined||px<rowLeftPx[ry])rowLeftPx[ry]=px;
+    if(rowRightPx[ry]===undefined||px>rowRightPx[ry])rowRightPx[ry]=px;
+  });
+
+  var uniqueRows=[];
+  positioned.forEach(function(p){var ry=Math.round(p.cy*1000)/1000;if(uniqueRows.indexOf(ry)<0)uniqueRows.push(ry);});
+  uniqueRows.sort(function(a,b){return a-b;});
+  var yPts=[0].concat(uniqueRows).concat([faceH]);
+  yPts=yPts.filter(function(v,i,a){return a.indexOf(v)===i;});
+  yPts.sort(function(a,b){return a-b;});
+  var vTop=oy+yPts[0]*scale,vBot=oy+yPts[yPts.length-1]*scale;
+  s+='<line x1="'+chainX+'" y1="'+vTop+'" x2="'+chainX+'" y2="'+vBot+'" stroke="'+RED+'" stroke-width="0.8"/>';
+  yPts.forEach(function(y){
+    var pyY=oy+y*scale;
+    var isEdge=(y===0||y===faceH);
+    var ry=Math.round(y*1000)/1000;
+    if(isEdge){
+      // Edge ticks: solid, from box wall to chain
+      s+='<line x1="'+(ox+bW)+'" y1="'+pyY+'" x2="'+(chainX+4)+'" y2="'+pyY+'" stroke="'+RED+'" stroke-width="0.8"/>';
+    }else{
+      // Row center: full-span dashed line from leftmost hole to chain (strikes through all hole centers)
+      var spanL=rowLeftPx[ry]!==undefined?rowLeftPx[ry]:(ox+bW);
+      s+='<line x1="'+spanL+'" y1="'+pyY+'" x2="'+(chainX+4)+'" y2="'+pyY+'" stroke="'+RED+'" stroke-width="0.8" stroke-dasharray="4,4"/>';
+    }
+  });
+  for(var yi=1;yi<yPts.length;yi++){
+    var distY=yPts[yi]-yPts[yi-1];
+    var midPyY=oy+(yPts[yi-1]+yPts[yi])/2*scale;
+    s+='<text x="'+(chainX+8)+'" y="'+(midPyY+3)+'" text-anchor="start" font-size="7.5" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(distY*16)/16)+'"</text>';
+  }
+
+  s+='</svg>';
+  return '<div class="dl-diagram-wrap">'+s+'</div>';
+}
+
+function dlRenderMeasurements(positioned,faceW,faceH){
+  var html='<div class="dl-section">Hole Positions (center to edge)</div>';
+  html+='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="dl-meas-tbl"><thead><tr><th>#</th><th>Trade</th><th>Drill</th><th>Left</th><th>Top</th><th>Right</th><th>Bottom</th></tr></thead><tbody>';
+  positioned.forEach(function(p,i){
+    html+='<tr>'+
+      '<td>'+(i+1)+'</td>'+
+      '<td>'+p.conduit+'</td>'+
+      '<td>'+dlFrac(p.d)+'"</td>'+
+      '<td>'+dlFrac(Math.round(p.cx*16)/16)+'"</td>'+
+      '<td>'+dlFrac(Math.round(p.cy*16)/16)+'"</td>'+
+      '<td>'+dlFrac(Math.round((faceW-p.cx)*16)/16)+'"</td>'+
+      '<td>'+dlFrac(Math.round((faceH-p.cy)*16)/16)+'"</td>'+
+      '</tr>';
+  });
+  html+='</tbody></table></div>';
+  // Center-to-center within each row
+  var rowGroups={};
+  positioned.forEach(function(p){
+    if(!rowGroups[p.row])rowGroups[p.row]=[];
+    rowGroups[p.row].push(p);
+  });
+  var ccItems=[];
+  Object.keys(rowGroups).forEach(function(k){
+    var rh=rowGroups[k];
+    if(rh.length<2)return;
+    rh.sort(function(a,b){return a.cx-b.cx;});
+    for(var i=1;i<rh.length;i++){
+      var cc=rh[i].cx-rh[i-1].cx;
+      var h1=positioned.indexOf(rh[i-1])+1;
+      var h2=positioned.indexOf(rh[i])+1;
+      ccItems.push({label:'Hole '+h1+' to Hole '+h2,val:dlFrac(Math.round(cc*16)/16)});
+    }
+  });
+  if(ccItems.length){
+    html+='<div class="dl-section" style="margin-top:14px;">Center-to-Center Spacing</div>';
+    ccItems.forEach(function(item){
+      html+='<div class="dl-hole-row">'+
+        '<span class="dl-hole-size">'+item.val+'"</span>'+
+        '<span class="dl-hole-info">'+item.label+'</span>'+
+        '</div>';
+    });
+  }
+  return html;
+}
 
 </script>
 
@@ -16037,6 +16911,7 @@ function scanLoad(){
   try{var d=localStorage.getItem('jc_scan_pages');if(d){_scanPages=JSON.parse(d)||[];}}catch(e){_scanPages=[];}
   scanRender();
 }
+scanLoad();
 function scanAddPage(input){
   var files=input.files;
   if(!files||!files.length)return;
@@ -16216,4 +17091,24 @@ function scanGeneratePDF(){
   // Try to load icon.png (same-origin), fall back to no logo
   iconImg.onload=function(){
     try{
-  
+      var cv=document.createElement('canvas');
+      cv.width=iconImg.naturalWidth||64;
+      cv.height=iconImg.naturalHeight||64;
+      cv.getContext('2d').drawImage(iconImg,0,0);
+      iconData=cv.toDataURL('image/png');
+    }catch(e){ iconData=null; }
+    buildPDF();
+  };
+  iconImg.onerror=function(){ iconData=null; buildPDF(); };
+  iconImg.src='icon.png';
+}
+
+function scanDownload(blob,fname){
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download=fname;a.click();
+  setTimeout(function(){URL.revokeObjectURL(url);},2000);
+}
+</script>
+
+</body>
+</html>
