@@ -1576,7 +1576,7 @@ body.light-mode .stg-state-grp-hd.yrlocal span,body.light-mode .stg-state-badge.
 /* ── Drill Layout Tab ── */
 .drill-wrap{padding:12px 14px 80px;}
 .dl-entry-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px;}
-.dl-entry-sel{flex:1;background:transparent;border:none;color:var(--text);font-size:13px;outline:none;-webkit-appearance:none;appearance:none;min-width:0;}
+.dl-entry-sel{flex:1;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a0b0c8' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center;border:none;color:var(--text);font-size:13px;outline:none;-webkit-appearance:none;appearance:none;min-width:0;padding-left:8px;padding-right:32px;}
 .dl-qty-inp{width:44px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:13px;padding:3px 6px;text-align:center;}
 .dl-rm-btn{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0;}
 .dl-hole-row{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);}
@@ -1588,8 +1588,24 @@ body.light-mode .stg-state-grp-hd.yrlocal span,body.light-mode .stg-state-badge.
 .dl-meas-tbl td{padding:5px 5px;color:var(--text);border-bottom:1px solid var(--border);font-family:'Roboto Mono',monospace;font-size:10px;white-space:nowrap;}
 .dl-meas-tbl tr:last-child td{border-bottom:none;}
 .dl-warn{background:#fbbf24;border:1px solid #d97706;border-radius:8px;padding:8px 12px;font-size:12px;color:#000;margin-top:6px;line-height:1.5;font-weight:600;}
+.dl-csp-toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);cursor:pointer;}
+.dl-csp-toggle input{accent-color:#f0c020;width:15px;height:15px;cursor:pointer;}
+.dl-csp-inputs{display:flex;align-items:center;gap:4px;padding:2px 0 4px;overflow-x:auto;}
+.dl-csp-field{display:flex;flex-direction:column;align-items:center;gap:3px;width:54px;flex-shrink:0;}
+.dl-csp-inp{width:100%;text-align:center;font-size:12px;padding:5px 2px;}
+.dl-csp-sub{font-size:9px;color:var(--muted);text-align:center;letter-spacing:0.02em;}
+.dl-csp-sep{font-size:13px;color:var(--muted);flex-shrink:0;padding:0 1px;margin-bottom:14px;}
+.dl-csp-reset{margin-left:8px;margin-bottom:12px;background:none;border:1px solid var(--border2);color:var(--muted);font-size:11px;font-weight:600;padding:5px 10px;border-radius:5px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.dl-csp-reset:hover{border-color:#6b7280;color:var(--text);}
+.dl-action-row{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
+.dl-action-btn{background:#1e2533;border:1px solid #3a4255;color:#c8d0e0;font-size:13px;font-weight:600;font-family:'Roboto Mono',monospace;letter-spacing:0.02em;padding:9px 18px;border-radius:5px;cursor:pointer;transition:background 0.15s,border-color 0.15s;}
+.dl-action-btn:hover{background:#283040;border-color:#556080;}
+.dl-action-btn:active{background:#161c28;}
+.dl-action-btn-accent{background:#1a2d1a;border-color:#2e5c2e;color:#7ec87e;}
+.dl-action-btn-accent:hover{background:#1f3a1f;border-color:#3a7a3a;}
 .dl-diagram-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:4px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;}
-.dl-add-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:#f0c020;font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer;margin-top:4px;}
+.dl-add-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:#000;border:1.5px solid #fff;border-radius:8px;color:#fff;font-size:13px;font-weight:700;padding:9px 14px;cursor:pointer;margin-top:4px;}
+.dl-add-btn:active{background:#ca9a04;}
 .dl-calc-btn{width:100%;background:#f0c020;border:none;border-radius:10px;color:#000;font-size:15px;font-weight:700;padding:13px;cursor:pointer;margin-top:10px;letter-spacing:.3px;}
 .dl-section{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#f0c020;margin:16px 0 8px;}
 .dl-no-entries{font-size:12px;color:var(--muted);padding:6px 2px;}
@@ -3346,7 +3362,6 @@ if('serviceWorker' in navigator){
   <div class="tab-panel" id="tab-drill">
     <div class="drill-wrap">
       <div class="section-label">Drill Layout</div>
-      <div class="fi-sub" style="margin-bottom:10px;">Select enclosure and face, add knockout sizes, then calculate for precise hole positions and a drill layout diagram.</div>
 
       <div class="fields">
         <div class="field-row">
@@ -3379,6 +3394,51 @@ if('serviceWorker' in navigator){
             <option value="match">Match — columns aligned</option>
           </select></div>
         </div>
+        <div class="field-row">
+          <div class="field-label">Rows</div>
+          <div class="sel-wrap"><select class="fi" id="dl-rows" onchange="dlCalc()">
+            <option value="auto">Auto</option>
+          </select></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Spacing</div>
+          <label class="dl-csp-toggle"><input type="checkbox" id="dl-csp-on" onchange="dlCustSpToggle()"> Custom Override</label>
+        </div>
+        <div class="field-row" id="dl-vcsp-label-row" style="display:none;margin-top:-2px;">
+          <div class="field-label"></div>
+          <label class="dl-csp-toggle"><input type="checkbox" id="dl-vcsp-on" onchange="dlVCustSpToggle()"> Vertical Override</label>
+        </div>
+        <div id="dl-csp-row" style="display:none;margin-top:-2px;">
+          <div class="dl-csp-inputs">
+            <div class="dl-csp-field">
+              <input type="text" inputmode="decimal" class="fi dl-csp-inp" id="dl-csp-left" placeholder="—" onchange="dlCustSpFill('left')">
+              <div class="dl-csp-sub">Left Edge</div>
+            </div>
+            <div class="dl-csp-sep">+</div>
+            <div class="dl-csp-field">
+              <input type="text" inputmode="decimal" class="fi dl-csp-inp" id="dl-csp-cc" placeholder="—" onchange="dlCustSpFill('cc')">
+              <div class="dl-csp-sub">CL to CL</div>
+            </div>
+            <div class="dl-csp-sep">+</div>
+            <div class="dl-csp-field">
+              <input type="text" inputmode="decimal" class="fi dl-csp-inp" id="dl-csp-right" placeholder="—" onchange="dlCustSpFill('right')">
+              <div class="dl-csp-sub">Right Edge</div>
+            </div>
+            <span id="dl-vcsp-inline" style="display:none;">
+              <div class="dl-csp-sep" style="color:var(--border2);">|</div>
+              <div class="dl-csp-field">
+                <input type="text" inputmode="decimal" class="fi dl-csp-inp" id="dl-vcsp-back" placeholder="—" onchange="dlVCustSpFill('back')">
+                <div class="dl-csp-sub">Back Edge</div>
+              </div>
+              <div class="dl-csp-sep">+</div>
+              <div class="dl-csp-field">
+                <input type="text" inputmode="decimal" class="fi dl-csp-inp" id="dl-vcsp-front" placeholder="—" onchange="dlVCustSpFill('front')">
+                <div class="dl-csp-sub">Front Edge</div>
+              </div>
+            </span>
+            <button class="dl-csp-reset" onclick="dlCustSpReset()">Reset</button>
+          </div>
+        </div>
         <div id="dl-custom-row" style="display:none;">
           <div class="field-row">
             <div class="field-label">Width (in)</div>
@@ -3396,11 +3456,14 @@ if('serviceWorker' in navigator){
       <button class="dl-add-btn" onclick="dlAddEntry()">+ Add Hole</button>
 
       <div id="dl-result" style="display:none;">
-        <div id="dl-hole-list"></div>
         <div id="dl-warnings"></div>
         <div class="section-label" style="margin-top:14px;">Layout Diagram</div>
         <div id="dl-diagram"></div>
         <div id="dl-measurements"></div>
+        <div class="result-actions">
+          <button class="result-save-btn" onclick="dlSaveToNotes()">Save to Notes</button>
+          <button class="result-export-btn" onclick="dlShareExport()">Share &amp; Export</button>
+        </div>
       </div>
     </div>
   </div>
@@ -15555,8 +15618,6 @@ var DL_LOCKNUT_OD={
 };
 var _dlEntries=[],_dlIdx=0;
 var _dlHoleOrder=[],_dlEntriesHash='';
-var _dlDrag=null;
-var _dlSvgInfo={scale:1,ox:0,oy:0};
 
 function dlGcd(a,b){return b===0?a:dlGcd(b,a%b);}
 function dlFrac(v){
@@ -15566,7 +15627,8 @@ function dlFrac(v){
   if(n===0)return w.toString();
   if(n===16)return (w+1).toString();
   var g=dlGcd(n,16);
-  return (w>0?w+'-':'')+n/g+'/'+(16/g);
+  if(w===0)return n/g+'/'+(16/g);
+  return w+'-'+n/g+'/'+(16/g);
 }
 
 function dlInit(){
@@ -15708,31 +15770,44 @@ function dlCalc(){
   dlSyncHoleOrder();
   var holes=_dlHoleOrder.map(function(h){return{conduit:h.conduit,d:h.d};});
   var resDiv=document.getElementById('dl-result');
-  var holeDiv=document.getElementById('dl-hole-list');
   var diagDiv=document.getElementById('dl-diagram');
   var measDiv=document.getElementById('dl-measurements');
   var warnDiv=document.getElementById('dl-warnings');
   if(!resDiv)return;
   if(holes.length===0){resDiv.style.display='none';return;}
   resDiv.style.display='';
-  // Hole summary
-  var summary={};
-  holes.forEach(function(h){
-    if(!summary[h.conduit])summary[h.conduit]={conduit:h.conduit,d:h.d,count:0};
-    summary[h.conduit].count++;
-  });
-  var hHtml='<div class="dl-section">Holes Required</div>';
-  Object.keys(summary).forEach(function(k){
-    var s=summary[k];
-    hHtml+='<div class="dl-hole-row">'+
-      '<span class="dl-hole-size">'+s.count+' x '+dlFrac(s.d)+'"</span>'+
-      '<span class="dl-hole-info">'+dlFrac(s.d)+'" holesaw</span>'+
-      '</div>';
-  });
-  holeDiv.innerHTML=hHtml;
   var patEl=document.getElementById('dl-pattern');
   var pattern=patEl?patEl.value:'offset';
-  var result=dlLayout(holes,face.w,face.h,pattern);
+  // Compute maxPossibleRows to populate Rows dropdown
+  var _maxLnOD2=Math.max.apply(null,holes.map(function(h){return DL_LOCKNUT_OD[h.conduit]||1.25;}));
+  var _H2=parseFloat(String(face.h).replace(/"/g,''))||0;
+  var _uH2=Math.max(0,_H2-(_maxLnOD2/2+0.5)*2);
+  var _maxRows2=Math.floor(_uH2/(_maxLnOD2+0.25))+1;
+  var rowsSel=document.getElementById('dl-rows');
+  if(rowsSel){
+    var _curRowVal=rowsSel.value;
+    var _ropts='<option value="auto">Auto</option>';
+    for(var _ri=1;_ri<=_maxRows2;_ri++)_ropts+='<option value="'+_ri+'">'+_ri+'</option>';
+    rowsSel.innerHTML=_ropts;
+    if(_curRowVal!=='auto'&&parseInt(_curRowVal)<=_maxRows2)rowsSel.value=_curRowVal;
+    else rowsSel.value='auto';
+  }
+  var manualRows=rowsSel?rowsSel.value:'auto';
+  var custSpEl=document.getElementById('dl-csp-on');
+  var custSp=null;
+  if(custSpEl&&custSpEl.checked){
+    var _cspL=dlParseFrac(document.getElementById('dl-csp-left').value);
+    var _cspCC=dlParseFrac(document.getElementById('dl-csp-cc').value);
+    if(_cspL!==null&&_cspCC!==null&&_cspCC>0)custSp={left:_cspL,cc:_cspCC};
+  }
+  var vCustSpEl=document.getElementById('dl-vcsp-on');
+  var vCustSp=null;
+  if(vCustSpEl&&vCustSpEl.checked){
+    var _vcspB=dlParseFrac(document.getElementById('dl-vcsp-back').value);
+    var _vcspF=dlParseFrac(document.getElementById('dl-vcsp-front').value);
+    if(_vcspB!==null&&_vcspB>0)vCustSp={back:_vcspB,front:(_vcspF!==null&&_vcspF>0?_vcspF:null)};
+  }
+  var result=dlLayout(holes,face.w,face.h,pattern,manualRows,custSp,vCustSp);
   var positioned=result.positioned;
   var warns=[];
   if(!result.valid){
@@ -15748,13 +15823,42 @@ function dlCalc(){
     if(h.d>face.w-1||h.d>face.h-1)
       warns.push(dlFrac(h.d)+'" holesaw ('+h.conduit+' trade size) is large relative to this enclosure face.');
   });
+  if(vCustSp){
+    var _maxLnOD_vc=Math.max.apply(null,holes.map(function(h){return DL_LOCKNUT_OD[h.conduit]||1.25;}));
+    var _minEM_vc=_maxLnOD_vc/2+0.5;
+    var _H_vc=parseFloat(String(face.h).replace(/"/g,''))||0;
+    if(vCustSp.back<_minEM_vc)warns.push('Back edge: hole is too close to the enclosure edge (vertical).');
+    if(vCustSp.front!==null&&vCustSp.front<_minEM_vc)warns.push('Front edge: hole is too close to the enclosure edge (vertical).');
+    if(vCustSp.front!==null&&vCustSp.back+vCustSp.front>_H_vc)warns.push('Vertical edge values exceed the enclosure face height.');
+  }
   warnDiv.innerHTML=warns.map(function(w){return '<div class="dl-warn">'+w+'</div>';}).join('');
-  diagDiv.innerHTML=dlRenderSVG(positioned,face.w,face.h);
-  dlSetupDrag(positioned);
+  diagDiv.innerHTML=dlRenderSVG(positioned,face.w,face.h,vCustSp);
   measDiv.innerHTML=dlRenderMeasurements(positioned,face.w,face.h);
+  // ── Capture _jcPending for Save to Notes / Share & Export ──
+  var _dlTypeEl=document.getElementById('dl-box-type');
+  var _dlSizeEl=document.getElementById('dl-box-size');
+  var _dlTypeLbl=_dlTypeEl?_dlTypeEl.options[_dlTypeEl.selectedIndex].text:'';
+  var _dlSizeLbl=_dlSizeEl?_dlSizeEl.options[_dlSizeEl.selectedIndex].text:'';
+  var _dlPatLbl=patEl?patEl.options[patEl.selectedIndex].text.split(' \u2014 ')[0]:'';
+  var _dlUniqueY=[];
+  positioned.forEach(function(p){var ry=Math.round(p.cy*1000)/1000;if(_dlUniqueY.indexOf(ry)<0)_dlUniqueY.push(ry);});
+  var _dlGroups={};
+  _dlHoleOrder.forEach(function(h){var k=h.conduit+' ('+dlFrac(h.d)+'" holesaw)';_dlGroups[k]=(_dlGroups[k]||0)+1;});
+  var _dlHoleSub=Object.keys(_dlGroups).map(function(k){return _dlGroups[k]+'\u00d7 '+k;}).join(', ');
+  _jcPending={
+    tab:'drill',tabName:'Drill Layout',
+    lines:[
+      {lbl:'Enclosure',val:_dlSizeLbl,state:'neutral',sub:_dlTypeLbl},
+      {lbl:'Total Holes',val:String(_dlHoleOrder.length),state:'neutral',sub:_dlHoleSub},
+      {lbl:'Pattern',val:_dlPatLbl,state:'neutral',sub:''},
+      {lbl:'Rows',val:String(_dlUniqueY.length),state:'neutral',sub:''},
+      {lbl:'Min. Edge Margin',val:dlFrac(result.em||0)+'"',state:'neutral',sub:'locknut clearance to wall'}
+    ],
+    svg:diagDiv.innerHTML+measDiv.innerHTML
+  };
 }
 
-function dlLayout(holes,faceW,faceH,pattern){
+function dlLayout(holes,faceW,faceH,pattern,manualRows,custSp,vCustSp){
   // Returns {positioned, valid, error, em, maxLnOD}
   if(!holes.length)return{positioned:[],valid:true,error:null,em:0,maxLnOD:0};
 
@@ -15765,10 +15869,18 @@ function dlLayout(holes,faceW,faceH,pattern){
 
   holes.forEach(function(h){h.lnOD=DL_LOCKNUT_OD[h.conduit]||1.25;});
   var maxLnOD=Math.max.apply(null,holes.map(function(h){return h.lnOD;}));
-  var EM=maxLnOD/2+0.5;
+  var minSpacing=maxLnOD+0.25;
+  var minEM=maxLnOD/2+0.5;
+  var prefEM=Math.max(minEM,1.5);
+  // Try preferred margin first; fall back to minimum if Sx would be too tight
+  var uW_pref=Math.max(0,W-2*prefEM),uH_pref=Math.max(0,H-2*prefEM);
+  var mpr_pref=Math.floor(uH_pref/minSpacing)+1;
+  var rMin_pref=(pattern==='offset'&&mpr_pref>=2)?2:1;
+  var Sx_pref=0,found_pref=false;
+  for(var rp=rMin_pref;rp<=mpr_pref;rp++){var mhr_p=Math.ceil(N/rp);var sx_p=uW_pref/(mhr_p>1?mhr_p-0.5:1);if(sx_p>=minSpacing){Sx_pref=sx_p;found_pref=true;break;}}
+  var EM=found_pref?prefEM:minEM;
   var uW=Math.max(0,W-2*EM);
   var uH=Math.max(0,H-2*EM);
-  var minSpacing=maxLnOD+0.25;
 
   if(N===1){
     var p0={conduit:holes[0].conduit,d:holes[0].d,lnOD:holes[0].lnOD,cx:snap(W/2),cy:snap(H/2),row:0,overflow:false};
@@ -15779,15 +15891,22 @@ function dlLayout(holes,faceW,faceH,pattern){
   var maxPossibleRows=Math.floor(uH/minSpacing)+1;
 
   // Step B: find optimal row count — smallest r where Sx >= minSpacing
+  // Offset pattern forces minimum 2 rows to guarantee honeycomb stagger
+  var rMin=(pattern==='offset'&&maxPossibleRows>=2)?2:1;
   var activeRows=maxPossibleRows,Sx=0;
   var found=false;
-  for(var r=1;r<=maxPossibleRows;r++){
+  for(var r=rMin;r<=maxPossibleRows;r++){
     var maxHolesInRow=Math.ceil(N/r);
     Sx=uW/(maxHolesInRow>1?maxHolesInRow-0.5:1);
     if(Sx>=minSpacing){activeRows=r;found=true;break;}
   }
   if(!found){
     return{positioned:[],valid:false,error:'Enclosure too small for this layout.',em:EM,maxLnOD:maxLnOD};
+  }
+  // Manual row override — bypasses optimal; collision check will catch bad configs
+  if(manualRows&&manualRows!=='auto'){
+    var _mr=Math.max(1,Math.min(parseInt(manualRows)||1,maxPossibleRows));
+    activeRows=_mr;
   }
 
   // Distribute holes round-robin across rows
@@ -15801,19 +15920,30 @@ function dlLayout(holes,faceW,faceH,pattern){
 
   // Even Y distribution: divide total height into (activeRows+1) equal gaps
   var Sy=H/(activeRows+1);
-  // Safety: Sy must be >= locknut radius + 0.25" from edge (hole won't be too close to wall or neighbor)
-  if(Sy<maxLnOD/2+0.25){
-    return{positioned:[],valid:false,error:'Enclosure too small for this layout.',em:EM,maxLnOD:maxLnOD};
+  var isManual=manualRows&&manualRows!=='auto';
+  // Skip Sy wall check when vertical custom override is active (user takes responsibility)
+  if(!vCustSp){
+    var minSy;
+    if(isManual&&pattern==='match'){
+      minSy=maxLnOD+0.25;
+      if(Sy<minSy)return{positioned:[],valid:false,error:'Holes cannot physically fit aligned. Try Offset pattern or a larger enclosure.',em:EM,maxLnOD:maxLnOD};
+    } else if(isManual&&pattern==='offset'){
+      minSy=maxLnOD/2;
+      if(Sy<minSy)return{positioned:[],valid:false,error:'Enclosure too small for this layout.',em:EM,maxLnOD:maxLnOD};
+    } else {
+      minSy=maxLnOD/2+0.25;
+      if(Sy<minSy)return{positioned:[],valid:false,error:'Enclosure too small for this layout.',em:EM,maxLnOD:maxLnOD};
+    }
   }
   var isOffset=(pattern==='offset');
   var positioned=[],hi=0;
 
   for(var ri2=0;ri2<activeRows;ri2++){
     var count=rowCounts[ri2];
-    var cy=snap((ri2+1)*Sy);
-    var xShift=(isOffset&&ri2%2!==0)?Sx/2:0;
+    var cy=vCustSp?snap(vCustSp.back+ri2*Sy):snap((ri2+1)*Sy);
+    var xShift=(isOffset&&ri2%2!==0)?(custSp?custSp.cc/2:Sx/2):0;
     for(var ci=0;ci<count;ci++){
-      var cx=snap(EM+(ci*Sx)+xShift);
+      var cx=custSp?snap(custSp.left+ci*custSp.cc+xShift):snap(EM+(ci*Sx)+xShift);
       var h=holes[hi++];
       positioned.push({conduit:h.conduit,d:h.d,lnOD:h.lnOD,cx:cx,cy:cy,row:ri2,overflow:false});
     }
@@ -15835,6 +15965,103 @@ function dlLayout(holes,faceW,faceH,pattern){
   return{positioned:positioned,valid:valid,error:error,em:EM,maxLnOD:maxLnOD};
 }
 
+function dlSaveToNotes(){if(!_jcPending)return;jcShowSave();}
+function dlShareExport(){if(!_jcPending)return;jcExport();}
+function dlCustSpToggle(){
+  var on=document.getElementById('dl-csp-on').checked;
+  var row=document.getElementById('dl-csp-row');
+  if(row)row.style.display=on?'':'none';
+  var labelRow=document.getElementById('dl-vcsp-label-row');
+  if(labelRow)labelRow.style.display=on?'':'none';
+  if(!on){
+    var vCb=document.getElementById('dl-vcsp-on');
+    if(vCb)vCb.checked=false;
+    var vInline=document.getElementById('dl-vcsp-inline');
+    if(vInline)vInline.style.display='none';
+    dlCustSpReset();
+  }
+  dlCalcIfEntries();
+}
+function dlParseFrac(s){
+  s=String(s).trim();
+  var m=s.match(/^(\d+)-(\d+)\/(\d+)$/);if(m)return parseInt(m[1])+parseInt(m[2])/parseInt(m[3]);
+  m=s.match(/^(\d+)\/(\d+)$/);if(m)return parseInt(m[1])/parseInt(m[2]);
+  var v=parseFloat(s);return isNaN(v)?null:v;
+}
+function dlCspSnap(v){return Math.round(v*16)/16;}
+function dlCspFmt(v){return dlFrac(dlCspSnap(v));}
+function dlCustSpFill(changed){
+  var face=dlGetFace();
+  var W=parseFloat(String(face.w).replace(/"/g,''))||0;
+  var N=_dlHoleOrder.length;
+  var lEl=document.getElementById('dl-csp-left');
+  var cEl=document.getElementById('dl-csp-cc');
+  var rEl=document.getElementById('dl-csp-right');
+  if(!lEl||!cEl||!rEl)return;
+  var left=dlParseFrac(lEl.value),cc=dlParseFrac(cEl.value),right=dlParseFrac(rEl.value);
+  var hasL=left!==null&&lEl.value.trim()!=='';
+  var hasC=cc!==null&&cEl.value.trim()!=='';
+  var hasR=right!==null&&rEl.value.trim()!=='';
+  // Priority-based sync: which field changed drives the solve order
+  if(changed==='cc'||(!hasL&&hasC&&!hasR)){
+    // CC changed (or only CC) — auto-center left & right
+    if(hasC&&N>=1){var rem=W-(N-1)*cc;left=dlCspSnap(rem/2);right=left;hasL=true;hasR=true;}
+  } else if(changed==='left'||changed==='right'){
+    // Edge changed — solve CC, keep the other edge fixed (or split if the other is absent)
+    if(hasL&&hasR&&N>1){cc=dlCspSnap((W-left-right)/(N-1));hasC=true;}
+    else if(hasL&&!hasR&&hasC&&N>=1){right=dlCspSnap(W-left-(N-1)*cc);hasR=true;}
+    else if(!hasL&&hasR&&hasC&&N>=1){left=dlCspSnap(W-right-(N-1)*cc);hasL=true;}
+  } else {
+    // Fallback generic solve
+    if(hasL&&hasC&&!hasR){right=dlCspSnap(W-left-(N-1)*cc);hasR=true;}
+    else if(!hasL&&hasC&&hasR){left=dlCspSnap(W-right-(N-1)*cc);hasL=true;}
+    else if(hasL&&!hasC&&hasR&&N>1){cc=dlCspSnap((W-left-right)/(N-1));hasC=true;}
+  }
+  // Edge margin validation
+  var warnDiv=document.getElementById('dl-warnings');
+  if(warnDiv&&N>0){
+    var _maxLnOD_csp=Math.max.apply(null,_dlHoleOrder.map(function(h){return DL_LOCKNUT_OD[h.conduit]||1.25;}));
+    var _minEM_csp=_maxLnOD_csp/2+0.5;
+    var _cspWarns=[];
+    if(hasL&&left<_minEM_csp)_cspWarns.push('Left hole is too close to the enclosure edge.');
+    if(hasR&&right<_minEM_csp)_cspWarns.push('Right hole is too close to the enclosure edge.');
+    if(_cspWarns.length)warnDiv.innerHTML='<div class="dl-warn">'+_cspWarns.join(' ')+'</div>';
+    else warnDiv.innerHTML='';
+  }
+  if(hasL)lEl.value=dlFrac(left);
+  if(hasC)cEl.value=dlFrac(cc);
+  if(hasR)rEl.value=dlFrac(right);
+  dlCalcIfEntries();
+}
+function dlCustSpReset(){
+  var ids=['dl-csp-left','dl-csp-cc','dl-csp-right','dl-vcsp-back','dl-vcsp-front'];
+  ids.forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  dlCalcIfEntries();
+}
+function dlVCustSpToggle(){
+  var on=document.getElementById('dl-vcsp-on').checked;
+  var inline=document.getElementById('dl-vcsp-inline');
+  if(inline)inline.style.display=on?'contents':'none';
+  dlCalcIfEntries();
+}
+function dlVCustSpFill(changed){
+  var face=dlGetFace();
+  var H=parseFloat(String(face.h).replace(/"/g,''))||0;
+  var bEl=document.getElementById('dl-vcsp-back');
+  var fEl=document.getElementById('dl-vcsp-front');
+  if(!bEl||!fEl)return;
+  var back=dlParseFrac(bEl.value),front=dlParseFrac(fEl.value);
+  var hasB=back!==null&&bEl.value.trim()!=='';
+  var hasF=front!==null&&fEl.value.trim()!=='';
+  // Two-way link: the changed field always drives the other
+  if(changed==='back'&&hasB){front=dlCspSnap(H-back);hasF=true;}
+  else if(changed==='front'&&hasF){back=dlCspSnap(H-front);hasB=true;}
+  else if(hasB&&!hasF){front=dlCspSnap(H-back);hasF=true;}
+  else if(!hasB&&hasF){back=dlCspSnap(H-front);hasB=true;}
+  if(hasB)bEl.value=dlFrac(back);
+  if(hasF)fEl.value=dlFrac(front);
+  dlCalcIfEntries();
+}
 function dlEntriesHash(){return _dlEntries.map(function(e){return e.koIdx+':'+e.qty;}).join('|');}
 function dlSyncHoleOrder(){
   var h=dlEntriesHash();
@@ -15848,60 +16075,6 @@ function dlSyncHoleOrder(){
   });
   _dlHoleOrder=arr;
 }
-function dlPointerToSvg(e,svgEl){
-  var rect=svgEl.getBoundingClientRect();
-  var vb=svgEl.viewBox.baseVal;
-  var sx=vb.width/rect.width,sy=vb.height/rect.height;
-  return{x:(e.clientX-rect.left)*sx,y:(e.clientY-rect.top)*sy};
-}
-function dlSetupDrag(positioned){
-  var svgEl=document.querySelector('#dl-diagram svg');
-  if(!svgEl||!positioned.length)return;
-  positioned.forEach(function(p,i){
-    var g=svgEl.querySelector('#dlh-'+i);
-    if(!g)return;
-    var startSvg=null,moved=false;
-    g.addEventListener('pointerdown',function(e){
-      e.preventDefault();
-      svgEl.setPointerCapture(e.pointerId);
-      startSvg=dlPointerToSvg(e,svgEl);
-      moved=false;
-      _dlDrag={idx:i,g:g,positioned:positioned};
-      g.style.filter='drop-shadow(0px 6px 14px rgba(0,0,0,0.65))';
-      g.style.opacity='0.80';
-      g.style.cursor='grabbing';
-    });
-    g.addEventListener('pointermove',function(e){
-      if(!_dlDrag||_dlDrag.idx!==i||!startSvg)return;
-      var cur=dlPointerToSvg(e,svgEl);
-      var dx=cur.x-startSvg.x,dy=cur.y-startSvg.y;
-      moved=true;
-      g.setAttribute('transform','translate('+dx+','+dy+')');
-    });
-    g.addEventListener('pointerup',function(e){
-      if(!_dlDrag||_dlDrag.idx!==i)return;
-      var drag=_dlDrag;
-      _dlDrag=null;
-      g.removeAttribute('style');
-      g.setAttribute('transform','');
-      if(!moved)return;
-      var cur=dlPointerToSvg(e,svgEl);
-      var info=_dlSvgInfo;
-      var best=-1,bestD=Infinity;
-      drag.positioned.forEach(function(pp,j){
-        var px=info.ox+pp.cx*info.scale,py=info.oy+pp.cy*info.scale;
-        var d=Math.sqrt((cur.x-px)*(cur.x-px)+(cur.y-py)*(cur.y-py));
-        if(d<bestD){bestD=d;best=j;}
-      });
-      if(best>=0&&best!==drag.idx){
-        var item=_dlHoleOrder.splice(drag.idx,1)[0];
-        _dlHoleOrder.splice(best,0,item);
-        dlCalc();
-      }
-    });
-  });
-}
-
 function dlNextSizeLabel(holes,pattern){
   // Returns label of next standard enclosure that will fit the current layout
   if(!holes.length)return null;
@@ -15952,8 +16125,8 @@ function dlNextSizeLabel(holes,pattern){
   return null;
 }
 
-function dlRenderSVG(positioned,faceW,faceH){
-  var PL=40,PT=42,PR=64,PB=64;
+function dlRenderSVG(positioned,faceW,faceH,vCustSp){
+  var PL=84,PT=42,PR=120,PB=64;
   var isLong=faceW>=faceH*3;
   var maxFW=isLong?800:420;
   var maxFH=isLong?240:360;
@@ -15964,7 +16137,13 @@ function dlRenderSVG(positioned,faceW,faceH){
   var svgW=bW+PL+PR,svgH=bH+PT+PB;
   var ox=PL,oy=PT;
   var RED='#dc2626',BLK='#111111';
-  _dlSvgInfo={scale:scale,ox:ox,oy:oy};
+  // Dynamic font size based on min horizontal spacing between holes
+  var _minSx=Infinity,_rowXMap={};
+  positioned.forEach(function(p){var ry=Math.round(p.cy*100);if(!_rowXMap[ry])_rowXMap[ry]=[];_rowXMap[ry].push(p.cx);});
+  Object.keys(_rowXMap).forEach(function(ry){var xs=_rowXMap[ry].sort(function(a,b){return a-b;});for(var _i=1;_i<xs.length;_i++){var g=xs[_i]-xs[_i-1];if(g<_minSx)_minSx=g;}});
+  if(!isFinite(_minSx)||positioned.length<=1)_minSx=2.5;
+  var dimFS=_minSx>=2.5?28:_minSx>=1.25?24:18;
+  var chainFS=_minSx>=2.5?12:_minSx>=1.25?11:10;
 
   var s='<svg viewBox="0 0 '+svgW+' '+svgH+'" width="100%" style="max-width:'+Math.round(svgW)+'px;display:block;" xmlns="http://www.w3.org/2000/svg">';
 
@@ -15974,6 +16153,16 @@ function dlRenderSVG(positioned,faceW,faceH){
   s+='<line x1="'+(ox+bW/2)+'" y1="'+oy+'" x2="'+(ox+bW/2)+'" y2="'+(oy+bH)+'" stroke="#9ca3af" stroke-width="0.5" stroke-dasharray="3,4"/>'+
      '<line x1="'+ox+'" y1="'+(oy+bH/2)+'" x2="'+(ox+bW)+'" y2="'+(oy+bH/2)+'" stroke="#9ca3af" stroke-width="0.5" stroke-dasharray="3,4"/>';
 
+  // ── Vertical override edge reference lines (RED dashed, horizontal) ──
+  if(vCustSp){
+    var _backPy=oy+vCustSp.back*scale;
+    s+='<line x1="'+ox+'" y1="'+_backPy+'" x2="'+(ox+bW)+'" y2="'+_backPy+'" stroke="'+RED+'" stroke-width="1" stroke-dasharray="6,3" opacity="0.7"/>';
+    if(vCustSp.front!==null){
+      var _frontPy=oy+(faceH-vCustSp.front)*scale;
+      s+='<line x1="'+ox+'" y1="'+_frontPy+'" x2="'+(ox+bW)+'" y2="'+_frontPy+'" stroke="'+RED+'" stroke-width="1" stroke-dasharray="6,3" opacity="0.7"/>';
+    }
+  }
+
   // ── Overall dimensions — BLACK, flush to outer box edges ──
   // Width: above box, extension lines from top corners upward
   var dAbove=oy-16;
@@ -15982,7 +16171,7 @@ function dlRenderSVG(positioned,faceW,faceH){
      '<line x1="'+ox+'" y1="'+dAbove+'" x2="'+(ox+bW)+'" y2="'+dAbove+'" stroke="'+BLK+'" stroke-width="1"/>'+         // dim line
      '<line x1="'+ox+'" y1="'+(dAbove-4)+'" x2="'+ox+'" y2="'+(dAbove+4)+'" stroke="'+BLK+'" stroke-width="1"/>'+      // tick L
      '<line x1="'+(ox+bW)+'" y1="'+(dAbove-4)+'" x2="'+(ox+bW)+'" y2="'+(dAbove+4)+'" stroke="'+BLK+'" stroke-width="1"/>'+  // tick R
-     '<text x="'+(ox+bW/2)+'" y="'+(dAbove-7)+'" text-anchor="middle" font-size="15" font-weight="bold" fill="'+BLK+'" font-family="Roboto Mono,monospace">'+dlFrac(faceW)+'"</text>';
+     '<text x="'+(ox+bW/2)+'" y="'+(dAbove-7)+'" text-anchor="middle" font-size="18" font-weight="bold" fill="'+BLK+'" font-family="Roboto Mono,monospace">'+dlFrac(faceW)+'"</text>';
   // Height: left of box, extension lines from left corners leftward
   var dLeft=ox-20,midY=oy+bH/2;
   s+='<line x1="'+ox+'" y1="'+oy+'" x2="'+(dLeft-4)+'" y2="'+oy+'" stroke="'+BLK+'" stroke-width="0.8"/>'+            // top ext
@@ -15990,59 +16179,70 @@ function dlRenderSVG(positioned,faceW,faceH){
      '<line x1="'+dLeft+'" y1="'+oy+'" x2="'+dLeft+'" y2="'+(oy+bH)+'" stroke="'+BLK+'" stroke-width="1"/>'+           // dim line
      '<line x1="'+(dLeft-4)+'" y1="'+oy+'" x2="'+(dLeft+4)+'" y2="'+oy+'" stroke="'+BLK+'" stroke-width="1"/>'+        // tick T
      '<line x1="'+(dLeft-4)+'" y1="'+(oy+bH)+'" x2="'+(dLeft+4)+'" y2="'+(oy+bH)+'" stroke="'+BLK+'" stroke-width="1"/>'+  // tick B
-     '<text x="'+(dLeft-7)+'" y="'+midY+'" text-anchor="middle" font-size="15" font-weight="bold" fill="'+BLK+'" font-family="Roboto Mono,monospace" transform="rotate(-90,'+(dLeft-7)+','+midY+')">'+dlFrac(faceH)+'"</text>';
-
-  // ── Holes ──
-  positioned.forEach(function(p,i){
-    var px=ox+p.cx*scale,py=oy+p.cy*scale,pr=(p.d/2)*scale;
-    var xs=Math.min(pr*0.42,9);
-    s+='<g id="dlh-'+i+'" style="cursor:grab;touch-action:none;">';
-    s+='<circle cx="'+px+'" cy="'+py+'" r="'+pr+'" fill="none" stroke="#111" stroke-width="1.5" stroke-dasharray="4,3"/>';
-    s+='<line x1="'+(px-xs)+'" y1="'+(py-xs)+'" x2="'+(px+xs)+'" y2="'+(py+xs)+'" stroke="#111" stroke-width="1.3"/>'+
-       '<line x1="'+(px+xs)+'" y1="'+(py-xs)+'" x2="'+(px-xs)+'" y2="'+(py+xs)+'" stroke="#111" stroke-width="1.3"/>';
-    s+='<text x="'+px+'" y="'+(py-pr-3)+'" text-anchor="middle" font-size="9" font-weight="700" fill="#111" font-family="Roboto Mono,monospace">'+(i+1)+'</text>';
-    s+='</g>';
-  });
+     '<text x="'+(dLeft-7)+'" y="'+midY+'" text-anchor="end" dominant-baseline="middle" font-size="18" font-weight="bold" fill="'+BLK+'" font-family="Roboto Mono,monospace">'+dlFrac(faceH)+'"</text>';
 
   // ── Horizontal layout chain (RED) — below box ──
-  // Points: left wall + each unique hole center X + right wall
   var chainY=oy+bH+24;
   var xPts=[0];
   positioned.forEach(function(p){var rx=Math.round(p.cx*1000)/1000;if(xPts.indexOf(rx)<0)xPts.push(rx);});
   xPts.push(faceW);
   xPts.sort(function(a,b){return a-b;});
-  // Detect tight spacing: any gap < 1.25" physical OR < 35px screen
-  var isTightSpacing=false;
-  for(var txi=1;txi<xPts.length;txi++){
-    if((xPts[txi]-xPts[txi-1])*scale<35){isTightSpacing=true;break;}
-  }
-  var STD_TY=chainY+13,STG_TY=chainY+29;
-  var tickBottom=isTightSpacing?STG_TY+4:chainY+4;
+  var STD_TY=chainY+16,STG_TY=chainY+34;
   s+='<line x1="'+ox+'" y1="'+chainY+'" x2="'+(ox+bW)+'" y2="'+chainY+'" stroke="'+RED+'" stroke-width="0.8"/>';
-  // Wall ticks from box bottom
+  // Wall ticks
   s+='<line x1="'+ox+'" y1="'+(oy+bH)+'" x2="'+ox+'" y2="'+(chainY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>'+
      '<line x1="'+(ox+bW)+'" y1="'+(oy+bH)+'" x2="'+(ox+bW)+'" y2="'+(chainY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>';
-  // Hole center drop lines: from hole bottom circle edge to baseline
+  // All hole drop lines
   positioned.forEach(function(p){
     var px=ox+p.cx*scale,pr=(p.d/2)*scale;
     s+='<line x1="'+px+'" y1="'+(oy+p.cy*scale+pr)+'" x2="'+px+'" y2="'+(chainY+4)+'" stroke="'+RED+'" stroke-width="0.8" stroke-dasharray="3,2"/>';
   });
-  // Extension lines for staggered segments (from baseline+4 down to staggered text area)
-  if(isTightSpacing){
-    for(var xi=1;xi<xPts.length;xi++){
-      if((xi-1)%2===1){ // odd-index segment → staggered
-        var ex0=ox+xPts[xi-1]*scale,ex1=ox+xPts[xi]*scale;
-        s+='<line x1="'+ex0+'" y1="'+(chainY+4)+'" x2="'+ex0+'" y2="'+(STG_TY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>'+
-           '<line x1="'+ex1+'" y1="'+(chainY+4)+'" x2="'+ex1+'" y2="'+(STG_TY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+  // Detect TYP: interior (hole-to-hole) gaps — need 3+ consecutive equal
+  var _gaps=[];
+  for(var _gi=1;_gi<xPts.length;_gi++)_gaps.push(Math.round((xPts[_gi]-xPts[_gi-1])*1000)/1000);
+  var _interior=_gaps.slice(1,_gaps.length-1);
+  var useTYP=false,typCount=0,typVal=0;
+  if(_interior.length>=3){
+    var _allSame=true;
+    for(var _ii=1;_ii<_interior.length;_ii++){if(Math.abs(_interior[_ii]-_interior[0])>0.002){_allSame=false;break;}}
+    if(_allSame){useTYP=true;typCount=_interior.length;typVal=_interior[0];}
+  }
+  if(useTYP){
+    // First gap: left edge → first hole
+    var _g0x0=ox+xPts[0]*scale,_g0x1=ox+xPts[1]*scale;
+    s+='<line x1="'+_g0x1+'" y1="'+(chainY+4)+'" x2="'+_g0x1+'" y2="'+(chainY+8)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+    s+='<text x="'+((_g0x0+_g0x1)/2)+'" y="'+STD_TY+'" text-anchor="middle" font-size="'+chainFS+'" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(_gaps[0]*16)/16)+'"</text>';
+    // TYP span: first hole → last hole
+    var _typX0=ox+xPts[1]*scale,_typX1=ox+xPts[xPts.length-2]*scale;
+    var _typMid=(_typX0+_typX1)/2;
+    var _typLabel=typCount+' @ '+dlFrac(Math.round(typVal*16)/16)+'" TYP';
+    s+='<line x1="'+_typX0+'" y1="'+(chainY+4)+'" x2="'+_typX0+'" y2="'+(chainY+8)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+    s+='<line x1="'+_typX1+'" y1="'+(chainY+4)+'" x2="'+_typX1+'" y2="'+(chainY+8)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+    s+='<line x1="'+_typX0+'" y1="'+STD_TY+'" x2="'+_typX1+'" y2="'+STD_TY+'" stroke="'+RED+'" stroke-width="0.6"/>';
+    s+='<text x="'+_typMid+'" y="'+(STD_TY-5)+'" text-anchor="middle" font-size="'+chainFS+'" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+_typLabel+'</text>';
+    // Last gap: last hole → right edge
+    var _gLx0=ox+xPts[xPts.length-2]*scale,_gLx1=ox+xPts[xPts.length-1]*scale;
+    s+='<text x="'+((_gLx0+_gLx1)/2)+'" y="'+STD_TY+'" text-anchor="middle" font-size="'+chainFS+'" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(_gaps[_gaps.length-1]*16)/16)+'"</text>';
+  } else {
+    // Standard: detect tight spacing and stagger
+    var isTightSpacing=false;
+    for(var txi=1;txi<xPts.length;txi++){if((xPts[txi]-xPts[txi-1])*scale<42){isTightSpacing=true;break;}}
+    if(isTightSpacing){
+      for(var xi=1;xi<xPts.length;xi++){
+        if((xi-1)%2===1){
+          var ex0=ox+xPts[xi-1]*scale,ex1=ox+xPts[xi]*scale;
+          s+='<line x1="'+ex0+'" y1="'+(chainY+4)+'" x2="'+ex0+'" y2="'+(STG_TY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>'+
+             '<line x1="'+ex1+'" y1="'+(chainY+4)+'" x2="'+ex1+'" y2="'+(STG_TY+4)+'" stroke="'+RED+'" stroke-width="0.8"/>';
+        }
       }
     }
-  }
-  for(var xi=1;xi<xPts.length;xi++){
-    var dist=xPts[xi]-xPts[xi-1];
-    var midPx=ox+(xPts[xi-1]+xPts[xi])/2*scale;
-    var isStg=isTightSpacing&&(xi-1)%2===1;
-    var textY=isStg?STG_TY:STD_TY;
-    s+='<text x="'+midPx+'" y="'+textY+'" text-anchor="middle" font-size="7.5" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(dist*16)/16)+'"</text>';
+    for(var xi=1;xi<xPts.length;xi++){
+      var dist=xPts[xi]-xPts[xi-1];
+      var midPx=ox+(xPts[xi-1]+xPts[xi])/2*scale;
+      var isStg=isTightSpacing&&(xi-1)%2===1;
+      var textY=isStg?STG_TY:STD_TY;
+      s+='<text x="'+midPx+'" y="'+textY+'" text-anchor="middle" font-size="'+chainFS+'" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(dist*16)/16)+'"</text>';
+    }
   }
 
   // ── Vertical layout chain (RED) — right of box ──
@@ -16082,8 +16282,18 @@ function dlRenderSVG(positioned,faceW,faceH){
   for(var yi=1;yi<yPts.length;yi++){
     var distY=yPts[yi]-yPts[yi-1];
     var midPyY=oy+(yPts[yi-1]+yPts[yi])/2*scale;
-    s+='<text x="'+(chainX+8)+'" y="'+(midPyY+3)+'" text-anchor="start" font-size="7.5" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(distY*16)/16)+'"</text>';
+    s+='<text x="'+(chainX+8)+'" y="'+(midPyY+3)+'" text-anchor="start" font-size="'+chainFS+'" font-weight="700" fill="'+RED+'" font-family="Roboto Mono,monospace">'+dlFrac(Math.round(distY*16)/16)+'"</text>';
   }
+
+  // ── Holes (rendered last so they sit on top) ──
+  positioned.forEach(function(p,i){
+    var px=ox+p.cx*scale,py=oy+p.cy*scale,pr=(p.d/2)*scale;
+    var xs=Math.min(pr*0.28,6);
+    s+='<circle cx="'+px+'" cy="'+py+'" r="'+pr+'" fill="#ffffff" stroke="#111" stroke-width="1.5" stroke-dasharray="4,3"/>';
+    s+='<line x1="'+(px-xs)+'" y1="'+(py-xs)+'" x2="'+(px+xs)+'" y2="'+(py+xs)+'" stroke="#222" stroke-width="1.2"/>'+
+       '<line x1="'+(px+xs)+'" y1="'+(py-xs)+'" x2="'+(px-xs)+'" y2="'+(py+xs)+'" stroke="#222" stroke-width="1.2"/>';
+    s+='<text x="'+px+'" y="'+(py-pr-3)+'" text-anchor="middle" font-size="9" font-weight="700" fill="#111" font-family="Roboto Mono,monospace">'+(i+1)+'</text>';
+  });
 
   s+='</svg>';
   return '<div class="dl-diagram-wrap">'+s+'</div>';
@@ -16091,12 +16301,11 @@ function dlRenderSVG(positioned,faceW,faceH){
 
 function dlRenderMeasurements(positioned,faceW,faceH){
   var html='<div class="dl-section">Hole Positions (center to edge)</div>';
-  html+='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="dl-meas-tbl"><thead><tr><th>#</th><th>Trade</th><th>Drill</th><th>Left</th><th>Top</th><th>Right</th><th>Bottom</th></tr></thead><tbody>';
+  html+='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="dl-meas-tbl"><thead><tr><th>#</th><th>Hole Size</th><th>Left</th><th>Top</th><th>Right</th><th>Bottom</th></tr></thead><tbody>';
   positioned.forEach(function(p,i){
     html+='<tr>'+
       '<td>'+(i+1)+'</td>'+
-      '<td>'+p.conduit+'</td>'+
-      '<td>'+dlFrac(p.d)+'"</td>'+
+      '<td style="white-space:nowrap">'+p.conduit+' Hole — '+dlFrac(p.d)+'" holesaw</td>'+
       '<td>'+dlFrac(Math.round(p.cx*16)/16)+'"</td>'+
       '<td>'+dlFrac(Math.round(p.cy*16)/16)+'"</td>'+
       '<td>'+dlFrac(Math.round((faceW-p.cx)*16)/16)+'"</td>'+
@@ -16104,33 +16313,6 @@ function dlRenderMeasurements(positioned,faceW,faceH){
       '</tr>';
   });
   html+='</tbody></table></div>';
-  // Center-to-center within each row
-  var rowGroups={};
-  positioned.forEach(function(p){
-    if(!rowGroups[p.row])rowGroups[p.row]=[];
-    rowGroups[p.row].push(p);
-  });
-  var ccItems=[];
-  Object.keys(rowGroups).forEach(function(k){
-    var rh=rowGroups[k];
-    if(rh.length<2)return;
-    rh.sort(function(a,b){return a.cx-b.cx;});
-    for(var i=1;i<rh.length;i++){
-      var cc=rh[i].cx-rh[i-1].cx;
-      var h1=positioned.indexOf(rh[i-1])+1;
-      var h2=positioned.indexOf(rh[i])+1;
-      ccItems.push({label:'Hole '+h1+' to Hole '+h2,val:dlFrac(Math.round(cc*16)/16)});
-    }
-  });
-  if(ccItems.length){
-    html+='<div class="dl-section" style="margin-top:14px;">Center-to-Center Spacing</div>';
-    ccItems.forEach(function(item){
-      html+='<div class="dl-hole-row">'+
-        '<span class="dl-hole-size">'+item.val+'"</span>'+
-        '<span class="dl-hole-info">'+item.label+'</span>'+
-        '</div>';
-    });
-  }
   return html;
 }
 
